@@ -1,0 +1,21 @@
+<div class="main">
+  <div class="menu-panel">
+    <!-- Logo -->
+    <div class="logo">
+      <img src="../assets/imgs/bendrocorp-final.png" alt="">
+    </div>
+    <!-- Menu -->
+    <div class="overflow-scrollable">
+      <app-menu></app-menu>
+    </div>
+  </div>
+  <div class="content-panel">
+    <div>
+      <app-header></app-header>
+    </div>
+    <div class="container overflow-scrollable">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>
+<app-message></app-message>

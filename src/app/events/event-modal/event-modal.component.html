@@ -1,0 +1,53 @@
+<ng-template #content let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">{{formAction}} Event</h4>
+    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form #eventForm="ngForm">
+      <div class="form-group">
+        <label>Event Name</label>
+        <input class="form-control" required placeholder="Enter event name..." [(ngModel)]="event.name" name="name" type="text">
+      </div>
+      <div class="form-group">
+        <label>Event Description</label>
+        <textarea class="form-control" required placeholder="Enter event description..." [(ngModel)]="event.description" name="description"></textarea>
+      </div>
+      <div class="form-group">
+        <label>Event Start Date</label>
+        <!-- <input class="form-control" required placeholder="Enter event start date/time..." [(ngModel)]="event.start_date" name="title" type="datetime"> -->
+        <angular2-date-picker [(ngModel)]="event.start_date" (onDateSelect)="onStartDateSelect($event)" [settings]="dateTimePickerSettings" name="start_date"></angular2-date-picker>
+      </div>
+      <div class="form-group">
+        <label>Event End Date</label>
+        <!-- <input class="form-control" required placeholder="Enter event end date/time..." [(ngModel)]="event.end_date" name="title" type="datetime"> -->
+        <angular2-date-picker [(ngModel)]="event.end_date" (onDateSelect)="onEndDateSelect($event)" [settings]="dateTimePickerSettings" name="end_date"></angular2-date-picker>
+      </div>
+      <div class="form-group" *ngIf="!gradeId">
+        <label>Event Type:</label>
+        <select class="form-control" [(ngModel)]="event.event_type_id" name="grade_level_id" required>
+          <option *ngFor="let eType of eventTypes" [value]="eType.id">{{eType.title}}</option>
+        </select>
+        </div>
+      <div class="form-group">
+        <div class="custom-control custom-checkbox">
+          <input type="checkbox" class="custom-control-input" id="customCheck1" [(ngModel)]="event.show_on_dashboard" name="show_on_dashboard">
+          <label class="custom-control-label" for="customCheck1">Show on dashboard?</label>
+        </div>
+        <div class="custom-control custom-checkbox">
+          <input type="checkbox" class="custom-control-input" id="customCheck2" [(ngModel)]="event.weekly_recurrance" name="weekly_recurrance">
+          <label class="custom-control-label" for="customCheck2">Weekly Recurrance?</label>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-primary" [disabled]="!eventForm.form.valid" (click)="doSaveBack()">{{formAction}} Event</button>
+    <button type="button" class="btn btn-secondary" (click)="c()">Cancel</button>
+  </div>
+</ng-template>
+
+<button *ngIf="event && event.id" class="btn btn-primary" (click)="open(content)">Edit Event</button>
+<button *ngIf="!event || !event.id" class="btn btn-sm btn-secondary" (click)="open(content)">Add Event</button>

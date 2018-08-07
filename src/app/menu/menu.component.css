@@ -1,0 +1,29 @@
+.menu-container > .menu-title
+{
+    text-align: center;
+} 
+
+.menu-container > div > .menu-item
+{
+    padding-left: 16px;
+    font-weight: 800;
+    border-left:4px solid #fff;
+    margin-bottom: 6px;
+}
+
+.menu-container > div  > .menu-item.active
+{
+    border-left:4px solid skyblue;
+}
+.menu-container > div  > .menu-item > .menu-item-icon
+{
+    display: inline-block;
+    text-align: center;
+    width: 25px;
+    font-size: 0.8em;
+}
+
+.menu-item-title > a, .menu-item-title > a:hover, .menu-item-title > a:visited
+{
+    color:#fff
+}

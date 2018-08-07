@@ -1,0 +1,34 @@
+<ng-template #content let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Event Certification</h4>
+    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <!--  -->
+    <div *ngIf="attendences">
+      <div *ngFor="let attendence of attendences" class="row">
+        <div class="col-md-6 col-sm-6 col-xs-6">
+          <h4 [ngClass]="{'text-success': attendence.attendence_type_id == 1, 'text-danger': attendence.attendence_type_id == 2}">{{attendence.character.full_name}}</h4>
+        </div>
+        <div class="col-md-6 col-sm-6 col-xs-6">
+          <select class="form-control" [(ngModel)]="attendence.attendence_type_id" name="attendence_type_id">
+            <option *ngFor="let aType of attendenceTypes" [value]="aType.id">{{aType.title}}</option>
+          </select>
+        </div>
+        <hr>
+      </div>
+    </div>
+    <hr>
+    <div>
+        <p>By submitted this event attendence you are certifying that these members attended or did not attend {{event.name}} on {{event.start_date_ms | date:'MM/dd/yyyy @ h:mma'}}. You do so based on your best knowledge and available attendence reports.</p>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-primary" [disabled]="!attendences || attendenceSubmitting" (click)="submitForCertification()">Submit Certification</button>
+    <button type="button" class="btn btn-secondary" (click)="c('Cancel click')">Cancel</button>
+  </div>
+</ng-template>
+
+<button class="btn btn-warning" (click)="open(content)">Certify Event</button>

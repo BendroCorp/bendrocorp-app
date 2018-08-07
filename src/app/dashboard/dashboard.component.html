@@ -1,0 +1,61 @@
+<div>
+  <div class="row">
+    <div class="col-md-12">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item active">Dashboard</li>
+      </ol>
+    </div>
+  </div>
+  <!-- Upcoming Events row -->
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card border-primary mb-3 upcoming-events-box">
+        <div class="card-header bg-primary text-white">Upcoming Events</div>
+        <div class="card-body">
+          <div *ngIf="!events || (events && events.length == 0)" class="row">
+            <div class="col-md-12">
+              <h4>There are currently no events posted!</h4>
+            </div>
+          </div>
+          <div *ngIf="events && events.length > 0" class="row">
+            <div class="col-md-6">
+              <h6>Next Event Details</h6>
+              <p>{{nextEvent.name}}</p>
+              <p>Starts: {{nextEvent.start_date | date: 'MM/dd/yyyy hh:mm '}}</p>
+              <p>End: {{nextEvent.end_date | date: 'MM/dd/yyyy hh:mm' }}</p>
+            </div>
+            <div class="col-md-6">
+              <!-- Countdown Clock -->
+              <event-countdown-chart [endTime]="nextEvent.start_date"></event-countdown-chart>
+            </div>
+            <event-attendence [event]="nextEvent"></event-attendence>
+          </div>
+          <!-- Scrollable events list -->
+          <div *ngIf="events && events.length > 0" class="row">
+            <div class="col-md-12">
+                Scrollable events list for all other events w/opt in
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-5">
+      <div class="card border-primary mb-3 other-box">
+        <div class="card-header bg-primary text-white">Commodities</div>
+        <div class="card-body">
+          There are currently no commodities posted.
+        </div>
+      </div>
+    </div>
+    <div class="col-md-7">
+      <div class="card border-primary mb-3 other-box">
+        <div class="card-header bg-primary text-white">Offender Reports</div>
+        <div class="card-body">
+          There are currently no offender reports posted.
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

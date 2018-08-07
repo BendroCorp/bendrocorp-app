@@ -1,0 +1,10 @@
+<div class="col-md-12">
+  <!-- Attendence String -->
+  <div *ngIf="!hideAttendenceString">Attending: <span *ngIf="attendenceString.length > 0">{{attendenceString}}</span><span *ngIf="attendenceString.length == 0">None</span></div>
+  <!-- Buttons -->
+  <div>
+    <button *ngIf="!checkCurrentStatus() || checkCurrentStatus().attendence_type_id == 2" class="btn btn-success" (click)="setAttendence(1)">Attending</button>
+    <span *ngIf="!checkCurrentStatus()">&nbsp;</span>
+    <button *ngIf="!checkCurrentStatus() || checkCurrentStatus().attendence_type_id == 1" class="btn btn-danger" (click)="setAttendence(2)">Not Attending</button>
+  </div>
+</div>

@@ -1,0 +1,47 @@
+<div>
+  <div class="row">
+    <div class="col-md-12">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item active">Events</li>
+      </ol>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card border-primary mb-3">
+        <div class="card-header bg-primary text-white">Upcoming Events<event-modal *ngIf="isAdmin" style="float: right;"></event-modal></div>
+        <div class="card-body">
+          <h5 *ngIf="!events || events.length == 0">There are no upcoming events - check back soon!</h5>
+          <div *ngFor="let event of events" class="event-box">
+            <h3><a routerLink="/events/{{event.id}}">{{event.name}}</a><span *ngIf="isAdmin">&nbsp;<event-modal [event]="event"></event-modal>&nbsp;<event-briefing-modal [event]="event"></event-briefing-modal>&nbsp;<button class="btn btn-warning" *ngIf="!event.published" (click)="publishEvent(event)">Publish Event</button></span></h3>
+            <div>Starts: {{event.start_date | date: 'MM/dd/yyyy hh:mm a'}}</div>
+            <div>Ends: {{event.end_date | date: 'MM/dd/yyyy hh:mm a '}}</div>
+            <br>
+            <event-attendence [event]="event"></event-attendence>
+            <hr>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="isAdmin" class="row">
+    <div class="col-md-12">
+      <div class="card border-danger mb-3">
+        <div class="card-header bg-primary text-white">Expired Events</div>
+        <div class="card-body">
+          <h5 *ngIf="!expiredEvents || expiredEvents.length == 0">There are no expired events - check back soon!</h5>
+          <div *ngFor="let event of expiredEvents" class="event-box">
+            <h3><a routerLink="/events/{{event.id}}">{{event.name}}</a><span *ngIf="isAdmin && !event.submitted_for_certification">&nbsp;<event-modal [event]="event"></event-modal>&nbsp;<event-briefing-modal [event]="event"></event-briefing-modal>&nbsp;<event-certification-modal [event]="event"></event-certification-modal></span></h3>
+            <div>Starts: {{event.start_date | date: 'MM/dd/yyyy hh:mm '}}</div>
+            <div>Ends: {{event.end_date | date: 'MM/dd/yyyy hh:mm '}}</div>
+            <br>
+            <hr>
+          </div>
+          <div style="text-align: center;">
+            <button class="btn btn-primary" *ngIf="!hideShowMoreExpiredEvents" [disabled]="hideShowMoreExpiredEventsDisabled" (click)="fetchExpired(99999999999, true)">Show More</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

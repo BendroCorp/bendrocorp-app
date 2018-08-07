@@ -1,0 +1,8 @@
+<div class="row">
+  <div class="col-md-12">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a routerLink="/profiles">Profiles</a></li>
+      <li class="breadcrumb-item active"><span *ngIf="!profile">Details</span><span *ngIf="profile">{{profile.full_name}}</span></li>
+    </ol>
+  </div>
+</div>

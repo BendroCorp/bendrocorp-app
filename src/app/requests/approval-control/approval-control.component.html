@@ -1,0 +1,7 @@
+<span *ngIf="approval">
+  <span *ngIf="approval.approval_type.id < 4">
+    <button class="btn btn-success" [disabled]="approvalSubmitting" (click)="submitApproval(approval.approval_id, 4)">Approve</button>&nbsp;
+    <button class="btn btn-danger" [disabled]="approvalSubmitting" (click)="submitApproval(approval.approval_id, 5)">Decline</button>
+  </span>
+  <span *ngIf="approval.approval_type.id >= 4">{{approval.approval_type.title}}</span>
+</span>

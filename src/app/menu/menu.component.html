@@ -1,0 +1,20 @@
+<div class="menu-container">
+  <div class="menu-title">
+    <h6>MENU</h6>
+    <h6 *ngIf="!menuVisible">NOT AVAILABLE</h6>
+  </div>
+  <div *ngIf="menuVisible">
+    <div *ngFor="let item of menuItems" class="menu-item">
+      <div class="btn btn-sm btn-primary"> 
+        <span class="menu-item-icon"><i class="fas {{item.icon}}"></i>&nbsp;</span>
+        <span class="menu-item-title">
+          <!-- If internal -->
+          <a *ngIf="item.internal" routerLink="{{item.link}}">{{item.title}}</a>
+          <!-- if external -->
+          <a *ngIf="!item.internal" href="{{item.link}}" target="_blank">{{item.title}}</a>
+        </span>
+        <span *ngIf="item.nested_items.length > 0" class="menu-item-arrow"> ></span>
+      </div>
+    </div>
+  </div> 
+</div>

@@ -1,0 +1,51 @@
+<div class="row">
+  <div class="col-md-12">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a routerLink="/requests">Requests</a></li>
+      <li class="breadcrumb-item"><a routerLink="/requests/approvals">Approvals</a></li>
+      <li class="breadcrumb-item active">Approval Details</li>
+    </ol>
+  </div>
+</div>
+
+<div *ngIf="approval" class="row">
+  <div class="col-md-12">
+    <div class="card border-primary mb-3">
+      <div class="card-header bg-primary text-white">Approval #{{approval.approval_id}}</div>
+      <div class="card-body">
+        <h4 *ngIf="!approval && dataLoaded">That approval does not exist or you do not have access to it!</h4>
+        <div *ngIf="approval && dataLoaded">
+          <div>
+            <p>Type: {{approval.approval.approval_kind.title}}</p>
+            <p>Submitted by: {{approval.approval.approval_source_character_name}}</p>
+            <p *ngIf="approval.approval.approval_link"><a routerLink='{{approval.approval.approval_link}}'>Linked Item</a></p>
+            <p *ngIf="approval.approval.approval_source_requested_item">Requested Item: {{approval.approval.approval_source_requested_item}}</p>
+            <p>Created at: {{approval.approval.created_at | date: 'MM/dd/yyyy hh:mm a '}}</p>
+            <p>Status: {{approval.approval.approval_status}}</p>
+            <p>Your Approval: <approval-control [approval]="approval"></approval-control></p>
+          </div>
+          <div>
+            <table class="table tables-striped">
+              <thead>
+                <tr>
+                  <th>
+                    Name
+                  </th>
+                  <th>
+                    Approval Status
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let approver of approval.approval.approval_approvers">
+                  <td>{{approver.character_name}}</td>
+                  <td>{{approver.approver_response}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

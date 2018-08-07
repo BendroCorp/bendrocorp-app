@@ -1,0 +1,35 @@
+<div class="row">
+  <div class="col-md-12">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item active">Profiles</li>
+    </ol>
+  </div>
+</div>
+<div class="row">
+  <div *ngIf="divisions" class="col-md-12">
+    <div *ngFor="let division of divisions" class="card border-primary mb-3">
+      <div class="card-header text-white" [ngStyle]="{'background-color': division.color}">{{division.name}}</div>
+      <div class="card-body">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th></th>
+              <th>Name</th>
+              <th>Position</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let character of division.division_members">
+              <td><img style="max-height: 25px" src="{{character.avatar}}" alt=""></td>
+              <td>{{character.full_name}}</td>
+              <td>{{character.current_job.title}}</td>
+              <td><a class="btn btn-primary btn-sm" routerLink="/profiles/{{character.first_name.toLowerCase()}}-{{character.last_name.toLowerCase()}}-{{character.id}}">View Profile</a></td>
+            </tr>
+          </tbody>
+        </table>
+        <h5 *ngIf="!division.division_members || division.division_members.length == 0">There are no employees currently in this division.</h5>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,14 @@
+<div class="row">
+  <div class="col-md-12">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a routerLink="/events">Events</a></li>
+      <li class="breadcrumb-item active">Event Details</li>
+    </ol>
+  </div>  
+</div>
+<div class="row" *ngIf="selectedEvent">
+  <div class="col-md-12">
+      <h3>{{selectedEvent.name}}</h3>
+      <div>Eventually the event details need to go here....</div>
+  </div>
+</div>

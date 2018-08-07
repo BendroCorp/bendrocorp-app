@@ -1,0 +1,93 @@
+<ng-template #content let-c="close" let-d="dismiss">
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Edit Briefing</h4>
+      <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <form *ngIf="event">
+        <!-- Designees 1 -->
+        <div class="row">
+          <div class="col-md-6 col-sm-6 col-xs-6">
+              <div class="form-group">
+                <label>Operational Leader</label>
+                <select class="form-control" [(ngModel)]="event.briefing.operational_leader_id" name="operational_leader_id">
+                  <option *ngFor="let character of characters" [value]="character.id">{{character.full_name}}</option>
+                </select>
+              </div>
+          </div>
+          <div class="col-md-6 col-sm-6 col-xs-6">
+            <div class="form-group">
+              <label>Communications Designee</label>
+              <select class="form-control" [(ngModel)]="event.briefing.communications_designee_id" name="communications_designee_id" >
+                <option *ngFor="let character of characters" [value]="character.id">{{character.full_name}}</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <!-- Designees 2 -->
+        <div class="row">
+          <div class="col-md-6 col-sm-6 col-xs-6">
+              <div class="form-group">
+                <label>Escort Leader</label>
+                <select class="form-control" [(ngModel)]="event.briefing.escort_leader_id" name="escort_leader_id" >
+                  <option *ngFor="let character of characters" [value]="character.id">{{character.full_name}}</option>
+                </select>
+              </div>
+          </div>
+          <div class="col-md-6 col-sm-6 col-xs-6">
+            <div class="form-group">
+              <label>Reporting Designee</label>
+              <select class="form-control" [(ngModel)]="event.briefing.reporting_designee_id" name="reporting_designee_id" >
+                <option *ngFor="let character of characters" [value]="character.id">{{character.full_name}}</option>
+              </select>
+            </div>
+          </div>
+        </div>  
+        <!-- Objective -->
+        <div class="row">
+          <div class="col-md-12">
+            <div class="form-group">
+              <label>Objective</label>
+              <textarea class="form-control" [(ngModel)]="event.briefing.objective" name="objective" id=""></textarea>
+            </div>
+          </div>
+        </div>
+        <!-- System Map -->
+        <div *ngIf="false" class="row">
+          <div class="col-md-6 col-sm-6 col-xs-6">
+              <div class="form-group">
+                <label></label>
+                <select class="form-control" [(ngModel)]="event.briefing.starting_system_id" name="starting_system_id">
+                  <option *ngFor="let character of characters" [value]="character.id">{{character.full_name}}</option>
+                </select>
+              </div>
+          </div>
+          <div class="col-md-6 col-sm-6 col-xs-6">
+            <div class="form-group">
+              <label></label>
+              <select class="form-control" [(ngModel)]="event.briefing.ending_system_id" name="ending_system_id">
+                <option *ngFor="let character of characters" [value]="character.id">{{character.full_name}}</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <!-- Notes -->
+        <div class="row">
+          <div class="col-md-12">
+            <div class="form-group">
+              <label>Notes</label>
+              <textarea class="form-control" [(ngModel)]="event.briefing.notes" name="notes" id="" ></textarea>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" (click)="doUpdate()">Update Briefing</button>
+        <button class="btn btn-secondary" (click)="c()">Cancel</button>
+    </div>
+  </ng-template>
+  <button class="btn btn-info" (click)="open(content)">Edit Briefing</button>
+  
