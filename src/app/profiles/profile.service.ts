@@ -2,9 +2,11 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '../../../node_modules/@angular/common/http';
 import { ErrorService } from '../error.service';
 import { Globals } from '../globals';
-import { Observable } from '../../../node_modules/rxjs';
+import { Observable, Subject } from '../../../node_modules/rxjs';
 import { Character, Division } from '../models/character-models';
 import { tap, catchError } from '../../../node_modules/rxjs/operators';
+import { StatusMessage } from '../models/misc-models';
+import { OwnedShip } from '../models/ship-models';
 
 @Injectable({
   providedIn: 'root'
@@ -12,6 +14,17 @@ import { tap, catchError } from '../../../node_modules/rxjs/operators';
 export class ProfileService {
 
   constructor(private http:HttpClient, private errorService:ErrorService, private globals:Globals) { }
+
+  private dataRefreshSource = new Subject();
+  dataRefreshAnnounced$ = this.dataRefreshSource.asObservable();
+  /**
+   * Call this to signal all subscribers to refresh their data
+   */
+  refreshData()
+  {
+    console.log("Requests service data refresh called!");    
+    this.dataRefreshSource.next();
+  }
 
   list() : Observable<Character[]>
   {
@@ -34,6 +47,38 @@ export class ProfileService {
     return this.http.get<Character>(`${this.globals.baseUrl}/profile/${profile_id}`).pipe(
       tap(result => console.log(`Fetched profile id #${profile_id}!`)),
       catchError(this.errorService.handleError<any>('Fetch Profiles'))
+    )
+  }
+
+  update(character:Character) : Observable<StatusMessage>
+  {
+    return this.http.patch<StatusMessage>(`${this.globals.baseUrl}/profile`, { character }).pipe(
+      tap(result => console.log(`Updated profile id #${character.id}!`)),
+      catchError(this.errorService.handleError<any>('Update Profile'))
+    )
+  }
+
+  updateAvatar(character:Character) : Observable<StatusMessage>
+  {
+    return this.http.patch<StatusMessage>(`${this.globals.baseUrl}/profile/avatar`, { character }).pipe(
+      tap(result => console.log(`Updated profile id #${character.id}!`)),
+      catchError(this.errorService.handleError<any>('Update Profile'))
+    )
+  }
+
+  addShip(owned_ship:OwnedShip) : Observable<OwnedShip>
+  {
+    return this.http.post<OwnedShip>(`${this.globals.baseUrl}/profile/ship`, { owned_ship }).pipe(
+      tap(result => console.log(`Created owned ship id #${result.id}!`)),
+      catchError(this.errorService.handleError<any>('Update Profile'))
+    )
+  }
+
+  removeShip(owned_ship:OwnedShip) : Observable<StatusMessage>
+  {
+    return this.http.delete<OwnedShip>(`${this.globals.baseUrl}/profile/ship/${owned_ship.id}`).pipe(
+      tap(result => console.log(`Archived owned ship id #${owned_ship.id}!`)),
+      catchError(this.errorService.handleError<any>('Update Profile'))
     )
   }
 }

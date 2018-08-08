@@ -22,3 +22,11 @@ export class StatusMessage
 {
     message?:string;
 }
+
+export class Base64Upload
+{
+    name: string
+    type: string 
+    size: number
+    base64: string
+}

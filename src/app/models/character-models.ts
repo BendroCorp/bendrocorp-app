@@ -1,11 +1,24 @@
+import { Base64Upload } from "./misc-models";
+import { OwnedShip } from "./ship-models";
+
 export class Character {
     id?:number;
+    user_id?:number;
     first_name?:string;
+    nickname?:string;
     last_name?:string;
     full_name?:string;
+    description?:string;
+    background?:string;
+
     avatar_url?:string;
     current_job_level?: number
-    current_job:Job
+    current_job?:Job
+    jobs?:Job[]
+
+    owned_ships:OwnedShip[]
+
+    new_avatar:Base64Upload
 }
 
 export class Job {
@@ -29,4 +42,11 @@ export class Division {
     ordinal?: number
 
     division_members:Character[]
+}
+
+export class Award {
+    id?:number;
+    title?:string;
+    name?:string;
+    image_url?:string;
 }

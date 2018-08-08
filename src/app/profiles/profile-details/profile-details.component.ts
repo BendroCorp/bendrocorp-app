@@ -6,6 +6,9 @@ import { HttpErrorResponse } from '../../../../node_modules/@angular/common/http
 import { AuthService } from '../../auth.service';
 import { ApplicationService } from '../application.service';
 import { MessageService } from '../../message/message.service';
+import { UserSessionResponse } from '../../models/user-models';
+import { Base64Upload } from '../../models/misc-models';
+import { OwnedShip } from '../../models/ship-models';
 
 @Component({
   selector: 'app-profile-details',
@@ -14,8 +17,8 @@ import { MessageService } from '../../message/message.service';
 })
 export class ProfileDetailsComponent implements OnInit {
   profileId:number = this.parseProfileId()
-  hasHrDirectorRights:boolean = this.authService.hasClaim(12)
-  hasCEORights:boolean = this.authService.hasClaim(9)
+  canEdit:boolean = false
+  hrRights:boolean = (this.authService.hasClaim(12) || this.authService.hasClaim(9)) ? true : false
 
   profile:Character
   constructor(private route:ActivatedRoute, private router:Router, private profileService:ProfileService, private applicationService:ApplicationService, private messageService:MessageService, private authService:AuthService) { }
@@ -26,11 +29,94 @@ export class ProfileDetailsComponent implements OnInit {
       (result) => {
         if (!(result instanceof HttpErrorResponse)) {
           this.profile = result
+          this.canEdit = ((this.profile.user_id === (this.authService.retrieveUserSession() as UserSessionResponse).id) || this.hrRights) ? true : false
         }else{
           this.router.navigateByUrl('/profiles')
         }
       }
     )
+  }
+
+  updateProfile()
+  {
+    if (this.profile) {
+      if (this.canEdit) {
+        this.profileService.update(this.profile).subscribe(
+          (result) => {
+            if (!(result instanceof HttpErrorResponse)) {
+              this.profileService.refreshData()
+            }
+          }
+        )
+      } else {
+        this.messageService.addError("You are not authorized to edit this character.")
+      }
+    }else{
+      console.error("There is really no way you should get this message...since you should be forward away...but...updateProfile could not find a profile")
+    }
+  }
+
+  updateAvatar()
+  {
+    if (this.profile) {
+      if (this.canEdit) {
+        this.profileService.updateAvatar(this.profile).subscribe(
+          (result) => {
+            if (!(result instanceof HttpErrorResponse)) {
+              this.profileService.refreshData()
+            }
+          }
+        )
+      } else {
+        this.messageService.addError("You are not authorized to edit this character.")
+      }
+    }else{
+      console.error("There is really no way you should get this message...since you should be forward away...but...updateProfile could not find a profile")
+    }
+  }
+
+  archiveShip(ownedShip:OwnedShip)
+  {
+    if (ownedShip) {
+      if (confirm("Are you sure you want to archived this ship? This action cannot be easily undone...")) {
+        if (this.canEdit) {
+          this.profileService.removeShip(ownedShip).subscribe(
+            (results) => {
+              if (!(results instanceof HttpErrorResponse)) {
+                this.profile.owned_ships.splice(this.profile.owned_ships.findIndex(x => x.id == ownedShip.id),1)
+              }
+            }
+          )
+        }
+      }
+    }else{
+      console.error("Owned ship not passed to archiveShip");
+      
+    }
+  }
+
+  handleAvatarFileInput(files: FileList)
+  {
+    console.log(files);
+    // fetch file data on file to uploads    
+    let file = files.item(0);    
+
+    // add the avatar information to the user object so it can be uploaded
+    this.getBase64(file).then(
+      result => {
+        this.profile.new_avatar = { name: file.name, type: file.type, size: file.size, base64: result } as Base64Upload;
+      }
+    );
+  }
+
+  getBase64(file) {
+    // https://stackoverflow.com/questions/47936183/angular-5-file-upload
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = error => reject(error);
+    });
   }
 
   private parseProfileId() : number

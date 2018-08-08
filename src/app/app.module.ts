@@ -54,6 +54,8 @@ import { JobCreationComponent } from './requests/job-creation/job-creation.compo
 import { ApprovalDetailsComponent } from './requests/approval-details/approval-details.component';
 import { ApprovalControlComponent } from './requests/approval-control/approval-control.component';
 import { ProfileDetailsComponent } from './profiles/profile-details/profile-details.component';
+import { InlineEditorComponent } from './editors/inline-editor/inline-editor.component';
+import { TextareaEditorComponent } from './editors/textarea-editor/textarea-editor.component';
 
 @NgModule({
   declarations: [
@@ -94,7 +96,9 @@ import { ProfileDetailsComponent } from './profiles/profile-details/profile-deta
     JobCreationComponent,
     ApprovalDetailsComponent,
     ApprovalControlComponent,
-    ProfileDetailsComponent
+    ProfileDetailsComponent,
+    InlineEditorComponent,
+    TextareaEditorComponent
   ],
   entryComponents: [
     EventModalComponent,

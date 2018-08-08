@@ -21,7 +21,7 @@
           </thead>
           <tbody>
             <tr *ngFor="let character of division.division_members">
-              <td><img style="max-height: 25px" src="{{character.avatar}}" alt=""></td>
+              <td><img style="max-height: 25px" src="{{character.avatar_url}}" alt=""></td>
               <td>{{character.full_name}}</td>
               <td>{{character.current_job.title}}</td>
               <td><a class="btn btn-primary btn-sm" routerLink="/profiles/{{character.first_name.toLowerCase()}}-{{character.last_name.toLowerCase()}}-{{character.id}}">View Profile</a></td>

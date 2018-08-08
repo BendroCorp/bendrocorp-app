@@ -6,3 +6,88 @@
     </ol>
   </div>
 </div>
+
+<div class="row" *ngIf="profile">
+  <div class="col-md-12">
+    <div class="card border-primary mb-3">
+      <div class="card-header text-white bg-primary">EMPLOYEE PROFILE - {{profile.first_name}}&nbsp;{{profile.last_name}}</div>
+      <div class="card-body">
+        <div class="row">
+          <div class="col-md-3">
+            <div><img src="{{profile.avatar_url}}" alt="Avatar" style="max-width: 100%;"></div>
+            <div *ngIf="canEdit">
+              <div class="form-group">
+                <div class="input-group mb-3">
+                  <div class="custom-file">
+                      <input class="custom-file-input" type="file" id="inputGroupFile02" (change)="handleAvatarFileInput($event.target.files)">
+                    <label class="custom-file-label" for="inputGroupFile02">Choose file</label>
+                  </div>
+                  <div class="input-group-append">
+                    <span class="input-group-text" id="" (click)="updateAvatar()">Upload</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div>{{profile.first_name}}&nbsp;{{profile.last_name}}</div>
+            <div>{{profile.current_job.title}}</div>
+          </div>
+          <div class="col-md-9">
+            <ngb-tabset>
+              <ngb-tab title="Background">
+                <ng-template ngbTabContent>
+                  <h4>Physical Description</h4>
+                  <p *ngIf="!canEdit">{{profile.description}}</p>
+                  <textarea-editor *ngIf="canEdit" [(ngModel)]="profile.description" maxheight="200px" (onSave)="updateProfile()"></textarea-editor>
+                  <h4>Background</h4>
+                  <p *ngIf="!canEdit">{{profile.background}}</p>
+                  <textarea-editor *ngIf="canEdit" [(ngModel)]="profile.background" maxheight="200px" (onSave)="updateProfile()"></textarea-editor>
+                </ng-template>
+              </ngb-tab>
+              <ngb-tab title="Service Records">
+                <ng-template ngbTabContent>
+                  <h4>Service Record</h4>
+                  <div class="row">
+                    <div class="col-md-6">
+                      <h6>Awards</h6>
+                      <span *ngIf="profile.awards.length == 0">No awards awarded</span>
+                      <span *ngFor="let award of profile.awards; let i = index">
+                        <img src="{{award.image_url}}" alt="">
+                        <br *ngIf="i % 2" >
+                      </span>
+                    </div>
+                    <div class="col-md-6">
+                      <h6>Job History</h6>
+                      <div *ngFor="let job of profile.jobs">{{job.title}}</div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-12">
+                      <h5>Other Information</h5>
+                      <p>Event(s) Attended: {{profile.attendences.length}}</p>
+                    </div>
+                  </div>
+                </ng-template>
+              </ngb-tab>
+              <ngb-tab title="Ships">
+                <ng-template ngbTabContent>
+                  <h4>Owned Ships</h4>
+                  <div class="row" *ngFor="let owned of profile.owned_ships">
+                    <div class="col-md-12">
+                      <h5>{{owned.title}} <button *ngIf="canEdit" class="btn btn-sm btn-danger" (click)="archiveShip(owned)"><i class="fas fa-archive"></i></button></h5>
+                      <p>{{owned.ship.name}} ({{owned.ship.manufacturer}})</p>
+                    </div>
+                  </div>
+                </ng-template>
+              </ngb-tab>
+              <ngb-tab title="Application" [disabled]="!hrRights">
+                <ng-template ngbTabContent>
+                  <p>Application stuff goes here...</p>
+                </ng-template>
+              </ngb-tab>
+            </ngb-tabset>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
