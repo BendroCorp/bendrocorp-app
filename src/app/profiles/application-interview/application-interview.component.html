@@ -1,0 +1,98 @@
+<div>
+  <!-- Show the form -->
+  <div>
+    <div>
+      <ul>
+        <li>All interviews should be conducted in the Interviews channel on Discord. It should not be conducted on any other channel ever. With 3.3 the plan is to preference having interviews in-game - this avoids non-members having access to our Discord.</li>
+        <li>All interviewers should introduce themself by their character name and position within BendroCorp.</li>
+        <li>The lead interviewer should then review what will happen over the course of the interview.</li>
+        <li>Complete the below Interview Packet except for the General Consensus.</li>
+        <li>Upon completing the applicant feedback portion of the interview packet you may ask other relevant questions as you see fit.</li>
+        <li>Once items 2-5 are completed inform the applicant that the interview is concluded and that you will move them out so the interviewers can finish their interview packet. Let them know they will recieve an email once their complete application packet is submitted to the Executive Board for review.</li>
+        <li>Discuss and a establish a general consensus regarding the applicant and fill that information into the final field on the packet.</li>
+        <li>Once all information is inserted, check the box "Submit for final approval?" and save the interview. This will lock the packet and notify the Executive Director that the application is ready for final review.</li>
+      </ul>
+    </div>
+    <div>
+      <form #interviewForm="ngForm">
+        <div class="form-group">
+          <label>Tell Us About Yourself</label>
+          <textarea class="form-control" [(ngModel)]="application.interview.tell_us_about_yourself" [disabled]="lockFields" name="tell_us_about_yourself"></textarea>
+        </div>
+        <hr>
+        <div class="form-group">
+          <div class="custom-control custom-checkbox">
+            <input type="checkbox" class="custom-control-input" id="applicant_has_read_soc" [disabled]="lockFields" [(ngModel)]="application.interview.applicant_has_read_soc" name="applicant_has_read_soc">
+            <label class="custom-control-label" for="applicant_has_read_soc">Applicant has read and agrees to follow Standards of Conduct?</label>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="custom-control custom-checkbox">
+            <input type="checkbox" class="custom-control-input" id="applicant_agrees_to_respect_for_leadership" [disabled]="lockFields" [(ngModel)]="application.interview.applicant_agrees_to_respect_for_leadership" name="applicant_agrees_to_respect_for_leadership">
+            <label class="custom-control-label" for="applicant_agrees_to_respect_for_leadership">Applicant agrees to follow respect for leadership policy?</label>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="custom-control custom-checkbox">
+            <input type="checkbox" class="custom-control-input" id="applicant_agrees_to_voice_policy" [disabled]="lockFields" [(ngModel)]="application.interview.applicant_agrees_to_voice_policy" name="applicant_agrees_to_voice_policy">
+            <label class="custom-control-label" for="applicant_agrees_to_voice_policy">Applicant agrees to FoIP/VoIP policy?</label>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="custom-control custom-checkbox">
+            <input type="checkbox" class="custom-control-input" id="applicant_agrees_to_roleplay_style" [disabled]="lockFields" [(ngModel)]="application.interview.applicant_agrees_to_roleplay_style" name="applicant_agrees_to_roleplay_style">
+            <label class="custom-control-label" for="applicant_agrees_to_roleplay_style">Applicant agrees to roleplay style?</label>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="custom-control custom-checkbox">
+            <input type="checkbox" class="custom-control-input" id="applicant_agrees_to_follow_all_policies" [disabled]="lockFields" [(ngModel)]="application.interview.applicant_agrees_to_follow_all_policies" name="applicant_agrees_to_follow_all_policies">
+            <label class="custom-control-label" for="applicant_agrees_to_follow_all_policies">Applicant agrees to follow all policies?</label>
+          </div>
+        </div>
+        <hr>
+        <div class="form-group">
+          <p>
+            Does the application understand the following participations requirements as detailed in the general standards of conduct:
+          </p>
+          <blockquote style="background:#666666;">
+              <p>Our goal is to make your experience with our guild as fun as possible while still encouraging a community atmosphere where people participate and help each other. No member will ever be removed from the guild for inactivity. All we ask is that if a member knows that they will be absent for a long period of time that they make the rest of the guild community aware of it through our forum.</p>
+              <p>If a member has been in-active for 6 months or more they will be moved to the inactive roster.</p>
+          </blockquote>
+          <div class="custom-control custom-checkbox">
+            <input type="checkbox" class="custom-control-input" id="applicant_agrees_to_understands_participation" [disabled]="lockFields" [(ngModel)]="application.interview.applicant_agrees_to_understands_participation" name="applicant_agrees_to_understands_participation">
+            <label class="custom-control-label" for="applicant_agrees_to_understands_participation">Applicant understands participation policy?</label>
+          </div>
+        </div>
+        <hr>
+        <div class="form-group">
+          <label>Why did you select the division that you did?</label>
+          <textarea class="form-control" [(ngModel)]="application.interview.why_selected_division" name="why_selected_division" [disabled]="lockFields"></textarea>
+        </div>
+        <div class="form-group">
+          <label>Why do you want to join BendroCorp?</label>
+          <textarea class="form-control" [(ngModel)]="application.interview.why_join_bendrocorp" name="why_join_bendrocorp" [disabled]="lockFields"></textarea>
+        </div>
+        <hr>
+        <div class="form-group">
+          <label>Any applicant questions for interviewers?</label>
+          <textarea class="form-control" [(ngModel)]="application.interview.applicant_questions" name="applicant_questions" [disabled]="lockFields"></textarea>
+        </div>
+        <hr>
+        <div class="form-group">
+          <label>Interview Consensous</label>
+          <textarea class="form-control" [(ngModel)]="application.interview.interview_consensous" name="interview_consensous" [disabled]="lockFields"></textarea>
+        </div>
+        <div class="form-group" *ngIf="!lockFields">
+          <div class="custom-control custom-checkbox">
+            <input type="checkbox" class="custom-control-input" id="locked_for_review" [(ngModel)]="application.interview.locked_for_review" name="locked_for_review">
+            <label class="custom-control-label" for="locked_for_review">Lock for review?</label>
+          </div>
+        </div>
+        <div class="form-group" *ngIf="!lockFields">
+          <button class="btn btn-primary" (click)="updateInterview()" [disabled]="updateInProgress">Update Interview<span *ngIf="updateInProgress">&nbsp;<i class="fas fa-spinner fa-spin"></i></span></button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

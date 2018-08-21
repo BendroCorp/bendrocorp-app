@@ -1,0 +1,50 @@
+<div>
+  <h4>Tell us about the real you...</h4>
+  <p>{{application.tell_us_about_the_real_you || "No feedback given" }}</p>
+  
+  <h4>Why do want to join BendroCorp?</h4>
+  <p>{{application.why_do_want_to_join || "No feedback given" }}</p>
+  
+  <h4>How did you hear about us?</h4>
+  <p>{{application.how_did_you_hear_about_us || "No feedback given" }}</p>
+  
+  <h4>Application is for the position:</h4>
+  <p>{{application.job.title || "No feedback given" }}</p>
+</div>
+<div *ngIf="hrRights && application.applicant_approval_request">
+  <hr>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Approver</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let approver of application.applicant_approval_request.approval.approval_approvers">
+        <td>{{approver.character_name}}</td>
+        <td>{{approver.approver_response}}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<div *ngIf="hrRights || profile.application.application_status.id < 6">
+  <hr>
+  <h5>Application Comments</h5>
+  <!-- Comment Block -->
+  <h6 *ngIf="!application.comments || application.comments.length == 0">No comments for this application.</h6>
+  <div *ngFor="let comment of application.comments">
+    <h6><img style="max-width:25px;" src="{{comment.avatar_url}}" alt="">&nbsp;{{comment.commenter_name}}</h6>
+    <small>{{comment.created_at | date}}</small>
+    <p>{{comment.comment}}</p>
+    <hr>
+  </div>
+  <div *ngIf="application.locked_for_review">
+    <div class="form-group">
+      <textarea class="form-control" [(ngModel)]="newCommentText" name="new_comment"></textarea>
+    </div>
+    <div class="form-group" style="text-align: right">
+      <button class="btn btn-primary" (click)="addApplicationComment()">Add Comment<span *ngIf="updateInProgress">&nbsp;<i class="fas fa-spinner fa-spin"></i></span></button>
+    </div>
+  </div>  
+</div>

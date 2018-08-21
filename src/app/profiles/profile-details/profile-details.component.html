@@ -30,9 +30,21 @@
             </div>
             <div>{{profile.first_name}}&nbsp;{{profile.last_name}}</div>
             <div>{{profile.current_job.title}}</div>
+            <div>RSI: <a href="https://robertsspaceindustries.com/citizens/{{profile.rsi_handle}}" target="_blank">{{profile.rsi_handle}}</a></div>
+            <!-- if applicable -->
+            <div *ngIf="profile.application.application_status_id < 6">
+              <div>Application: {{profile.application.application_status.title}}</div>
+              <div>
+                <button class="btn btn-success" *ngIf="profile.application.application_status_id < 5" (click)="advanceApplication()">Advance Application</button>
+                <button class="btn btn-success" *ngIf="profile.application.application_status_id == 5" (click)="advanceApplication()">CEO Accept</button>
+              </div>
+              <div>
+                <button class="btn btn-danger" (click)="rejectApplication()">Reject Application</button>
+              </div>
+            </div>
           </div>
           <div class="col-md-9">
-            <ngb-tabset>
+            <ngb-tabset style="overflow-x: scroll; width: 100%">
               <ngb-tab title="Background">
                 <ng-template ngbTabContent>
                   <h4>Physical Description</h4>
@@ -71,19 +83,40 @@
               <ngb-tab title="Ships">
                 <ng-template ngbTabContent>
                   <h4>Owned Ships</h4>
+                  <h6 *ngIf="profile.owned_ships.length === 0">No owned ships!</h6>
                   <div class="row" *ngFor="let owned of profile.owned_ships">
                     <div class="col-md-12">
                       <h5>{{owned.title}} <button *ngIf="canEdit" class="btn btn-sm btn-danger" (click)="archiveShip(owned)"><i class="fas fa-archive"></i></button></h5>
                       <p>{{owned.ship.name}} ({{owned.ship.manufacturer}})</p>
                     </div>
                   </div>
+                  <div *ngIf="canEdit">
+                    <form class="form-inline" #newShipForm="ngForm">
+                      <div class="col-md-4 col-sm-4">
+                        <input class="form-control" type="text" placeholder="Ship title" [(ngModel)]="newShip.title" name="ship_title" required>
+                      </div>
+                      <div class="col-md-4 col-sm-4">
+                        <select *ngIf="shipList" class="form-control" [(ngModel)]="newShip.ship_id" name="grade_level_id" required>
+                          <option *ngFor="let ship of shipList" [value]="ship.id">{{ship.name}}</option>
+                        </select>
+                      </div>
+                      <div class="col-md-4 col-sm-4">
+                        <button class="btn btn-primary" [disabled]="!newShipForm.form.valid" (click)="addOwnedShip()">Add Ship</button>
+                      </div>
+                    </form>
+                  </div>
                 </ng-template>
               </ngb-tab>
-              <ngb-tab title="Application" [disabled]="!hrRights">
+              <ngb-tab title="Application" [disabled]="!hrRights && profile.application.application_status.id >= 6">
                 <ng-template ngbTabContent>
-                  <p>Application stuff goes here...</p>
+                  <application-details [application]="profile.application"></application-details>
                 </ng-template>
               </ngb-tab>
+              <ngb-tab title="Interview" [disabled]="(!hrRights && !directorRights) || (!hrRights && directorRights && profile.application.application_status.id >= 6)">
+                  <ng-template ngbTabContent>
+                    <application-interview [application]="profile.application"></application-interview>
+                  </ng-template>
+                </ngb-tab>
             </ngb-tabset>
           </div>
         </div>

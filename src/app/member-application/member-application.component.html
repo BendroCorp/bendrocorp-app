@@ -1,3 +1,135 @@
-<p>
-  member-application works!
-</p>
+<h2>Membership Application</h2>
+<div *ngIf="currentApplication && dataLoaded">
+  <div class="row">
+    <div class="col-md-3"></div>
+    <div class="col-md-6">
+      <div class="text-white bg-primary card">
+        <div class="card-body">
+            <p style="text-align:center;"><img style="max-height:200px;" src="../../assets/imgs/bendrocorp-final.png" alt=""></p>
+            <p>Status: <span [ngClass]="{'text-success': currentApplication.application_status_id <=6, 'text-danger': currentApplication.application_status_id > 6 }">{{currentApplication.application_status.title}}</span></p>
+            <p>{{currentApplication.application_status.description}}</p>
+        </div> 
+      </div>
+      <div class="col-md-3"></div>
+    </div>
+  </div>
+</div>
+<div *ngIf="!currentApplication && dataLoaded">
+  <form #newApplicationForm="ngForm">
+      <br>
+      <p>:first_name, :last_name, :description, :background, owned_ships_attributes: [:ship_id, :title], application_attributes: [:tell_us_about_the_real_you, :why_do_want_to_join, :how_did_you_hear_about_us, :job_id])</p>
+      <div class="row">
+        <div class="col-md-12">* All fields must be filled out in full.</div>
+      </div>
+      <h5>Character Information</h5>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label>First Name</label>
+            <input class="form-control" type="text" [(ngModel)]="characterApplication.first_name" name="character_first_name" placeholder="Character First Name...">
+          </div>
+          <div class="form-group">
+            <label>Last Name</label>
+            <input class="form-control" type="text" [(ngModel)]="characterApplication.last_name" name="character_last_name" placeholder="Character Last Name...">
+          </div>
+          <div class="form-group">
+            <label>Description</label>
+            <textarea class="form-control" name="character_description" [(ngModel)]="characterApplication.description" placeholder="Character Description..."></textarea>
+          </div>
+          <div class="form-group">
+            <label>Background</label>
+            <textarea class="form-control" name="character_background" [(ngModel)]="characterApplication.background" placeholder="Character Background..."></textarea>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label>Your Ship Title</label>
+            <input class="form-control" type="text" placeholder="Ship title" [(ngModel)]="characterApplication.owned_ship.title" name="ship_title" required>
+          </div>
+          <div class="form-group">
+            <label>Your Ship Class</label>
+            <select *ngIf="ships" class="form-control" [(ngModel)]="characterApplication.owned_ship.ship_id" name="ship_id" required>
+              <option *ngFor="let ship of ships" [value]="ship.id">{{ship.name}}</option>
+            </select>
+          </div>
+          <small>* All BendroCorp employees are required to own at least one ship/Star Citizen Game Package.</small>
+          <hr>
+          <div class="form-group">
+            <label>Career Interest</label>
+            <select *ngIf="jobs" class="form-control" [(ngModel)]="characterApplication.application_attributes.job_id" name="job_id" required>
+              <option *ngFor="let job of jobs" [value]="job.id">{{job.title}}</option>
+            </select>
+          </div>
+          <!-- <small>* </small> -->
+        </div>
+      </div>
+      <hr>
+      <h5>Player Information (the real you)</h5>
+      <div class="row">
+        <div class="col-md-6">
+          <label>RSI Handle</label>
+          <input class="form-control" type="text" [(ngModel)]="characterApplication.user_attributes.rsi_handle" name="rsi_handle" placeholder="RSI Handle...">
+        </div>
+      </div>
+      <div class="row">  
+        <div class="col-md-12">
+            <label>Tell us about yourself</label>
+            <textarea class="form-control" [(ngModel)]="characterApplication.application_attributes.tell_us_about_the_real_you" name="tell_us_about_the_real_you" placeholder="Tell us about yourself (hobbies, likes/dislikes, age, etc)"></textarea>
+        </div>
+        <div class="col-md-12">
+            <label>Why do you want to join BendroCorp?</label>
+            <textarea class="form-control" [(ngModel)]="characterApplication.application_attributes.why_do_want_to_join" name="why_do_want_to_join" placeholder="Why do you want to join BendroCorp?"></textarea>
+        </div>
+        <div class="col-md-12">
+            <label>How did you hear about us?</label>
+            <textarea class="form-control" [(ngModel)]="characterApplication.application_attributes.how_did_you_hear_about_us" name="how_did_you_hear_about_us" placeholder="How did you hear about us?"></textarea>
+        </div>
+      </div>
+      <hr>
+      <div class="row">
+        <div class="col-md-12">
+          <h5>Application Process</h5>
+          <p>Below follows the basic process for applications submitted to BendroCorp. The timeframes provided are designed to provide applicants with a rough estimate of the time from application submission to acceptance they do not represent a contractual timeframe. Applications may be refused at any step in the application process for any reason.</p>
+          <ol>
+            <li>Application is accepted by our system</li>
+            <li>Initial Application Review (1-8 Hours)</li>
+            <li>360 Review (2-4 days based on feedback)</li>
+            <li>Referred for Interview (Director &amp; Applicant Availability)</li>
+            <li>Executive Review (1 Day)</li>
+            <li>CEO Review (1-2 Days)</li>
+            <li>Final Acceptance</li>
+          </ol>
+        </div>
+      </div>
+      <hr>
+      <div class="row">
+        <div class="col-md-12">
+          <h5>Standards of Conduct</h5>
+          <p>The Standards of Conduct is our core policy governing member behaviour. While other policies exist these Standards of Conduct form the core of the BendroCorp ethos.</p>
+          <ol>
+            <li>BendroCorp employees are expected to be professional and courteous at all times in their activities, dealings, contacts and with any individuals they work with or encounter. Obscene language will not be tolerated when dealing with customers or other clients. (This includes obscenities in Xi’an or Banu.)</li>
+            <li>BendroCorp employees are expected to be courteous and helpful to other employees regardless of their position within the company. Employees who refuse to render aid to other employees when they are in distress may be discharged from the company.</li>
+            <li>BendroCorp employees are expected to be respectful of all supervisors and staff placed over them. Employees are expected to follow all reasonable instructions given to them by a supervisor.</li>
+            <li>Any attempt by an employee to sow seeds of discord between other BendroCorp employees and their supervisors will result in an immediate discharge. Any employee trying to create a “coup-d'etat” against corporate leadership will be subject to immediate discharge and possible turn over to UEE advocacy. </li>
+            <li>BendroCorp will not at any time tolerate of any of its membership participating in piracy activities. Piracy being defined by this company as, "Criminal violence for the purposes of robbery of ship and/or cargo while in space or air." Such actions will result in discharge of the employee and referral to the UEE Advocacy for legal proceedings.</li>
+            <li>BendroCorp expects that when an employee chooses to opt-in to participate in BendroCorp missions and operations that they are present and available for those missions.</li>
+            <li>BendroCorp will immediately discharge any employees who become employees of BendroCorp for the purpose of corporate espionage. Any employees found to be engaged in such activities will be prosecuted to the fullest extent found under UEE law.</li>
+            <li>BendroCorp employees agree to follow and abide by all other BendroCorp policies current and future.</li>
+          </ol>
+          <div class="form-group">
+            <div class="custom-control custom-checkbox">
+              <input type="checkbox" class="custom-control-input" id="customCheck1" [(ngModel)]="policyCheck" name="policyCheck">
+              <label class="custom-control-label" for="customCheck1">I agree to abide by the BendroCorp Standards of Conduct and all other policies. I have also read and understand the BendroCorp Privacy Policy.</label>
+            </div>
+          </div>
+        </div>
+      </div>
+      <hr>
+      <div class="row">
+        <div class="col-md-12" style="text-align:center">
+          <button class="btn btn-lg btn-primary" [disabled]="!newApplicationForm.form.valid || !policyCheck || applicationSubmitting" (click)="submitApplication()">Create BendroCorp Application<span *ngIf="applicationSubmitting">&nbsp;<i class="fas fa-spinner fa-spin"></i></span></button>
+        </div>
+      </div>
+  </form>
+</div>
+<br>

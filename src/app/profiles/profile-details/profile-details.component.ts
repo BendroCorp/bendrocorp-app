@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '../../../../node_modules/@angular/router';
 import { ProfileService } from '../profile.service';
-import { Character } from '../../models/character-models';
+import { Character, CharacterApplicationComment } from '../../models/character-models';
 import { HttpErrorResponse } from '../../../../node_modules/@angular/common/http';
 import { AuthService } from '../../auth.service';
 import { ApplicationService } from '../application.service';
 import { MessageService } from '../../message/message.service';
 import { UserSessionResponse } from '../../models/user-models';
 import { Base64Upload } from '../../models/misc-models';
-import { OwnedShip } from '../../models/ship-models';
+import { OwnedShip, Ship } from '../../models/ship-models';
 
 @Component({
   selector: 'app-profile-details',
@@ -18,7 +18,11 @@ import { OwnedShip } from '../../models/ship-models';
 export class ProfileDetailsComponent implements OnInit {
   profileId:number = this.parseProfileId()
   canEdit:boolean = false
+  ceoRights:boolean = (this.authService.hasClaim(9)) ? true : false;
   hrRights:boolean = (this.authService.hasClaim(12) || this.authService.hasClaim(9)) ? true : false
+  directorRights:boolean = this.authService.hasClaim(3)
+  shipList:Ship[]
+  newShip:OwnedShip = { } as OwnedShip
 
   profile:Character
   constructor(private route:ActivatedRoute, private router:Router, private profileService:ProfileService, private applicationService:ApplicationService, private messageService:MessageService, private authService:AuthService) { }
@@ -30,6 +34,15 @@ export class ProfileDetailsComponent implements OnInit {
         if (!(result instanceof HttpErrorResponse)) {
           this.profile = result
           this.canEdit = ((this.profile.user_id === (this.authService.retrieveUserSession() as UserSessionResponse).id) || this.hrRights) ? true : false
+          if (this.canEdit && !this.shipList) {
+            this.profileService.list_ships().subscribe(
+              (results) => {
+                if (!(results instanceof HttpErrorResponse)) {
+                  this.shipList = results
+                }
+              }
+            )
+          }
         }else{
           this.router.navigateByUrl('/profiles')
         }
@@ -75,6 +88,19 @@ export class ProfileDetailsComponent implements OnInit {
     }
   }
 
+  addOwnedShip()
+  {
+    if (this.newShip && this.canEdit) {
+      this.newShip.character_id = this.profile.id
+      this.profileService.addShip(this.newShip).subscribe(
+        (results) => {
+          this.newShip = { } as OwnedShip
+          this.fetchProfile()
+        }
+      )
+    }
+  }
+
   archiveShip(ownedShip:OwnedShip)
   {
     if (ownedShip) {
@@ -93,6 +119,51 @@ export class ProfileDetailsComponent implements OnInit {
       console.error("Owned ship not passed to archiveShip");
       
     }
+  }
+
+  advanceApplication()
+  {
+    if (this.hrRights && this.profile.application && this.profile.application.application_status_id < 6) {
+      if (confirm("Are you sure you want to advance this application?")) {
+        this.applicationService.advanceApplication(this.profile).subscribe(
+          (results) => {
+            if (!(results instanceof HttpErrorResponse)) {
+              this.fetchProfile()
+            }
+          }
+        )
+      }
+    } else {
+      this.messageService.addError("You are not authorized to advance applications!")
+    }
+  }
+
+  rejectApplication(character:Character)
+  {
+    if (this.hrRights && character.application.application_status_id < 6) {
+      if (confirm("Are you sure you want to reject this application?")) {
+        this.applicationService.rejectApplication(character).subscribe(
+          (results) => {
+            if (!(results instanceof HttpErrorResponse)) {
+              this.fetchProfile()
+            }
+          }
+        )
+      }
+    } else {
+      this.messageService.addError("You are not authorized to reject applications!")
+    }
+  }
+
+  addApplicationComment(applicationComment:CharacterApplicationComment)
+  {
+    this.applicationService.addApplicationComment(applicationComment).subscribe(
+      (results) => {
+        if (!(results instanceof HttpErrorResponse)) {
+          this.profile.application.comments.push(results)
+        }
+      }
+    )
   }
 
   handleAvatarFileInput(files: FileList)
@@ -119,6 +190,9 @@ export class ProfileDetailsComponent implements OnInit {
     });
   }
 
+  /**
+   * Parses the profile name from the url - assumes "first_name-last_name-id"
+   */
   private parseProfileId() : number
   {
     let threePart = this.route.snapshot.paramMap.get('character_id').split('-')

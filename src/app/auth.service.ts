@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { UserSessionResponse } from './models/user-models';
+import { UserSessionResponse, SignUp } from './models/user-models';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http'; // https://stackoverflow.com/questions/47369850/property-get-does-not-exist-on-type-httpclientmodule
 import * as moment from 'moment';
 import { tap, catchError } from 'rxjs/operators';
@@ -9,6 +9,7 @@ import { Globals } from './globals';
 import { MessageService } from './message/message.service';
 import { Subject, Observable, of } from 'rxjs';
 import { Router } from '@angular/router';
+import { StatusMessage } from './models/misc-models';
 
 @Injectable()
 export class AuthService {
@@ -32,6 +33,14 @@ export class AuthService {
       }), 
       catchError(this.err.handleError('Login', []))
     );
+  }
+
+  signup(signup:SignUp)
+  {
+    return this.http.post<StatusMessage>(`${this.globals.baseUrl}/signup`, { signup }).pipe(
+      tap(result => console.log("New sign up created!")),
+      catchError(this.err.handleError<any>('Sign Up'))
+    )
   }
 
   public hasClaim(roleId:number) : boolean

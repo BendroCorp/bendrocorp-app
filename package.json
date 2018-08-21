@@ -30,6 +30,7 @@
     "core-js": "^2.5.4",
     "moment": "^2.22.2",
     "ng-pick-datetime": "^6.0.10",
+    "ng-recaptcha": "^3.0.5",
     "ng-timespan": "^0.9.4",
     "rxjs": "^6.0.0",
     "sortablejs": "^1.7.0",

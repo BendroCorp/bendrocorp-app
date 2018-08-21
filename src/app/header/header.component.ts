@@ -14,6 +14,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   userSession:UserSessionResponse
   authSubscription:Subscription
   authErrorSubscription:Subscription
+  isMember:boolean = this.authService.hasClaim(0)
 
   constructor(private authService:AuthService, private errorService:ErrorService, private router:Router) { 
     this.authSubscription = this.authService.dataRefreshAnnounced$.subscribe(
@@ -35,8 +36,11 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   doLogout()
   {
-    this.authService.logout()
-    this.router.navigateByUrl('/')
+    this.authService.logout().subscribe(
+      () => {
+        this.router.navigateByUrl('/')
+      }
+    )    
   }
 
   fetchUserSession()

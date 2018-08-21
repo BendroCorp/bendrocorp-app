@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { MessageService } from './message.service';
-import { Subscription, Subject } from 'rxjs';
-import { debounceTime, map } from 'rxjs/operators';
+import { Subscription, Subject, Observable, of } from 'rxjs';
+import { debounceTime, map, timeout } from 'rxjs/operators';
 import { Message } from '../models/message-models';
 import { trigger, state, style, animate, transition } from '@angular/animations';
+import { TimeSpan } from 'ng-timespan';
 
 @Component({
   selector: 'app-message',
@@ -57,17 +58,33 @@ export class MessageComponent implements OnInit {
   updateMessage: string;
 
   ngOnInit(): void { //infoMessage
-
+    // let timespan = TimeSpan.Subtract(new Date(), new Date().setSeconds(new Date().getSeconds() + 7))
     // success message
-    this._successMessage.subscribe((message) => this.successMessage = message);
+    this._successMessage.subscribe((message) => {
+      this.successMessage = message
+      setTimeout(() => {
+            this.successMessage = null;
+      }, 5000);
+    });
+    // debounceTime.call
     // debounceTime.call(this._successMessage, 7000).subscribe(() => this.successMessage = null);
-
+    
     // Error message
-    this._errorMessage.subscribe((message) => this.errorMessage = message);
+    this._errorMessage.subscribe((message) => {
+      this.errorMessage = message
+      setTimeout(() => {
+        this.errorMessage = null;
+      }, 10000);
+    });
     // debounceTime.call(this._errorMessage, 7000).subscribe(() => this.errorMessage = null);
 
     // Info message
-    this._infoMessage.subscribe((message) => this.infoMessage = message);
+    this._infoMessage.subscribe((message) => {
+      this.infoMessage = message
+      setTimeout(() => {
+        this.infoMessage = null;
+      }, 7000);
+    });
     // debounceTime.call(this._infoMessage, 7000).subscribe(() => this.infoMessage = null);
   }
 

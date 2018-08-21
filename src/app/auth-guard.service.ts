@@ -32,6 +32,26 @@ export class AuthGuardService implements CanActivate {
 }
 
 @Injectable()
+export class MemberAuthGuardService implements CanActivate {
+  constructor(private router: Router, private authService:AuthService) { }
+  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
+    if (this.authService.isLoggedIn()) {
+      let isMember:boolean  = (this.authService.hasClaim(0)) ? true : false
+      if (isMember) {
+        return true
+      } else {
+        this.router.navigate(['/apply']);
+        return false
+      }
+    } else {
+      this.authService.refreshData()
+      this.router.navigate(['/login']);
+      return false;
+    }
+  }
+}
+
+@Injectable()
 export class RoleRequiredAuthGuardService implements CanActivate {
   constructor(public roleId:number, private router: Router, private authService:AuthService) { }
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {

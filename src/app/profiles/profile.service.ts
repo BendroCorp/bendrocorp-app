@@ -3,10 +3,10 @@ import { HttpClient } from '../../../node_modules/@angular/common/http';
 import { ErrorService } from '../error.service';
 import { Globals } from '../globals';
 import { Observable, Subject } from '../../../node_modules/rxjs';
-import { Character, Division } from '../models/character-models';
+import { Character, Division, Job } from '../models/character-models';
 import { tap, catchError } from '../../../node_modules/rxjs/operators';
 import { StatusMessage } from '../models/misc-models';
-import { OwnedShip } from '../models/ship-models';
+import { OwnedShip, Ship } from '../models/ship-models';
 
 @Injectable({
   providedIn: 'root'
@@ -81,4 +81,29 @@ export class ProfileService {
       catchError(this.errorService.handleError<any>('Update Profile'))
     )
   }
+
+  list_ships() : Observable<Ship[]>
+  {
+    return this.http.get<Ship[]>(`${this.globals.baseUrl}/ship`).pipe(
+      tap(result => console.log(`Fetched all ships`)),
+      catchError(this.errorService.handleError('Fetch Ships', []))
+    )
+  }
+
+  list_jobs() : Observable<Job[]>
+  {
+    return this.http.get<Job[]>(`${this.globals.baseUrl}/job`).pipe(
+      tap(result => console.log(`Fetched all jobs`)),
+      catchError(this.errorService.handleError('Fetch Jobs', []))
+    )
+  }
+
+  list_hiring_jobs() : Observable<Job[]>
+  {
+    return this.http.get<Job[]>(`${this.globals.baseUrl}/job/hiring`).pipe(
+      tap(result => console.log(`Fetched all hiring jobs`)),
+      catchError(this.errorService.handleError('Fetch Hiring Jobs', []))
+    )
+  }
+
 }

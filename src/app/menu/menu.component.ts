@@ -37,11 +37,11 @@ export class MenuComponent implements OnInit, OnDestroy {
 
   checkAuthAndLoadMenu()
   {
-    if (this.authService.isLoggedIn()) {
+    if (this.authService.isLoggedIn() && this.authService.hasClaim(0)) {
       this.menuService.list().subscribe(
         (results) => {
           if (!(results instanceof HttpErrorResponse)) {
-            this.menuVisible = true
+            this.menuVisible = this.authService.hasClaim(0) // ie. is a member of BendroCorp
             this.menuItems = results
             console.log(this.menuItems);
             

@@ -16,7 +16,7 @@ import { AuthService } from './auth.service';
 import { ErrorService } from './error.service';
 import { MessageService } from './message/message.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { AuthGuardService, NoAuthGuardService, RoleRequiredAuthGuardService } from './auth-guard.service';
+import { AuthGuardService, NoAuthGuardService, RoleRequiredAuthGuardService, MemberAuthGuardService } from './auth-guard.service';
 import { Globals } from './globals';
 import { MenuService } from './menu/menu.service';
 import { AuthInterceptor } from './auth-interceptor';
@@ -56,6 +56,8 @@ import { ApprovalControlComponent } from './requests/approval-control/approval-c
 import { ProfileDetailsComponent } from './profiles/profile-details/profile-details.component';
 import { InlineEditorComponent } from './editors/inline-editor/inline-editor.component';
 import { TextareaEditorComponent } from './editors/textarea-editor/textarea-editor.component';
+import { ApplicationInterviewComponent } from './profiles/application-interview/application-interview.component';
+import { ApplicationDetailsComponent } from './profiles/application-details/application-details.component';
 
 @NgModule({
   declarations: [
@@ -98,7 +100,9 @@ import { TextareaEditorComponent } from './editors/textarea-editor/textarea-edit
     ApprovalControlComponent,
     ProfileDetailsComponent,
     InlineEditorComponent,
-    TextareaEditorComponent
+    TextareaEditorComponent,
+    ApplicationInterviewComponent,
+    ApplicationDetailsComponent
   ],
   entryComponents: [
     EventModalComponent,
@@ -127,6 +131,7 @@ import { TextareaEditorComponent } from './editors/textarea-editor/textarea-edit
     },
     AuthService,
     AuthGuardService,
+    MemberAuthGuardService,
     NoAuthGuardService,
     RoleRequiredAuthGuardService,
     ErrorService,
