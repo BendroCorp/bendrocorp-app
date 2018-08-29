@@ -1,0 +1,31 @@
+<ng-template #content let-c="close" let-d="dismiss">
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Complete Mission</h4>
+      <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <form #completionForm="ngForm">
+        <div class="form-group">
+          <label>Completion Message</label>
+          <textarea class="form-control" [(ngModel)]="completionRequest.completion_message" name="completion_message" required></textarea>
+        </div>
+        <div class="form-group">
+          <label>Flight Log</label>   
+          <h6 *ngIf="flightLogs.length == 0">You currently have no flight logs. You must add a flight log to complete a mission.</h6>                 
+          <select *ngIf="flightLogs.length > 0" class="form-control" [(ngModel)]="completionRequest.flight_log_id" name="flight_log_id" required>
+            <option *ngFor="let fLog of flightLogs" [value]="fLog.id">{{fLog.title}} - {{fLog.log_time_ms | date:'MM/dd/yyyy @ h:mma'}}</option>
+          </select>
+          <p><small>* Please be as detailed as is needed in your flight log to show that you completed the mission as described. This is how it will be determined whether or not you completed the mission.</small></p>
+        </div>
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-primary" [disabled]="!completionForm.form.valid || !completionRequest.flight_log_id" (click)="completeMission()">Submit Completion</button>
+      <button type="button" class="btn btn-outline-dark" (click)="c()">Close</button>
+    </div>
+  </ng-template>
+  
+  <button class="btn btn-success" (click)="open(content)">Complete</button>
+  

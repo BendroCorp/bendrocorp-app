@@ -1,0 +1,64 @@
+<ng-template #content let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h6 class="modal-title" id="modal-basic-title">View Mission</h6>
+    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="form-group">
+      <h2>{{mission.title}}</h2>
+      <p>{{mission.description}}</p>
+    </div>
+    <hr />
+    <div class="form-group">
+      <h6>Completion Criteria: {{mission.completion_criteria.title}}</h6>
+      {{mission.completion_criteria.description}}
+    </div>
+    <div class="form-group">
+      <h6>Maximum Acceptors: {{mission.max_acceptors}}</h6>
+    </div>
+    <div class="form-group">
+      <h6>Expires When: {{mission.expires_when  | date:'MM/dd/yyyy @ h:mma' || "No Expiration" }}</h6>
+    </div>
+    <div class="form-group">
+      <h6>OP Value: {{mission.op_value}} Points</h6>
+    </div>
+    <hr />
+    <div>
+      <h6>On the Job:</h6>
+      <span *ngIf="mission.on_mission.length == 0">No one has accepted this mission yet.</span>
+      <ul *ngIf="mission.on_mission.length > 0">
+        <li *ngFor="let employee of mission.on_mission">{{employee.first_name}} {{employee.last_name}}</li>
+      </ul>
+    </div>
+    <hr />
+    <div *ngIf="mission.completion_request_id && isAdmin">
+      <h6>Submitted For Completion</h6>
+      <div>
+        <h6>Completion Message</h6>
+        {{mission.completion_request.completion_message}}
+      </div>
+      <div *ngIf="mission.completion_request.flight_log">
+        <h6>Flight Log</h6>
+        {{mission.completion_request.flight_log.text}}
+        <div>
+          <!-- Flight Log Images -->
+          <div class="" *ngIf="mission.completion_request.flight_log.image_uploads.length > 0">
+            <div *ngFor="let image of mission.completion_request.flight_log.image_uploads">
+              <img src="{{image.image_url_original}}" style="max-width:100%; padding:4px;" alt="">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <edit-job-modal *ngIf="isAdmin" [mission]="mission" (click)="c()"></edit-job-modal>
+    <complete-job-modal [mission]="mission" *ngIf="isAcceptor() && !mission.completion_request_id" (click)="c()"></complete-job-modal>
+    <button class="btn btn-success" *ngIf="!isAcceptor() && !mission.completion_request_id" (click)="acceptMission()">Accept Mission</button>
+    <button class="btn btn-danger" *ngIf="isAcceptor() && !mission.completion_request_id" (click)="abandonMission()">Abandon Mission</button>
+    <!-- <button type="button" class="btn btn-outline-dark" (click)="c('Save click')">Close</button> -->
+  </div>
+</ng-template>
+<button class="btn btn-sm btn-primary" *ngIf="asButton" (click)="open(content)">View Mission</button>

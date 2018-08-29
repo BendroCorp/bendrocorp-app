@@ -8,12 +8,16 @@
               <form #loginForm="ngForm">
                   <div class="form-group">
                       <label>Email:</label>
-                      <input class="form-control" required name="username" type="email" [(ngModel)]="formEmail">
+                      <input class="form-control" required name="username" type="email" [(ngModel)]="formEmail" placeholder="Email">
                   </div>
                   <div class="form-group">
                       <label>Password:</label>
-                      <input class="form-control" required name="password" type="password" [(ngModel)]="formPassword">
+                      <input class="form-control" required name="password" type="password" [(ngModel)]="formPassword" placeholder="Password">
                   </div>
+                  <div class="form-group">
+                    <label>Code:</label>
+                    <input class="form-control" required name="code" type="text" [(ngModel)]="formCode" placeholder="If Applicable...">
+                </div>
                   <div *ngIf="submissionError" class="text-danger">
                       <p>{{submissionError}}</p>
                   </div>

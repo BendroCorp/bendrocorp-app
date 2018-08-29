@@ -12,6 +12,7 @@ import { UserSessionResponse } from '../models/user-models';
 export class LoginComponent implements OnInit {
   formEmail:string;
   formPassword:string;
+  formCode:string;
   loginSubmitting:boolean = false;
 
   constructor(private authService: AuthService, private router:Router) { }
@@ -23,7 +24,7 @@ export class LoginComponent implements OnInit {
     console.log("Attempting login...");    
     if (this.formEmail && this.formPassword) {
       this.loginSubmitting = true;
-      this.authService.login(this.formEmail, this.formPassword).subscribe(
+      this.authService.login(this.formEmail, this.formPassword, this.formCode).subscribe(
         (result:UserSessionResponse) => {
           console.log(result);                    
           if (!(result instanceof HttpErrorResponse)) {

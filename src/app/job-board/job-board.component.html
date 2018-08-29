@@ -1,3 +1,56 @@
-<p>
-  job-board works!
-</p>
+<div class="">
+  <ol class="breadcrumb">
+    <li>Job Board</li>
+  </ol>
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <div class="card border-primary">
+      <div class="card-header bg-primary text-white">Available Missions</div>
+      <div class="card-body">
+        <div>
+          <h6 *ngIf="missions.length == 0">There are currently no missions posted to the job board!</h6>
+          <table *ngIf="missions.length > 0" class="table">
+            <thead>
+              <tr>
+                <th>Title</th>
+                <th>Criteria</th>
+                <th>Expires</th>
+                <th>Created By</th>
+                <th>Accepted By</th>
+                <th>Status</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let job of missions">
+                <td>{{job.title}}</td>
+                <td>{{job.completion_criteria.title}}</td>
+                <td>{{(job.expires_when | date:'MM/dd/yyyy @ h:mma') || "N/A" }}</td>
+                <td>{{job.created_by.main_character.first_name + ' ' + job.created_by.main_character.last_name}}</td>
+                <td>{{acceptorString(job)}}</td>
+                <td>{{job.mission_status.title}}</td>
+                <td><view-job-modal [mission]="job"></view-job-modal></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div style="text-align:right;">
+          <edit-job-modal *ngIf="isAdmin"></edit-job-modal>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<br>
+<div class="row">
+  <div class="col-md-12">
+    <div class="card border-primary">
+      <div class="card-header bg-primary text-white">Job Board Information</div>
+      <div class="card-body">
+        <p>The BendroCorp internal job board is intended to provide a way for employees to share jobs internally within BendroCorp. This is not intended to replace the Spectrum job board but augment it with internal types of jobs or jobs with objectives which should remain internal.</p>
+        <p>All rewards are in operations points (OP) which will be redeemable for UEC at a later time.</p>
+      </div>
+    </div>
+  </div>
+</div>

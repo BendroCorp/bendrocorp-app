@@ -24,6 +24,7 @@
     "@types/chart.js": "^2.7.30",
     "angular-sortablejs": "^2.5.2",
     "angular2-datetimepicker": "^1.1.1",
+    "angularx-qrcode": "^1.2.2",
     "bootstrap": "^4.1.3",
     "bootswatch": "^4.1.3",
     "chart.js": "^2.7.2",

@@ -1,3 +1,39 @@
-<p>
-  flight-logs works!
-</p>
+<div class="">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item active">Flight Log</li>
+  </ol>
+</div>
+
+<div class="row">
+  <div class="col-md-12">
+    <div class="card border-primary">
+      <div class="card-header bg-primary text-white">My Flight Logs</div>
+      <div class="card-body">
+        <h6 *ngIf="dataLoaded && (!flightLogs || flightLogs.length == 0)">You currently have no flight logs!</h6>
+        <div class="table-overflow-allow">
+          <table *ngIf="flightLogs && flightLogs.length > 0" class="table table-striped table-hover">
+            <thead>
+              <tr>
+                <th>Title</th>
+                <th>Date</th>
+                <th>Ship</th>
+                <th>Location</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr style="cursor:pointer" *ngFor="let flightLog of flightLogs" (click)="openLog(flightLog)">
+                <td>{{flightLog.title}}</td>
+                <td>{{flightLog.log_time_ms | date:'MM/dd/yyyy @ h:mma'}}</td>
+                <td><span *ngIf="flightLog.owned_ship">{{flightLog.owned_ship.title}}</span><span *ngIf="!flightLog.owned_ship">N/A</span></td>
+                <td>N/A</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div style="text-align:right">
+          <create-update-flight-log-modal></create-update-flight-log-modal>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

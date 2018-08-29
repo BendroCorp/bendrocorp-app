@@ -1,0 +1,50 @@
+<ng-template #content let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">{{formAction}} Mission</h4>
+    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form #createUpdateJobForm="ngForm">
+      <div class="form-group">
+        <label>Title</label>
+        <input required class="form-control" type="text" name="title" [(ngModel)]="mission.title">
+      </div>
+      <div class="form-group">
+        <label>Description</label>
+        <textarea required class="form-control" type="text" name="description"[(ngModel)]="mission.description"></textarea>
+      </div>
+      <div class="form-group">
+        <label>Completion Criteria</label>
+        <select class="form-control" [(ngModel)]="mission.completion_criteria_id" name="completion_criteria_id" required>
+          <option *ngFor="let criteria of criterium" [value]="criteria.id">{{criteria.title}}</option>
+        </select>
+        <!-- <small>{{mission.completion_criteria.description}}</small> -->
+      </div>
+      <div class="form-group">
+        <label>Maximum Acceptors</label>
+        <input required class="form-control" type="number" [(ngModel)]="mission.max_acceptors" name="max_acceptors">
+      </div>
+      <!-- <div class="form-group"> -->
+       <!--  <label>Expires When</label> -->
+        <!-- | date:'yyyy-MM-dd H:mm Z'  -->
+        <!-- <input class="form-control" type="text" datetime="yyyy-MM-dd HH:mm Z" datetime-model="yyyy-MM-dd HH:mm Z" [(ngModel)]="mission.expires_when" placeholder="yyyy-mm-dd hh:mm -0500" pattern="^\d{4}-\d{1,2}-\d{1,2} \d{1,2}:\d{2} [-|+]\d{4}$"> -->
+        <!-- <small>* Leave empty for no expiration. If provided required format: yyyy-mm-dd hh:mm -0500. Its recommended that you set this a day or two after you expect to complete the job to give your acceptor(s) time to submit a completion.</small> -->
+      <!-- </div> -->
+      <div class="form-group">
+        <label>OP Value</label>
+        <input required class="form-control" type="number" name="op_value" value="" [(ngModel)]="mission.op_value" placeholder="Operation points rewards...">
+        <small>* Typically most missions are 2 OP or 2,000 UEC.</small>
+      </div>
+      <div style="text-align:right;">
+        <button type="button" class="btn btn-primary" (click)="createUpdateJobBoardMission()" [disabled]="!createUpdateJobForm.form.valid">{{formAction}} Mission</button>&nbsp;
+        <button type="button" class="btn btn-secondary" (click)="c('Cancel click')">Cancel</button>
+        <!-- <button class="btn btn-primary" ng-click="ok()" ng-disabled="createUpdateJobForm.$invalid">{{formAction}} Job</button>
+        <button class="btn btn-default" ng-click="cancelEdit()">Cancel</button> -->
+      </div>
+    </form>
+  </div>
+</ng-template>  
+<button class="btn btn-primary" (click)="open(content)">{{formAction}} Mission</button>
+  

@@ -25,6 +25,7 @@ export class StatusMessage
 
 export class Base64Upload
 {
+    temp_id?:number;
     name: string
     type: string 
     size: number

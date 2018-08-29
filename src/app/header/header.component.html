@@ -1,13 +1,13 @@
 <header>
   <div class="row">
-    <div class="left-header col-md-6 col-sm-4 col-xs-4">
-        <span class="univia header-title">BENDROCORP PORTAL</span>
+    <div class="left-header col-md-6 col-sm-4">
+        <span class="univia header-title"><span class="first-word">BENDROCORP</span><span class="second-word">&nbsp;PORTAL</span></span>
     </div>
-    <div class="right-header col-md-6 col-sm-8 col-xs-8" style="text-align: right; padding-right: 30px;">      
+    <div class="right-header col-md-6 col-sm-8 col-xs-12" style="text-align: right; padding-right: 30px;">      
         <div *ngIf="userSession">
             <h4><span *ngIf="!userSession.character">Hello!</span><span *ngIf="userSession.character">{{userSession.character.first_name}} <img src="{{userSession.character.avatar_url}}" style="max-height: 20px;" alt=""></span>&nbsp;<span><button class="btn btn-sm btn-primary" (click)="doLogout()"><i class="fas fa-power-off"></i></button></span></h4>
             <!-- Peronal Menus -->
-            <div><span *ngIf="isMember"><a class="btn btn-sm btn-primary btn-header" href="">Profile</a>&nbsp;<a class="btn btn-sm btn-primary btn-header" href="https://discord.gg/yEzMyaT" target="_blank">Discord</a>&nbsp;<a class="btn btn-sm btn-primary btn-header" href="">Settings</a></span></div>
+            <div><span *ngIf="isMember"><a class="btn btn-sm btn-primary btn-header" routerLink="/profiles/{{userSession.character.first_name.toLowerCase()}}-{{userSession.character.last_name.toLowerCase()}}-{{userSession.character.id}}">Profile</a>&nbsp;<a class="btn btn-sm btn-primary btn-header" href="https://discord.gg/yEzMyaT" target="_blank">Discord</a>&nbsp;<settings-modal></settings-modal></span></div>
         </div>
     </div>
   </div>

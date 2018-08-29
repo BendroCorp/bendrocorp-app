@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { UserSessionResponse, SignUp } from './models/user-models';
+import { UserSessionResponse, SignUp, NewPassword, TwoFactorDataObject, TwoFactorAuthObject } from './models/user-models';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http'; // https://stackoverflow.com/questions/47369850/property-get-does-not-exist-on-type-httpclientmodule
 import * as moment from 'moment';
 import { tap, catchError } from 'rxjs/operators';
@@ -26,8 +26,8 @@ export class AuthService {
   }
 
   /** Log the user in. */
-  login(email:string, password:string) {
-    return this.http.post<UserSessionResponse>(`${this.globals.baseUrlRoot}/auth`, { "session": { email, password } }).pipe(
+  login(email:string, password:string, code?:string) {
+    return this.http.post<UserSessionResponse>(`${this.globals.baseUrlRoot}/auth`, { "session": { email, password, code } }).pipe(
       tap(result => {
         this.messageService.addSuccess('Login Successful! Welcome back!')
       }), 
@@ -42,6 +42,32 @@ export class AuthService {
       catchError(this.err.handleError<any>('Sign Up'))
     )
   }
+
+  changePassword(password:NewPassword)
+  {
+    return this.http.post<StatusMessage>(`${this.globals.baseUrl}/account/change-password`, { password }).pipe(
+      tap(result => console.log("Password updated!")),
+      catchError(this.err.handleError<any>('Update Password'))
+    )
+  }
+
+  fetchTfa() : Observable <TwoFactorDataObject>
+  {
+    return this.http.get<TwoFactorDataObject>(`${this.globals.baseUrl}/account/fetch-tfa`).pipe(
+      tap(result => console.log("Fetch TFA!")),
+      catchError(this.err.handleError<any>('Fetch TFA'))
+    )
+  }
+
+  enableTfa(two_factor_auth:TwoFactorAuthObject) : Observable <StatusMessage>
+  {
+    return this.http.post<StatusMessage>(`${this.globals.baseUrl}/account/enable-tfa`, { two_factor_auth }).pipe(
+      tap(result => console.log("Enable TFA!")),
+      catchError(this.err.handleError<any>('Enable TFA'))
+    )
+  }
+
+  // Internal stuff below here
 
   public hasClaim(roleId:number) : boolean
   {

@@ -1,0 +1,62 @@
+<ng-template #content let-c="close" let-d="dismiss">
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">{{formAction}} Flight Log</h4>
+      <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <form #flightLogForm="ngForm">
+        <h6>Log</h6>
+        <div class="form-group">
+          <input class="form-control" type="text" [(ngModel)]="flightLog.title" name="flight_log_title" placeholder="Flight Log Title..." required>
+        </div>
+        <div class="form-group">
+          <textarea class="form-control" [(ngModel)]="flightLog.text" name="flight_log_text" placeholder="Flight Log Text..." required></textarea>
+        </div>
+        <h6>Ship</h6>
+        <div class="form-group">
+          <div *ngIf="!flightLogShips || flightLogShips.length == 0">You currently have no ships.</div>
+          <select *ngIf="flightLogShips.length > 0" class="form-control" [(ngModel)]="flightLog.owned_ship_id" name="owned_ship_id">
+            <option *ngFor="let ship of flightLogShips" [value]="ship.id">{{ship.title}}</option>
+          </select>
+        </div>
+        <div *ngIf="flightLog && flightLog.image_uploads && flightLog.image_uploads.length > 0" class="form-group">
+          <h6>Current Images</h6>
+          <div>
+            <span *ngFor="let image of flightLog.image_uploads"><img src="{{image.image_url_small}}" alt=""></span>
+          </div> 
+        </div>
+        <div class="form-group">
+          <label *ngIf="flightLog.new_image_uploads && flightLog.new_image_uploads.length > 0">New Images</label>
+          <div class="row" *ngFor="let new_image of flightLog.new_image_uploads; let i = index">
+            <div class="col-md-5 col-sm-5">
+              <input class="form-control" type="text" [(ngModel)]="new_image.title" name="flight_log_new_image_title" placeholder="Image Title..." required>
+            </div>
+            <div class="col-md-5 col-sm-5">
+              <div class="input-group mb-3">
+                <div class="custom-file">
+                  <input class="custom-file-input" type="file" id="inputGroupFile02" (change)="handleImageUploadFileInput($event.target.files, i)">
+                  <label class="custom-file-label" for="inputGroupFile02">Choose file</label>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-2 col-sm-2">
+              <button class="btn btn-danger" (click)="popImage(i)">X</button>
+            </div>
+          </div>
+          <div style="text-align:right">
+          <button class="btn btn-primary" (click)="pushImage()">Add Image</button>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-primary" [disabled]="!flightLogForm.form.valid" (click)="createUpdateFlightLog()">{{formAction}} Flight Log</button>
+      <button *ngIf="flightLog.id" class="btn btn-danger" (click)="deleteFlightLog()" [disabled]="flightLog.id && !flightLog.privacy_changes_allowed">Delete</button>
+      <button type="button" class="btn btn-outline-dark" (click)="c('Close click')">Close</button>
+    </div>
+  </ng-template>
+  
+  <button class="btn btn-primary" (click)="open(content)" [disabled]="flightLog.id && !flightLog.privacy_changes_allowed">{{formAction}} Flight Log</button>
+  

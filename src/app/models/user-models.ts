@@ -4,6 +4,7 @@ export class UserSessionResponse
 {
     id:number;
     character:Character;
+    tfa_enabled:boolean;
     token:string;
     token_expires:number;
     claims:Claim[];
@@ -30,7 +31,19 @@ export class SignUp
 
 export class NewPassword
 {
-    old_password?:string
+    original_password?:string
     password?:string
     password_confirmation?:string
+}
+
+export class TwoFactorDataObject
+{
+    qr_data_string?:string
+    seed_value?:string
+}
+
+export class TwoFactorAuthObject
+{
+    password:string
+    code:string
 }

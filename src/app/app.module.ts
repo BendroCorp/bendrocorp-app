@@ -58,6 +58,12 @@ import { InlineEditorComponent } from './editors/inline-editor/inline-editor.com
 import { TextareaEditorComponent } from './editors/textarea-editor/textarea-editor.component';
 import { ApplicationInterviewComponent } from './profiles/application-interview/application-interview.component';
 import { ApplicationDetailsComponent } from './profiles/application-details/application-details.component';
+import { EditJobModalComponent } from './job-board/edit-job-modal/edit-job-modal.component';
+import { CompleteJobModalComponent } from './job-board/complete-job-modal/complete-job-modal.component';
+import { ViewJobModalComponent } from './job-board/view-job-modal/view-job-modal.component';
+import { FlightLogDetailsComponent } from './flight-logs/flight-log-details/flight-log-details.component';
+import { CreateUpdateFlightLogModalComponent } from './flight-logs/create-update-flight-log-modal/create-update-flight-log-modal.component';
+import { QRCodeModule } from 'angularx-qrcode';
 
 @NgModule({
   declarations: [
@@ -102,7 +108,12 @@ import { ApplicationDetailsComponent } from './profiles/application-details/appl
     InlineEditorComponent,
     TextareaEditorComponent,
     ApplicationInterviewComponent,
-    ApplicationDetailsComponent
+    ApplicationDetailsComponent,
+    EditJobModalComponent,
+    CompleteJobModalComponent,
+    ViewJobModalComponent,
+    FlightLogDetailsComponent,
+    CreateUpdateFlightLogModalComponent
   ],
   entryComponents: [
     EventModalComponent,
@@ -118,7 +129,8 @@ import { ApplicationDetailsComponent } from './profiles/application-details/appl
     ReactiveFormsModule,
     NgbModule.forRoot(),
     BrowserAnimationsModule,
-    AngularDateTimePickerModule
+    AngularDateTimePickerModule,
+    QRCodeModule
   ],
   providers: [
     NgbModal,

@@ -1,0 +1,25 @@
+<div class="">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a routerLink="/flight-logs">Flight Logs</a></li>
+    <li class="breadcrumb-item active">Flight Log: {{flightLog.title}}</li>
+  </ol>
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <div class="card border-primary">
+      <div class="card-header bg-primary text-white">Flight Log</div>
+      <div class="card-body">
+        <h3>{{flightLog.title}}</h3>
+        <div><small>{{flightLog.log_time_ms | date}}<span *ngIf="flightLog.owned_ship"> - {{flightLog.owned_ship.title}}</span></small></div>     
+        <div>{{flightLog.text}}</div>       
+        <div>
+          <span *ngFor="let image of flightLog.image_uploads"><img src="{{image.image_url_small}}" alt=""></span>
+        </div> 
+        <div style="text-align:right">
+          <create-update-flight-log-modal [flightLog]="flightLog"></create-update-flight-log-modal>&nbsp;
+          <button class="btn btn-danger" (click)="deleteFlightLog()" [disabled]="flightLog.id && !flightLog.privacy_changes_allowed">Delete</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

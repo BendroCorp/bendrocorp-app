@@ -1,3 +1,87 @@
-<p>
-  settings-modal works!
-</p>
+
+<ng-template #content>
+  <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Profile update</h4>
+   <button type="button" class="close" aria-label="Close" (click)="close()">
+     <span aria-hidden="true">&times;</span>
+   </button>
+ </div>
+ <div class="modal-body">
+    <ngb-tabset>
+      <ngb-tab title="Password">
+        <ng-template ngbTabContent>
+          <br>
+          <h5>Change Password</h5>
+          <div>
+            <div class="form-group">
+              <label>Original Password</label>
+              <input class="form-control" type="password" [(ngModel)]="passwordChange.original_password" name="original_password">
+            </div>
+            <div class="form-group">
+              <label>New Password</label>
+              <input class="form-control" type="password" [(ngModel)]="passwordChange.password" name="password">
+            </div>
+            <div class="form-group">
+              <label>Password Confirmation</label>
+              <input class="form-control" type="password" [(ngModel)]="passwordChange.password_confirmation" name="password_confirmation">
+            </div>
+            <div>
+              <button class="btn btn-primary" (click)="doChangePassword()">Change Password</button>
+            </div>
+          </div>
+        </ng-template>
+      </ngb-tab>
+      <ngb-tab title="TFA">
+        <ng-template ngbTabContent>
+          <br>
+          <h5>Two-Factor Authentication</h5>
+          <div>
+            <!-- First Stage Show the Button -->
+            <div *ngIf="!user.tfa_enabled && !tfaDataObject" style="text-align:center" >
+              <button class="btn btn-lg btn-primary" (click)="doRequestTfa()">Enable Two Factor Auth</button>
+            </div>
+            <!-- Second stage show the qr code -->
+            <div *ngIf="!user.tfa_enabled && tfaDataObject">
+                <h6>Scan this code using something like Google Authenticator. (<a href="https://itunes.apple.com/us/app/google-authenticator/id388497605" target="_blank">iTunes</a>/<a href="https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2&hl=en_US" target="_blank">Google Play</a>)</h6>
+                <div style="text-align:center">
+                  <qrcode [qrdata]="tfaDataObject.qr_data_string" [size]="256" [level]="'M'"></qrcode>
+                </div>
+                <br>
+                <h6>To Enable TFA enter the code produced by your authenticator and your current password:</h6>
+                <div class="form-group">
+                  <label>Password</label>
+                  <input class="form-control" [(ngModel)]="tfaAuthObject.password" type="password">
+                </div>
+                <div class="form-group">
+                  <label>Code</label>
+                  <input class="form-control" [(ngModel)]="tfaAuthObject.code" type="text">
+                </div>
+                <div class="form-group">
+                  <button class="btn btn-primary" (click)="doEnableTfa()">Enable TFA</button>
+                </div>
+            </div>
+            <!-- Final Stage state its enabled -->
+            <div *ngIf="user.tfa_enabled">
+              <h6>Two factor authentication is enabled for this account!</h6>
+            </div>
+          </div>
+        </ng-template>
+      </ngb-tab>
+      <ngb-tab title="Membership">
+        <ng-template ngbTabContent>
+          <br>
+          <h5>Your Membership</h5>
+          <div>
+            <p>You can end your membership to BendroCorp at any time by clicking the button below. Please note that this action is not reversable. If at any time you with to rejoin BendroCorp you may do so by getting a membership of leadership via Spectrum.</p>
+            <button class="btn btn-lg btn-danger" (click)="doCancelMembership()">Cancel Membership</button>
+          </div>
+        </ng-template>
+      </ngb-tab>
+    </ngb-tabset>
+ </div>
+ <!-- <div class="modal-footer">
+   <button type="button" class="btn btn-outline-dark" (click)="close()">Save</button>
+ </div> -->
+</ng-template>
+<a class="btn btn-sm btn-primary btn-header text-white" (click)="open(content)" style="cursor:pointer;">Settings</a>
+<!-- <button class="btn btn-lg btn-outline-primary" (click)="open(content)">Launch demo modal</button> -->
