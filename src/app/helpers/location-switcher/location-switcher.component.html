@@ -1,0 +1,13 @@
+<div>
+  <select [disabled]="isDisabled" class="form-control" (change)="selectSystem($event.target.value)" [(ngModel)]="objectWithLocation.system_id" name="ship_id">
+    <option *ngFor="let syste of systemData" [value]="syste.id">{{syste.title}}</option>
+  </select>
+
+  <select *ngIf="selectedSystem" [disabled]="isDisabled" class="form-control" (change)="selectPlanet($event.target.value)" [(ngModel)]="objectWithLocation.planet_id" name="ship_id">
+    <option *ngFor="let planet of selectedSystem.planets" [value]="planet.id">{{planet.title}}</option>
+  </select>
+
+  <select *ngIf="selectedPlanet" [disabled]="isDisabled" class="form-control" (change)="selectMoon($event.target.value)" [(ngModel)]="objectWithLocation.moon_id" name="ship_id">
+    <option *ngFor="let moon of selectedPlanet.moons" [value]="moon.id">{{moon.title}}</option>
+  </select>
+</div>

@@ -16,6 +16,7 @@ import { MemberApplicationComponent } from './member-application/member-applicat
 import { JobBoardComponent } from './job-board/job-board.component';
 import { FlightLogsComponent } from './flight-logs/flight-logs.component';
 import { FlightLogDetailsComponent } from './flight-logs/flight-log-details/flight-log-details.component';
+import { OffenderReportsComponent } from './offender-reports/offender-reports.component';
 
 const routes: Routes = [
     { path: '', component: DashboardComponent, canActivate: [AuthGuardService, MemberAuthGuardService] },
@@ -26,6 +27,7 @@ const routes: Routes = [
     { path: 'job-board', component: JobBoardComponent, canActivate: [AuthGuardService, MemberAuthGuardService] },
     { path: 'flight-logs', component: FlightLogsComponent, canActivate: [AuthGuardService, MemberAuthGuardService] },
     { path: 'flight-logs/:flight_log_id', component: FlightLogDetailsComponent, canActivate: [AuthGuardService, MemberAuthGuardService] },
+    { path: 'offender-reports', component: OffenderReportsComponent, canActivate: [AuthGuardService, MemberAuthGuardService] },
     // public/non-member routes below here
     { path: 'login', component: LoginComponent, canActivate: [NoAuthGuardService] },
     { path: 'signup', component: SignupComponent, canActivate: [NoAuthGuardService] },

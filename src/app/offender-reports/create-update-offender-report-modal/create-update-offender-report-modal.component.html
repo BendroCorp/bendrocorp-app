@@ -1,0 +1,68 @@
+<ng-template #content let-c="close" let-d="dismiss">
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">{{formAction}} Offender Report</h4>
+      <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <form #offenderReportForm="ngForm">
+        <div class="form-group">
+          <label>Offender Handle</label>
+          <div *ngIf="offenderReport.id">{{offenderReport.offender.offender_handle}}</div>
+          <input required *ngIf="!offenderReport.id" placeholder="The offenders handle..." class="form-control" type="text" [(ngModel)]="offenderReport.offender_attributes.offender_handle" name="offender_handle">
+        </div>
+        <div class="form-group">
+          <label>Offender Name</label>
+          <div *ngIf="offenderReport.id">{{offenderReport.offender.offender_name}}</div>
+          <input required *ngIf="!offenderReport.id" placeholder="The offenders name...(might be the same as the above)" class="form-control" type="text" [(ngModel)]="offenderReport.offender_attributes.offender_name" name="offender_name">
+        </div>
+        <div class="form-group">
+          <label>Occured When</label>
+          <div *ngIf="offenderReport.submitted_for_approval">{{offenderReport.occured_when | date }}</div>
+          <angular2-date-picker *ngIf="!offenderReport.submitted_for_approval" [(ngModel)]="offenderReport.occured_when" (onDateSelect)="onOccuredWhenDateSelect($event)" [settings]="dateTimePickerSettings" name="start_date"></angular2-date-picker>
+          <!-- <p>{{offenderReport.occured_when_ms}}</p> -->
+          <!-- <input required [disabled]="offenderReport.submitted_for_approval" class="form-control" datetime="yyyy-MM-dd H:mm Z" datetime-model="yyyy-MM-dd H:mm Z" type="datetime" [(ngModel)]="" /> -->
+        </div>
+        <div class="form-group">
+          <label>Occured Where</label>
+          <div class="form-inline">
+            <location-switcher [isDisabled]="offenderReport.submitted_for_approval" [objectWithLocation]="offenderReport"></location-switcher>
+            <!-- <select [disabled]="offenderReport.submitted_for_approval" ng-options="item as item.title for item in systemData.system_data track by item.id" [(ngModel)]="offenderReport.system" class="form-control"></select>
+            <select [disabled]="offenderReport.submitted_for_approval" ng-options="item as item.title for item in offenderReport.system.planets track by item.id" [(ngModel)]="offenderReport.planet" class="form-control"></select>
+            <select [disabled]="offenderReport.submitted_for_approval" ng-options="item as item.title for item in offenderReport.planet.moons track by item.id" [(ngModel)]="offenderReport.moon" class="form-control"></select> -->
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Incident Description</label>
+          <textarea required [disabled]="offenderReport.submitted_for_approval" class="form-control" placeholder="Describe the event/offense..." [(ngModel)]="offenderReport.description" name="description"></textarea>
+        </div>
+        <div class="form-group">
+          <label>Ship Used (If Applicable)</label>
+          <select [disabled]="offenderReport.submitted_for_approval" class="form-control" [(ngModel)]="offenderReport.ship_id" name="ship_id">
+            <option *ngFor="let ship of shipData" [value]="ship.id">{{ship.name}}</option>
+          </select>
+        </div>
+        <div>
+          <label>Violence Rating</label>
+          <select [disabled]="offenderReport.submitted_for_approval" class="form-control" [(ngModel)]="offenderReport.violence_rating_id" name="violence_rating_id" required>
+            <option *ngFor="let rating of violenceRatings" [value]="rating.id">{{rating.title}}</option>
+          </select>
+          <!-- <p style="color:{{offenderReport.violence_rating.color}}">{{offenderReport.violence_rating.description}}</p> -->
+          <small *ngIf="!offenderReport.submitted_for_approval">* Note: Selecting an improper violence rating will cause your report to be rejected.</small>
+        </div>
+        <br />
+      </form>
+    </div>
+    <div class="modal-footer">
+        <div class="form-group" *ngIf="!offenderReport.submitted_for_approval">
+          <button *ngIf="!offenderReport.report_approved" [disabled]="offenderReport.submitted_for_approval || !offenderReport.occured_when_ms || !offenderReportForm.form.valid" type="button" class="btn btn-primary" (click)="doCreateUpdate()">{{formAction}} Offender Report</button>&nbsp;
+          <button *ngIf="!offenderReport.report_approved && offenderReport.id" class="btn btn-success" (click)="submitForApproval()">Submit for Approval</button>&nbsp;
+          <button type="button" class="btn btn-outline-dark" (click)="c('Save click')">Cancel</button>
+        </div>
+    </div>
+  </ng-template>
+  
+  <button *ngIf="!offenderReport.report_approved && offenderReport.id" class="btn btn-sm btn-primary" (click)="open(content)">{{formAction}}</button>
+  <button *ngIf="!offenderReport.id" class="btn btn-primary" (click)="open(content)">{{formAction}}</button>
+  

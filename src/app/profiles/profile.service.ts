@@ -82,6 +82,9 @@ export class ProfileService {
     )
   }
 
+  /**
+   * List all available classes of ships
+   */
   list_ships() : Observable<Ship[]>
   {
     return this.http.get<Ship[]>(`${this.globals.baseUrl}/ship`).pipe(

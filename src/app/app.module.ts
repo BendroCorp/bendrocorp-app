@@ -64,6 +64,10 @@ import { ViewJobModalComponent } from './job-board/view-job-modal/view-job-modal
 import { FlightLogDetailsComponent } from './flight-logs/flight-log-details/flight-log-details.component';
 import { CreateUpdateFlightLogModalComponent } from './flight-logs/create-update-flight-log-modal/create-update-flight-log-modal.component';
 import { QRCodeModule } from 'angularx-qrcode';
+import { NgxPaginationModule } from 'ngx-pagination';
+import { CreateUpdateOffenderReportModalComponent } from './offender-reports/create-update-offender-report-modal/create-update-offender-report-modal.component';
+import { LocationSwitcherComponent } from './helpers/location-switcher/location-switcher.component';
+import { OffenderReportDetailsComponent } from './offender-reports/offender-report-details/offender-report-details.component';
 
 @NgModule({
   declarations: [
@@ -113,7 +117,10 @@ import { QRCodeModule } from 'angularx-qrcode';
     CompleteJobModalComponent,
     ViewJobModalComponent,
     FlightLogDetailsComponent,
-    CreateUpdateFlightLogModalComponent
+    CreateUpdateFlightLogModalComponent,
+    CreateUpdateOffenderReportModalComponent,
+    LocationSwitcherComponent,
+    OffenderReportDetailsComponent
   ],
   entryComponents: [
     EventModalComponent,
@@ -130,7 +137,8 @@ import { QRCodeModule } from 'angularx-qrcode';
     NgbModule.forRoot(),
     BrowserAnimationsModule,
     AngularDateTimePickerModule,
-    QRCodeModule
+    QRCodeModule,
+    NgxPaginationModule
   ],
   providers: [
     NgbModal,

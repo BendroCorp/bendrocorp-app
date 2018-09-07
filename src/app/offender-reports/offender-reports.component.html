@@ -1,3 +1,126 @@
-<p>
-  offender-reports works!
-</p>
+<div class="">
+  <ol class="breadcrumb">
+    <li>Offender Reports</li>
+  </ol>
+</div>
+<div class="row">
+  <!-- main section -->
+  <div class="col-md-8">
+    <div class="card border-primary">
+      <div class="card-header bg-primary text-white">Offender Reports</div>
+      <div class="card-body">
+        <h6 *ngIf="offenderReports.length == 0">No approved offender reports on file.</h6>
+        <!-- Need to figure out search -->
+        <!-- <input class="form-control" *ngIf="offenderReports.length > 0" type="text" name="" value="" ng-model="offenderSearchFilter" placeholder="Search for an offender..."> -->
+        <table class="table table-striped table-hover" *ngIf="offenderReports.length > 0">
+          <thead>
+            <tr>
+              <th>Offender Handle</th>
+              <th>Last Seen</th>
+              <th>Rating</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of offenderReports">
+              <td>
+                {{item.offender_handle}}
+              </td>
+              <td>
+                {{item.full_location}}
+              </td>
+              <td *ngIf="item.offender_rating != null">
+                {{item.offender_rating}}
+              </td>
+              <td *ngIf="item.offender_rating == null">
+                Not Yet Processed
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <div style="text-align:right">
+          <offender-report-modal></offender-report-modal>
+        </div>
+      </div>
+    </div>
+    <br>
+    <!-- admin view -->
+    <div *ngIf="isAdmin" class="card border-primary">
+      <div class="card-header bg-primary text-white">Offender Reports (Admin View)</div>
+      <div class="card-body">
+        <h6 *ngIf="adminOffenderReports.length == 0">No offender reports in any are on file...probably because none have been submitted...</h6>
+        <table class="table table-striped table-hover" *ngIf="adminOffenderReports.length > 0">
+          <thead>
+            <tr>
+              <th>ID#</th>
+              <th>Offender Handle</th>
+              <th>Submitted</th>
+              <th>Submitted By</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-click="openOffenderReportModal(item)" *ngFor="let item of adminOffenderReports">
+              <td>
+                {{item.id}}
+              </td>
+              <td>
+                {{item.offender.offender_handle}}
+              </td>
+              <td>
+                {{item.created_at | date:'MM/dd/yyyy' }}
+              </td>
+              <td>
+                {{item.created_by.username}}
+              </td>
+              <td>
+                <i style="color:green;" class="fas fa-check" *ngIf="item.report_approved == true"></i>
+                <i style="color:red;" class="fas fa-check" *ngIf="item.report_approved == false"></i>
+                <i style="color:orange;" class="far fa-clock" *ngIf="item.report_approved == null"></i>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <!-- end admin view -->
+  </div>
+  <!-- Side bar -->
+  <div class="col-md-4">
+    <!-- Violence Ratings -->
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card border-primary">
+          <div class="card-header bg-primary text-white">Violence Ratings</div>
+          <div class="card-body">
+            <div class="" *ngFor="let item of violenceRatings">
+              <h6 [ngStyle]="{'color': item.color}">{{item.title}}</h6>
+              <p>{{item.description}}</p>
+              <br>
+            </div>
+            <div class="">
+              <small>* Note that offender ratings are processed nightly. So if an offender does not have a rating the batch analysis has not been run yet.</small>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <br>
+    <!-- "Your" Reports -->
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card border-primary">
+          <div class="card-header bg-primary text-white">Your Reports</div>
+          <div class="card-body">
+            <h6 *ngIf="myOffenderReports.length <= 0">You have no reports.</h6>
+            <ul>
+              <li *ngFor="let item of myOffenderReports"><a>Report #{{item.id}} ({{item.occured_when | date:'MM/dd/yyyy'}})</a><offender-report-modal [offenderReport]="item"></offender-report-modal>&nbsp;<i style="color:green;" class="fas fa-check" *ngIf="item.report_approved == true"></i><i style="color:red;" class="fas fa-check" *ngIf="item.report_approved == false"></i><i style="color:orange;" class="far fa-clock" *ngIf="item.report_approved == null"></i></li>
+            </ul>
+            <div style="text-align:right">
+                <offender-report-modal></offender-report-modal>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
