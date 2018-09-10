@@ -17,6 +17,8 @@ import { JobBoardComponent } from './job-board/job-board.component';
 import { FlightLogsComponent } from './flight-logs/flight-logs.component';
 import { FlightLogDetailsComponent } from './flight-logs/flight-log-details/flight-log-details.component';
 import { OffenderReportsComponent } from './offender-reports/offender-reports.component';
+import { AddRoleComponent } from './requests/add-role/add-role.component';
+import { RemoveRoleComponent } from './requests/remove-role/remove-role.component';
 
 const routes: Routes = [
     { path: '', component: DashboardComponent, canActivate: [AuthGuardService, MemberAuthGuardService] },
@@ -34,6 +36,8 @@ const routes: Routes = [
     { path: 'apply', component: MemberApplicationComponent, canActivate: [AuthGuardService] },
     // Keep requests at the bottom of the route list
     { path: 'requests', component: RequestsComponent, canActivate: [AuthGuardService, MemberAuthGuardService] },
+    { path: 'requests/add-role', component: AddRoleComponent, canActivate: [AuthGuardService, MemberAuthGuardService]},
+    { path: 'requests/remove-role', component: RemoveRoleComponent, canActivate: [AuthGuardService, MemberAuthGuardService]},
     { path: 'requests/approvals', component: ApprovalsComponent, canActivate: [AuthGuardService, MemberAuthGuardService]},
     { path: 'requests/approvals/:approval_id', component: ApprovalDetailsComponent, canActivate: [AuthGuardService, MemberAuthGuardService]}
   ];

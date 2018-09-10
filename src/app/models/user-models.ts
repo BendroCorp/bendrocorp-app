@@ -18,7 +18,21 @@ export class Claim
 
 export class User 
 {
-    rsi_handle:string
+    id?:number
+    username?:string
+    rsi_handle?:string
+    main_character?:Character
+    roles?:Role[]
+}
+
+export class Role extends Claim
+{
+    nested_roles?:Role[]
+}
+
+export class NestedRole
+{
+    role_nested?:Role
 }
 
 export class SignUp 

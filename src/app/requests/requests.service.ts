@@ -5,8 +5,8 @@ import { Globals } from '../globals';
 import { Observable, Subject } from '../../../node_modules/rxjs';
 import { MyApproval } from '../models/approval-models';
 import { tap, catchError } from '../../../node_modules/rxjs/operators';
-import { MessageService } from '../message/message.service';
 import { StatusMessage } from '../models/misc-models';
+import { AddRoleRequest, RemoveRoleRequest } from '../models/request-models';
 
 @Injectable({
   providedIn: 'root'
@@ -25,6 +25,23 @@ export class RequestsService {
     console.log("Requests service data refresh called!");    
     this.dataRefreshSource.next();
   }
+
+  addRoleRequest(role_request:AddRoleRequest) : Observable<StatusMessage>
+  {
+    return this.http.post<StatusMessage>(`${this.globals.baseUrl}/requests/add-role`, { role_request }).pipe(
+      tap(results => console.log(`Submitted Add Role Request `)),
+      catchError(this.errorService.handleError<any>('Add Role Request '))
+    )
+  }
+
+  removeRoleRequest(role_removal_request:RemoveRoleRequest) : Observable<StatusMessage>
+  {
+    return this.http.post<StatusMessage>(`${this.globals.baseUrl}/requests/remove-role`, { role_removal_request }).pipe(
+      tap(results => console.log(`Submitted Remove Role Request `)),
+      catchError(this.errorService.handleError<any>('Remove Role Request '))
+    )
+  }
+
 
   list_approvals() : Observable<MyApproval[]>
   {

@@ -1,3 +1,44 @@
-<p>
-  add-role works!
-</p>
+<div class="row">
+  <div class="col-md-12">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a routerLink="/requests">Requests</a></li>
+      <li class="breadcrumb-item active">Add Role</li>
+    </ol>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-6 col-sm-6">
+    <h5>Add Role Request</h5>
+    <div class="form-group">
+      <label>On Behalf Of</label>
+      <select *ngIf="users.length > 0" class="form-control" [(ngModel)]="addRoleRequest.on_behalf_of_id" (change)="roleList()" name="on_behalf_of_id">
+        <option *ngFor="let user of users" [value]="user.main_character.id">{{user.main_character.first_name}} {{user.main_character.last_name}}</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label *ngIf="notInRoles && notInRoles.length > 0">Role</label>
+      <h6 *ngIf="notInRoles.length == 0">Select a user to select a role</h6>
+      <select *ngIf="notInRoles.length > 0" class="form-control" [(ngModel)]="addRoleRequest.role_id" name="role_id">
+        <option *ngFor="let role of notInRoles" [value]="role.id">{{role.name}}</option>
+      </select>
+      <small>* Roles are assigned on a least privilege basis. If you request a role you do not need it will be denied.</small>
+    </div>
+
+    <div class="form-group" style="text-align:right">
+      <button class="btn btn-primary" (click)="submitaddRoleRequest()" [disabled]="requestSubmitting || !addRoleRequest.role_id || !addRoleRequest.on_behalf_of_id">Submit Add Role Request<span *ngIf="requestSubmitting">&nbsp;<i class="fas fa-spinner fa-spin"></i></span></button>
+    </div>
+  </div>
+  <div *ngIf="selectedUser" class="col-md-6 col-sm-6">
+    <h5>Current Roles</h5>
+    <ul>
+      <li *ngFor="let role of selectedUser.roles">
+        {{role.name}}
+        <ul *ngIf="role.nested_roles">
+          <li *ngFor="let nested of role.nested_roles">{{nested.role_nested.name}} (Nested)</li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+</div>
