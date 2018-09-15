@@ -68,6 +68,8 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { CreateUpdateOffenderReportModalComponent } from './offender-reports/create-update-offender-report-modal/create-update-offender-report-modal.component';
 import { LocationSwitcherComponent } from './helpers/location-switcher/location-switcher.component';
 import { OffenderReportDetailsComponent } from './offender-reports/offender-report-details/offender-report-details.component';
+import { OrderByPipe } from './helpers/orderBy';
+import { FilterPipe } from './pipes/filter.pipe';
 
 @NgModule({
   declarations: [
@@ -141,6 +143,8 @@ import { OffenderReportDetailsComponent } from './offender-reports/offender-repo
     NgxPaginationModule
   ],
   providers: [
+    OrderByPipe,
+    FilterPipe,
     NgbModal,
     NgbAlert,
     AuthInterceptor,
