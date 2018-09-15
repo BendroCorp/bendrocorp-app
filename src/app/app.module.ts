@@ -74,6 +74,8 @@ import { FilterPipe } from './pipes/filter.pipe';
 @NgModule({
   declarations: [
     AppComponent,
+    OrderByPipe,
+    FilterPipe,
     MenuComponent,
     HeaderComponent,
     LoginComponent,
