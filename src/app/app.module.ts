@@ -16,7 +16,7 @@ import { AuthService } from './auth.service';
 import { ErrorService } from './error.service';
 import { MessageService } from './message/message.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { AuthGuardService, NoAuthGuardService, RoleRequiredAuthGuardService, MemberAuthGuardService } from './auth-guard.service';
+import { AuthGuardService, NoAuthGuardService, MemberAuthGuardService } from './auth-guard.service';
 import { Globals } from './globals';
 import { MenuService } from './menu/menu.service';
 import { AuthInterceptor } from './auth-interceptor';
@@ -153,7 +153,6 @@ import { OffenderReportDetailsComponent } from './offender-reports/offender-repo
     AuthGuardService,
     MemberAuthGuardService,
     NoAuthGuardService,
-    RoleRequiredAuthGuardService,
     ErrorService,
     MessageService,
     MenuService,

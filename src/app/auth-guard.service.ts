@@ -51,17 +51,17 @@ export class MemberAuthGuardService implements CanActivate {
   }
 }
 
-@Injectable()
-export class RoleRequiredAuthGuardService implements CanActivate {
-  constructor(public roleId:number, private router: Router, private authService:AuthService) { }
-  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
-    if (this.authService.isLoggedIn()) {
-      return (this.authService.hasClaim(this.roleId)) ? true : false
-    } else {
-      this.authService.refreshData()
-      this.router.navigate(['/login']);
-      return false;
-    }
-  }
-}
+// @Injectable()
+// export class RoleRequiredAuthGuardService implements CanActivate {
+//   constructor(public roleId:number, private router: Router, private authService:AuthService) { }
+//   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
+//     if (this.authService.isLoggedIn()) {
+//       return (this.authService.hasClaim(this.roleId)) ? true : false
+//     } else {
+//       this.authService.refreshData()
+//       this.router.navigate(['/login']);
+//       return false;
+//     }
+//   }
+// }
 
