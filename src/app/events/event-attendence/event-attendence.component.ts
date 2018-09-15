@@ -4,9 +4,6 @@ import { Event, EventAttendence } from '../../models/event-models';
 import { MessageService } from '../../message/message.service';
 import { AuthService } from '../../auth.service';
 import { UserSessionResponse } from '../../models/user-models';
-import { OrderBy } from '../../helpers/orderBy';
-import { from } from '../../../../node_modules/rxjs';
-import { map } from '../../../../node_modules/rxjs/operators';
 import { HttpErrorResponse } from '../../../../node_modules/@angular/common/http';
 
 @Component({
