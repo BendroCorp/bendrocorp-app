@@ -1,3 +1,39 @@
-<p>
-  position-change works!
-</p>
+<div class="row">
+    <div class="col-md-12">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a routerLink="/requests">Requests</a></li>
+        <li class="breadcrumb-item active">Position Change</li>
+      </ol>
+    </div>
+  </div>
+    
+  <div class="row">
+    <div class="col-md-6 col-sm-6">
+      <h5>Position Change Request</h5>
+      <div class="form-group">
+        <label>On Behalf Of</label>
+        <select *ngIf="characters.length > 0" class="form-control" [(ngModel)]="positionChangeRequest.character_id" (change)="selectCharacter()" name="character_id">
+          <option *ngFor="let character of characters" [value]="character.id">{{character.full_name}}</option>
+        </select>
+      </div>
+  
+      <div class="form-group">
+        <h6 *ngIf="!selectedCharacter">Select a user to select a job</h6>
+        <label *ngIf="selectedCharacter">New Job</label>        
+        <select *ngIf="selectedCharacter && availableJobs.length > 0" class="form-control" [(ngModel)]="positionChangeRequest.job_id" name="job_id">
+          <option *ngFor="let job of availableJobs" [value]="job.id">{{job.title}}</option>
+        </select>
+        <small></small>
+      </div>
+  
+      <div class="form-group" style="text-align:right">
+        <button class="btn btn-primary" (click)="submitPositionChangeRequest()" [disabled]="requestSubmitting || !positionChangeRequest.job_id || !positionChangeRequest.character_id">Submit Position Change Request<span *ngIf="requestSubmitting">&nbsp;<i class="fas fa-spinner fa-spin"></i></span></button>
+      </div>
+    </div>
+    <div *ngIf="selectedCharacter" class="col-md-6 col-sm-6">
+      <h5>Job History</h5>
+      <ul>
+        <li *ngFor="let job of selectedCharacter.jobs">{{job.title}}</li>
+      </ul>
+    </div>
+  </div>

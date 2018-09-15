@@ -1,3 +1,19 @@
 .middle {
     text-align: center;
 }
+
+.request-box
+{
+    margin: 6px;
+    text-align: center;
+    height: 200px;
+    padding: 8px;
+    border: 2px solid black;
+    border-radius: 8px;
+    line-height: 80px;
+}
+
+.request-box > .icon
+{
+    font-size: 4.5em;
+}

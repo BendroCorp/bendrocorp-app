@@ -6,11 +6,37 @@
     </div>
   </div>
 
-<div class="row">
-  <div class="col-md-4"><a routerLink="/requests/add-role">Add Role</a></div>
-  <div class="col-md-4"><a routerLink="/requests/remove-role">Remove Role</a></div>
-  <div class="col-md-4"><a routerLink="/requests/position-change">Position Change</a></div>
-  <div class="col-md-4">
-    <a routerLink="/requests/approvals">Approvals</a>
+<div class="row middle">
+  <div class="col-md-4 request-box" *ngIf="isDirector || isExecutive">
+    <div class="icon">
+      <i class="fas fa-chevron-circle-up"></i>
+    </div>
+    <div>
+      <a routerLink="/requests/add-role">Add Role</a>
+    </div>
+  </div>
+  <div class="col-md-4 request-box" *ngIf="isDirector || isExecutive">
+    <div class="icon">
+      <i class="fas fa-chevron-circle-down"></i>
+    </div>
+    <div>
+      <a routerLink="/requests/remove-role">Remove Role</a>
+    </div>
+  </div>
+  <div class="col-md-4 request-box" *ngIf="isDirector">
+    <div class="icon">
+      <i class="fas fa-briefcase"></i>
+    </div>
+    <div>
+      <a routerLink="/requests/position-change">Position Change</a>
+    </div>
+  </div>
+  <div class="col-md-4 request-box">
+    <div class="icon">
+      <i class="far fa-check-circle"></i>
+    </div>
+    <div>
+      <a routerLink="/requests/approvals">Approvals</a>
+    </div>
   </div>
 </div>

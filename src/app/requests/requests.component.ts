@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-requests',
@@ -7,7 +8,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class RequestsComponent implements OnInit {
 
-  constructor() { }
+  constructor(private authService:AuthService) { }
+  isExecutive:boolean = this.authService.hasClaim(3)
+  isDirector:boolean = this.authService.hasClaim(3)
 
   ngOnInit() {
   }

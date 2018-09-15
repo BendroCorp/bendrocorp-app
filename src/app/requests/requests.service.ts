@@ -6,7 +6,7 @@ import { Observable, Subject } from '../../../node_modules/rxjs';
 import { MyApproval } from '../models/approval-models';
 import { tap, catchError } from '../../../node_modules/rxjs/operators';
 import { StatusMessage } from '../models/misc-models';
-import { AddRoleRequest, RemoveRoleRequest } from '../models/request-models';
+import { AddRoleRequest, RemoveRoleRequest, PositionChangeRequest } from '../models/request-models';
 
 @Injectable({
   providedIn: 'root'
@@ -42,7 +42,13 @@ export class RequestsService {
     )
   }
 
-
+  positionChangeRequest(position_change_request:PositionChangeRequest) : Observable<StatusMessage>
+  {
+    return this.http.post<StatusMessage>(`${this.globals.baseUrl}/requests/position-change`, { position_change_request }).pipe(
+      tap(results => console.log(`Submitted Remove Role Request `)),
+      catchError(this.errorService.handleError<any>('Remove Role Request '))
+    )
+  }
   list_approvals() : Observable<MyApproval[]>
   {
     return this.http.get<MyApproval[]>(`${this.globals.baseUrl}/user/approvals`).pipe(

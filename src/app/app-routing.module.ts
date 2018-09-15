@@ -19,6 +19,7 @@ import { FlightLogDetailsComponent } from './flight-logs/flight-log-details/flig
 import { OffenderReportsComponent } from './offender-reports/offender-reports.component';
 import { AddRoleComponent } from './requests/add-role/add-role.component';
 import { RemoveRoleComponent } from './requests/remove-role/remove-role.component';
+import { PositionChangeComponent } from './requests/position-change/position-change.component';
 
 const routes: Routes = [
     { path: '', component: DashboardComponent, canActivate: [AuthGuardService, MemberAuthGuardService] },
@@ -38,6 +39,7 @@ const routes: Routes = [
     { path: 'requests', component: RequestsComponent, canActivate: [AuthGuardService, MemberAuthGuardService] },
     { path: 'requests/add-role', component: AddRoleComponent, canActivate: [AuthGuardService, MemberAuthGuardService]},
     { path: 'requests/remove-role', component: RemoveRoleComponent, canActivate: [AuthGuardService, MemberAuthGuardService]},
+    { path: 'requests/position-change', component: PositionChangeComponent, canActivate: [AuthGuardService, MemberAuthGuardService]},
     { path: 'requests/approvals', component: ApprovalsComponent, canActivate: [AuthGuardService, MemberAuthGuardService]},
     { path: 'requests/approvals/:approval_id', component: ApprovalDetailsComponent, canActivate: [AuthGuardService, MemberAuthGuardService]}
   ];
