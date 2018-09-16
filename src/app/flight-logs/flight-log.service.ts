@@ -60,7 +60,7 @@ export class FlightLogService {
   {
     return this.http.post<FlightLog>(`${this.globals.baseUrl}/flight-logs/`, { flight_log }).pipe(
       tap(result => console.log(`Created flight log with id# ${result.id}!`)),
-      catchError(this.errorService.handleError('Create Flught Log'))
+      catchError(this.errorService.handleError('Create Flight Log'))
     )
   }
 
@@ -68,7 +68,7 @@ export class FlightLogService {
   {
     return this.http.patch<FlightLog>(`${this.globals.baseUrl}/flight-logs/`, { flight_log }).pipe(
       tap(result => console.log(`Updated flight log with id# ${result.id}!`)),
-      catchError(this.errorService.handleError('Create Flught Log'))
+      catchError(this.errorService.handleError('Update Flight Log'))
     )
   }
 
@@ -76,7 +76,7 @@ export class FlightLogService {
   {
     return this.http.delete<StatusMessage>(`${this.globals.baseUrl}/flight-logs/${flight_log.id}`).pipe(
       tap(result => console.log(`Deleted flight log with id# ${flight_log.id}!`)),
-      catchError(this.errorService.handleError('Create Flught Log'))
+      catchError(this.errorService.handleError('Remove Flight Log'))
     )
   }
 }
