@@ -11,12 +11,14 @@ import { DomSanitizer } from '../../../node_modules/@angular/platform-browser';
 })
 export class ProfilesComponent implements OnInit {
   divisions:Division[]
+  dataLoaded:boolean = false
   constructor(private profileService:ProfileService, private sanitizer: DomSanitizer) { }
 
   ngOnInit() {
     this.profileService.list_by_division().subscribe(
       (results) => {
         if (!(results instanceof HttpErrorResponse)) {
+          this.dataLoaded = true
           this.divisions = results
         }
       }

@@ -8,6 +8,7 @@
 </div>
 
 <div class="row" *ngIf="profile">
+  <app-loading *ngIf="!dataLoaded"></app-loading>
   <div class="col-md-12">
     <div class="card border-primary mb-3">
       <div class="card-header text-white bg-primary">EMPLOYEE PROFILE - {{profile.first_name}}&nbsp;{{profile.last_name}}</div>

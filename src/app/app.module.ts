@@ -70,6 +70,7 @@ import { LocationSwitcherComponent } from './helpers/location-switcher/location-
 import { OffenderReportDetailsComponent } from './offender-reports/offender-report-details/offender-report-details.component';
 import { OrderByPipe } from './helpers/orderBy';
 import { FilterPipe } from './pipes/filter.pipe';
+import { LoadingComponent } from './misc/loading/loading.component';
 
 @NgModule({
   declarations: [
@@ -124,7 +125,8 @@ import { FilterPipe } from './pipes/filter.pipe';
     CreateUpdateFlightLogModalComponent,
     CreateUpdateOffenderReportModalComponent,
     LocationSwitcherComponent,
-    OffenderReportDetailsComponent
+    OffenderReportDetailsComponent,
+    LoadingComponent
   ],
   entryComponents: [
     EventModalComponent,
