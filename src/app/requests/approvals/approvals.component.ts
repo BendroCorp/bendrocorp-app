@@ -11,7 +11,8 @@ import { Subscription } from '../../../../node_modules/rxjs';
 })
 export class ApprovalsComponent implements OnInit, OnDestroy {
   
-  myApprovals:MyApproval[]
+  myApprovals:MyApproval[] = []
+  dataLoaded:boolean = false
   approvalSubmitting:boolean = false
   subscription:Subscription
   constructor(private requestsService:RequestsService) { 
@@ -27,6 +28,7 @@ export class ApprovalsComponent implements OnInit, OnDestroy {
       (results) => {
         if (!(results instanceof HttpErrorResponse)) {
           this.myApprovals = results
+          this.dataLoaded = true
         }
       }
     )
