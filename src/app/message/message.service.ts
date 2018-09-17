@@ -1,10 +1,13 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 import { Message } from '../models/message-models';
+import { SwUpdate } from '@angular/service-worker';
 
 @Injectable()
 export class MessageService {
-  messages: Message[] = [];
+  messages: Message[] = []; 
+
+  constructor (private update: SwUpdate) { } // NOTE - this may cause trouble
 
   // Observable string streams
   private messageSource = new Subject();
@@ -38,6 +41,11 @@ export class MessageService {
   {
     let msg:Message = { message: message, type: 4 }
     this.add(msg)
+  }
+
+  doUpdate()
+  {
+    this.update.activateUpdate().then(() => document.location.reload())
   }
 
   add(message: Message) {
