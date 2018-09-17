@@ -12,7 +12,7 @@ import { SpinnerService } from '../../misc/spinner/spinner.service';
 })
 export class ApprovalsComponent implements OnInit, OnDestroy {
   
-  myApprovals:MyApproval[] = []
+  myApprovals:MyApproval[]
   approvalSubmitting:boolean = false
   subscription:Subscription
   constructor(private requestsService:RequestsService, private spinnerService:SpinnerService) { 

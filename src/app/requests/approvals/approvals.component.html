@@ -9,7 +9,7 @@
 
 <div class="row">
   <div class="col-md-12">
-    <div class="card border-primary mb-3">
+    <div *ngIf="myApprovals" class="card border-primary mb-3">
       <div class="card-header bg-primary text-white">My Approvals</div>
       <div class="card-body">
         <h4 *ngIf="myApprovals && myApprovals.length == 0">You currently have no approvals.</h4>
