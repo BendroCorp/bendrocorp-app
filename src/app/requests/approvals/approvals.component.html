@@ -12,7 +12,6 @@
     <div class="card border-primary mb-3">
       <div class="card-header bg-primary text-white">My Approvals</div>
       <div class="card-body">
-        <h4 *ngIf="!dataLoaded">.::Loading Approvals::.</h4>
         <h4 *ngIf="myApprovals && myApprovals.length == 0 && dataLoaded">You currently have no approvals.</h4>
         <table *ngIf="myApprovals.length > 0" class="table table-striped table-hover">
           <thead>
