@@ -70,7 +70,8 @@ import { LocationSwitcherComponent } from './helpers/location-switcher/location-
 import { OffenderReportDetailsComponent } from './offender-reports/offender-report-details/offender-report-details.component';
 import { OrderByPipe } from './helpers/orderBy';
 import { FilterPipe } from './pipes/filter.pipe';
-import { LoadingComponent } from './misc/loading/loading.component';
+import { SpinnerComponent } from './misc/spinner/spinner.component';
+import { SpinnerService } from './misc/spinner/spinner.service';
 
 @NgModule({
   declarations: [
@@ -126,7 +127,7 @@ import { LoadingComponent } from './misc/loading/loading.component';
     CreateUpdateOffenderReportModalComponent,
     LocationSwitcherComponent,
     OffenderReportDetailsComponent,
-    LoadingComponent
+    SpinnerComponent
   ],
   entryComponents: [
     EventModalComponent,
@@ -165,7 +166,8 @@ import { LoadingComponent } from './misc/loading/loading.component';
     MessageService,
     MenuService,
     Globals,
-    EventService
+    EventService,
+    SpinnerService
   ],
   bootstrap: [AppComponent]
 })

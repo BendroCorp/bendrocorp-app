@@ -5,6 +5,7 @@ import { Event } from '../models/event-models';
 import { MessageService } from '../message/message.service';
 import { HttpErrorResponse } from '../../../node_modules/@angular/common/http';
 import { Subscription } from '../../../node_modules/rxjs';
+import { SpinnerService } from '../misc/spinner/spinner.service';
 
 @Component({
   selector: 'app-events',
@@ -13,7 +14,7 @@ import { Subscription } from '../../../node_modules/rxjs';
 })
 export class EventsComponent implements OnInit, OnDestroy {
   
-  constructor(private authService:AuthService, private eventService:EventService, private messageService:MessageService) { 
+  constructor(private authService:AuthService, private eventService:EventService, private messageService:MessageService, private spinnerService:SpinnerService) { 
     this.subscription = this.eventService.dataRefreshAnnounced$.subscribe(
       () => {
         // if the service tells us to refresh then we refresh
@@ -36,9 +37,8 @@ export class EventsComponent implements OnInit, OnDestroy {
       (results) => 
       {
         if (!(results instanceof HttpErrorResponse)) {
+          this.spinnerService.spin(false)
           this.events = results
-          console.log(results);
-          
         }
       }
     )
@@ -74,7 +74,7 @@ export class EventsComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-
+    this.spinnerService.spin(true)
     this.fetchEvents()
     if (this.isAdmin) {
       this.fetchExpired()

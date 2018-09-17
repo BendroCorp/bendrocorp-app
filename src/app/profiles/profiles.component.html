@@ -6,7 +6,6 @@
   </div>
 </div>
 <div class="row">
-  <app-loading *ngIf="!dataLoaded"></app-loading>
   <div *ngIf="divisions" class="col-md-12">
     <div *ngFor="let division of divisions" class="card border-primary mb-3">
       <div class="card-header text-white" [ngStyle]="{'background-color': division.color, 'color': division.font_color}">{{division.name}}</div>

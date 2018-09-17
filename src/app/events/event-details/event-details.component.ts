@@ -3,6 +3,7 @@ import { ActivatedRoute } from '../../../../node_modules/@angular/router';
 import { EventService } from '../event.service';
 import { Event } from '../../models/event-models';
 import { HttpErrorResponse } from '../../../../node_modules/@angular/common/http';
+import { SpinnerService } from '../../misc/spinner/spinner.service';
 
 @Component({
   selector: 'app-event-details',
@@ -11,7 +12,7 @@ import { HttpErrorResponse } from '../../../../node_modules/@angular/common/http
 })
 export class EventDetailsComponent implements OnInit {
 
-  constructor(private route:ActivatedRoute, private eventService:EventService) { }
+  constructor(private route:ActivatedRoute, private eventService:EventService, private spinnerService:SpinnerService) { }
   
   selectedEvent:Event
 
@@ -21,6 +22,7 @@ export class EventDetailsComponent implements OnInit {
       (result) => 
       {
         if (!(result instanceof HttpErrorResponse)) {
+          this.spinnerService.spin(false)
           this.selectedEvent = result
         }
       }
@@ -28,6 +30,7 @@ export class EventDetailsComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.spinnerService.spin(true)
     this.getEvent()
   }
 

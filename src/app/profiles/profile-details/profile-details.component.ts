@@ -9,6 +9,7 @@ import { MessageService } from '../../message/message.service';
 import { UserSessionResponse } from '../../models/user-models';
 import { Base64Upload } from '../../models/misc-models';
 import { OwnedShip, Ship } from '../../models/ship-models';
+import { SpinnerService } from '../../misc/spinner/spinner.service';
 
 @Component({
   selector: 'app-profile-details',
@@ -23,17 +24,16 @@ export class ProfileDetailsComponent implements OnInit {
   directorRights:boolean = this.authService.hasClaim(3)
   shipList:Ship[]
   newShip:OwnedShip = { } as OwnedShip
-  dataLoaded:boolean = false
 
   profile:Character
-  constructor(private route:ActivatedRoute, private router:Router, private profileService:ProfileService, private applicationService:ApplicationService, private messageService:MessageService, private authService:AuthService) { }
+  constructor(private route:ActivatedRoute, private router:Router, private profileService:ProfileService, private applicationService:ApplicationService, private messageService:MessageService, private authService:AuthService, private spinnerService:SpinnerService) { }
 
   fetchProfile()
   {
     this.profileService.fetch(this.profileId).subscribe(
       (result) => {
+        this.spinnerService.spin(false)
         if (!(result instanceof HttpErrorResponse)) {
-          this.dataLoaded = true
           this.profile = result
           this.canEdit = ((this.profile.user_id === (this.authService.retrieveUserSession() as UserSessionResponse).id) || this.hrRights) ? true : false
           if (this.canEdit && !this.shipList) {
@@ -216,6 +216,7 @@ export class ProfileDetailsComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.spinnerService.spin(true)
     this.fetchProfile()
   }
 

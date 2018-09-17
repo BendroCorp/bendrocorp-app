@@ -3,6 +3,7 @@ import { RequestsService } from '../requests.service';
 import { MyApproval } from '../../models/approval-models';
 import { HttpErrorResponse } from '../../../../node_modules/@angular/common/http';
 import { Subscription } from '../../../../node_modules/rxjs';
+import { SpinnerService } from '../../misc/spinner/spinner.service';
 
 @Component({
   selector: 'app-approvals',
@@ -12,10 +13,9 @@ import { Subscription } from '../../../../node_modules/rxjs';
 export class ApprovalsComponent implements OnInit, OnDestroy {
   
   myApprovals:MyApproval[] = []
-  dataLoaded:boolean = false
   approvalSubmitting:boolean = false
   subscription:Subscription
-  constructor(private requestsService:RequestsService) { 
+  constructor(private requestsService:RequestsService, private spinnerService:SpinnerService) { 
     this.subscription = requestsService.dataRefreshAnnounced$.subscribe(
       () => {
         this.fetchApprovals()
@@ -26,15 +26,16 @@ export class ApprovalsComponent implements OnInit, OnDestroy {
   fetchApprovals() {
     this.requestsService.list_approvals().subscribe(
       (results) => {
+        this.spinnerService.spin(false)
         if (!(results instanceof HttpErrorResponse)) {
           this.myApprovals = results
-          this.dataLoaded = true
         }
       }
     )
   }
 
   ngOnInit() {
+    this.spinnerService.spin(true)
     this.fetchApprovals()
   }
 

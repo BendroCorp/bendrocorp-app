@@ -5,6 +5,7 @@ import { OffenderReport, Offender, ViolenceRating } from '../models/offender-rep
 import { Subscription } from 'rxjs';
 import { AuthService } from '../auth.service';
 import { HttpErrorResponse } from '@angular/common/http';
+import { SpinnerService } from '../misc/spinner/spinner.service';
 
 @Component({
   selector: 'app-offender-reports',
@@ -16,10 +17,10 @@ export class OffenderReportsComponent implements OnInit {
   adminOffenderReports:OffenderReport[] = []
   myOffenderReports:OffenderReport[] = []
   violenceRatings:ViolenceRating[]
-  
   isAdmin = this.authService.hasClaim(16)
+
   subscription:Subscription
-  constructor(private offenderReportService:OffenderReportService, private messageService:MessageService, private authService:AuthService) { 
+  constructor(private offenderReportService:OffenderReportService, private messageService:MessageService, private authService:AuthService, private spinnerService:SpinnerService) { 
     this.subscription = this.offenderReportService.dataRefreshAnnounced$.subscribe(
       () => {
         this.fetchReports()
@@ -39,24 +40,26 @@ export class OffenderReportsComponent implements OnInit {
       )
     }
 
-    this.offenderReportService.list_mine().subscribe(
-      (results) => {
-        if (!(results instanceof HttpErrorResponse)) {
-          this.myOffenderReports = results
-        }
-      }
-    )
-
     this.offenderReportService.list().subscribe(
       (results) => {
         if (!(results instanceof HttpErrorResponse)) {
           this.offenderReports = results
         }
+
+        this.offenderReportService.list_mine().subscribe(
+          (results) => {
+            this.spinnerService.spin(false)
+            if (!(results instanceof HttpErrorResponse)) {
+              this.myOffenderReports = results
+            }
+          }
+        )
       }
-    )
+    )  
   }
 
   ngOnInit() {
+    this.spinnerService.spin(true)
     this.offenderReportService.list_rating().subscribe(
       (results) => {
         if (!(results instanceof HttpErrorResponse)) {
