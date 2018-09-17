@@ -72,6 +72,11 @@ import { OrderByPipe } from './helpers/orderBy';
 import { FilterPipe } from './pipes/filter.pipe';
 import { SpinnerComponent } from './misc/spinner/spinner.component';
 import { SpinnerService } from './misc/spinner/spinner.service';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
+import { PromptUpdateService } from './updates/prompt-update-service.service';
+import { CheckForUpdateService } from './updates/check-for-update.service';
+import { LogUpdateService } from './updates/log-update-service.service';
 
 @NgModule({
   declarations: [
@@ -145,9 +150,13 @@ import { SpinnerService } from './misc/spinner/spinner.service';
     BrowserAnimationsModule,
     AngularDateTimePickerModule,
     QRCodeModule,
-    NgxPaginationModule
+    NgxPaginationModule,
+    ServiceWorkerModule.register('/ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [
+    PromptUpdateService,
+    CheckForUpdateService,
+    LogUpdateService,
     OrderByPipe,
     FilterPipe,
     NgbModal,
