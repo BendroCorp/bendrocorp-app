@@ -17,7 +17,7 @@ export class MenuService {
   list() : Observable<MenuItem[]>
   {
     return this.http.get<MenuItem[]>(`${this.globals.baseUrl}/menu`).pipe(
-      tap(results => console.log()),
+      tap(results => console.log("Fetched the menu")),
       catchError(this.errorService.handleError('Fetch Menu', []))
     )
   }
