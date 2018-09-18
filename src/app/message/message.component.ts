@@ -57,8 +57,7 @@ export class MessageComponent implements OnInit {
   errorMessage: string;
   updateMessage: string;
 
-  ngOnInit(): void { //infoMessage
-    // let timespan = TimeSpan.Subtract(new Date(), new Date().setSeconds(new Date().getSeconds() + 7))
+  ngOnInit(): void { 
     // success message
     this._successMessage.subscribe((message) => {
       this.successMessage = message
@@ -66,8 +65,6 @@ export class MessageComponent implements OnInit {
             this.successMessage = null;
       }, 5000);
     });
-    // debounceTime.call
-    // debounceTime.call(this._successMessage, 7000).subscribe(() => this.successMessage = null);
     
     // Error message
     this._errorMessage.subscribe((message) => {
@@ -76,7 +73,6 @@ export class MessageComponent implements OnInit {
         this.errorMessage = null;
       }, 10000);
     });
-    // debounceTime.call(this._errorMessage, 7000).subscribe(() => this.errorMessage = null);
 
     // Info message
     this._infoMessage.subscribe((message) => {
@@ -85,7 +81,6 @@ export class MessageComponent implements OnInit {
         this.infoMessage = null;
       }, 7000);
     });
-    // debounceTime.call(this._infoMessage, 7000).subscribe(() => this.infoMessage = null);
   }
 
   changeSuccessMessage(message:string) {
@@ -102,6 +97,11 @@ export class MessageComponent implements OnInit {
 
   changeUpdateMessage(message:string) {
     this._updateMessage.next(message);
+  }
+
+  doUpdate()
+  {
+    this.messageService.doUpdate()
   }
 
 }

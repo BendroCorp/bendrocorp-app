@@ -2,5 +2,5 @@
   <ngb-alert [@flyInOut]="successMessage" *ngIf="successMessage" type="success" (close)="successMessage = null">{{ successMessage }}</ngb-alert>
   <ngb-alert [@flyInOut]="errorMessage" *ngIf="errorMessage" type="danger" (close)="errorMessage = null">{{ errorMessage }}</ngb-alert>
   <ngb-alert [@flyInOut]="infoMessage" *ngIf="infoMessage" type="info" (close)="infoMessage = null">{{ infoMessage }}</ngb-alert>
-  <ngb-alert [@flyInOut]="updateMessage" *ngIf="updateMessage" type="info" (close)="updateMessage = null">{{ updateMessage }} <button class="btn btn-secondary" (click)="doUpdate()">Update</button></ngb-alert>
+  <ngb-alert [@flyInOut]="updateMessage" *ngIf="updateMessage" type="info" (close)="updateMessage = null"><p>{{ updateMessage }}</p><p><button class="btn btn-primary" (click)="doUpdate()">Update</button></p></ngb-alert>
 </div>
