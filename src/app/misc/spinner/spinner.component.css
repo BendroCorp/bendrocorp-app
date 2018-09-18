@@ -1,6 +1,6 @@
 div.spinner-parent {
     position: absolute;
-    background-color: #fff;
+    /* background-color: #fff; */
     top: 0;
     left: 0;
     height: 100%;
@@ -15,7 +15,7 @@ div.spinner-parent {
     align-items: center;
     justify-content: center;
     height: 100%;
-    background-color: #fff !important;
+    /* background-color: #fff !important; */
 }
 .app-loading .spinner {
     height: 200px;
