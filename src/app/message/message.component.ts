@@ -81,6 +81,11 @@ export class MessageComponent implements OnInit {
         this.infoMessage = null;
       }, 7000);
     });
+
+    this._updateMessage.subscribe((message) => {
+      this.updateMessage = message
+      // these dont time out
+    })
   }
 
   changeSuccessMessage(message:string) {
