@@ -10,13 +10,13 @@ import { ApiOfflineService } from './api-offline.service';
 export class ApiOfflineComponent implements OnInit {
 
   subscription:Subscription
-  appOffline:boolean = false
+  apiOffline:boolean = false
 
   constructor(private apiOfflineService:ApiOfflineService) { 
     this.apiOfflineService.dataRefreshAnnounced$.subscribe(
       () => {
         let result = this.apiOfflineService.appOnline()
-        this.appOffline = result        
+        this.apiOffline = result        
       }
     )    
   }
