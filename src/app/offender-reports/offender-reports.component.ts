@@ -17,6 +17,7 @@ export class OffenderReportsComponent implements OnInit {
   adminOffenderReports:OffenderReport[] = []
   myOffenderReports:OffenderReport[] = []
   violenceRatings:ViolenceRating[]
+  dataLoaded:boolean = false
   isAdmin = this.authService.hasClaim(16)
 
   subscription:Subscription
@@ -51,6 +52,7 @@ export class OffenderReportsComponent implements OnInit {
             this.spinnerService.spin(false)
             if (!(results instanceof HttpErrorResponse)) {
               this.myOffenderReports = results
+              this.dataLoaded = true
             }
           }
         )
