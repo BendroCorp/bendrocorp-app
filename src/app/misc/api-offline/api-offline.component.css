@@ -1,0 +1,16 @@
+.api-offline
+{
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background: #fff;
+    z-index: 100;
+}
+
+.api-offline > div
+{
+    margin-top: 20%;
+    text-align: center;
+}

@@ -41,19 +41,24 @@ export class MessageComponent implements OnInit {
         }else if(this.capturedMessage.type === 4)
         {
           this.changeUpdateMessage(this.capturedMessage.message)
+        }else if (this.capturedMessage.type === 5)
+        {
+          this.changeStaticInfoMessage(this.capturedMessage.message)
         }
         this.messageService.clear();
       }
     )
   }
 
-  private subscription:Subscription; // for the message service
+  private subscription:Subscription; // for the message service 
   private _successMessage = new Subject<string>();
   private _errorMessage = new Subject<string>();
-  private _infoMessage = new Subject<string>();
+  private _infoMessage = new Subject<string>(); 
+  private _staticInfoMessage = new Subject<string>(); 
   private _updateMessage = new Subject<string>();
   successMessage: string;
   infoMessage: string;
+  staticInfoMessage: string;
   errorMessage: string;
   updateMessage: string;
 
@@ -82,6 +87,11 @@ export class MessageComponent implements OnInit {
       }, 7000);
     });
 
+    this._staticInfoMessage.subscribe((message) => {
+      this.staticInfoMessage = message
+      // these dont time out
+    })
+
     this._updateMessage.subscribe((message) => {
       this.updateMessage = message
       // these dont time out
@@ -102,6 +112,10 @@ export class MessageComponent implements OnInit {
 
   changeUpdateMessage(message:string) {
     this._updateMessage.next(message);
+  }
+
+  changeStaticInfoMessage(message:string) {
+    this._staticInfoMessage.next(message);
   }
 
   doUpdate()

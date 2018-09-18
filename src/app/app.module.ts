@@ -77,6 +77,8 @@ import { environment } from '../environments/environment';
 import { PromptUpdateService } from './updates/prompt-update-service.service';
 import { CheckForUpdateService } from './updates/check-for-update.service';
 import { LogUpdateService } from './updates/log-update-service.service';
+import { ApiOfflineComponent } from './misc/api-offline/api-offline.component';
+import { IsAuthorizedService } from './misc/is-authorized.service';
 
 @NgModule({
   declarations: [
@@ -132,7 +134,8 @@ import { LogUpdateService } from './updates/log-update-service.service';
     CreateUpdateOffenderReportModalComponent,
     LocationSwitcherComponent,
     OffenderReportDetailsComponent,
-    SpinnerComponent
+    SpinnerComponent,
+    ApiOfflineComponent
   ],
   entryComponents: [
     EventModalComponent,
@@ -176,7 +179,8 @@ import { LogUpdateService } from './updates/log-update-service.service';
     MenuService,
     Globals,
     EventService,
-    SpinnerService
+    SpinnerService,
+    IsAuthorizedService
   ],
   bootstrap: [AppComponent]
 })

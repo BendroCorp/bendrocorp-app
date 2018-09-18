@@ -37,6 +37,13 @@ export class MessageService {
     this.add(msg)
   }
 
+  addStaticInfo(message: string)
+  {
+    let msg:Message = { message: message, type: 5 }
+    console.log(message)
+    this.add(msg)
+  }
+
   addUpdateMessage(message: string)
   {
     let msg:Message = { message: message, type: 4 }

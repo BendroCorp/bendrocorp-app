@@ -5,23 +5,21 @@ import { Message } from './models/message-models';
 import { HttpErrorResponse, HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { Globals } from './globals';
-import { LogItem } from './models/misc-models';
 import { tap, catchError } from 'rxjs/operators';
 
 @Injectable()
 export class ErrorService {
   msg:Message = new Message; 
   constructor(private messageService: MessageService, private router:Router, private http:HttpClient, private globals:Globals) { }
-  handleError<T> (operation = 'operation', result?: T) {
+  handleError<T> (operation = 'operation', result?: T, skipMessage?:boolean) {
     return (error: any): Observable<T> => {
   
       // TODO: send the error to remote logging infrastructure
-      // console.log("Error handler triggered!");
       
       console.error(error); // log to console instead
       this.msg.type = 2 // error
       if (error instanceof HttpErrorResponse) {
-        if (error.error.message) {
+        if (error.error && error.error.message) {
           this.msg.message = `${operation}: ${error.error.message}`
         } else {
           this.msg.message = `${operation}: ${error.message}`
@@ -31,8 +29,8 @@ export class ErrorService {
         // forward to the login page
         if (error.status == 401) {
           localStorage.removeItem('userObject')
-          localStorage.setItem("authRedirect", error.url)
-          this.router.navigateByUrl('/login'); //forces the page to actually reload
+          //localStorage.setItem("authRedirect", error.url)
+          this.router.navigateByUrl('/'); //forces the page to actually reload
           // need to handle telling the menu that an auth error happened
           this.announceAuthError()
         }
@@ -43,8 +41,10 @@ export class ErrorService {
 
       console.log(this.msg.message);
 
-      this.createLog({ severity: 'ERROR', module: operation, message: error.message } as LogItem)      
-      this.messageService.add(this.msg);
+      // this.createLog({ severity: 'ERROR', module: operation, message: error.message } as LogItem) 
+      if (!skipMessage) {
+        this.messageService.add(this.msg);
+      }
            
       return of(error as T);
     };
@@ -72,12 +72,12 @@ export class ErrorService {
     this.authErrorSource.next();
   }
 
-  private createLog(log:LogItem)
-  {
-    return this.http.post(`${this.globals.baseUrl}/logs`, { log }).pipe(
-      tap(results => console.log())
-    )
-  }
+  // private createLog(log:LogItem)
+  // {
+  //   return this.http.post(`${this.globals.baseUrl}/logs`, { log }).pipe(
+  //     tap(results => console.log())
+  //   )
+  // }
 
   fourZeroOneError(uri:string)
   {

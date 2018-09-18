@@ -36,7 +36,7 @@ export class OffenderReportService {
   list_mine() : Observable<OffenderReport[]>
   {
     return this.http.get<OffenderReport[]>(`${this.globals.baseUrl}/offender-report/mine`).pipe(
-      tap(result => console.log(`Fetched ${result.length} soffender reports!`)),
+      tap(result => console.log(`Fetched ${result.length} offender reports of mine!`)),
       catchError(this.errorService.handleError('Fetch My Offender Reports', []))
     )
   }
