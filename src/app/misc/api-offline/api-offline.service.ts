@@ -76,7 +76,7 @@ export class ApiOfflineService {
    */
   private healthCheck() : Observable<StatusMessage>
   {
-    return this.http.get<StatusMessage>(`${this.globals.baseUrl}`).pipe(
+    return this.http.get<StatusMessage>(`${this.globals.baseUrlRoot}`).pipe(
       tap(result => console.log("API Health check performed")),
       catchError(this.error.handleError<any>('Health Check', null, true))
     )

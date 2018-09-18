@@ -25,7 +25,7 @@ export class AuthInterceptor implements HttpInterceptor {
         this.authService.logout()
         this.authService.setOnAuthRedirect(err.url)
         this.authService.refreshData()
-        this.router.navigate([`/login`]);
+        this.router.navigateByUrl(`/login`);
         // yes we do want to let downstream stuff also have a day lol man
         // // if you've caught / handled the error, you don't want to rethrow it unless you also want downstream consumers to have to handle it as well.
         // return of(err.message);

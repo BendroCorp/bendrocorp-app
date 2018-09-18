@@ -14,7 +14,7 @@ export class IsAuthorizedService {
       () => {
         // Does a token a actually exist?
         let user = this.authService.retrieveUserSession()
-        if (user) {
+        if (user && user.id) {
           // if the user is not logged (ie their session has expired)
           if (!this.authService.isLoggedIn()) {
             // then log the user out and redirect to root

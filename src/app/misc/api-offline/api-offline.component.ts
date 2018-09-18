@@ -16,9 +16,7 @@ export class ApiOfflineComponent implements OnInit {
     this.apiOfflineService.dataRefreshAnnounced$.subscribe(
       () => {
         let result = this.apiOfflineService.appOnline()
-        this.appOffline = result
-        console.log(result);
-        
+        this.appOffline = result        
       }
     )    
   }

@@ -57,8 +57,7 @@ export class ErrorService {
         console.log("401 received - forwarding to login...")
         // this.authService.logout();
         // this.authService.setOnAuthRedirect(err.url);
-        this.fourZeroOneError(error.url)
-        this.router.navigateByUrl('/login');
+        this.fourZeroOneError(error.url)        
       }
       return of(error as T);
     }
@@ -82,6 +81,7 @@ export class ErrorService {
   fourZeroOneError(uri:string)
   {
     localStorage.setItem("authRedirect", uri)
-    localStorage.removeItem('userObject')
+    let didLogout = localStorage.removeItem('userObject') ? of(true) : of(false);
+    this.router.navigateByUrl('/login')
   }
 }
