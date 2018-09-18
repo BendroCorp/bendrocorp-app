@@ -8,7 +8,7 @@ export class PromptUpdateService {
 
   constructor(updates: SwUpdate, private messageService:MessageService) {
     updates.available.subscribe(event => {
-      this.messageService.addInfo("An update is available for this application. Refresh your browser to update to it!")
+      this.messageService.addUpdateMessage("An update is available for this application. Refresh your browser to update to it!")
       // if (promptUser(event)) {
       //   updates.activateUpdate().then(() => document.location.reload());
       // }
