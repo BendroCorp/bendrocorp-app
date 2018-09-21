@@ -6,8 +6,10 @@ import { SwUpdate } from '@angular/service-worker';
 export class CheckForUpdateService {
 
   constructor(updates: SwUpdate) {
-    if (updates.isEnabled) {
-      interval(6 * 60 * 60).subscribe(() => updates.checkForUpdate());
-    }
+    // if (updates.isEnabled) {
+    //   interval(6 * 60 * 60).subscribe(() => updates.checkForUpdate());
+    // }
+
+    interval(6 * 60 * 60).subscribe(() => updates.checkForUpdate());
   }
 }
