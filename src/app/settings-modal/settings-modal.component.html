@@ -67,6 +67,22 @@
           </div>
         </ng-template>
       </ngb-tab>
+      <ngb-tab title="OAuth">
+        <ng-template ngbTabContent>
+          <br>
+          <h5>OAuth Tokens</h5>
+          <h6 *ngIf="!tokens || tokens.length == 0">You have not authorized any third party integrations.</h6>
+          <table *ngIf="tokens && tokens.length > 0" class="table table-striped">
+            <tbody>
+              <tr *ngFor="let token of tokens">
+                <td>{{token}}</td>
+                <td></td>
+                <td><button class="btn btn-sm btn-danger" (click)="revokeToken(token)">Revoke</button></td>
+              </tr>
+            </tbody>
+          </table>
+        </ng-template>
+      </ngb-tab>
       <ngb-tab title="Membership">
         <ng-template ngbTabContent>
           <br>

@@ -41,7 +41,7 @@ export class LoginComponent implements OnInit {
                 this.authService.unSetOnAuthRedirect();                
                 try {
                   // TODO: Implement this better
-                  this.router.navigateByUrl('/');
+                  this.router.navigateByUrl(auth_redirect);
                 } catch (error) {
                   // if for some reason the route causes a problem then just go to the root
                   // TODO: Find out why this sometimes gets segments

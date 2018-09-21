@@ -1,0 +1,34 @@
+<div class="row">
+  <div class="col-md-2"></div>
+  <div class="col-md-8">
+    <br>
+    <div class="card border-secondary mb-3">
+      <div class="card-header">Authorize Application</div>
+      <div class="card-body">
+        <!-- Outer -->
+        <div *ngIf="clientChecked" style="text-align:center;">
+          <!-- Client not found -->
+          <div *ngIf="!client">
+            <h3 class="text-danger">Client not found</h3>
+            <p class="text-danger">Cannot process request. All applications must be registered to use Oauth2 authentication for security reasons. If you would like to see an integration added please contact the Chief Executive Officer.</p>
+          </div>
+          <!-- Client Found  -->
+          <div *ngIf="client">
+            <div *ngIf="client.image">
+              <!-- image here -->
+              <img src="{{client.image}}" alt="" style="max-height:100px;">
+            </div>
+            <h4>{{client.title}}</h4>
+            <p>
+              You are authorizing the above application to access all of your BendroCorp data. You can revoke this permission at any time from the 'Settings' menu.
+            </p>
+            <button class="btn btn-lg btn-primary" (click)="authorizeClient()">Authorize Application</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-2"></div>
+</div>
+
+

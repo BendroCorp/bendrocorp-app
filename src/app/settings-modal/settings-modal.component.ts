@@ -4,6 +4,8 @@ import { AuthService } from '../auth.service';
 import { NewPassword, TwoFactorDataObject, TwoFactorAuthObject, UserSessionResponse } from '../models/user-models';
 import { MessageService } from '../message/message.service';
 import { HttpErrorResponse } from '@angular/common/http';
+import { OauthService } from '../oauth/oauth.service';
+import { OAuthToken } from '../models/misc-models';
 
 @Component({
   selector: 'settings-modal',
@@ -15,9 +17,10 @@ export class SettingsModalComponent implements OnInit {
   passwordChange:NewPassword
   tfaDataObject:TwoFactorDataObject
   tfaAuthObject:TwoFactorAuthObject
+  tokens:OAuthToken[] = []
   user = this.authService.retrieveUserSession() as UserSessionResponse
 
-  constructor(private modalService: NgbModal, private authService:AuthService, private messageService:MessageService) {}
+  constructor(private modalService: NgbModal, private authService:AuthService, private messageService:MessageService, private oAuthService:OauthService) {}
 
   doChangePassword()
   {
@@ -65,6 +68,32 @@ export class SettingsModalComponent implements OnInit {
     this.messageService.addInfo("The one click button is currently not available. If you would like to end your membership please contact your Director via Discord.")
   }
 
+  fetchTokens()
+  {
+    this.oAuthService.fetch_tokens().subscribe(
+      (results) => {
+        if (!(results instanceof HttpErrorResponse)) {
+          this.tokens = results
+        }
+      }
+    )
+  }
+
+  revokeToken(token:OAuthToken)
+  {
+    if (this.tokens.length > 0 && token) {
+      if (confirm("Are you sure you want to revoke this applications access to your data?")) {
+        this.oAuthService.remove_token(token.token).subscribe(
+          (results) => {
+            if (!(results instanceof HttpErrorResponse)) {
+              this.tokens.splice(this.tokens.findIndex(x => x.token == token.token), 1)
+            }
+          }
+        )
+      }
+    }
+  }
+
   open(content) {
     this.passwordChange = { } as NewPassword
     this.openModal = this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'})
@@ -76,6 +105,7 @@ export class SettingsModalComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.fetchTokens()
   }
 
 }

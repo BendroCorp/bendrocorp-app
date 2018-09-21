@@ -79,6 +79,8 @@ import { CheckForUpdateService } from './updates/check-for-update.service';
 import { LogUpdateService } from './updates/log-update-service.service';
 import { ApiOfflineComponent } from './misc/api-offline/api-offline.component';
 import { IsAuthorizedService } from './misc/is-authorized.service';
+import { OauthComponent } from './oauth/oauth.component';
+import { DeviceDetectorModule } from 'ngx-device-detector';
 
 @NgModule({
   declarations: [
@@ -135,7 +137,8 @@ import { IsAuthorizedService } from './misc/is-authorized.service';
     LocationSwitcherComponent,
     OffenderReportDetailsComponent,
     SpinnerComponent,
-    ApiOfflineComponent
+    ApiOfflineComponent,
+    OauthComponent
   ],
   entryComponents: [
     EventModalComponent,
@@ -154,6 +157,7 @@ import { IsAuthorizedService } from './misc/is-authorized.service';
     AngularDateTimePickerModule,
     QRCodeModule,
     NgxPaginationModule,
+    DeviceDetectorModule.forRoot(),
     ServiceWorkerModule.register('/ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [

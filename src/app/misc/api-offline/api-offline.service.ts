@@ -5,6 +5,7 @@ import { tap, catchError } from 'rxjs/operators';
 import { StatusMessage } from '../../models/misc-models';
 import { Globals } from '../../globals';
 import { ErrorService } from '../../error.service';
+import { DeviceDetectorService } from 'ngx-device-detector';
 
 @Injectable({
   providedIn: 'root'
@@ -14,39 +15,41 @@ export class ApiOfflineService {
   private apiOffline:boolean = false 
   private dataRefreshSource = new Subject();
 
-  constructor(private http:HttpClient, private error:ErrorService, private globals:Globals) {
+  constructor(private http:HttpClient, private error:ErrorService, private globals:Globals, private deviceService:DeviceDetectorService) {
     // perform an initial immediate check
-    this.healthCheck().subscribe(
-      (results) => {
+    // this.healthCheck().subscribe(
+    //   (results) => {
 
-        // handle initial results
-        if (!(results instanceof HttpErrorResponse)) {
-          this.apiOffline = false
-        } else {
-          this.apiOffline = true
-        }
+    //     // handle initial results
+    //     if (!(results instanceof HttpErrorResponse)) {
+    //       this.apiOffline = false
+    //     } else {
+    //       this.apiOffline = true
+    //     }
 
-        this.refreshData()
+    //     this.refreshData()
 
-        // now perform every 10 seconds
-        interval(10 * 1000).subscribe(() => {
-          // do health check
-          this.healthCheck().subscribe(
-            (results) =>
-            {
-              if (!(results instanceof HttpErrorResponse)) {
-                this.apiOffline = false
-              } else {
-                this.apiOffline = true
-              }
-
-              // signal app offline component that there is an update
-              this.refreshData();
-            }
-          )
-        })
-      }
-    )    
+    //     // now perform every 10 seconds - if not on a mobile device
+    //     if (this.deviceService.isDesktop()) {
+    //       interval(10 * 1000).subscribe(() => {
+    //         // do health check
+    //         this.healthCheck().subscribe(
+    //           (results) =>
+    //           {
+    //             if (!(results instanceof HttpErrorResponse)) {
+    //               this.apiOffline = false
+    //             } else {
+    //               this.apiOffline = true
+    //             }
+  
+    //             // signal app offline component that there is an update
+    //             this.refreshData();
+    //           }
+    //         )
+    //       })
+    //     }        
+    //   }
+    // )    
   }
   /**
    * An observable which can be subcribed to which allows you to detect when a data refresh is announced.

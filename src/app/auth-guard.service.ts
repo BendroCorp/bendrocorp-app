@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { CanActivate, Router, RouterStateSnapshot, ActivatedRouteSnapshot } from '@angular/router';
+import { CanActivate, Router, RouterStateSnapshot, ActivatedRouteSnapshot, ActivatedRoute } from '@angular/router';
 import { AuthService } from './auth.service';
 
 @Injectable()
@@ -25,6 +25,29 @@ export class AuthGuardService implements CanActivate {
       return true
     } else {
       this.authService.refreshData()
+
+      // get the base path
+      let path = `/${route.url.join('/')}`
+
+      // handle params
+      let paramLength = Object.keys(route.queryParams).length
+      if (paramLength > 0) {
+        path = `${path}?`
+      }
+
+      // Iterate through any params which may also be in the url
+      let i = 0
+      for (var key in route.queryParams) {
+        if (route.queryParams.hasOwnProperty(key)) {
+          i++
+          let param = key + "=" + route.queryParams[key]
+          path = `${path}${param}`
+          if (i < paramLength) {
+            path = `${path}&`
+          }
+        }
+      }
+      localStorage.setItem("authRedirect", path)
       this.router.navigate(['/login']);
       return false;
     }

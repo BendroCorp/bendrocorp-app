@@ -3,14 +3,14 @@ import { Observable, of, Subject } from 'rxjs';
 import { MessageService } from './message/message.service';
 import { Message } from './models/message-models';
 import { HttpErrorResponse, HttpClient } from '@angular/common/http';
-import { Router } from '@angular/router';
+import { Router, ActivatedRouteSnapshot, ActivatedRoute } from '@angular/router';
 import { Globals } from './globals';
 import { tap, catchError } from 'rxjs/operators';
 
 @Injectable()
 export class ErrorService {
   msg:Message = new Message; 
-  constructor(private messageService: MessageService, private router:Router, private http:HttpClient, private globals:Globals) { }
+  constructor(private messageService: MessageService, private route: ActivatedRoute, private router:Router, private http:HttpClient, private globals:Globals) { }
   handleError<T> (operation = 'operation', result?: T, skipMessage?:boolean) {
     return (error: any): Observable<T> => {
   
@@ -31,6 +31,7 @@ export class ErrorService {
           localStorage.removeItem('userObject')
           //localStorage.setItem("authRedirect", error.url)
           this.router.navigateByUrl('/'); //forces the page to actually reload
+          this.fourZeroOneError()   
           // need to handle telling the menu that an auth error happened
           this.announceAuthError()
         }
@@ -57,7 +58,7 @@ export class ErrorService {
         console.log("401 received - forwarding to login...")
         // this.authService.logout();
         // this.authService.setOnAuthRedirect(err.url);
-        this.fourZeroOneError(error.url)        
+        this.fourZeroOneError()        
       }
       return of(error as T);
     }
@@ -78,9 +79,31 @@ export class ErrorService {
   //   )
   // }
 
-  fourZeroOneError(uri:string)
+  fourZeroOneError()
   {
-    localStorage.setItem("authRedirect", uri)
+    // get the base path
+    let path = `/${this.route.snapshot.url.join('/')}`
+
+    // handle params
+    let params = this.route.snapshot.queryParams;
+    let paramLength = Object.keys(params).length
+    if (paramLength > 0) {
+      path = `${path}?`
+    }
+
+    // Iterate through any params which may also be in the url
+    let i = 0
+    for (var key in params) {
+      if (params.hasOwnProperty(key)) {
+        i++
+        let param = key + "=" + params[key]
+        path = `${path}${param}`
+        if (i < paramLength) {
+          path = `${path}&`
+        }
+      }
+    }
+    localStorage.setItem("authRedirect", path)
     let didLogout = localStorage.removeItem('userObject') ? of(true) : of(false);
     this.router.navigateByUrl('/login')
   }

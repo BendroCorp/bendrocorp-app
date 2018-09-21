@@ -20,6 +20,7 @@ import { OffenderReportsComponent } from './offender-reports/offender-reports.co
 import { AddRoleComponent } from './requests/add-role/add-role.component';
 import { RemoveRoleComponent } from './requests/remove-role/remove-role.component';
 import { PositionChangeComponent } from './requests/position-change/position-change.component';
+import { OauthComponent } from './oauth/oauth.component';
 
 const routes: Routes = [
     { path: '', component: DashboardComponent, canActivate: [AuthGuardService, MemberAuthGuardService] },
@@ -41,7 +42,8 @@ const routes: Routes = [
     { path: 'requests/remove-role', component: RemoveRoleComponent, canActivate: [AuthGuardService, MemberAuthGuardService]},
     { path: 'requests/position-change', component: PositionChangeComponent, canActivate: [AuthGuardService, MemberAuthGuardService]},
     { path: 'requests/approvals', component: ApprovalsComponent, canActivate: [AuthGuardService, MemberAuthGuardService]},
-    { path: 'requests/approvals/:approval_id', component: ApprovalDetailsComponent, canActivate: [AuthGuardService, MemberAuthGuardService]}
+    { path: 'requests/approvals/:approval_id', component: ApprovalDetailsComponent, canActivate: [AuthGuardService, MemberAuthGuardService]},
+    { path: 'oauth', component: OauthComponent, canActivate: [AuthGuardService, MemberAuthGuardService] }
   ];
   
   @NgModule({
