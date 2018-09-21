@@ -20,6 +20,7 @@ export class Approval
     approval_status?: string
     approval_link?: string
     approval_source_requested_item?: string
+    approval_source_on_behalf_of?: string
 
     approval_kind:ApprovalKind
     approval_approver:ApprovalApprover

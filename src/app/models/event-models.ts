@@ -1,6 +1,4 @@
 import { Character } from "./character-models";
-import { debounceTime } from "../../../node_modules/rxjs/operators";
-import { Observable } from "../../../node_modules/rxjs";
 
 export class Event
 {
@@ -22,63 +20,6 @@ export class Event
 
     private _start_date:Date
     private _end_date:Date
-
-    // get start_date(): Date {
-	// 	return this._start_date
-	// }
-	// set start_date(value: Date) {     
-    //     this._start_date = new Date(value)   
-	// 	this.start_date_ms = this._start_date.getTime()
-    // }
-    
-    // get end_date(): Date {
-    //     // return this._end_date
-	// 	return new Date(this.end_date_ms)
-	// }
-	// set end_date(value: Date) {
-    //     this._start_date = new Date(value)  
-	// 	this.end_date_ms = this._end_date.getTime()
-    // }
-
-    // private _startDate: number;
-    // private _endDate: number;
-
-    // getStartDate()
-    // {
-    //     this.display_start_date = new Date(this.start_date_ms)
-    //     return this.display_start_date        
-    // }
-
-    // getEndDate()
-    // {
-    //     this.display_end_date = new Date(this.end_date_ms)
-    //     return this.display_end_date      
-    // }
-
-    // get display_start_date(): Date {
-	// 	return new Date(this.start_date_ms)
-	// }
-	// set display_start_date(value: Date) {        
-	// 	this.start_date_ms = value.getTime()
-    // }
-    
-    // get display_end_date(): Date {
-	// 	return new Date(this.end_date_ms)
-	// }
-	// set display_end_date(value: Date) {
-	// 	this.end_date_ms = value.getTime()
-    // }
-
-    constructor() {
-        // console.log("event construct");
-        
-        // if (this.start_date_ms) {
-        //     this.display_start_date = new Date(this.start_date_ms)
-        // }
-        // if (this.end_date_ms) {
-        //     this.display_end_date = new Date(this.end_date_ms)
-        // }
-    }
 }
 
 export class EventAttendence
