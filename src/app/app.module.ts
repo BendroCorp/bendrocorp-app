@@ -81,6 +81,7 @@ import { ApiOfflineComponent } from './misc/api-offline/api-offline.component';
 import { IsAuthorizedService } from './misc/is-authorized.service';
 import { OauthComponent } from './oauth/oauth.component';
 import { DeviceDetectorModule } from 'ngx-device-detector';
+import { AuthCompleteComponent } from './misc/auth-complete/auth-complete.component';
 
 @NgModule({
   declarations: [
@@ -138,7 +139,8 @@ import { DeviceDetectorModule } from 'ngx-device-detector';
     OffenderReportDetailsComponent,
     SpinnerComponent,
     ApiOfflineComponent,
-    OauthComponent
+    OauthComponent,
+    AuthCompleteComponent
   ],
   entryComponents: [
     EventModalComponent,
