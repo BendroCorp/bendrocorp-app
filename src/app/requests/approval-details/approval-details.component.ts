@@ -4,6 +4,7 @@ import { MyApproval } from '../../models/approval-models';
 import { HttpErrorResponse } from '../../../../node_modules/@angular/common/http';
 import { ActivatedRoute } from '../../../../node_modules/@angular/router';
 import { Subscription } from '../../../../node_modules/rxjs';
+import { SpinnerService } from '../../misc/spinner/spinner.service';
 
 @Component({
   selector: 'app-approval-details',
@@ -17,22 +18,22 @@ export class ApprovalDetailsComponent implements OnInit, OnDestroy {
   approvalSubmitting:boolean = false
   dataLoaded:boolean = false
   subscription:Subscription
-  constructor(private requestsService:RequestsService, private route:ActivatedRoute) { 
+  constructor(private requestsService:RequestsService, private route:ActivatedRoute, private spinnerService:SpinnerService) { 
     this.subscription = this.requestsService.dataRefreshAnnounced$.subscribe(
       () => {
-        this.fetchApprovals()
+        this.fetchApproval()
       }
     )
   }
 
-  fetchApprovals() {
+  fetchApproval() {
     this.requestsService.list_approvals().subscribe(
       (results) => {
         if (!(results instanceof HttpErrorResponse)) {
           this.approval = results.find(x => x.approval_id == this.approvalId)
-          console.log(this.approval);
-          
+          console.log(this.approval);          
           this.dataLoaded = true
+          this.spinnerService.spin(false)
         }
       }
     )
@@ -53,7 +54,7 @@ export class ApprovalDetailsComponent implements OnInit, OnDestroy {
         (results) => {
           if (!(results instanceof HttpErrorResponse))
           {
-            this.fetchApprovals()
+            this.fetchApproval()
           }
           this.approvalSubmitting = false
         }
@@ -62,7 +63,8 @@ export class ApprovalDetailsComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.fetchApprovals()
+    this.spinnerService.spin(true)
+    this.fetchApproval()
   }
 
   ngOnDestroy() {
