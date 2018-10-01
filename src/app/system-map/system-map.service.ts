@@ -27,7 +27,10 @@ export class SystemMapService {
   list() : Observable<StarSystem[]>
   {
     return this.http.get<StarSystem[]>(`${this.globals.baseUrl}/system-map`).pipe(
-      tap(result => console.log(`Fetched ${result.length} star systems!`)),
+      tap(result => {
+        console.log(`Fetched ${result.length} star systems!`)
+        console.log(result)
+      }),
       catchError(this.errorService.handleError('Fetch Job Board', []))
     )
   }

@@ -82,6 +82,7 @@ import { IsAuthorizedService } from './misc/is-authorized.service';
 import { OauthComponent } from './oauth/oauth.component';
 import { DeviceDetectorModule } from 'ngx-device-detector';
 import { AuthCompleteComponent } from './misc/auth-complete/auth-complete.component';
+import { StarChartComponent } from './system-map/star-chart/star-chart.component';
 
 @NgModule({
   declarations: [
@@ -140,7 +141,8 @@ import { AuthCompleteComponent } from './misc/auth-complete/auth-complete.compon
     SpinnerComponent,
     ApiOfflineComponent,
     OauthComponent,
-    AuthCompleteComponent
+    AuthCompleteComponent,
+    StarChartComponent
   ],
   entryComponents: [
     EventModalComponent,

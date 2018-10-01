@@ -4,6 +4,7 @@ export class StarSystem
     title?:string
     planets?:Planet[]
     system_objects?:SystemObject[]
+    jump_points?:JumpPoint[]
 }
 
 export class Planet
@@ -38,6 +39,13 @@ export class Settlement
 }
 
 export class SystemLocation
+{
+    id?:number
+    title?:string
+}
+
+
+export class JumpPoint
 {
     id?:number
     title?:string
