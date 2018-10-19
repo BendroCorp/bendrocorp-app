@@ -83,6 +83,10 @@ import { OauthComponent } from './oauth/oauth.component';
 import { DeviceDetectorModule } from 'ngx-device-detector';
 import { AuthCompleteComponent } from './misc/auth-complete/auth-complete.component';
 import { StarChartComponent } from './system-map/star-chart/star-chart.component';
+import { AddUpdateSystemModalComponent } from './system-map/add-update-system-modal/add-update-system-modal.component';
+import { AddUpdatePlanetModalComponent } from './system-map/add-update-planet-modal/add-update-planet-modal.component';
+import { AddUpdateMoonModalComponent } from './system-map/add-update-moon-modal/add-update-moon-modal.component';
+import { AddUpdateSystemObjectModalComponent } from './system-map/add-update-system-object-modal/add-update-system-object-modal.component';
 
 @NgModule({
   declarations: [
@@ -142,7 +146,11 @@ import { StarChartComponent } from './system-map/star-chart/star-chart.component
     ApiOfflineComponent,
     OauthComponent,
     AuthCompleteComponent,
-    StarChartComponent
+    StarChartComponent,
+    AddUpdateSystemModalComponent,
+    AddUpdatePlanetModalComponent,
+    AddUpdateMoonModalComponent,
+    AddUpdateSystemObjectModalComponent
   ],
   entryComponents: [
     EventModalComponent,

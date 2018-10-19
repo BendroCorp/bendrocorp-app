@@ -5,6 +5,14 @@ export class StarSystem
     planets?:Planet[]
     system_objects?:SystemObject[]
     jump_points?:JumpPoint[]
+    gravity_wells?:GravityWell[]
+}
+
+export class GravityWell
+{
+    id?:number
+    title?:string
+    description?:string
 }
 
 export class Planet
