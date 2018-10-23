@@ -7,7 +7,7 @@ branches:
   only:
   - master
 deploy:
-  provider: script # http://blog.abarbanell.de/linux/2017/09/09/deploy-from-travis-to-dokku/
+  provider: script
   script: deploy.sh
   on: master
 cache:
@@ -27,4 +27,7 @@ install:
 script:
 - npm test
 notifications:
-  slack: daleslab:iOjNthhpWvGcIYlDK532APwS
+  slack:
+    secure: FMW/pth3LjYDCycA663QMY7IW3/drHeQBuYbPQv1ibDoXXnp+sYEkqcJBqitmrGn+8RjW3glLtFlds6s3Iy1byFSagInr3g8lGBrrAn0bcgyQ0UiSIE1oOREFXX3XlLbCUIImZTYrSAysvLJYEUQ4j4jA7g2xy/sgYPeU0Aapr651nwd9jexA4dAByi7Ab6xEaQyBel9t9fe5nKCz0DPb5GBDQxC4rRgxgyL29xn7lwqH9PEpzkwELm8aRJ91x+FYniIeXOvcXvbqCsQHANoHs4yAjEDJmVB3MmwvY7EQCkmijdUzx1dtoyXtAdUu7nC692c3xv81J5s5qzYYhyaAQ6zdsBmcJRHD2q7xEBjq0uFo8inqRi7NYgpG0D57HdaeatlBPBqmSXlaxv/GNd/4ieBoYbC0auWds8t0bx5f75ghZLOFqSPpFpXBIux3ll70su7SeOADL69xzYM2IyCVKkivmvixIdU3HKhGjVFhKKvgXkuxo/7Vznd4KsCH5bgXOUjGdlLkTPo+JSf3yOFH5IpUd2N7W/W6iNtacoimprNf4eaPwBE3JEkYIPPouWvmZMC4vGYBm47D28RobZSJShR3wZrxBGXnhYpuJ+P1tlBq4IcljeHGq2AJ0YOlxsg0iM3PGIN4jVT3gL/7SAeKKfddXfFf0M7I5aTLTSqRcU=
+  irc:
+  - "chat.freenode.net#daleslab"
