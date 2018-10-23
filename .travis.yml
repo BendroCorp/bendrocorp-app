@@ -1,16 +1,28 @@
 dist: trusty
 sudo: false
- 
 language: node_js
 node_js:
-  - "8"
- 
+- '8'
+branches:
+  only:
+  - master
+deploy:
+  provider: script # http://blog.abarbanell.de/linux/2017/09/09/deploy-from-travis-to-dokku/
+  script: deploy.sh
+  on: master
 cache:
   directories:
-     - ./node_modules
- 
+  - "./node_modules"
+before_install:
+- openssl aes-256-cbc -K $encrypted_e0e91c2d29b3_key -iv $encrypted_e0e91c2d29b3_iv
+  -in .travis/deploy.key.enc -out .travis/deploy.key -d
+- eval "$(ssh-agent -s)"
+- chmod 600 .travis/deploy.key
+- ssh-add .travis/deploy.key
+- ssh-keyscan daleslab.com >> ~/.ssh/known_hosts
+- git remote add deploy dokku@daleslab.com:bendrocorp
+- git config --global push.default simple
 install:
-  - npm install
-
+- npm install
 script:
-  - npm test
+- npm test
