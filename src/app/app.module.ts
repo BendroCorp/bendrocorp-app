@@ -83,6 +83,7 @@ import { OauthComponent } from './oauth/oauth.component';
 import { DeviceDetectorModule } from 'ngx-device-detector';
 import { AuthCompleteComponent } from './misc/auth-complete/auth-complete.component';
 import { TermsOfServiceComponent } from './terms-of-service/terms-of-service.component';
+import { PrivacyComponent } from './privacy/privacy.component';
 
 @NgModule({
   declarations: [
@@ -142,7 +143,8 @@ import { TermsOfServiceComponent } from './terms-of-service/terms-of-service.com
     ApiOfflineComponent,
     OauthComponent,
     AuthCompleteComponent,
-    TermsOfServiceComponent
+    TermsOfServiceComponent,
+    PrivacyComponent
   ],
   entryComponents: [
     EventModalComponent,
