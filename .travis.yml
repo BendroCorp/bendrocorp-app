@@ -26,3 +26,5 @@ install:
 - npm install
 script:
 - npm test
+notifications:
+  slack: daleslab:iOjNthhpWvGcIYlDK532APwS

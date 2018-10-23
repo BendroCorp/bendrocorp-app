@@ -1,4 +1,5 @@
-# BendrocorpApp
+# Bendrocorp App
+[![Build Status](https://travis-ci.org/BendroCorp/bendrocorp-app.svg?branch=master)](https://travis-ci.org/BendroCorp/bendrocorp-app)
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 6.0.8.
 
