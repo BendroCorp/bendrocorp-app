@@ -1,3 +1,4 @@
+#!/bin/bash
 git stash --all
 git checkout master
 CURRENT_BRANCH = git branch | grep \* | cut -d ' ' -f2
