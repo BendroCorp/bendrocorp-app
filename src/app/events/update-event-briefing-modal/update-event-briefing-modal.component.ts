@@ -18,6 +18,7 @@ export class UpdateEventBriefingModalComponent implements OnInit {
   @Input() event:Event;
   characters:Character[]
   openModal:NgbModalRef
+  updateSubmitting:boolean = false
 
   open(content) {
     if (this.event && this.event.briefing) {
@@ -34,6 +35,7 @@ export class UpdateEventBriefingModalComponent implements OnInit {
   doUpdate()
   {
     if (this.event && this.event.briefing) {
+      this.updateSubmitting = true
       this.eventService.briefing(this.event.briefing).subscribe(
         (result) => 
         {
@@ -43,6 +45,8 @@ export class UpdateEventBriefingModalComponent implements OnInit {
             
             this.eventService.refreshData();
             this.openModal.close()
+          }else{
+            this.updateSubmitting = false
           }
         }
       )
