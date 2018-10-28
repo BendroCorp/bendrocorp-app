@@ -12,7 +12,7 @@
           <div class="col-md-6 col-sm-6 col-xs-6">
               <div class="form-group">
                 <label>Operational Leader</label>
-                <select class="form-control" [(ngModel)]="event.briefing.operational_leader_id" name="operational_leader_id">
+                <select class="form-control" [(ngModel)]="event.briefing.operational_leader_id" name="operational_leader_id" [disabled]="updateSubmitting">
                   <option *ngFor="let character of characters" [value]="character.id">{{character.full_name}}</option>
                 </select>
               </div>
@@ -20,7 +20,7 @@
           <div class="col-md-6 col-sm-6 col-xs-6">
             <div class="form-group">
               <label>Communications Designee</label>
-              <select class="form-control" [(ngModel)]="event.briefing.communications_designee_id" name="communications_designee_id" >
+              <select class="form-control" [(ngModel)]="event.briefing.communications_designee_id" name="communications_designee_id" [disabled]="updateSubmitting">
                 <option *ngFor="let character of characters" [value]="character.id">{{character.full_name}}</option>
               </select>
             </div>
@@ -31,7 +31,7 @@
           <div class="col-md-6 col-sm-6 col-xs-6">
               <div class="form-group">
                 <label>Escort Leader</label>
-                <select class="form-control" [(ngModel)]="event.briefing.escort_leader_id" name="escort_leader_id" >
+                <select class="form-control" [(ngModel)]="event.briefing.escort_leader_id" name="escort_leader_id" [disabled]="updateSubmitting">
                   <option *ngFor="let character of characters" [value]="character.id">{{character.full_name}}</option>
                 </select>
               </div>
@@ -39,7 +39,7 @@
           <div class="col-md-6 col-sm-6 col-xs-6">
             <div class="form-group">
               <label>Reporting Designee</label>
-              <select class="form-control" [(ngModel)]="event.briefing.reporting_designee_id" name="reporting_designee_id" >
+              <select class="form-control" [(ngModel)]="event.briefing.reporting_designee_id" name="reporting_designee_id" [disabled]="updateSubmitting">
                 <option *ngFor="let character of characters" [value]="character.id">{{character.full_name}}</option>
               </select>
             </div>
@@ -50,7 +50,7 @@
           <div class="col-md-12">
             <div class="form-group">
               <label>Objective</label>
-              <textarea class="form-control" [(ngModel)]="event.briefing.objective" name="objective" id=""></textarea>
+              <textarea class="form-control" [(ngModel)]="event.briefing.objective" name="objective" id="" [disabled]="updateSubmitting"></textarea>
             </div>
           </div>
         </div>
@@ -59,7 +59,7 @@
           <div class="col-md-6 col-sm-6 col-xs-6">
               <div class="form-group">
                 <label></label>
-                <select class="form-control" [(ngModel)]="event.briefing.starting_system_id" name="starting_system_id">
+                <select class="form-control" [(ngModel)]="event.briefing.starting_system_id" name="starting_system_id" [disabled]="updateSubmitting">
                   <option *ngFor="let character of characters" [value]="character.id">{{character.full_name}}</option>
                 </select>
               </div>
@@ -67,7 +67,7 @@
           <div class="col-md-6 col-sm-6 col-xs-6">
             <div class="form-group">
               <label></label>
-              <select class="form-control" [(ngModel)]="event.briefing.ending_system_id" name="ending_system_id">
+              <select class="form-control" [(ngModel)]="event.briefing.ending_system_id" name="ending_system_id" [disabled]="updateSubmitting">
                 <option *ngFor="let character of characters" [value]="character.id">{{character.full_name}}</option>
               </select>
             </div>
@@ -78,7 +78,7 @@
           <div class="col-md-12">
             <div class="form-group">
               <label>Notes</label>
-              <textarea class="form-control" [(ngModel)]="event.briefing.notes" name="notes" id="" ></textarea>
+              <textarea class="form-control" [(ngModel)]="event.briefing.notes" name="notes" id="" [disabled]="updateSubmitting"></textarea>
             </div>
           </div>
         </div>
