@@ -85,7 +85,7 @@
       </form>
     </div>
     <div class="modal-footer">
-        <button class="btn btn-primary" (click)="doUpdate()">Update Briefing</button>
+        <button class="btn btn-primary" (click)="doUpdate()" [disabled]="updateSubmitting">Update Briefing<span *ngIf="updateSubmitting">&nbsp;<i class="fas fa-spinner fa-spin"></i></span></button>
         <button class="btn btn-secondary" (click)="c()">Cancel</button>
     </div>
   </ng-template>
