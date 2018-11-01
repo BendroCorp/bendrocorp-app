@@ -27,7 +27,8 @@ export class AuthService {
 
   /** Log the user in. */
   login(email:string, password:string, code?:string) {
-    return this.http.post<UserSessionResponse>(`${this.globals.baseUrlRoot}/auth`, { "session": { email, password, code } }).pipe(
+    let device = "Web"
+    return this.http.post<UserSessionResponse>(`${this.globals.baseUrlRoot}/auth`, { "session": { email, password, code, device } }).pipe(
       tap(result => {
         this.messageService.addSuccess('Login Successful! Welcome back!')
       }), 
@@ -97,8 +98,10 @@ export class AuthService {
 
   logout() : Observable<boolean>
   {
-    let didLogout = localStorage.removeItem('userObject') ? of(true) : of(false);
-    return didLogout
+    // let didLogout = localStorage.removeItem('userObject') ? of(true) : of(false);
+    // return didLogout
+    localStorage.removeItem('userObject')
+    return of(true)
   }
 
   public isLoggedIn() {
