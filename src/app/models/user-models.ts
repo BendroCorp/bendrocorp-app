@@ -2,12 +2,12 @@ import { Character } from './character-models'
 
 export class UserSessionResponse
 {
-    id:number;
-    character:Character;
-    tfa_enabled:boolean;
-    token:string;
-    token_expires:number;
-    claims:Claim[];
+    id?:number;
+    character?:Character;
+    tfa_enabled?:boolean;
+    token?:string;
+    token_expires?:number;
+    claims?:Claim[];
 }
 
 export class Claim

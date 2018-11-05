@@ -22,6 +22,7 @@ import { RemoveRoleComponent } from './requests/remove-role/remove-role.componen
 import { PositionChangeComponent } from './requests/position-change/position-change.component';
 import { OauthComponent } from './oauth/oauth.component';
 import { AuthCompleteComponent } from './misc/auth-complete/auth-complete.component';
+import { ImpersonateComponent } from './admin/impersonate/impersonate.component';
 
 const routes: Routes = [
     { path: '', component: DashboardComponent, canActivate: [AuthGuardService, MemberAuthGuardService] },
@@ -45,7 +46,8 @@ const routes: Routes = [
     { path: 'requests/approvals', component: ApprovalsComponent, canActivate: [AuthGuardService, MemberAuthGuardService]},
     { path: 'requests/approvals/:approval_id', component: ApprovalDetailsComponent, canActivate: [AuthGuardService, MemberAuthGuardService]},
     { path: 'oauth', component: OauthComponent, canActivate: [AuthGuardService, MemberAuthGuardService] },
-    { path: 'auth-complete', component: AuthCompleteComponent, canActivate: [AuthGuardService, MemberAuthGuardService] }
+    { path: 'auth-complete', component: AuthCompleteComponent, canActivate: [AuthGuardService, MemberAuthGuardService] },
+    { path: 'impersonate', component: ImpersonateComponent, canActivate: [AuthGuardService, MemberAuthGuardService] }
   ];
   
   @NgModule({
