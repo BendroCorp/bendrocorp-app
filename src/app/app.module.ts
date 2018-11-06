@@ -84,6 +84,7 @@ import { DeviceDetectorModule } from 'ngx-device-detector';
 import { AuthCompleteComponent } from './misc/auth-complete/auth-complete.component';
 import { TermsOfServiceComponent } from './terms-of-service/terms-of-service.component';
 import { PrivacyComponent } from './privacy/privacy.component';
+import { ImpersonateComponent } from './admin/impersonate/impersonate.component';
 
 @NgModule({
   declarations: [
@@ -144,7 +145,8 @@ import { PrivacyComponent } from './privacy/privacy.component';
     OauthComponent,
     AuthCompleteComponent,
     TermsOfServiceComponent,
-    PrivacyComponent
+    PrivacyComponent,
+    ImpersonateComponent
   ],
   entryComponents: [
     EventModalComponent,
