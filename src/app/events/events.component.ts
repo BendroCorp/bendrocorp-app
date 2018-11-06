@@ -24,7 +24,7 @@ export class EventsComponent implements OnInit, OnDestroy {
     )
   }
 
-  isAdmin:boolean = this.authService.hasClaim(19)
+  isAdmin:boolean = this.authService.hasClaim(19) // can CRUD events
   events:Event[]
   expiredEvents:Event[]
   hideShowMoreExpiredEventsDisabled:boolean = false
