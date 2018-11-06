@@ -17,6 +17,7 @@ export class Event
     briefing:EventBriefing
     debriefing:EventDebriefing
     published:boolean
+    is_expired:boolean
 
     private _start_date:Date
     private _end_date:Date
