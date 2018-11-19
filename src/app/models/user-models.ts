@@ -61,3 +61,14 @@ export class TwoFactorAuthObject
     password:string
     code:string
 }
+
+export class TokenObject
+{
+    id: number
+    user_id: number
+    token: string
+    expires: Date
+    device: string
+    created_at: Date
+    is_expired: boolean
+}

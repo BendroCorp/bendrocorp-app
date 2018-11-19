@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { AuthService } from '../auth.service';
-import { NewPassword, TwoFactorDataObject, TwoFactorAuthObject, UserSessionResponse } from '../models/user-models';
+import { NewPassword, TwoFactorDataObject, TwoFactorAuthObject, UserSessionResponse, TokenObject } from '../models/user-models';
 import { MessageService } from '../message/message.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { OauthService } from '../oauth/oauth.service';
@@ -17,7 +17,8 @@ export class SettingsModalComponent implements OnInit {
   passwordChange:NewPassword
   tfaDataObject:TwoFactorDataObject
   tfaAuthObject:TwoFactorAuthObject
-  tokens:OAuthToken[] = []
+  oAuthTokens:OAuthToken[] = []
+  tokens:TokenObject[] = []
   user = this.authService.retrieveUserSession() as UserSessionResponse
 
   constructor(private modalService: NgbModal, private authService:AuthService, private messageService:MessageService, private oAuthService:OauthService) {}
@@ -68,9 +69,9 @@ export class SettingsModalComponent implements OnInit {
     this.messageService.addInfo("The one click button is currently not available. If you would like to end your membership please contact your Director via Discord.")
   }
 
-  fetchTokens()
+  fetchAuthTokens()
   {
-    this.oAuthService.fetch_tokens().subscribe(
+    this.authService.fetchAuthTokens().subscribe(
       (results) => {
         if (!(results instanceof HttpErrorResponse)) {
           this.tokens = results
@@ -79,14 +80,41 @@ export class SettingsModalComponent implements OnInit {
     )
   }
 
-  revokeToken(token:OAuthToken)
+  fetchOAuthTokens()
+  {
+    this.oAuthService.fetch_tokens().subscribe(
+      (results) => {
+        if (!(results instanceof HttpErrorResponse)) {
+          this.oAuthTokens = results
+        }
+      }
+    )
+  }
+
+  removeAuthToken(token:TokenObject)
   {
     if (this.tokens.length > 0 && token) {
+      if (confirm("Are you sure you want to revoke this token?")) {
+        this.authService.removeAuthToken(token.token).subscribe(
+          (results) => {
+            if (!(results instanceof HttpErrorResponse)) {
+              this.tokens.splice(this.tokens.findIndex(x => x.token == token.token), 1)
+              this.messageService.addSuccess("Auth token removed!")
+            }
+          }
+        )
+      }
+    }
+  }
+
+  revokeOAuthToken(token:OAuthToken)
+  {
+    if (this.oAuthTokens.length > 0 && token) {
       if (confirm("Are you sure you want to revoke this applications access to your data?")) {
         this.oAuthService.remove_token(token.token).subscribe(
           (results) => {
             if (!(results instanceof HttpErrorResponse)) {
-              this.tokens.splice(this.tokens.findIndex(x => x.token == token.token), 1)
+              this.oAuthTokens.splice(this.oAuthTokens.findIndex(x => x.token == token.token), 1)
             }
           }
         )
@@ -105,7 +133,8 @@ export class SettingsModalComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.fetchTokens()
+    this.fetchOAuthTokens()
+    this.fetchAuthTokens()
   }
 
 }

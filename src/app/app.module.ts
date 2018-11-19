@@ -85,6 +85,7 @@ import { AuthCompleteComponent } from './misc/auth-complete/auth-complete.compon
 import { TermsOfServiceComponent } from './terms-of-service/terms-of-service.component';
 import { PrivacyComponent } from './privacy/privacy.component';
 import { ImpersonateComponent } from './admin/impersonate/impersonate.component';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
 
 @NgModule({
   declarations: [
@@ -146,7 +147,8 @@ import { ImpersonateComponent } from './admin/impersonate/impersonate.component'
     AuthCompleteComponent,
     TermsOfServiceComponent,
     PrivacyComponent,
-    ImpersonateComponent
+    ImpersonateComponent,
+    ResetPasswordComponent
   ],
   entryComponents: [
     EventModalComponent,
