@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { UserSessionResponse, SignUp, NewPassword, TwoFactorDataObject, TwoFactorAuthObject } from './models/user-models';
+import { UserSessionResponse, SignUp, NewPassword, TwoFactorDataObject, TwoFactorAuthObject, TokenObject } from './models/user-models';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http'; // https://stackoverflow.com/questions/47369850/property-get-does-not-exist-on-type-httpclientmodule
 import * as moment from 'moment';
 import { tap, catchError } from 'rxjs/operators';
@@ -65,6 +65,40 @@ export class AuthService {
     return this.http.post<StatusMessage>(`${this.globals.baseUrl}/account/enable-tfa`, { two_factor_auth }).pipe(
       tap(result => console.log("Enable TFA!")),
       catchError(this.err.handleError<any>('Enable TFA'))
+    )
+  }
+
+  fetchAuthTokens() : Observable<TokenObject[]>
+  {
+    return this.http.get<TokenObject[]>(`${this.globals.baseUrl}/user/auth-tokens`).pipe(
+      tap(result => console.log(`Fetched ${result.length} tokens`)),
+      catchError(this.err.handleError<any>('Retrieve Auth Tokens'))
+    )
+  }
+
+  removeAuthToken(token:string) : Observable<StatusMessage>
+  {
+    return this.http.delete<StatusMessage>(`${this.globals.baseUrl}/account/token/${token}`).pipe(
+      tap(result => console.log("Removed auth token!")),
+      catchError(this.err.handleError<any>('Remove Auth Token'))
+    )
+  }
+
+  requestPasswordReset(email:string) : Observable<StatusMessage>
+  {
+    let user = { email: email }
+    return this.http.post<StatusMessage>(`${this.globals.baseUrl}/account/forgot-password`, { user }).pipe(
+      tap(result => console.log("Requested password reset!")),
+      catchError(this.err.handleError<any>('Request Password Reset'))
+    )
+  }
+
+  doPasswordReset(password:string, password_confirmation:string, password_reset_token:string) : Observable<StatusMessage>
+  {
+    let user = { password, password_confirmation, password_reset_token }
+    return this.http.post<StatusMessage>(`${this.globals.baseUrl}/account/reset-password`, { user }).pipe(
+      tap(result => console.log("Do password reset!")),
+      catchError(this.err.handleError<any>('Password Reset'))
     )
   }
 

@@ -23,6 +23,8 @@ import { PositionChangeComponent } from './requests/position-change/position-cha
 import { OauthComponent } from './oauth/oauth.component';
 import { AuthCompleteComponent } from './misc/auth-complete/auth-complete.component';
 import { ImpersonateComponent } from './admin/impersonate/impersonate.component';
+import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
 
 const routes: Routes = [
     { path: '', component: DashboardComponent, canActivate: [AuthGuardService, MemberAuthGuardService] },
@@ -47,7 +49,9 @@ const routes: Routes = [
     { path: 'requests/approvals/:approval_id', component: ApprovalDetailsComponent, canActivate: [AuthGuardService, MemberAuthGuardService]},
     { path: 'oauth', component: OauthComponent, canActivate: [AuthGuardService, MemberAuthGuardService] },
     { path: 'auth-complete', component: AuthCompleteComponent, canActivate: [AuthGuardService, MemberAuthGuardService] },
-    { path: 'impersonate', component: ImpersonateComponent, canActivate: [AuthGuardService, MemberAuthGuardService] }
+    { path: 'impersonate', component: ImpersonateComponent, canActivate: [AuthGuardService, MemberAuthGuardService] },
+    { path: 'forgot-password', component: ForgotPasswordComponent, canActivate: [NoAuthGuardService] },
+    { path: 'password-reset/:token', component: ResetPasswordComponent, canActivate: [NoAuthGuardService] },
   ];
   
   @NgModule({

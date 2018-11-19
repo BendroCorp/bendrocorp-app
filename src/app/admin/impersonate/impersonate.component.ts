@@ -23,7 +23,7 @@ export class ImpersonateComponent implements OnInit {
       (results) => {
         if (!(results instanceof HttpErrorResponse)) {
           console.log(results)
-          this.users = results.filter(x => x.id != (this.authService.retrieveUserSession() as UserSessionResponse).id)
+          this.users = results.filter(x => x.id != (this.authService.retrieveUserSession() as UserSessionResponse).id).sort((a, b) => a.username < b.username ? -1 : a.username > b.username ? 1 : 0)
         }
         this.spinnerService.spin(false)
       }
