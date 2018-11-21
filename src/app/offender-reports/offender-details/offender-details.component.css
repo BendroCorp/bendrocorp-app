@@ -1,0 +1,14 @@
+.or-left-col
+{
+  border-right: 2px solid #000;
+}
+
+.dangerous
+{
+  color: orange;
+}
+
+.lethal
+{
+  color: red;
+}

@@ -4,6 +4,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgbModal, NgbModule, NgbAlert } from '@ng-bootstrap/ng-bootstrap';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AngularDateTimePickerModule } from 'angular2-datetimepicker';
+import { DlDateTimePickerDateModule } from 'angular-bootstrap-datetimepicker';
 
 import { AppComponent } from './app.component';
 import { MenuComponent } from './menu/menu.component';
@@ -86,6 +87,8 @@ import { TermsOfServiceComponent } from './terms-of-service/terms-of-service.com
 import { PrivacyComponent } from './privacy/privacy.component';
 import { ImpersonateComponent } from './admin/impersonate/impersonate.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import { OffenderDetailsComponent } from './offender-reports/offender-details/offender-details.component';
+import { OffenderReportReportDetailsComponent } from './offender-reports/offender-report-report-details/offender-report-report-details.component';
 
 @NgModule({
   declarations: [
@@ -148,7 +151,9 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
     TermsOfServiceComponent,
     PrivacyComponent,
     ImpersonateComponent,
-    ResetPasswordComponent
+    ResetPasswordComponent,
+    OffenderDetailsComponent,
+    OffenderReportReportDetailsComponent,
   ],
   entryComponents: [
     EventModalComponent,
@@ -165,6 +170,7 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
     NgbModule.forRoot(),
     BrowserAnimationsModule,
     AngularDateTimePickerModule,
+    DlDateTimePickerDateModule,
     QRCodeModule,
     NgxPaginationModule,
     DeviceDetectorModule.forRoot(),

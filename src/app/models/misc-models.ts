@@ -55,3 +55,15 @@ export class Base64Upload
     size: number
     base64: string
 }
+
+export class IdTitleDesc 
+{
+    id?:number
+    title?:string
+    description?:string
+}
+
+export class IdTitleDescOrd extends IdTitleDesc
+{
+    ordinal?:number
+}

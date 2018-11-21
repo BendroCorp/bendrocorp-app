@@ -3,9 +3,10 @@ import { HttpClient } from '@angular/common/http';
 import { ErrorService } from '../error.service';
 import { Globals } from '../globals';
 import { Subject, Observable } from 'rxjs';
-import { Offender, ViolenceRating, OffenderReport } from '../models/offender-report-models';
+import { Offender, ViolenceRating, OffenderReport, Infraction, ForceLevel } from '../models/offender-report-models';
 import { tap, catchError } from 'rxjs/operators';
 import { JobBoardMission } from '../models/job-board-models';
+import { StatusMessage } from '../models/misc-models';
 
 @Injectable({
   providedIn: 'root'
@@ -33,6 +34,22 @@ export class OffenderReportService {
     )
   }
 
+  fetch_offender(offender_id:number) : Observable<Offender>
+  {
+    return this.http.get<Offender>(`${this.globals.baseUrl}/offender-report/offender/${offender_id}`).pipe(
+      tap(result => console.log(`Fetched offender id #${result.id}!`)),
+      catchError(this.errorService.handleError('Fetch Offender'))
+    )
+  }
+
+  fetch_report(report_id:number) : Observable<OffenderReport>
+  {
+    return this.http.get<OffenderReport>(`${this.globals.baseUrl}/offender-report/${report_id}`).pipe(
+      tap(result => console.log(`Fetched offender report id #${result.id}!`)),
+      catchError(this.errorService.handleError('Fetch Offender Report'))
+    )
+  }
+
   list_mine() : Observable<OffenderReport[]>
   {
     return this.http.get<OffenderReport[]>(`${this.globals.baseUrl}/offender-report/mine`).pipe(
@@ -56,6 +73,31 @@ export class OffenderReportService {
       catchError(this.errorService.handleError('Fetch Violence Ratings', []))
     )
   }  
+
+  list_infractions() : Observable<Infraction[]>
+  {
+    return this.http.get<Infraction[]>(`${this.globals.baseUrl}/offender-report/infractions`).pipe(
+      tap(result => console.log(`Fetched ${result.length} kinds of infractions!`)),
+      catchError(this.errorService.handleError<any>('Fetch Infractions'))
+    )
+  }
+
+  list_force_level() : Observable<ForceLevel[]>
+  {
+    return this.http.get<ForceLevel[]>(`${this.globals.baseUrl}/offender-report/force-levels`).pipe(
+      tap(result => console.log(`Fetched ${result.length} kinds of force levels!`)),
+      catchError(this.errorService.handleError<any>('Fetch Force Levels'))
+    )
+  }
+
+  verify_handle(rsi_handle:string) : Observable<boolean>
+  {
+    
+    return this.http.get<boolean>(`${this.globals.baseUrl}/offender-reports/verify/${rsi_handle}`).pipe(
+      tap(result => console.log(`Verifying rsi_handle!`)),
+      catchError(this.errorService.handleError<any>('Verify Handle'))
+    )
+  }
 
   create(offender_report:OffenderReport) : Observable<OffenderReport>
   {

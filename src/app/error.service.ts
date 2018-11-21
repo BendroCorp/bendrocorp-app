@@ -104,7 +104,7 @@ export class ErrorService {
       }
     }
     localStorage.setItem("authRedirect", path)
-    let didLogout = localStorage.removeItem('userObject') ? of(true) : of(false);
+    localStorage.removeItem('userObject')
     this.router.navigateByUrl('/login')
   }
 }
