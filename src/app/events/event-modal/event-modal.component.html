@@ -15,15 +15,17 @@
         <label>Event Description</label>
         <textarea class="form-control" required placeholder="Enter event description..." [(ngModel)]="event.description" name="description"></textarea>
       </div>
-      <div class="form-group">
-        <label>Event Start Date</label>
-        <!-- <input class="form-control" required placeholder="Enter event start date/time..." [(ngModel)]="event.start_date" name="title" type="datetime"> -->
-        <angular2-date-picker [(ngModel)]="event.start_date" (onDateSelect)="onStartDateSelect($event)" [settings]="dateTimePickerSettings" name="start_date"></angular2-date-picker>
-      </div>
-      <div class="form-group">
-        <label>Event End Date</label>
-        <!-- <input class="form-control" required placeholder="Enter event end date/time..." [(ngModel)]="event.end_date" name="title" type="datetime"> -->
-        <angular2-date-picker [(ngModel)]="event.end_date" (onDateSelect)="onEndDateSelect($event)" [settings]="dateTimePickerSettings" name="end_date"></angular2-date-picker>
+      <div class="row">
+        <div class="form-group col-md-6 col-sm-6 col-xs-6">
+          <label>Event Start Date</label>
+          <div *ngIf="event.start_date"><strong>{{event.start_date | date:'MM/dd/yyyy @ h:mma' }}</strong></div>
+          <dl-date-time-picker startView="day" maxView="year" minView="minute" minuteStep="5" name="start_date" (change)="onStartDateSelect($event)" [(ngModel)]="event.start_date"></dl-date-time-picker>
+        </div>
+        <div class="form-group col-md-6 col-sm-6 col-xs-6">
+          <label>Event End Date</label>
+          <div *ngIf="event.end_date"><strong>{{event.end_date | date:'MM/dd/yyyy @ h:mma' }}</strong></div>
+          <dl-date-time-picker startView="day" maxView="year" minView="minute" minuteStep="5" name="end_date" (change)="onEndDateSelect($event)" [(ngModel)]="event.end_date"></dl-date-time-picker>
+        </div>
       </div>
       <div class="form-group" *ngIf="!gradeId">
         <label>Event Type:</label>

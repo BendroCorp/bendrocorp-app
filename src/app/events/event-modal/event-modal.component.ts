@@ -29,7 +29,9 @@ export class EventModalComponent implements OnInit {
 
   ngOnInit() {
     if (this.event && this.event.id) {
-      this.formAction = 'Update'      
+      this.formAction = 'Update'
+      this.event.start_date = new Date(this.event.start_date)
+      this.event.end_date = new Date(this.event.end_date)      
     } else {
       this.formAction = 'Create'
       this.event = { } as Event
@@ -50,24 +52,28 @@ export class EventModalComponent implements OnInit {
   }
 
 
-  public onStartDateSelect(event_date_change:string)
+  onStartDateSelect(event_date_change:any)
   {
-    console.log(event_date_change)    
-    let new_date = new Date(event_date_change)
-    new_date.setSeconds(0)
-    console.log(new_date)    
-    this.event.start_date_ms = new_date.getTime()
-    console.log(this.event.start_date_ms);    
+    if (event_date_change && event_date_change.value) {
+      console.log(event_date_change.value)    
+      let new_date = new Date(event_date_change.value)
+      new_date.setSeconds(0)
+      console.log(new_date)    
+      this.event.start_date_ms = new_date.getTime()
+      console.log(this.event.start_date_ms);  
+    }  
   }
 
-  public onEndDateSelect(event_date_change:string)
+  onEndDateSelect(event_date_change:any)
   {
-    console.log(event_date_change)    
-    let new_date = new Date(event_date_change)
-    new_date.setSeconds(0)
-    console.log(new_date)    
-    this.event.end_date_ms = new_date.getTime()
-    console.log(this.event.end_date_ms);    
+    if (event_date_change && event_date_change.value) {
+      console.log(event_date_change.value)    
+      let new_date = new Date(event_date_change.value)
+      new_date.setSeconds(0)
+      console.log(new_date)    
+      this.event.end_date_ms = new_date.getTime()
+      console.log(this.event.end_date_ms);  
+    }  
   }
 
   public logIt(text:string)
@@ -75,36 +81,6 @@ export class EventModalComponent implements OnInit {
     console.log(text);
     
   }
-
-  // public setStartDateMs(an_event:Event)
-  // {
-  //   if (an_event) {
-  //     console.log(an_event.start_date_ms);
-  //     try
-  //     {
-  //       an_event.start_date_ms = new Date(an_event.start_date).getTime()
-  //       console.log(an_event.start_date_ms);
-  //     }
-  //     catch{ }
-  //   } else {
-  //     console.error("Event not passed!")
-  //   }
-  // }
-
-  // public setEndDateMs(an_event:Event)
-  // {
-  //   if (an_event) {
-  //     console.log(an_event.end_date_ms);
-  //     try
-  //     {
-  //       an_event.end_date_ms = new Date(an_event.end_date).getTime()
-  //       console.log(an_event.end_date_ms);
-  //     }
-  //     catch{ }
-  //   } else {
-  //     console.error("Event not passed!")
-  //   }
-  // }
 
   doSaveBack()
   {

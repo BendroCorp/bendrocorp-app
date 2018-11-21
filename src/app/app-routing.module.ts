@@ -25,6 +25,8 @@ import { AuthCompleteComponent } from './misc/auth-complete/auth-complete.compon
 import { ImpersonateComponent } from './admin/impersonate/impersonate.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import { OffenderDetailsComponent } from './offender-reports/offender-details/offender-details.component';
+import { OffenderReportReportDetailsComponent } from './offender-reports/offender-report-report-details/offender-report-report-details.component';
 
 const routes: Routes = [
     { path: '', component: DashboardComponent, canActivate: [AuthGuardService, MemberAuthGuardService] },
@@ -36,6 +38,8 @@ const routes: Routes = [
     { path: 'flight-logs', component: FlightLogsComponent, canActivate: [AuthGuardService, MemberAuthGuardService] },
     { path: 'flight-logs/:flight_log_id', component: FlightLogDetailsComponent, canActivate: [AuthGuardService, MemberAuthGuardService] },
     { path: 'offender-reports', component: OffenderReportsComponent, canActivate: [AuthGuardService, MemberAuthGuardService] },
+    { path: 'offender-reports/:offender_id', component: OffenderDetailsComponent, canActivate: [AuthGuardService, MemberAuthGuardService] },
+    { path: 'offender-reports/report/:report_id', component: OffenderReportReportDetailsComponent, canActivate: [AuthGuardService, MemberAuthGuardService] },
     // public/non-member routes below here
     { path: 'login', component: LoginComponent, canActivate: [NoAuthGuardService] },
     { path: 'signup', component: SignupComponent, canActivate: [NoAuthGuardService] },

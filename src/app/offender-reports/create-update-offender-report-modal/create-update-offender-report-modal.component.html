@@ -10,32 +10,62 @@
         <div class="form-group">
           <label>Offender Handle</label>
           <div *ngIf="offenderReport.id">{{offenderReport.offender.offender_handle}}</div>
-          <input required *ngIf="!offenderReport.id" placeholder="The offenders handle..." class="form-control" type="text" [(ngModel)]="offenderReport.offender_attributes.offender_handle" name="offender_handle">
+          <div class="input-group mb-3">
+              <input required *ngIf="!offenderReport.id" placeholder="The offenders handle..." class="form-control" type="text" (keyup)="searchHandle($event)" [(ngModel)]="offenderReport.offender_attributes.offender_handle" name="offender_handle">
+            <div class="input-group-append" *ngIf="!offenderReport.id">
+              <span class="input-group-text" *ngIf="checkingHandle"><i class="fas fa-spinner fa-spin"></i></span>
+              <span class="input-group-text" style="color:red;" *ngIf="!checkingHandle && handleVerified == false"><i class="fas fa-times"></i></span>
+              <span class="input-group-text" style="color:green;" *ngIf="!checkingHandle && handleVerified == true"><i class="fas fa-check"></i></span>
+            </div>
+          </div>          
         </div>
         <div class="form-group">
           <label>Offender Name</label>
           <div *ngIf="offenderReport.id">{{offenderReport.offender.offender_name}}</div>
-          <input required *ngIf="!offenderReport.id" placeholder="The offenders name...(might be the same as the above)" class="form-control" type="text" [(ngModel)]="offenderReport.offender_attributes.offender_name" name="offender_name">
+          <input required *ngIf="!offenderReport.id" placeholder="The offenders name... (might be the same as the above)" class="form-control" type="text" [(ngModel)]="offenderReport.offender_attributes.offender_name" name="offender_name">
         </div>
         <div class="form-group">
           <label>Occured When</label>
-          <div *ngIf="offenderReport.submitted_for_approval">{{offenderReport.occured_when | date }}</div>
-          <angular2-date-picker *ngIf="!offenderReport.submitted_for_approval" [(ngModel)]="offenderReport.occured_when" (onDateSelect)="onOccuredWhenDateSelect($event)" [settings]="dateTimePickerSettings" name="start_date"></angular2-date-picker>
-          <!-- <p>{{offenderReport.occured_when_ms}}</p> -->
-          <!-- <input required [disabled]="offenderReport.submitted_for_approval" class="form-control" datetime="yyyy-MM-dd H:mm Z" datetime-model="yyyy-MM-dd H:mm Z" type="datetime" [(ngModel)]="" /> -->
+          <div *ngIf="offenderReport.occured_when"><strong>{{offenderReport.occured_when | date:'MM/dd/yyyy @ h:mma' }}</strong></div>
+          <dl-date-time-picker *ngIf="!offenderReport.submitted_for_approval" startView="day" maxView="year" minView="minute" minuteStep="5" name="occured_when" (change)="onOccuredWhenDateSelect($event)" [(ngModel)]="offenderReport.occured_when"></dl-date-time-picker>
         </div>
         <div class="form-group">
           <label>Occured Where</label>
           <div class="form-inline">
-            <location-switcher [isDisabled]="offenderReport.submitted_for_approval" [objectWithLocation]="offenderReport"></location-switcher>
-            <!-- <select [disabled]="offenderReport.submitted_for_approval" ng-options="item as item.title for item in systemData.system_data track by item.id" [(ngModel)]="offenderReport.system" class="form-control"></select>
-            <select [disabled]="offenderReport.submitted_for_approval" ng-options="item as item.title for item in offenderReport.system.planets track by item.id" [(ngModel)]="offenderReport.planet" class="form-control"></select>
-            <select [disabled]="offenderReport.submitted_for_approval" ng-options="item as item.title for item in offenderReport.planet.moons track by item.id" [(ngModel)]="offenderReport.moon" class="form-control"></select> -->
+            <location-switcher [isDisabled]="offenderReport.submitted_for_approval" [objectWithLocation]="offenderReport"></location-switcher>            
           </div>
         </div>
         <div class="form-group">
+          <label>Force Used Against Offender</label>
+          <select [disabled]="offenderReport.submitted_for_approval" class="form-control" [(ngModel)]="offenderReport.force_level_applied_id" name="forced_used">
+            <option *ngFor="let force of forceLevels" [value]="force.id">{{force.title}}</option>
+          </select>
+          <small>{{getForceDescription(offenderReport.force_level_applied_id)}}</small>
+        </div>
+        <div class="form-group">
           <label>Incident Description</label>
-          <textarea required [disabled]="offenderReport.submitted_for_approval" class="form-control" placeholder="Describe the event/offense..." [(ngModel)]="offenderReport.description" name="description"></textarea>
+          <textarea required [disabled]="offenderReport.submitted_for_approval" class="form-control" placeholder="Describe the event/offense in detail. Please describe how the incident that occured. Any force used by employees during the incident. Etc." [(ngModel)]="offenderReport.description" name="description"></textarea>
+        </div>
+        <div class="row form-group">          
+          <div class="col-md-6 col-sm-6 col-xs-6">
+            <label>Infractions</label>
+            <select [disabled]="offenderReport.submitted_for_approval" class="form-control" name="infractions" multiple>
+              <option *ngFor="let infraction of filteredInfractions()" (dblclick)="addInfractionToReport(infraction)" [value]="infraction.id">{{infraction.title}}</option>
+            </select>
+            <small class="text-mute">(Double click to add infraction)</small>
+          </div>
+          <div class="col-md-6 col-sm-6 col-xs-6">
+            <label>&nbsp;</label>
+            <p *ngIf="(offenderReport.infractions && offenderReport.infractions.length == 0) && (offenderReport.new_infractions && offenderReport.new_infractions.length == 0)">No selected infractions.</p>
+            <!-- Current Infractions -->
+            <ul>
+              <li [ngClass]="{'deleted': onRemoveList(infraction), 'text-danger': onRemoveList(infraction) }" *ngFor="let infraction of offenderReport.infractions">{{infraction.title}} <a (click)="removeInfractionFromReport(infraction)"><i class="fas fa-trash-alt"></i></a></li>
+            </ul>
+            <!-- New Infractions -->
+            <ul>
+              <li *ngFor="let infraction of offenderReport.new_infractions">{{infraction.title}} <a (click)="removeInfractionFromReport(infraction)"><i class="fas fa-trash-alt"></i></a></li>
+            </ul>
+          </div>
         </div>
         <div class="form-group">
           <label>Ship Used (If Applicable)</label>
@@ -56,13 +86,13 @@
     </div>
     <div class="modal-footer">
         <div class="form-group" *ngIf="!offenderReport.submitted_for_approval">
-          <button *ngIf="!offenderReport.report_approved" [disabled]="offenderReport.submitted_for_approval || !offenderReport.occured_when_ms || !offenderReportForm.form.valid" type="button" class="btn btn-primary" (click)="doCreateUpdate()">{{formAction}} Offender Report</button>&nbsp;
+          <button *ngIf="!offenderReport.report_approved" [disabled]="offenderReport.submitted_for_approval || !offenderReport.occured_when_ms || !offenderReportForm.form.valid || !handleVerified" type="button" class="btn btn-primary" (click)="doCreateUpdate()">{{formAction}} Offender Report</button>&nbsp;
           <button *ngIf="!offenderReport.report_approved && offenderReport.id" class="btn btn-success" (click)="submitForApproval()">Submit for Approval</button>&nbsp;
           <button type="button" class="btn btn-outline-dark" (click)="c('Save click')">Cancel</button>
         </div>
     </div>
   </ng-template>
   
-  <button *ngIf="!offenderReport.report_approved && offenderReport.id" class="btn btn-sm btn-primary" (click)="open(content)">{{formAction}}</button>
-  <button *ngIf="!offenderReport.id" class="btn btn-primary" (click)="open(content)">{{formAction}}</button>
+  <button *ngIf="!offenderReport.report_approved && offenderReport.id" class="btn btn-sm btn-primary" (click)="open(content)">{{formActionOuter}}</button>
+  <button *ngIf="!offenderReport.id" class="btn btn-primary" (click)="open(content)">{{formActionOuter}}</button>
   

@@ -5,8 +5,8 @@ export class Event
     id?:number;
     name?:string;
     description?:string;
-    // start_date?:Date;
-    // end_date?:Date;
+    start_date?:Date;
+    end_date?:Date;
     start_date_ms?:number;
     end_date_ms?:number;
     show_on_dashboard?:boolean;
@@ -18,9 +18,6 @@ export class Event
     debriefing:EventDebriefing
     published:boolean
     is_expired:boolean
-
-    private _start_date:Date
-    private _end_date:Date
 }
 
 export class EventAttendence
