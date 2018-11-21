@@ -11,6 +11,7 @@ export class Offender
     offender_rating?:IdTitleDesc
     offender_rating_id?:number
     offender_report_org?:OffenderOrg
+    offender_rsi_avatar?:string
     /**
      * Used to create a new offender report. Will not be otherwise populated
      */
@@ -21,6 +22,7 @@ export class OffenderReport
 {
     id?:number
     description?:string
+    created_at?:Date
     report_approved?:boolean
     submitted_for_approval?:boolean
     created_by?:User
