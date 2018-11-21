@@ -59,7 +59,7 @@ export class OffenderDetailsComponent implements OnInit {
   fetchOrgAssociatesString()
   {
     if (this.offender && this.offender.id && this.offender.offender_report_org) {
-      let filtered = this.offender.offender_report_org.known_offenders.filter(x => x.id != this.offender.id)
+      let filtered = this.offender.offender_report_org.known_offenders.filter(x => x.id != this.offender.id).map(x => x.offender_handle)
       return (filtered.length > 0) ? filtered.join(', ') : "None"
     }else{
       return "None"
