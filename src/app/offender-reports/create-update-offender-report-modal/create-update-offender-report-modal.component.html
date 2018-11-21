@@ -59,11 +59,11 @@
             <p *ngIf="(offenderReport.infractions && offenderReport.infractions.length == 0) && (offenderReport.new_infractions && offenderReport.new_infractions.length == 0)">No selected infractions.</p>
             <!-- Current Infractions -->
             <ul>
-              <li [ngClass]="{'deleted': onRemoveList(infraction), 'text-danger': onRemoveList(infraction) }" *ngFor="let infraction of offenderReport.infractions">{{infraction.title}} <a (click)="removeInfractionFromReport(infraction)"><i class="fas fa-trash-alt"></i></a></li>
+              <li [ngClass]="{'deleted': onRemoveList(infraction), 'text-danger': onRemoveList(infraction) }" *ngFor="let infraction of offenderReport.infractions">{{infraction.title}} <a *ngIf="!offenderReport.submitted_for_approval" (click)="removeInfractionFromReport(infraction)"><i class="fas fa-trash-alt"></i></a></li>
             </ul>
             <!-- New Infractions -->
             <ul>
-              <li *ngFor="let infraction of offenderReport.new_infractions">{{infraction.title}} <a (click)="removeInfractionFromReport(infraction)"><i class="fas fa-trash-alt"></i></a></li>
+              <li *ngFor="let infraction of offenderReport.new_infractions">{{infraction.title}} <a *ngIf="!offenderReport.submitted_for_approval" (click)="removeInfractionFromReport(infraction)"><i class="fas fa-trash-alt"></i></a></li>
             </ul>
           </div>
         </div>
