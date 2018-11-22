@@ -14,14 +14,9 @@ export class EventModalComponent implements OnInit {
   
   @Input() event:Event
   eventTypes:EventType[] = []
-  formAction:string;
-  closeResult: string;
-  dateTimePickerSettings = {
-    bigBanner: true,
-    timePicker: true,
-    format: 'MM/dd/yyyy hh:mm a  ',
-    defaultOpen: false
-  }
+  formAction:string
+  closeResult: string
+  recurrenceId:number = 0
 
   openModal:NgbModalRef
 
@@ -37,6 +32,8 @@ export class EventModalComponent implements OnInit {
       this.event = { } as Event
     }
 
+    this.getRecurrence()
+
     this.eventService.list_types().subscribe(
       (results) => 
       {
@@ -49,6 +46,35 @@ export class EventModalComponent implements OnInit {
 
   open(content) {
     this.openModal = this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'})
+  }
+
+  setRecurrence()
+  {
+    if (this.recurrenceId == 1) {
+      this.event.monthly_recurrence = false
+      this.event.weekly_recurrence = true
+    } else if (this.recurrenceId == 2) {
+      this.event.monthly_recurrence = true
+      this.event.weekly_recurrence = false
+    } else {
+      this.event.monthly_recurrence = false
+      this.event.weekly_recurrence = false
+    }
+  }
+
+  getRecurrence()
+  {
+    if (this.event) {
+      if (this.event.weekly_recurrence && !this.event.monthly_recurrence) {
+        this.recurrenceId = 1
+      } else if (!this.event.weekly_recurrence && this.event.monthly_recurrence) {
+        this.recurrenceId = 2
+      } else {
+        this.recurrenceId = 0
+      }
+    }else{
+      this.recurrenceId = 0
+    }
   }
 
 

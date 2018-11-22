@@ -32,16 +32,37 @@
         <select class="form-control" [(ngModel)]="event.event_type_id" name="grade_level_id" required>
           <option *ngFor="let eType of eventTypes" [value]="eType.id">{{eType.title}}</option>
         </select>
+      </div>
+      <fieldset class="form-group">
+        <label>Recurrence</label>
+        <div class="form-check">
+          <label class="form-check-label">
+            <input type="radio" class="form-check-input" name="optionsRadios" id="optionsRadios1" [value]="1" (change)="setRecurrence()" [(ngModel)]="recurrenceId">
+            Weekly
+          </label>
         </div>
+        <div class="form-check">
+        <label class="form-check-label">
+            <input type="radio" class="form-check-input" name="optionsRadios" id="optionsRadios2" [value]="2" (change)="setRecurrence()" [(ngModel)]="recurrenceId">
+            Monthly
+          </label>
+        </div>
+        <div class="form-check disabled">
+        <label class="form-check-label">
+            <input type="radio" class="form-check-input" name="optionsRadios" id="optionsRadios3" [value]="0" (change)="setRecurrence()" [(ngModel)]="recurrenceId">
+            None
+          </label>
+        </div>
+      </fieldset>
       <div class="form-group">
         <div class="custom-control custom-checkbox">
           <input type="checkbox" class="custom-control-input" id="customCheck1" [(ngModel)]="event.show_on_dashboard" name="show_on_dashboard">
           <label class="custom-control-label" for="customCheck1">Show on dashboard?</label>
         </div>
-        <div class="custom-control custom-checkbox">
+        <!-- <div class="custom-control custom-checkbox">
           <input type="checkbox" class="custom-control-input" id="customCheck2" [(ngModel)]="event.weekly_recurrence" name="weekly_recurrence">
           <label class="custom-control-label" for="customCheck2">Weekly Recurrence?</label>
-        </div>
+        </div> -->
       </div>
     </form>
   </div>
