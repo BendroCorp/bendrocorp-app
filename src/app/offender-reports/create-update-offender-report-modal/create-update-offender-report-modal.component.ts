@@ -243,9 +243,9 @@ export class CreateUpdateOffenderReportModalComponent implements OnInit, OnDestr
       this.offenderReport = { offender_attributes: { } as Offender, new_infractions: [], remove_infractions: [], infractions: [] } as OffenderReport
     }
 
-    if (!this.offenderReport && !this.offenderReport.id) {
+    if (!this.offenderReport.id) {
       this.subscription = this.handleTextChanged
-      .pipe(tap(tapper => { this.checkingHandle = true }), debounceTime(500)).subscribe(
+      .pipe(tap(tapper => { this.checkingHandle = true }), debounceTime(1000)).subscribe(
       (search) => {
         this.verifyHandle(search)
       }

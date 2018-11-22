@@ -11,13 +11,14 @@
           <label>Offender Handle</label>
           <div *ngIf="offenderReport.id">{{offenderReport.offender.offender_handle}}</div>
           <div class="input-group mb-3">
-              <input required *ngIf="!offenderReport.id" placeholder="The offenders handle..." class="form-control" type="text" (keyup)="searchHandle($event)" [(ngModel)]="offenderReport.offender_attributes.offender_handle" name="offender_handle">
+            <input required *ngIf="!offenderReport.id" placeholder="The offenders handle..." class="form-control" type="text" (keyup)="searchHandle($event)" [(ngModel)]="offenderReport.offender_attributes.offender_handle" name="offender_handle">
             <div class="input-group-append" *ngIf="!offenderReport.id">
               <span class="input-group-text" *ngIf="checkingHandle"><i class="fas fa-spinner fa-spin"></i></span>
               <span class="input-group-text" style="color:red;" *ngIf="!checkingHandle && handleVerified == false"><i class="fas fa-times"></i></span>
               <span class="input-group-text" style="color:green;" *ngIf="!checkingHandle && handleVerified == true"><i class="fas fa-check"></i></span>
             </div>
-          </div>          
+          </div>    
+          <small class="text-muted">* Handles are verified againt public RSI data.</small>      
         </div>
         <div class="form-group">
           <label>Offender Name</label>
