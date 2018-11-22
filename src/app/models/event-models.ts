@@ -10,7 +10,8 @@ export class Event
     start_date_ms?:number;
     end_date_ms?:number;
     show_on_dashboard?:boolean;
-    weekly_recurrance?:boolean;
+    weekly_recurrence?:boolean;
+    monthly_recurrence?:boolean;
     event_type_id?:number;
     event_type:EventType
     attendences?:EventAttendence[]   
