@@ -17,6 +17,8 @@ export class EventCertificationModalComponent implements OnInit {
   debriefingText:string
   openModal:NgbModalRef
   attendenceSubmitting:boolean = false
+  certificationPassed: boolean = false
+
   constructor(private modalService: NgbModal, private eventService:EventService) { }
 
   open(content) {
@@ -35,6 +37,7 @@ export class EventCertificationModalComponent implements OnInit {
           this.attendenceSubmitting = false
           if (!(results instanceof HttpErrorResponse)) {
             this.eventService.refreshData()
+            this.certificationPassed = true
             this.openModal.close()
           }
         }

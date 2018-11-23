@@ -1,0 +1,34 @@
+dist: trusty
+sudo: true
+language: node_js
+node_js:
+  - '8'
+branches:
+  only:
+  - master
+deploy:
+  provider: script
+  script: bash ./deploy.sh
+  on: master
+cache:
+  directories:
+  - "./node_modules"
+before_install:
+  - chmod +x ./deploy.sh
+  - openssl aes-256-cbc -K $encrypted_e0e91c2d29b3_key -iv $encrypted_e0e91c2d29b3_iv
+    -in .travis/deploy.key.enc -out .travis/deploy.key -d
+  - eval "$(ssh-agent -s)"
+  - chmod 600 .travis/deploy.key
+  - ssh-add .travis/deploy.key
+  - ssh-keyscan daleslab.com >> ~/.ssh/known_hosts
+  - git remote add deploy dokku@daleslab.com:bendrocorp
+  - git config --global push.default simple
+install:
+  - npm install
+script:
+  - npm test
+notifications:
+  slack:
+    secure: FMW/pth3LjYDCycA663QMY7IW3/drHeQBuYbPQv1ibDoXXnp+sYEkqcJBqitmrGn+8RjW3glLtFlds6s3Iy1byFSagInr3g8lGBrrAn0bcgyQ0UiSIE1oOREFXX3XlLbCUIImZTYrSAysvLJYEUQ4j4jA7g2xy/sgYPeU0Aapr651nwd9jexA4dAByi7Ab6xEaQyBel9t9fe5nKCz0DPb5GBDQxC4rRgxgyL29xn7lwqH9PEpzkwELm8aRJ91x+FYniIeXOvcXvbqCsQHANoHs4yAjEDJmVB3MmwvY7EQCkmijdUzx1dtoyXtAdUu7nC692c3xv81J5s5qzYYhyaAQ6zdsBmcJRHD2q7xEBjq0uFo8inqRi7NYgpG0D57HdaeatlBPBqmSXlaxv/GNd/4ieBoYbC0auWds8t0bx5f75ghZLOFqSPpFpXBIux3ll70su7SeOADL69xzYM2IyCVKkivmvixIdU3HKhGjVFhKKvgXkuxo/7Vznd4KsCH5bgXOUjGdlLkTPo+JSf3yOFH5IpUd2N7W/W6iNtacoimprNf4eaPwBE3JEkYIPPouWvmZMC4vGYBm47D28RobZSJShR3wZrxBGXnhYpuJ+P1tlBq4IcljeHGq2AJ0YOlxsg0iM3PGIN4jVT3gL/7SAeKKfddXfFf0M7I5aTLTSqRcU=
+  irc:
+    - "chat.freenode.net#daleslab"

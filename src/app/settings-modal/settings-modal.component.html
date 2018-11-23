@@ -67,6 +67,23 @@
           </div>
         </ng-template>
       </ngb-tab>
+      <ngb-tab title="Auth Tokens">
+        <ng-template ngbTabContent>
+          <br>
+          <h5>Auth Tokens</h5>
+          <h6 *ngIf="!tokens || tokens.length == 0">You do not have any authorization tokens.</h6>
+          <table *ngIf="tokens && tokens.length > 0" class="table table-striped">
+            <tbody>
+              <tr *ngFor="let token of tokens">
+                <td>{{token.token | slice:0:6 }}...</td>
+                <td [ngClass]="{'text-success': token.perpetual == true, 'text-danger': token.perpetual == false}">Perpetual</td>
+                <td>{{token.device}}</td>
+                <td><button class="btn btn-sm btn-danger" (click)="removeAuthToken(token)">Revoke</button></td>
+              </tr>
+            </tbody>
+          </table>
+        </ng-template>
+      </ngb-tab>
       <ngb-tab title="OAuth">
         <ng-template ngbTabContent>
           <br>
@@ -74,10 +91,10 @@
           <h6 *ngIf="!tokens || tokens.length == 0">You have not authorized any third party integrations.</h6>
           <table *ngIf="tokens && tokens.length > 0" class="table table-striped">
             <tbody>
-              <tr *ngFor="let token of tokens">
-                <td>{{token}}</td>
+              <tr *ngFor="let token of oAuthTokens">
+                <td>{{token.token | slice:0:6 }}...</td>
                 <td></td>
-                <td><button class="btn btn-sm btn-danger" (click)="revokeToken(token)">Revoke</button></td>
+                <td><button class="btn btn-sm btn-danger" (click)="revokeOAuthToken(token)">Revoke</button></td>
               </tr>
             </tbody>
           </table>

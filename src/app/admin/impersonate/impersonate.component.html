@@ -1,0 +1,25 @@
+<div class="">
+    <ol class="breadcrumb">
+      <li>Impersonate User (Admin)</li>
+    </ol>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card border-primary">
+        <div class="card-header bg-primary text-white">User Impersonation</div>
+        <div class="card-body">
+          <h6>User Impersonation</h6>
+          <p>Is a tightly controlled adminstrative function. Please note that this feature should only be used when absoluetly required to diagnose an issue that an end user is having. Use of this feature is logged and the feature also informs the end user when it is used against their account.</p>
+          <div class="form-group">
+            <label>Select User</label>
+            <select class="form-control" [(ngModel)]="selectedImpersonationUserId" name="impersonation_user">
+              <option *ngFor="let user of users" [value]="user.id">{{user.username}}</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <button class="btn btn-primary" (click)="impersonateUser()" [disabled]="!selectedImpersonationUserId">Impersonate User</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

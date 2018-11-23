@@ -23,6 +23,11 @@ import { PositionChangeComponent } from './requests/position-change/position-cha
 import { OauthComponent } from './oauth/oauth.component';
 import { AuthCompleteComponent } from './misc/auth-complete/auth-complete.component';
 import { SystemMapComponent } from './system-map/system-map.component';
+import { ImpersonateComponent } from './admin/impersonate/impersonate.component';
+import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import { OffenderDetailsComponent } from './offender-reports/offender-details/offender-details.component';
+import { OffenderReportReportDetailsComponent } from './offender-reports/offender-report-report-details/offender-report-report-details.component';
 
 const routes: Routes = [
     { path: '', component: DashboardComponent, canActivate: [AuthGuardService, MemberAuthGuardService] },
@@ -35,6 +40,8 @@ const routes: Routes = [
     { path: 'flight-logs/:flight_log_id', component: FlightLogDetailsComponent, canActivate: [AuthGuardService, MemberAuthGuardService] },
     { path: 'offender-reports', component: OffenderReportsComponent, canActivate: [AuthGuardService, MemberAuthGuardService] },
     { path: 'system-map', component: SystemMapComponent, canActivate: [AuthGuardService, MemberAuthGuardService]},
+    { path: 'offender-reports/:offender_id', component: OffenderDetailsComponent, canActivate: [AuthGuardService, MemberAuthGuardService] },
+    { path: 'offender-reports/report/:report_id', component: OffenderReportReportDetailsComponent, canActivate: [AuthGuardService, MemberAuthGuardService] },
     // public/non-member routes below here
     { path: 'login', component: LoginComponent, canActivate: [NoAuthGuardService] },
     { path: 'signup', component: SignupComponent, canActivate: [NoAuthGuardService] },
@@ -47,7 +54,10 @@ const routes: Routes = [
     { path: 'requests/approvals', component: ApprovalsComponent, canActivate: [AuthGuardService, MemberAuthGuardService]},
     { path: 'requests/approvals/:approval_id', component: ApprovalDetailsComponent, canActivate: [AuthGuardService, MemberAuthGuardService]},
     { path: 'oauth', component: OauthComponent, canActivate: [AuthGuardService, MemberAuthGuardService] },
-    { path: 'auth-complete', component: AuthCompleteComponent, canActivate: [AuthGuardService, MemberAuthGuardService] }
+    { path: 'auth-complete', component: AuthCompleteComponent, canActivate: [AuthGuardService, MemberAuthGuardService] },
+    { path: 'impersonate', component: ImpersonateComponent, canActivate: [AuthGuardService, MemberAuthGuardService] },
+    { path: 'forgot-password', component: ForgotPasswordComponent, canActivate: [NoAuthGuardService] },
+    { path: 'password-reset/:token', component: ResetPasswordComponent, canActivate: [NoAuthGuardService] },
   ];
   
   @NgModule({

@@ -45,3 +45,23 @@
     -webkit-overflow-scrolling: touch;
     -ms-overflow-style: -ms-autohiding-scrollbar;
 }
+
+.footer
+{
+    color: #fff;
+    font-size: .8em;
+    text-align:right; 
+    position: absolute; 
+    bottom: 0; right: 0; 
+    margin-right: 8px; 
+}
+
+.footer > a, .footer > a:visited 
+{
+    color: #fff;
+}
+
+.footer > a:hover
+{
+    text-decoration: underline;
+}

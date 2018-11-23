@@ -15,31 +15,54 @@
         <label>Event Description</label>
         <textarea class="form-control" required placeholder="Enter event description..." [(ngModel)]="event.description" name="description"></textarea>
       </div>
-      <div class="form-group">
-        <label>Event Start Date</label>
-        <!-- <input class="form-control" required placeholder="Enter event start date/time..." [(ngModel)]="event.start_date" name="title" type="datetime"> -->
-        <angular2-date-picker [(ngModel)]="event.start_date" (onDateSelect)="onStartDateSelect($event)" [settings]="dateTimePickerSettings" name="start_date"></angular2-date-picker>
-      </div>
-      <div class="form-group">
-        <label>Event End Date</label>
-        <!-- <input class="form-control" required placeholder="Enter event end date/time..." [(ngModel)]="event.end_date" name="title" type="datetime"> -->
-        <angular2-date-picker [(ngModel)]="event.end_date" (onDateSelect)="onEndDateSelect($event)" [settings]="dateTimePickerSettings" name="end_date"></angular2-date-picker>
+      <div class="row">
+        <div class="form-group col-md-6 col-sm-6 col-xs-6">
+          <label>Event Start Date</label>
+          <div *ngIf="event.start_date"><strong>{{event.start_date | date:'MM/dd/yyyy @ h:mma' }}</strong></div>
+          <dl-date-time-picker startView="day" maxView="year" minView="minute" minuteStep="5" name="start_date" (change)="onStartDateSelect($event)" [(ngModel)]="event.start_date"></dl-date-time-picker>
+        </div>
+        <div class="form-group col-md-6 col-sm-6 col-xs-6">
+          <label>Event End Date</label>
+          <div *ngIf="event.end_date"><strong>{{event.end_date | date:'MM/dd/yyyy @ h:mma' }}</strong></div>
+          <dl-date-time-picker startView="day" maxView="year" minView="minute" minuteStep="5" name="end_date" (change)="onEndDateSelect($event)" [(ngModel)]="event.end_date"></dl-date-time-picker>
+        </div>
       </div>
       <div class="form-group" *ngIf="!gradeId">
         <label>Event Type:</label>
         <select class="form-control" [(ngModel)]="event.event_type_id" name="grade_level_id" required>
           <option *ngFor="let eType of eventTypes" [value]="eType.id">{{eType.title}}</option>
         </select>
+      </div>
+      <fieldset class="form-group">
+        <label>Recurrence</label>
+        <div class="form-check">
+          <label class="form-check-label">
+            <input type="radio" class="form-check-input" name="optionsRadios" id="optionsRadios1" [value]="1" (change)="setRecurrence()" [(ngModel)]="recurrenceId">
+            Weekly
+          </label>
         </div>
+        <div class="form-check">
+        <label class="form-check-label">
+            <input type="radio" class="form-check-input" name="optionsRadios" id="optionsRadios2" [value]="2" (change)="setRecurrence()" [(ngModel)]="recurrenceId">
+            Monthly
+          </label>
+        </div>
+        <div class="form-check disabled">
+        <label class="form-check-label">
+            <input type="radio" class="form-check-input" name="optionsRadios" id="optionsRadios3" [value]="0" (change)="setRecurrence()" [(ngModel)]="recurrenceId">
+            None
+          </label>
+        </div>
+      </fieldset>
       <div class="form-group">
         <div class="custom-control custom-checkbox">
           <input type="checkbox" class="custom-control-input" id="customCheck1" [(ngModel)]="event.show_on_dashboard" name="show_on_dashboard">
           <label class="custom-control-label" for="customCheck1">Show on dashboard?</label>
         </div>
-        <div class="custom-control custom-checkbox">
-          <input type="checkbox" class="custom-control-input" id="customCheck2" [(ngModel)]="event.weekly_recurrance" name="weekly_recurrance">
-          <label class="custom-control-label" for="customCheck2">Weekly Recurrance?</label>
-        </div>
+        <!-- <div class="custom-control custom-checkbox">
+          <input type="checkbox" class="custom-control-input" id="customCheck2" [(ngModel)]="event.weekly_recurrence" name="weekly_recurrence">
+          <label class="custom-control-label" for="customCheck2">Weekly Recurrence?</label>
+        </div> -->
       </div>
     </form>
   </div>

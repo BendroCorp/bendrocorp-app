@@ -1,4 +1,5 @@
-# BendrocorpApp
+# Bendrocorp App
+[![Build Status](https://travis-ci.org/BendroCorp/bendrocorp-app.svg?branch=master)](https://travis-ci.org/BendroCorp/bendrocorp-app)
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 6.0.8.
 
@@ -21,6 +22,9 @@ Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.
 ## Running end-to-end tests
 
 Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+
+## Production
+Promotion to production is automatic and happens when pushes occur to the master branch.
 
 ## Further help
 

@@ -1,0 +1,47 @@
+<div class="">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a routerLink="/offender-reports">Offender Reports</a></li>
+      <li class="breadcrumb-item active">Offender Report - Report #{{offenderReport.id}}</li>
+    </ol>
+  </div>
+<div class="card border-primary">
+  <div class="card-header bg-primary text-white">Report Details - Report #{{offenderReport.id}}</div>
+  <div class="card-body">
+    <div class="row">
+      <div class="col-md-3 or-left-col">
+        <div class="offender-image bvc">
+          <div class="content">
+              <img *ngIf="!offenderReport.offender.offender_rsi_avatar" style="max-width:130%;" src="../../../assets/imgs/or-report-default.png" alt="">
+              <img *ngIf="offenderReport.offender.offender_rsi_avatar" style="max-width:130%;" src="{{offenderReport.offender.offender_rsi_avatar}}" alt="">
+          </div>          
+          <div class="bevel bl"></div>
+        </div>
+        <div>
+          <h6>{{offenderReport.offender.offender_handle}}</h6>
+          <a href="https://robertsspaceindustries.com/citizens/{{offenderReport.offender.offender_handle}}" target="_blank">Spectrum Link</a>
+        </div>
+      </div>
+      <div class="col-md-9">
+        <!-- Offender Summary -->
+        <div>
+          <h4>Report Details</h4>
+          <p>{{offenderReport.description}}</p>
+        </div>
+        <hr>
+        <div>
+          <p><strong>Location:</strong> {{offenderReport.full_location}}</p>
+          <p><strong>Occured:</strong> {{offenderReport.occured_when | date}}</p>
+          <p><strong>Submitted:</strong> {{offenderReport.created_at | date}}</p>
+          <p><strong>Submitted By:</strong> {{offenderReport.created_by.main_character.first_name}} {{offenderReport.created_by.main_character.last_name}}</p>
+          <p><strong>Force Applied:</strong> {{offenderReport.force_level_applied.title}}</p>
+        </div>
+        <div>
+          <h4>Offender Infractions</h4>
+          <div *ngIf="offenderReport" class="row">
+            <div *ngFor="let item of offenderReport.infractions" class="col-md-4">{{item.title}}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

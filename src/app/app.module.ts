@@ -1,9 +1,10 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgbModal, NgbModule, NgbAlert } from '@ng-bootstrap/ng-bootstrap';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AngularDateTimePickerModule } from 'angular2-datetimepicker';
+import { DlDateTimePickerDateModule } from 'angular-bootstrap-datetimepicker';
 
 import { AppComponent } from './app.component';
 import { MenuComponent } from './menu/menu.component';
@@ -87,6 +88,12 @@ import { AddUpdateSystemModalComponent } from './system-map/add-update-system-mo
 import { AddUpdatePlanetModalComponent } from './system-map/add-update-planet-modal/add-update-planet-modal.component';
 import { AddUpdateMoonModalComponent } from './system-map/add-update-moon-modal/add-update-moon-modal.component';
 import { AddUpdateSystemObjectModalComponent } from './system-map/add-update-system-object-modal/add-update-system-object-modal.component';
+import { TermsOfServiceComponent } from './terms-of-service/terms-of-service.component';
+import { PrivacyComponent } from './privacy/privacy.component';
+import { ImpersonateComponent } from './admin/impersonate/impersonate.component';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import { OffenderDetailsComponent } from './offender-reports/offender-details/offender-details.component';
+import { OffenderReportReportDetailsComponent } from './offender-reports/offender-report-report-details/offender-report-report-details.component';
 
 @NgModule({
   declarations: [
@@ -150,7 +157,13 @@ import { AddUpdateSystemObjectModalComponent } from './system-map/add-update-sys
     AddUpdateSystemModalComponent,
     AddUpdatePlanetModalComponent,
     AddUpdateMoonModalComponent,
-    AddUpdateSystemObjectModalComponent
+    AddUpdateSystemObjectModalComponent,
+    TermsOfServiceComponent,
+    PrivacyComponent,
+    ImpersonateComponent,
+    ResetPasswordComponent,
+    OffenderDetailsComponent,
+    OffenderReportReportDetailsComponent,
   ],
   entryComponents: [
     EventModalComponent,
@@ -167,6 +180,7 @@ import { AddUpdateSystemObjectModalComponent } from './system-map/add-update-sys
     NgbModule.forRoot(),
     BrowserAnimationsModule,
     AngularDateTimePickerModule,
+    DlDateTimePickerDateModule,
     QRCodeModule,
     NgxPaginationModule,
     DeviceDetectorModule.forRoot(),

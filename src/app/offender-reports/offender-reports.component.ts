@@ -6,6 +6,7 @@ import { Subscription } from 'rxjs';
 import { AuthService } from '../auth.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { SpinnerService } from '../misc/spinner/spinner.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-offender-reports',
@@ -21,7 +22,7 @@ export class OffenderReportsComponent implements OnInit {
   isAdmin = this.authService.hasClaim(16)
 
   subscription:Subscription
-  constructor(private offenderReportService:OffenderReportService, private messageService:MessageService, private authService:AuthService, private spinnerService:SpinnerService) { 
+  constructor(private offenderReportService:OffenderReportService, private messageService:MessageService, private authService:AuthService, private spinnerService:SpinnerService, private router:Router) { 
     this.subscription = this.offenderReportService.dataRefreshAnnounced$.subscribe(
       () => {
         this.fetchReports()
@@ -58,6 +59,13 @@ export class OffenderReportsComponent implements OnInit {
         )
       }
     )  
+  }
+
+  showOffender(offender:Offender)
+  {
+    if (offender && offender.id) {
+      this.router.navigateByUrl(`/offender-reports/offender-${offender.id}`)
+    }
   }
 
   ngOnInit() {

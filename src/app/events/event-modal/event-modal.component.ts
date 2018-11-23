@@ -14,14 +14,9 @@ export class EventModalComponent implements OnInit {
   
   @Input() event:Event
   eventTypes:EventType[] = []
-  formAction:string;
-  closeResult: string;
-  dateTimePickerSettings = {
-    bigBanner: true,
-    timePicker: true,
-    format: 'MM/dd/yyyy hh:mm a  ',
-    defaultOpen: false
-  }
+  formAction:string
+  closeResult: string
+  recurrenceId:number = 0
 
   openModal:NgbModalRef
 
@@ -29,11 +24,15 @@ export class EventModalComponent implements OnInit {
 
   ngOnInit() {
     if (this.event && this.event.id) {
-      this.formAction = 'Update'      
+      this.formAction = 'Update'
+      this.event.start_date = new Date(this.event.start_date)
+      this.event.end_date = new Date(this.event.end_date)      
     } else {
       this.formAction = 'Create'
       this.event = { } as Event
     }
+
+    this.getRecurrence()
 
     this.eventService.list_types().subscribe(
       (results) => 
@@ -49,25 +48,58 @@ export class EventModalComponent implements OnInit {
     this.openModal = this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'})
   }
 
-
-  public onStartDateSelect(event_date_change:string)
+  setRecurrence()
   {
-    console.log(event_date_change)    
-    let new_date = new Date(event_date_change)
-    new_date.setSeconds(0)
-    console.log(new_date)    
-    this.event.start_date_ms = new_date.getTime()
-    console.log(this.event.start_date_ms);    
+    if (this.recurrenceId == 1) {
+      this.event.monthly_recurrence = false
+      this.event.weekly_recurrence = true
+    } else if (this.recurrenceId == 2) {
+      this.event.monthly_recurrence = true
+      this.event.weekly_recurrence = false
+    } else {
+      this.event.monthly_recurrence = false
+      this.event.weekly_recurrence = false
+    }
   }
 
-  public onEndDateSelect(event_date_change:string)
+  getRecurrence()
   {
-    console.log(event_date_change)    
-    let new_date = new Date(event_date_change)
-    new_date.setSeconds(0)
-    console.log(new_date)    
-    this.event.end_date_ms = new_date.getTime()
-    console.log(this.event.end_date_ms);    
+    if (this.event) {
+      if (this.event.weekly_recurrence && !this.event.monthly_recurrence) {
+        this.recurrenceId = 1
+      } else if (!this.event.weekly_recurrence && this.event.monthly_recurrence) {
+        this.recurrenceId = 2
+      } else {
+        this.recurrenceId = 0
+      }
+    }else{
+      this.recurrenceId = 0
+    }
+  }
+
+
+  onStartDateSelect(event_date_change:any)
+  {
+    if (event_date_change && event_date_change.value) {
+      console.log(event_date_change.value)    
+      let new_date = new Date(event_date_change.value)
+      new_date.setSeconds(0)
+      console.log(new_date)    
+      this.event.start_date_ms = new_date.getTime()
+      console.log(this.event.start_date_ms);  
+    }  
+  }
+
+  onEndDateSelect(event_date_change:any)
+  {
+    if (event_date_change && event_date_change.value) {
+      console.log(event_date_change.value)    
+      let new_date = new Date(event_date_change.value)
+      new_date.setSeconds(0)
+      console.log(new_date)    
+      this.event.end_date_ms = new_date.getTime()
+      console.log(this.event.end_date_ms);  
+    }  
   }
 
   public logIt(text:string)
@@ -75,36 +107,6 @@ export class EventModalComponent implements OnInit {
     console.log(text);
     
   }
-
-  // public setStartDateMs(an_event:Event)
-  // {
-  //   if (an_event) {
-  //     console.log(an_event.start_date_ms);
-  //     try
-  //     {
-  //       an_event.start_date_ms = new Date(an_event.start_date).getTime()
-  //       console.log(an_event.start_date_ms);
-  //     }
-  //     catch{ }
-  //   } else {
-  //     console.error("Event not passed!")
-  //   }
-  // }
-
-  // public setEndDateMs(an_event:Event)
-  // {
-  //   if (an_event) {
-  //     console.log(an_event.end_date_ms);
-  //     try
-  //     {
-  //       an_event.end_date_ms = new Date(an_event.end_date).getTime()
-  //       console.log(an_event.end_date_ms);
-  //     }
-  //     catch{ }
-  //   } else {
-  //     console.error("Event not passed!")
-  //   }
-  // }
 
   doSaveBack()
   {

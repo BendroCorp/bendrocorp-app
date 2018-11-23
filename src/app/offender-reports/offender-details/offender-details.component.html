@@ -1,0 +1,84 @@
+<div class="">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a routerLink="/offender-reports">Offender Reports</a></li>
+      <li class="breadcrumb-item active">Offender - {{offender.offender_handle}}</li>
+    </ol>
+  </div>
+<div class="card border-primary">
+  <div class="card-header bg-primary text-white">Offender Details - {{offender.offender_handle}}</div>
+  <div class="card-body">
+    <div class="row">
+      <div class="col-md-3 or-left-col">
+        <div class="offender-image bvc">
+          <div class="content">
+              <img *ngIf="!offender.offender_rsi_avatar" style="max-width:130%;" src="../../../assets/imgs/or-report-default.png" alt="">
+              <img *ngIf="offender.offender_rsi_avatar" style="max-width:130%;" src="{{offender.offender_rsi_avatar}}" alt="">
+          </div>          
+          <div class="bevel bl"></div>
+        </div>
+        <div>
+          <h6>{{offender.offender_handle}}</h6>
+          <a href="https://robertsspaceindustries.com/citizens/{{offender.offender_handle}}" target="_blank">Spectrum Link</a>
+        </div>
+      </div>
+      <div class="col-md-9">
+        <!-- Rating -->
+        <div style="text-align:center">
+            <h3 [ngClass]="{'dangerous': offender.offender_rating_id == 2, 'lethal': offender.offender_rating_id == 3 }" *ngIf="offender && offender.offender_rating != null">
+              <p>.::{{offender.offender_rating.title}}::.</p>
+              <small *ngIf="offender.offender_rating_id == 2">Exercise caution</small>
+              <small *ngIf="offender.offender_rating_id == 3">Exercise extreme caution</small>
+            </h3>
+            <h3 *ngIf="offender && offender.offender_rating == null">.::PROCESSING PENDING::.</h3>
+        </div>
+        <!-- Affiliation -->
+        <div>
+          <h4>Affiliations</h4>
+          <h6 *ngIf="!offender.offender_report_org">No known affiliations</h6>
+          <div *ngIf="offender.offender_report_org">
+            <img src="{{offender.offender_report_org.logo}}" style="max-height:100px; float:right;" alt="">
+            <h5>{{offender.offender_report_org.title}} <span class="text-muted">({{offender.offender_report_org.model}})</span><br><small class="text-muted">{{offender.offender_report_org.primary_activity}} {{offender.offender_report_org.secondary_activity}}</small></h5>
+            <p>
+              <strong>Title:</strong> {{offender.org_title}}<br>
+              <strong>Rank:</strong> {{offender.offender_org_rank}} out of 5<br>
+              <strong>Member Count:</strong> {{offender.offender_report_org.member_count}}
+            </p>
+            <p>Criminal Associate(s): {{fetchOrgAssociatesString()}}</p>
+            <br style="clear:both;">
+          </div>
+        </div>
+        <!-- Offender Summary -->
+        <div>
+          <h4>Contact Summary</h4>
+          <strong>{{offender.offender_reports.length}} x valid offender report(s)</strong>
+          <div *ngIf="offenderInfractionHistogram" class="row">
+            <div *ngFor="let item of offenderInfractionHistogram | keyvalue" class="col-md-4">{{item.value}} x {{item.key}}</div>
+          </div>
+        </div>
+        <br>
+        <!-- Reports -->
+        <div>
+          <h4>Reports</h4>
+          <table class="table table-striped table-hover">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Location</th>
+                <th>Occured When</th>
+                <th>Infraction(s)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let report of offender.offender_reports" (click)="openReport(report.id)">
+                <td>{{report.id}}</td>
+                <td>{{report.full_location}}</td>
+                <td>{{report.occured_when | date:'MM/dd/yyyy' }}</td>
+                <td>{{report.infractions.length}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

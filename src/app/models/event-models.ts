@@ -5,21 +5,20 @@ export class Event
     id?:number;
     name?:string;
     description?:string;
-    // start_date?:Date;
-    // end_date?:Date;
+    start_date?:Date;
+    end_date?:Date;
     start_date_ms?:number;
     end_date_ms?:number;
     show_on_dashboard?:boolean;
-    weekly_recurrance?:boolean;
+    weekly_recurrence?:boolean;
+    monthly_recurrence?:boolean;
     event_type_id?:number;
     event_type:EventType
     attendences?:EventAttendence[]   
     briefing:EventBriefing
     debriefing:EventDebriefing
     published:boolean
-
-    private _start_date:Date
-    private _end_date:Date
+    is_expired:boolean
 }
 
 export class EventAttendence
