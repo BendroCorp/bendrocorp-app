@@ -1,0 +1,40 @@
+<ng-template #content let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">{{formAction}} Planet</h4>
+      <button type="button" class="close" aria-label="Close" (click)="close()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <form #addUpdatePlanetForm="ngForm">
+        <div class="form-group">
+          <label>Title</label>
+          <input required class="form-control" type="text" placeholder="Planet Title..." name="planet_title" [(ngModel)]="planet.title" id="">
+        </div>
+        <div class="form-group">
+          <label>Description</label>
+          <textarea required class="form-control" placeholder="Planet description..." [(ngModel)]="planet.description" name="planet_description" id="" cols="30" rows="10"></textarea>
+        </div>
+        <div>
+          <label>Primary Image</label>
+          <div *ngIf="planet.primary_image_url" style="text-align:center;">
+            <img src="{{planet.primary_image_url}}" alt="Avatar" style="max-width: 200px;">
+          </div>
+          <div class="form-group">
+            <div class="input-group mb-3">
+              <div class="custom-file">
+                <input class="custom-file-input" type="file" id="inputGroupFile02" (change)="handleImageFileInput($event.target.files)">
+                <label class="custom-file-label" for="inputGroupFile02">Choose file</label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-primary" [disabled]="!addUpdatePlanetForm.form.valid" (click)="createUpdatePlanet()">{{formAction}} Planet</button>
+    </div>
+  </ng-template>
+  
+  <button *ngIf="!planet || (planet && !planet.id)" class="btn btn-primary" (click)="open(content)"><i class="fas fa-plus"></i> Add Planet</button>
+  <button *ngIf="planet && planet.id" class="btn btn-sm btn-primary" (click)="open(content)"><i class="fas fa-edit"></i> Edit Planet</button>

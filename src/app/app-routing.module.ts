@@ -22,6 +22,7 @@ import { RemoveRoleComponent } from './requests/remove-role/remove-role.componen
 import { PositionChangeComponent } from './requests/position-change/position-change.component';
 import { OauthComponent } from './oauth/oauth.component';
 import { AuthCompleteComponent } from './misc/auth-complete/auth-complete.component';
+import { SystemMapComponent } from './system-map/system-map.component';
 import { ImpersonateComponent } from './admin/impersonate/impersonate.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
@@ -38,6 +39,7 @@ const routes: Routes = [
     { path: 'flight-logs', component: FlightLogsComponent, canActivate: [AuthGuardService, MemberAuthGuardService] },
     { path: 'flight-logs/:flight_log_id', component: FlightLogDetailsComponent, canActivate: [AuthGuardService, MemberAuthGuardService] },
     { path: 'offender-reports', component: OffenderReportsComponent, canActivate: [AuthGuardService, MemberAuthGuardService] },
+    { path: 'system-map', component: SystemMapComponent, canActivate: [AuthGuardService, MemberAuthGuardService]},
     { path: 'offender-reports/:offender_id', component: OffenderDetailsComponent, canActivate: [AuthGuardService, MemberAuthGuardService] },
     { path: 'offender-reports/report/:report_id', component: OffenderReportReportDetailsComponent, canActivate: [AuthGuardService, MemberAuthGuardService] },
     // public/non-member routes below here

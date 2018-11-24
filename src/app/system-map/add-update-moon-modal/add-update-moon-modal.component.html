@@ -1,0 +1,46 @@
+<ng-template #content let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">{{formAction}} Moon</h4>
+      <button type="button" class="close" aria-label="Close" (click)="close()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <form #addUpdateMoonForm="ngForm">
+        <div class="form-group">
+          <label>Title</label>
+          <input required class="form-control" type="text" placeholder="Moon Title..." name="moon_title" [(ngModel)]="moon.title" id="">
+        </div>
+        <div class="form-group">
+          <label>Description</label>
+          <textarea required class="form-control" placeholder="Moon description..." [(ngModel)]="moon.description" name="moon_description" id="" cols="30" rows="10"></textarea>
+        </div>
+        <div class="form-group">
+          <label>Orbit Planets</label>
+          <select required class="form-control" [(ngModel)]="moon.orbits_planet_id" name="orbits_planet">
+            <option *ngFor="let planet of starSystem.planets" [value]="planet.id">{{planet.title}}</option>
+          </select>
+        </div>
+        <div>
+          <label>Primary Image</label>
+          <div *ngIf="moon.primary_image_url" style="text-align:center;">
+            <img src="{{moon.primary_image_url}}" alt="Avatar" style="max-width: 200px;">
+          </div>
+          <div class="form-group">
+            <div class="input-group mb-3">
+              <div class="custom-file">
+                <input class="custom-file-input" type="file" id="inputGroupFile02" (change)="handleImageFileInput($event.target.files)">
+                <label class="custom-file-label" for="inputGroupFile02">Choose file</label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-primary" [disabled]="!addUpdateMoonForm.form.valid" (click)="createUpdateMoon()">{{formAction}} Moon</button>
+    </div>
+  </ng-template>
+  
+  <button *ngIf="!moon || (moon && !moon.id)" class="btn btn-primary" (click)="open(content)"><i class="fas fa-plus"></i> Add Moon</button>
+  <button *ngIf="moon && moon.id" class="btn btn-sm btn-primary" (click)="open(content)"><i class="fas fa-edit"></i> Edit Moon</button>

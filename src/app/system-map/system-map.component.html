@@ -1,3 +1,75 @@
-<p>
-  system-map works!
-</p>
+<!-- Breadcrumbs -->
+<div class="row">
+  <div class="col-md-12">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item active">System Map</li>
+    </ol>
+  </div>
+</div>
+<!-- Buttons -->
+<div class="row" style="margin-bottom:4px">
+  <div class="col-md-12">
+    <add-update-system-modal *ngIf="isEditor && !selectedStarSystem" style="float:right"></add-update-system-modal>
+    <add-update-system-object-modal [starSystem]="selectedStarSystem" *ngIf="isEditor && selectedStarSystem" style="float:right; margin-right: 4px;"></add-update-system-object-modal>
+    <add-update-moon-modal [starSystem]="selectedStarSystem" *ngIf="isEditor && selectedStarSystem" style="float:right; margin-right: 4px;"></add-update-moon-modal>
+    <add-update-planet-modal [starSystem]="selectedStarSystem" *ngIf="isEditor && selectedStarSystem" style="float:right; margin-right: 4px;"></add-update-planet-modal>
+    <button *ngIf="selectedStarSystem" (click)="allSystems()" style="float:right; margin-right: 4px;" class="btn btn-primary">Back To Galaxy</button>
+  </div>
+</div>
+<!-- System Map -->
+<div class="row" style="height:80%;">
+  <div [ngClass]="{'col-md-6 col-sm-6 col-xs-6': selectedStarSystemItem, 'col-md-12': !selectedStarSystemItem }" class="">    
+    <div style="border:2px solid #000; height: 95%;" #starChart></div>   
+  </div>
+  <div style="height: 95%;" *ngIf="selectedStarSystemItem" class="col-md-6 col-sm-6 col-xs-6 detail-panel">
+    <span class="sm-close"><a (click)="deselectItem()"><i class="fas fa-times"></i></a></span>
+    <!-- Basic Details -->
+    <div style="clear:both;">
+      <img src="{{selectedStarSystemItem.primary_image_url}}" style="float:right; border: 2px solid black; max-height:150px" alt="">
+      <h2>{{selectedStarSystemItem.title}}<span *ngIf="isEditor"><add-update-planet-modal *ngIf="selectedObjectKind === 'p'" [starSystem]="selectedStarSystem" [planet]="selectedStarSystemItem"></add-update-planet-modal><add-update-moon-modal *ngIf="selectedObjectKind === 'm'" [starSystem]="selectedStarSystem" [moon]="selectedStarSystemItem"></add-update-moon-modal>&nbsp;<add-update-system-object-modal [smallBtn]="true" [systemPlanet]="selectedStarSystemItem" *ngIf="isEditor && selectedStarSystem && selectedObjectKind === 'p'"></add-update-system-object-modal><add-update-system-object-modal [systemMoon]="selectedStarSystemItem" *ngIf="isEditor && selectedStarSystem&& selectedObjectKind === 'm'"></add-update-system-object-modal></span></h2>
+      <p>{{selectedStarSystemItem.description}}</p>
+    </div>
+    <hr style="clear:both; padding-top:6px;">
+    <!-- Settlements -->
+    <div *ngIf="selectedStarSystemItem.settlements">
+      <h5>Settlements&nbsp;
+        <add-update-settlement-modal *ngIf="isEditor && selectedStarSystem && selectedObjectKind === 'p'" [smallBtn]="true" [systemPlanet]="selectedStarSystemItem"></add-update-settlement-modal>
+        <add-update-settlement-modal *ngIf="isEditor && selectedStarSystem && selectedObjectKind === 'm'" [smallBtn]="true" [systemMoon]="selectedStarSystemItem"></add-update-settlement-modal>
+      </h5>
+      <div *ngFor="let settlement of selectedStarSystemItem.settlements; let i = index">
+        <img src="{{settlement.primary_image_url}}" style="max-height:100px; float:right;" alt="">
+        <h6>{{settlement.title}}&nbsp;
+            <add-update-location-modal *ngIf="isEditor && selectedStarSystem" [smallBtn]="true" [systemSettlement]="settlement"></add-update-location-modal>
+        </h6>
+        <p>{{settlement.description}}</p>
+        <br style="clear:both;">
+        <div *ngIf="settlement.locations && settlement.locations.length > 0" style="color:#fff; background: #666666; padding: 8px;">
+          <div *ngFor="let setLocation of settlement.locations">
+            <img src="{{setLocation.primary_image_url}}" style="max-height:100px; float:right;" alt="">
+            <h6>{{setLocation.title}}&nbsp;
+              <add-update-location-modal *ngIf="isEditor" [smallBtn]="true" [systemLocation]="setLocation"></add-update-location-modal>
+            </h6>
+            <p>{{setLocation.description}}</p>
+            <br style="clear:both;">
+          </div>
+        </div>
+        <hr *ngIf="settlement.locations.length == (i + 1)">
+      </div>
+    </div>
+    <hr>
+    <hr>
+    <!-- Locations -->
+    <div *ngIf="selectedStarSystemItem.locations">
+      <h5>Locations&nbsp;
+        <add-update-location-modal *ngIf="isEditor && selectedStarSystem && selectedObjectKind === 'p'" [smallBtn]="true" [systemPlanet]="selectedStarSystemItem"></add-update-location-modal>
+        <add-update-location-modal *ngIf="isEditor && selectedStarSystem && selectedObjectKind === 'm'" [smallBtn]="true" [systemMoon]="selectedStarSystemItem"></add-update-location-modal>
+        <add-update-location-modal *ngIf="isEditor && selectedStarSystem && selectedObjectKind === 'so'" [smallBtn]="true" [systemObject]="selectedStarSystemItem"></add-update-location-modal>
+      </h5>
+      <div *ngFor="let location of selectedStarSystemItem.locations">
+        <img src="{{location.primary_image_url}}" style="max-height:100px; float:right;" alt="">
+        <h6>{{location.title}} <add-update-location-modal *ngIf="isEditor" [smallBtn]="true" [systemLocation]="location"></add-update-location-modal></h6>
+        <p>{{location.description}}</p>
+      </div>
+    </div>
+  </div>
+</div>

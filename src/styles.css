@@ -1,6 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 
 @import '~bootswatch/dist/flatly/bootstrap.css';
+/* @import './assets/fonts/system-map/style.css'; */
 
 html, body {
     height: 100%;
@@ -9,6 +10,10 @@ html, body {
     background-image: url('/assets/imgs/crusader-lattice.jpg');
     background-size: cover;
     overflow: hidden;
+}
+
+a {
+  cursor: pointer;
 }
 
 h1, h2, h3, h4, h5, h6
@@ -40,6 +45,7 @@ h1, h2, h3, h4, h5, h6
     overflow-x: hidden;
 }
 
+/* Univia */
 .table-hover
 {
     cursor: pointer;
@@ -87,3 +93,108 @@ h1, h2, h3, h4, h5, h6
     font-weight:800;
     src:url('/assets/fonts/univia-pro-800.woff2') format('woff2')
 }
+
+/* icomoon - system map icons */
+@font-face {
+    font-family: 'systemmap';
+    /* src:  url('/assets/fonts/system-map/fonts/icomoon.eot?pvwneo');
+    src:  url('/assets/fonts/system-map/fonts/icomoon.eot?pvwneo#iefix') format('embedded-opentype'),
+      url('/assets/fonts/system-map/fonts/icomoon.ttf?pvwneo') format('truetype'),
+      url('/assets/fonts/system-map/fonts/icomoon.woff?pvwneo') format('woff'),
+      url('/assets/fonts/system-map/fonts/icomoon.svg?pvwneo#icomoon') format('svg'); */
+    src: url('/assets/fonts/system-map/fonts/icomoon.woff') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+  }
+  
+  [class^="icon-"], [class*=" icon-"] {
+    /* use !important to prevent issues with browser extensions that change fonts */
+    font-family: 'system map' !important;
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+  
+    /* Better Font Rendering =========== */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  
+  .icon-search:before {
+    content: "\e600";
+  }
+  .icon-icon-sensor-crime:before {
+    content: "\e601";
+  }
+  .icon-icon-sensor-economy:before {
+    content: "\e602";
+  }
+  .icon-icon-route-size-large:before {
+    content: "\e603";
+  }
+  .icon-icon-route-size-medium:before {
+    content: "\e604";
+  }
+  .icon-icon-route-size-small:before {
+    content: "\e605";
+  }
+  .icon-icon-affiliation-banu:before {
+    content: "\e606";
+  }
+  .icon-icon-affiliation-dev:before {
+    content: "\e607";
+  }
+  .icon-icon-affiliation-uee-transitional:before {
+    content: "\e608";
+  }
+  .icon-icon-affiliation-uee:before {
+    content: "\e609";
+  }
+  .icon-icon-affiliation-unc:before {
+    content: "\e60a";
+  }
+  .icon-icon-affiliation-vncl:before {
+    content: "\e60b";
+  }
+  .icon-icon-affiliation-xian-transitional:before {
+    content: "\e60c";
+  }
+  .icon-icon-affiliation-xian:before {
+    content: "\e60d";
+  }
+  .icon-icon-bs:before {
+    content: "\e60e";
+  }
+  .icon-icon-bo:before {
+    content: "\e60f";
+  }
+  .icon-icon-arrow:before {
+    content: "\e610";
+  }
+  .icon-icon-sensor-lifeforms:before {
+    content: "\e611";
+  }
+  .icon-icon-type-asteroid_belt:before {
+    content: "\e800";
+  }
+  .icon-icon-type-jumppoint:before {
+    content: "\e801";
+  }
+  .icon-icon-type-manmade:before {
+    content: "\e802";
+  }
+  .icon-icon-type-planet:before {
+    content: "\e803";
+  }
+  .icon-icon-type-star:before {
+    content: "\e804";
+  }
+  .icon-icon-type-star_system:before {
+    content: "\e805";
+  }
+  .icon-icon-protected:before {
+    content: "\e806";
+  }
+  

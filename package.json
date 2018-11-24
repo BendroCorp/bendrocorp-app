@@ -25,6 +25,7 @@
     "@angular/service-worker": "^6.1.0",
     "@ng-bootstrap/ng-bootstrap": "^2.2.1",
     "@types/chart.js": "^2.7.30",
+    "@types/vis": "^4.21.8",
     "angular-bootstrap-datetimepicker": "^2.2.1",
     "angular-sortablejs": "^2.5.2",
     "angular2-datetimepicker": "^1.1.1",
@@ -43,6 +44,7 @@
     "open-iconic": "^1.1.1",
     "rxjs": "^6.0.0",
     "sortablejs": "^1.7.0",
+    "vis": "^4.21.0",
     "zone.js": "^0.8.26"
   },
   "devDependencies": {

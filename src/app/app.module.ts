@@ -83,12 +83,19 @@ import { IsAuthorizedService } from './misc/is-authorized.service';
 import { OauthComponent } from './oauth/oauth.component';
 import { DeviceDetectorModule } from 'ngx-device-detector';
 import { AuthCompleteComponent } from './misc/auth-complete/auth-complete.component';
+import { StarChartComponent } from './system-map/star-chart/star-chart.component';
+import { AddUpdateSystemModalComponent } from './system-map/add-update-system-modal/add-update-system-modal.component';
+import { AddUpdatePlanetModalComponent } from './system-map/add-update-planet-modal/add-update-planet-modal.component';
+import { AddUpdateMoonModalComponent } from './system-map/add-update-moon-modal/add-update-moon-modal.component';
+import { AddUpdateSystemObjectModalComponent } from './system-map/add-update-system-object-modal/add-update-system-object-modal.component';
 import { TermsOfServiceComponent } from './terms-of-service/terms-of-service.component';
 import { PrivacyComponent } from './privacy/privacy.component';
 import { ImpersonateComponent } from './admin/impersonate/impersonate.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { OffenderDetailsComponent } from './offender-reports/offender-details/offender-details.component';
 import { OffenderReportReportDetailsComponent } from './offender-reports/offender-report-report-details/offender-report-report-details.component';
+import { AddUpdateLocationModalComponent } from './system-map/add-update-location-modal/add-update-location-modal.component';
+import { AddUpdateSettlementModalComponent } from './system-map/add-update-settlement-modal/add-update-settlement-modal.component';
 
 @NgModule({
   declarations: [
@@ -148,12 +155,19 @@ import { OffenderReportReportDetailsComponent } from './offender-reports/offende
     ApiOfflineComponent,
     OauthComponent,
     AuthCompleteComponent,
+    StarChartComponent,
+    AddUpdateSystemModalComponent,
+    AddUpdatePlanetModalComponent,
+    AddUpdateMoonModalComponent,
+    AddUpdateSystemObjectModalComponent,
     TermsOfServiceComponent,
     PrivacyComponent,
     ImpersonateComponent,
     ResetPasswordComponent,
     OffenderDetailsComponent,
     OffenderReportReportDetailsComponent,
+    AddUpdateLocationModalComponent,
+    AddUpdateSettlementModalComponent,
   ],
   entryComponents: [
     EventModalComponent,
