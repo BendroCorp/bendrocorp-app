@@ -1,27 +1,28 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { SystemObject, Planet, Moon, StarSystem, SystemMapTypes } from 'src/app/models/system-map-models';
+import { Planet, Moon, SystemMapTypes, SystemLocation, Settlement } from 'src/app/models/system-map-models';
 import { NgbModalRef, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { SystemMapService } from '../system-map.service';
 import { MessageService } from 'src/app/message/message.service';
 import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
-  selector: 'add-update-system-object-modal',
-  templateUrl: './add-update-system-object-modal.component.html',
-  styleUrls: ['./add-update-system-object-modal.component.css']
+  selector: 'add-update-settlement-modal',
+  templateUrl: './add-update-settlement-modal.component.html',
+  styleUrls: ['./add-update-settlement-modal.component.css']
 })
-export class AddUpdateSystemObjectModalComponent implements OnInit {
-  @Input() systemObject:SystemObject
+export class AddUpdateSettlementModalComponent implements OnInit {
 
-  @Input() starSystem:StarSystem
+  @Input() systemSettlement:Settlement
+
   @Input() systemPlanet:Planet
   @Input() systemMoon:Moon
   @Input() smallBtn:boolean
   formAction:string
   objectTitle:string
+  successString:string
   types:SystemMapTypes
-
   modalRef:NgbModalRef
+
   constructor(private modalService: NgbModal, private systemMapService:SystemMapService, private messageService:MessageService) { }
 
   open(content) {
@@ -35,22 +36,24 @@ export class AddUpdateSystemObjectModalComponent implements OnInit {
     }
   }
 
-  addUpdateSystemObject()
+  addUpdateSystemSettlement()
   {
-    if (this.systemObject.id) {
-      this.systemMapService.updateSystemObject(this.systemObject).subscribe(
+    if (this.systemSettlement.id) {
+      this.systemMapService.updateSettlement(this.systemSettlement).subscribe(
         (results) => {
           if (!(results instanceof HttpErrorResponse)) {
             this.systemMapService.fullRefreshData()
+            this.messageService.addSuccess(this.successString)
             this.close()
           }
         }
       )
     } else {
-      this.systemMapService.addSystemObject(this.systemObject).subscribe(
+      this.systemMapService.addSettlement(this.systemSettlement).subscribe(
         (results) => {
           if (!(results instanceof HttpErrorResponse)) {
             this.systemMapService.fullRefreshData()
+            this.messageService.addSuccess(this.successString)
             this.close()
           }
         }
@@ -71,19 +74,17 @@ export class AddUpdateSystemObjectModalComponent implements OnInit {
 
   ngOnInit() {
     this.fetchTypes()
-    this.formAction = (this.systemObject && this.systemObject.id) ? "Update" : "Create"
-    if (!(this.systemObject && this.systemObject.id)) {
-      // orbits_planet_id, orbits_planet_id, orbits_system_id
-      // this.systemObject = { } as SystemObject 
-      if (this.starSystem && !this.systemPlanet && !this.systemMoon) {
-        this.systemObject = { orbits_system_id: this.starSystem.id } as SystemObject 
-        this.objectTitle = "System"
-      } else if (!this.starSystem && this.systemPlanet && !this.systemMoon) {
-        this.systemObject = { orbits_planet_id: this.systemPlanet.id } as SystemObject 
+    this.formAction = (this.systemSettlement && this.systemSettlement.id) ? "Update" : "Create"
+    if (!(this.systemSettlement && this.systemSettlement.id)) {
+      // Which one is it
+      if (this.systemPlanet && !this.systemMoon) {
+        this.systemSettlement = { on_planet_id: this.systemPlanet.id } as SystemLocation 
         this.objectTitle = "Planet"
-      } else if (!this.starSystem && !this.systemPlanet && this.systemMoon) {
-        this.systemObject = { orbits_moon_id: this.systemMoon.id } as SystemObject 
+        this.successString = `${this.formAction}ed location on ${this.systemPlanet.title}`
+      } else if (!this.systemPlanet && this.systemMoon) {
+        this.systemSettlement = { on_moon_id: this.systemMoon.id } as SystemLocation 
         this.objectTitle = "Moon"
+        this.successString = `${this.formAction}ed location on ${this.systemMoon.title}`
       }
     }
   }

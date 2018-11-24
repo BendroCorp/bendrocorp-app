@@ -1,0 +1,46 @@
+<ng-template #content let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">{{formAction}} Location ({{objectTitle}})</h4>
+      <button type="button" class="close" aria-label="Close" (click)="close()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <form #addLocationForm="ngForm">
+        <div class="form-group">
+          <label>Title</label>
+          <input required class="form-control" type="text" placeholder="Location Title..." name="so_title" [(ngModel)]="systemLocation.title" id="">
+        </div>
+        <div class="form-group">
+          <label>Description</label>
+          <textarea required class="form-control" placeholder="Location description..." [(ngModel)]="systemLocation.description" name="so_description" id="" cols="30" rows="10"></textarea>
+        </div>
+        <div class="form-group">
+          <label>Location Type</label>
+          <select required class="form-control" [(ngModel)]="systemLocation.object_type_id" name="orbits_planet">
+            <option *ngFor="let type of types.location_types" [value]="type.id">{{type.title}}</option>
+          </select>
+        </div>
+        <div>
+          <label>Primary Image</label>
+          <div *ngIf="systemLocation.primary_image_url" style="text-align:center;">
+            <img src="{{systemLocation.primary_image_url}}" alt="Avatar" style="max-width: 200px;">
+          </div>
+          <div class="form-group">
+            <div class="input-group mb-3">
+              <div class="custom-file">
+                <input class="custom-file-input" type="file" id="inputGroupFile02" (change)="handleImageFileInput($event.target.files)">
+                <label class="custom-file-label" for="inputGroupFile02">Choose file</label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-primary" [disabled]="!addLocationForm.form.valid" (click)="addUpdateSystemLocation()">{{formAction}} Location</button>
+    </div>
+  </ng-template>
+  
+  <button *ngIf="!systemLocation.id" class="btn btn-primary" [ngClass]="{'btn-sm': smallBtn }" (click)="open(content)"><i class="fas fa-plus"></i> Add Location</button>
+  <button *ngIf="systemLocation.id" class="btn btn-sm btn-primary" [ngClass]="{'btn-sm': smallBtn }" (click)="open(content)"><i class="fas fa-edit"></i> Edit Location</button>

@@ -94,6 +94,8 @@ import { ImpersonateComponent } from './admin/impersonate/impersonate.component'
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { OffenderDetailsComponent } from './offender-reports/offender-details/offender-details.component';
 import { OffenderReportReportDetailsComponent } from './offender-reports/offender-report-report-details/offender-report-report-details.component';
+import { AddUpdateLocationModalComponent } from './system-map/add-update-location-modal/add-update-location-modal.component';
+import { AddUpdateSettlementModalComponent } from './system-map/add-update-settlement-modal/add-update-settlement-modal.component';
 
 @NgModule({
   declarations: [
@@ -164,6 +166,8 @@ import { OffenderReportReportDetailsComponent } from './offender-reports/offende
     ResetPasswordComponent,
     OffenderDetailsComponent,
     OffenderReportReportDetailsComponent,
+    AddUpdateLocationModalComponent,
+    AddUpdateSettlementModalComponent,
   ],
   entryComponents: [
     EventModalComponent,

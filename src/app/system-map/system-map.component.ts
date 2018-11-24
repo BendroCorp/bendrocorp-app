@@ -29,16 +29,24 @@ export class SystemMapComponent implements OnInit, AfterContentInit, OnDestroy {
   selectedStarSystemItem:any
   selectedObjectKind:string
   subscription:Subscription
+  fullSubscription:Subscription
 
   constructor(private systemMapService:SystemMapService, private authService:AuthService, private spinnerService:SpinnerService) { 
     this.subscription = this.systemMapService.dataRefreshAnnounced$.subscribe(
       () => {
-        this.fetchSystems()
+        // this.fetchSystems()
+        this.allSystems() // redraw
       }
-    )    
+    )
+    
+    this.subscription = this.systemMapService.fullDataRefreshAnnounced$.subscribe(
+      () => {
+        this.fetchSystems(true)
+      }
+    )
   }
 
-  fetchSystems()
+  fetchSystems(redraw:boolean = false)
   {
     this.spinnerService.spin(true)
     this.systemMapService.list().subscribe(
@@ -49,10 +57,11 @@ export class SystemMapComponent implements OnInit, AfterContentInit, OnDestroy {
           this.starSystems = results
 
           // If first load then fetch and reload the chart
-          if (!this.dataLoaded) {
+          if (!this.dataLoaded || redraw) {
             this.dataLoaded = true
             this.allSystems()
           }
+          
         }
       }
     )
@@ -276,9 +285,10 @@ export class SystemMapComponent implements OnInit, AfterContentInit, OnDestroy {
           nodeArray.push(
             {
               id: `so-${system_object.id}`, 
-              label: `${system_object.title} (System Object <Type>)`, 
+              label: `${system_object.title} (${system_object.object_type.title})`, 
               group: `gw-${gravity_well.id}`, 
               shape: 'dot',
+              size: 5,
             }
           )
           edgesArray.push({from: `gw-${gravity_well.id}`, to: `so-${system_object.id}`})
@@ -293,7 +303,7 @@ export class SystemMapComponent implements OnInit, AfterContentInit, OnDestroy {
               group: `gw-${gravity_well.id}`, 
               shape: 'dot',
               color: '#58bbd4',
-              size: 10
+              size: 15
             }
           )
           // push an edge line
@@ -321,9 +331,10 @@ export class SystemMapComponent implements OnInit, AfterContentInit, OnDestroy {
               nodeArray.push(
                 {
                   id: `so-${system_object.id}`, 
-                  label: `${system_object.title} (System Object <Type>)`, 
+                  label: `${system_object.title} (${system_object.object_type.title})`, 
                   group: `m-${moon.id}`, 
                   shape: 'dot',
+                  size: 5,
                 }
               )
               edgesArray.push({from: `m-${moon.id}`, to: `so-${system_object.id}`})
@@ -336,9 +347,10 @@ export class SystemMapComponent implements OnInit, AfterContentInit, OnDestroy {
             nodeArray.push(
               {
                 id: `so-${system_object.id}`, 
-                label: `${system_object.title} (System Object <Type>)`, 
+                label: `${system_object.title} (${system_object.object_type.title})`, 
                 group: `p-${planet.id}`, 
                 shape: 'dot',
+                size: 10,
               }
             )
             edgesArray.push({from: `p-${planet.id}`, to: `so-${system_object.id}`})
@@ -406,7 +418,9 @@ export class SystemMapComponent implements OnInit, AfterContentInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.subscription.unsubscribe()
+    if (this.subscription) {
+      this.subscription.unsubscribe()
+    }
   }
 
 }

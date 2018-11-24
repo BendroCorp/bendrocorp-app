@@ -1,0 +1,40 @@
+<ng-template #content let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">{{formAction}} Settlement ({{objectTitle}})</h4>
+      <button type="button" class="close" aria-label="Close" (click)="close()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <form #addSettlementForm="ngForm">
+        <div class="form-group">
+          <label>Title</label>
+          <input required class="form-control" type="text" placeholder="Settlement Title..." name="so_title" [(ngModel)]="systemSettlement.title" id="">
+        </div>
+        <div class="form-group">
+          <label>Description</label>
+          <textarea required class="form-control" placeholder="Settlement description..." [(ngModel)]="systemSettlement.description" name="so_description" id="" cols="30" rows="10"></textarea>
+        </div>
+        <div>
+          <label>Primary Image</label>
+          <div *ngIf="systemSettlement.primary_image_url" style="text-align:center;">
+            <img src="{{systemSettlement.primary_image_url}}" alt="Avatar" style="max-width: 200px;">
+          </div>
+          <div class="form-group">
+            <div class="input-group mb-3">
+              <div class="custom-file">
+                <input class="custom-file-input" type="file" id="inputGroupFile02" (change)="handleImageFileInput($event.target.files)">
+                <label class="custom-file-label" for="inputGroupFile02">Choose file</label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-primary" [disabled]="!addSettlementForm.form.valid" (click)="addUpdateSystemSettlement()">{{formAction}} Settlement</button>
+    </div>
+  </ng-template>
+  
+  <button *ngIf="!systemSettlement.id" class="btn btn-primary" [ngClass]="{'btn-sm': smallBtn }" (click)="open(content)"><i class="fas fa-plus"></i> Add Settlement</button>
+  <button *ngIf="systemSettlement.id" class="btn btn-sm btn-primary" [ngClass]="{'btn-sm': smallBtn }" (click)="open(content)"><i class="fas fa-edit"></i> Edit Settlement</button>
