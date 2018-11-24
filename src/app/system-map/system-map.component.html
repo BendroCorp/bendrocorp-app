@@ -36,6 +36,7 @@
         <add-update-settlement-modal *ngIf="isEditor && selectedStarSystem && selectedObjectKind === 'p'" [smallBtn]="true" [systemPlanet]="selectedStarSystemItem"></add-update-settlement-modal>
         <add-update-settlement-modal *ngIf="isEditor && selectedStarSystem && selectedObjectKind === 'm'" [smallBtn]="true" [systemMoon]="selectedStarSystemItem"></add-update-settlement-modal>
       </h5>
+      <p *ngIf="selectedStarSystemItem.settlements.length == 0">There are currently no registered settlements.</p>
       <div *ngFor="let settlement of selectedStarSystemItem.settlements; let i = index">
         <img src="{{settlement.primary_image_url}}" style="max-height:100px; float:right; margin-left:8px;" alt="">
         <h6>{{settlement.title}}&nbsp;
@@ -65,6 +66,7 @@
         <add-update-location-modal *ngIf="isEditor && selectedStarSystem && selectedObjectKind === 'm'" [smallBtn]="true" [systemMoon]="selectedStarSystemItem"></add-update-location-modal>
         <add-update-location-modal *ngIf="isEditor && selectedStarSystem && selectedObjectKind === 'so'" [smallBtn]="true" [systemObject]="selectedStarSystemItem"></add-update-location-modal>
       </h5>
+      <p *ngIf="selectedStarSystemItem.locations.length == 0">There are currently no registered locations.</p>
       <div *ngFor="let location of selectedStarSystemItem.locations">
         <img src="{{location.primary_image_url}}" style="max-height:100px; float:right; margin-left:8px;" alt="">
         <h6>{{location.title}} <add-update-location-modal *ngIf="isEditor" [smallBtn]="true" [systemLocation]="location"></add-update-location-modal></h6>
