@@ -37,7 +37,7 @@ export class AddUpdatePlanetModalComponent implements OnInit {
       this.systemMapService.updatePlanet(this.planet).subscribe(
         (results) => {
           if (!(results instanceof HttpErrorResponse)) {
-            this.systemMapService.refreshData()
+            this.systemMapService.fullRefreshData()
             this.modalRef.close()
           }
           this.formSubmitting = false
@@ -48,7 +48,7 @@ export class AddUpdatePlanetModalComponent implements OnInit {
         (results) => {
           if (!(results instanceof HttpErrorResponse)) {
             this.starSystem.planets.push(results)
-            this.systemMapService.refreshData()
+            this.systemMapService.fullRefreshData()
             this.modalRef.close()
           }
           this.formSubmitting = false
@@ -67,6 +67,8 @@ export class AddUpdatePlanetModalComponent implements OnInit {
     this.getBase64(file).then(
       result => {
         this.planet.new_primary_image = { name: file.name, type: file.type, size: file.size, base64: result } as Base64Upload;
+        console.log(this.planet.new_primary_image);
+        
       }
     );
   }

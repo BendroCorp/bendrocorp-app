@@ -4,6 +4,7 @@ import { NgbModalRef, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { SystemMapService } from '../system-map.service';
 import { MessageService } from 'src/app/message/message.service';
 import { HttpErrorResponse } from '@angular/common/http';
+import { Base64Upload } from 'src/app/models/misc-models';
 
 @Component({
   selector: 'add-update-system-object-modal',
@@ -67,6 +68,31 @@ export class AddUpdateSystemObjectModalComponent implements OnInit {
         }
       }
     )
+  }
+
+  handleImageFileInput(files: FileList)
+  {
+    console.log(files);
+    // fetch file data on file to uploads    
+    let file = files.item(0);    
+
+    // add the avatar information to the user object so it can be uploaded
+    this.getBase64(file).then(
+      result => {
+        this.systemObject.new_primary_image = { name: file.name, type: file.type, size: file.size, base64: result } as Base64Upload;
+        
+      }
+    );
+  }
+
+  getBase64(file) {
+    // https://stackoverflow.com/questions/47936183/angular-5-file-upload
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = error => reject(error);
+    });
   }
 
   ngOnInit() {
