@@ -40,6 +40,7 @@
       <div *ngFor="let settlement of selectedStarSystemItem.settlements; let i = index">
         <img src="{{settlement.primary_image_url}}" style="max-height:100px; float:right; margin-left:8px;" alt="">
         <h6>{{settlement.title}}&nbsp;
+            <add-update-settlement-modal *ngIf="isEditor" [smallBtn]="true" [systemSettlement]="settlement"></add-update-settlement-modal>&nbsp;
             <add-update-location-modal *ngIf="isEditor && selectedStarSystem" [smallBtn]="true" [systemSettlement]="settlement"></add-update-location-modal>
         </h6>
         <p>{{settlement.description}}</p>
