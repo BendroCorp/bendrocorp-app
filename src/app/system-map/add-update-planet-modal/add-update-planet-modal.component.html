@@ -32,7 +32,7 @@
       </form>
     </div>
     <div class="modal-footer">
-      <button type="button" class="btn btn-primary" [disabled]="!addUpdatePlanetForm.form.valid" (click)="createUpdatePlanet()">{{formAction}} Planet</button>
+      <button type="button" class="btn btn-primary" [disabled]="!addUpdatePlanetForm.form.valid || formSubmitting" (click)="createUpdatePlanet()">{{formAction}} Planet<span *ngIf="formSubmitting">&nbsp;<i class="fas fa-spinner fa-spin"></i></span></button>
     </div>
   </ng-template>
   

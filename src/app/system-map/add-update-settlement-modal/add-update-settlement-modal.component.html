@@ -32,7 +32,7 @@
       </form>
     </div>
     <div class="modal-footer">
-      <button type="button" class="btn btn-primary" [disabled]="!addSettlementForm.form.valid" (click)="addUpdateSystemSettlement()">{{formAction}} Settlement</button>
+      <button type="button" class="btn btn-primary" [disabled]="!addSettlementForm.form.valid || formSubmitting" (click)="addUpdateSystemSettlement()">{{formAction}} Settlement<span *ngIf="formSubmitting">&nbsp;<i class="fas fa-spinner fa-spin"></i></span></button>
     </div>
   </ng-template>
   

@@ -37,7 +37,7 @@ export class AddUpdateMoonModalComponent implements OnInit {
       this.systemMapService.updateMoon(this.moon).subscribe(
         (results) => {
           if (!(results instanceof HttpErrorResponse)) {
-            this.systemMapService.refreshData()
+            this.systemMapService.fullRefreshData()
             this.modalRef.close()
           }
           this.formSubmitting = false
@@ -48,7 +48,7 @@ export class AddUpdateMoonModalComponent implements OnInit {
         (results) => {
           if (!(results instanceof HttpErrorResponse)) {
             this.starSystem.planets[this.starSystem.planets.findIndex(x => x.id == results.orbits_planet_id)].moons.push(results)
-            this.systemMapService.refreshData()
+            this.systemMapService.fullRefreshData()
             this.modalRef.close()
           }
           this.formSubmitting = false

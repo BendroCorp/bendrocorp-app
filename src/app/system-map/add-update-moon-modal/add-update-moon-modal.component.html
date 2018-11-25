@@ -38,7 +38,7 @@
       </form>
     </div>
     <div class="modal-footer">
-      <button type="button" class="btn btn-primary" [disabled]="!addUpdateMoonForm.form.valid" (click)="createUpdateMoon()">{{formAction}} Moon</button>
+      <button type="button" class="btn btn-primary" [disabled]="!addUpdateMoonForm.form.valid || formSubmitting" (click)="createUpdateMoon()">{{formAction}} Moon<span *ngIf="formSubmitting">&nbsp;<i class="fas fa-spinner fa-spin"></i></span></button>
     </div>
   </ng-template>
   

@@ -6,7 +6,7 @@
       </button>
     </div>
     <div class="modal-body">
-      <form #addUpdateMoonForm="ngForm">
+      <form #addUpdateSystemObjectForm="ngForm">
         <div class="form-group">
           <label>Title</label>
           <input required class="form-control" type="text" placeholder="System Object Title..." name="so_title" [(ngModel)]="systemObject.title" id="">
@@ -38,7 +38,7 @@
       </form>
     </div>
     <div class="modal-footer">
-      <button type="button" class="btn btn-primary" (click)="addUpdateSystemObject()">{{formAction}} System Object</button>
+      <button type="button" class="btn btn-primary" (click)="addUpdateSystemObject()" [disabled]="!addUpdateSystemObjectForm.form.valid || formSubmitting">{{formAction}} System Object<span *ngIf="formSubmitting">&nbsp;<i class="fas fa-spinner fa-spin"></i></span></button>
     </div>
   </ng-template>
   

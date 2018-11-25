@@ -4,6 +4,7 @@ import { NgbModalRef, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { SystemMapService } from '../system-map.service';
 import { MessageService } from 'src/app/message/message.service';
 import { HttpErrorResponse } from '@angular/common/http';
+import { Base64Upload } from 'src/app/models/misc-models';
 
 @Component({
   selector: 'add-update-settlement-modal',
@@ -22,6 +23,7 @@ export class AddUpdateSettlementModalComponent implements OnInit {
   successString:string
   types:SystemMapTypes
   modalRef:NgbModalRef
+  formSubmitting:boolean = false
 
   constructor(private modalService: NgbModal, private systemMapService:SystemMapService, private messageService:MessageService) { }
 
@@ -38,9 +40,11 @@ export class AddUpdateSettlementModalComponent implements OnInit {
 
   addUpdateSystemSettlement()
   {
+    this.formSubmitting = true
     if (this.systemSettlement.id) {
       this.systemMapService.updateSettlement(this.systemSettlement).subscribe(
         (results) => {
+          this.formSubmitting = false
           if (!(results instanceof HttpErrorResponse)) {
             this.systemMapService.fullRefreshData()
             this.messageService.addSuccess(this.successString)
@@ -51,6 +55,7 @@ export class AddUpdateSettlementModalComponent implements OnInit {
     } else {
       this.systemMapService.addSettlement(this.systemSettlement).subscribe(
         (results) => {
+          this.formSubmitting = false
           if (!(results instanceof HttpErrorResponse)) {
             this.systemMapService.fullRefreshData()
             this.messageService.addSuccess(this.successString)
@@ -59,6 +64,31 @@ export class AddUpdateSettlementModalComponent implements OnInit {
         }
       )
     }
+  }
+
+  handleImageFileInput(files: FileList)
+  {
+    console.log(files);
+    // fetch file data on file to uploads    
+    let file = files.item(0);    
+
+    // add the avatar information to the user object so it can be uploaded
+    this.getBase64(file).then(
+      result => {
+        this.systemSettlement.new_primary_image = { name: file.name, type: file.type, size: file.size, base64: result } as Base64Upload;
+        
+      }
+    );
+  }
+
+  getBase64(file) {
+    // https://stackoverflow.com/questions/47936183/angular-5-file-upload
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = error => reject(error);
+    });
   }
 
   fetchTypes()
