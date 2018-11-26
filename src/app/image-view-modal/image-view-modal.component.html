@@ -15,4 +15,4 @@
   </div>
 </ng-template>
 
-<span class="image-view-container" (click)="open(content)"><img src="{{imageUri}}" alt="" [ngStyle]="{'max-width.px': maxWidth}"></span>
+<span class="image-view-container" (click)="open(content)"><img *ngIf="thumbnailUri" src="{{thumbnailUri}}" alt="" [ngStyle]="{'max-width.px': maxWidth}"><img *ngIf="imageUri && !thumbnailUri" src="{{imageUri}}" alt="" [ngStyle]="{'max-width.px': maxWidth}"></span>

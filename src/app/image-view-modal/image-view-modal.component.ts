@@ -13,6 +13,7 @@ export class ImageViewModalComponent implements OnInit {
   @Input() description:string
   @Input() maxWidth:number
   @Input() imageUri:string
+  @Input() thumbnailUri:string
   @Input() createdBy:Character
 
   modal:NgbModalRef
