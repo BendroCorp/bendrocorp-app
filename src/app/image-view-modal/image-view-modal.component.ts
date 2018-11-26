@@ -33,7 +33,7 @@ export class ImageViewModalComponent implements OnInit {
 
   ngOnInit() {
     if (!this.maxWidth) {
-      this.maxWidth = 150
+      this.maxWidth = 200
     }
 
     console.log(this.imageUri)
