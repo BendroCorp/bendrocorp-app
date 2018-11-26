@@ -29,6 +29,29 @@ export class AddUpdateLocationModalComponent implements OnInit {
   constructor(private modalService: NgbModal, private systemMapService:SystemMapService, private messageService:MessageService) { }
 
   open(content) {
+    this.formAction = (this.systemLocation && this.systemLocation.id) ? "Update" : "Create"
+    if (!(this.systemLocation && this.systemLocation.id)) {
+      // Which one is it
+      if (this.systemPlanet && !this.systemMoon && !this.systemObject && !this.systemSettlement) {
+        this.systemLocation = { on_planet_id: this.systemPlanet.id } as SystemLocation 
+        this.objectTitle = "Planet"
+        this.successString = `${this.formAction}ed location on ${this.systemPlanet.title}`
+      } else if (!this.systemPlanet && this.systemMoon && !this.systemObject && !this.systemSettlement) {
+        this.systemLocation = { on_moon_id: this.systemMoon.id } as SystemLocation 
+        this.objectTitle = "Moon"
+        this.successString = `${this.formAction}ed location on ${this.systemMoon.title}`
+      } else if (!this.systemPlanet && !this.systemMoon && this.systemObject && !this.systemSettlement) {
+        this.systemLocation = { on_system_object_id: this.systemObject.id } as SystemLocation 
+        this.objectTitle = "System Object"
+        this.successString = `${this.formAction}ed location on ${this.systemObject.title}`
+      } else if (!this.systemPlanet && !this.systemMoon && !this.systemObject && this.systemSettlement) {
+        this.systemLocation = { on_settlement_id: this.systemSettlement.id } as SystemLocation 
+        this.objectTitle = "Settlement"
+        this.successString = `${this.formAction}ed location in ${this.systemSettlement.title}`
+      }
+    }
+
+    // open the modal
     this.modalRef = this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'})
   }
 
@@ -105,26 +128,8 @@ export class AddUpdateLocationModalComponent implements OnInit {
 
   ngOnInit() {
     this.fetchTypes()
-    this.formAction = (this.systemLocation && this.systemLocation.id) ? "Update" : "Create"
     if (!(this.systemLocation && this.systemLocation.id)) {
-      // Which one is it
-      if (this.systemPlanet && !this.systemMoon && !this.systemObject && !this.systemSettlement) {
-        this.systemLocation = { on_planet_id: this.systemPlanet.id } as SystemLocation 
-        this.objectTitle = "Planet"
-        this.successString = `${this.formAction}ed location on ${this.systemPlanet.title}`
-      } else if (!this.systemPlanet && this.systemMoon && !this.systemObject && !this.systemSettlement) {
-        this.systemLocation = { on_moon_id: this.systemMoon.id } as SystemLocation 
-        this.objectTitle = "Moon"
-        this.successString = `${this.formAction}ed location on ${this.systemMoon.title}`
-      } else if (!this.systemPlanet && !this.systemMoon && this.systemObject && !this.systemSettlement) {
-        this.systemLocation = { on_system_object_id: this.systemObject.id } as SystemLocation 
-        this.objectTitle = "System Object"
-        this.successString = `${this.formAction}ed location on ${this.systemObject.title}`
-      } else if (!this.systemPlanet && !this.systemMoon && !this.systemObject && this.systemSettlement) {
-        this.systemLocation = { on_settlement_id: this.systemSettlement.id } as SystemLocation 
-        this.objectTitle = "Settlement"
-        this.successString = `${this.formAction}ed location in ${this.systemSettlement.title}`
-      }
+      this.systemLocation = { } as SystemLocation
     }
   }
 

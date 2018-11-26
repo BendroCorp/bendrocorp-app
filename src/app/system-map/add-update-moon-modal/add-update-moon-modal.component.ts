@@ -20,6 +20,12 @@ export class AddUpdateMoonModalComponent implements OnInit {
   constructor(private modalService: NgbModal, private systemMapService:SystemMapService, private messageService:MessageService) { }
 
   open(content) {
+    this.formAction = (this.moon && this.moon.id) ? "Update" : "Create"
+    if (!(this.moon && this.moon.id)) {
+     this.moon = { } as Moon 
+    }
+
+    // open the modal
     this.modalRef = this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'})
   }
 
@@ -83,10 +89,7 @@ export class AddUpdateMoonModalComponent implements OnInit {
 
 
   ngOnInit() {
-    this.formAction = (this.moon && this.moon.id) ? "Update" : "Create"
-    if (!(this.moon && this.moon.id)) {
-     this.moon = { } as Moon 
-    }
+
   }
 
 }
