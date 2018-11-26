@@ -26,6 +26,25 @@ export class AddUpdateSystemImageModalComponent implements OnInit {
   constructor(private modalService: NgbModal, private systemMapService:SystemMapService, private messageService:MessageService) { }
 
   open(content) {
+    this.formAction = (this.systemImage && this.systemImage.id) ? "Update" : "Create"
+    if (!(this.systemImage && this.systemImage.id)) {
+      // Which one is it
+      if (this.systemPlanet && !this.systemMoon && !this.systemObject) {
+        this.systemImage = { of_planet_id: this.systemPlanet.id } as SystemImage 
+        this.objectTitle = "Planet"
+        this.successString = `${this.formAction}d system image on ${this.systemPlanet.title}`
+      } else if (!this.systemPlanet && this.systemMoon && !this.systemObject) {
+        this.systemImage = { of_moon_id: this.systemMoon.id } as SystemImage 
+        this.objectTitle = "Moon"
+        this.successString = `${this.formAction}d system image on ${this.systemMoon.title}`
+      } else if (!this.systemPlanet && !this.systemMoon && this.systemObject) {
+        this.systemImage = { of_system_object_id: this.systemObject.id } as SystemImage 
+        this.objectTitle = "System Object"
+        this.successString = `${this.formAction}d system image on ${this.systemObject.title}`
+      }
+    }
+
+    // open the modal
     this.modalRef = this.modalService.open(content, { ariaLabelledBy: 'Add or Update Image'})
   }
 
@@ -108,22 +127,8 @@ export class AddUpdateSystemImageModalComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.formAction = (this.systemImage && this.systemImage.id) ? "Update" : "Create"
     if (!(this.systemImage && this.systemImage.id)) {
-      // Which one is it
-      if (this.systemPlanet && !this.systemMoon && !this.systemObject) {
-        this.systemImage = { of_planet_id: this.systemPlanet.id } as SystemImage 
-        this.objectTitle = "Planet"
-        this.successString = `${this.formAction}d system image on ${this.systemPlanet.title}`
-      } else if (!this.systemPlanet && this.systemMoon && !this.systemObject) {
-        this.systemImage = { of_moon_id: this.systemMoon.id } as SystemImage 
-        this.objectTitle = "Moon"
-        this.successString = `${this.formAction}d system image on ${this.systemMoon.title}`
-      } else if (!this.systemPlanet && !this.systemMoon && this.systemObject) {
-        this.systemImage = { of_system_object_id: this.systemObject.id } as SystemImage 
-        this.objectTitle = "System Object"
-        this.successString = `${this.formAction}d system image on ${this.systemObject.title}`
-      }
+      this.systemImage = {  } as SystemImage 
     }
   }
 }

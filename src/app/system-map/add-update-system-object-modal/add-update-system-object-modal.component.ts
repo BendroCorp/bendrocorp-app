@@ -26,6 +26,23 @@ export class AddUpdateSystemObjectModalComponent implements OnInit {
   constructor(private modalService: NgbModal, private systemMapService:SystemMapService, private messageService:MessageService) { }
 
   open(content) {
+    this.formAction = (this.systemObject && this.systemObject.id) ? "Update" : "Create"
+    if (!(this.systemObject && this.systemObject.id)) {
+      // orbits_planet_id, orbits_planet_id, orbits_system_id
+      // this.systemObject = { } as SystemObject 
+      if (this.starSystem && !this.systemPlanet && !this.systemMoon) {
+        this.systemObject = { orbits_system_id: this.starSystem.id } as SystemObject 
+        this.objectTitle = "System"
+      } else if (!this.starSystem && this.systemPlanet && !this.systemMoon) {
+        this.systemObject = { orbits_planet_id: this.systemPlanet.id } as SystemObject 
+        this.objectTitle = "Planet"
+      } else if (!this.starSystem && !this.systemPlanet && this.systemMoon) {
+        this.systemObject = { orbits_moon_id: this.systemMoon.id } as SystemObject 
+        this.objectTitle = "Moon"
+      }
+    }
+
+    // open the modal
     this.modalRef = this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'})
   }
 
@@ -97,20 +114,8 @@ export class AddUpdateSystemObjectModalComponent implements OnInit {
 
   ngOnInit() {
     this.fetchTypes()
-    this.formAction = (this.systemObject && this.systemObject.id) ? "Update" : "Create"
-    if (!(this.systemObject && this.systemObject.id)) {
-      // orbits_planet_id, orbits_planet_id, orbits_system_id
-      // this.systemObject = { } as SystemObject 
-      if (this.starSystem && !this.systemPlanet && !this.systemMoon) {
-        this.systemObject = { orbits_system_id: this.starSystem.id } as SystemObject 
-        this.objectTitle = "System"
-      } else if (!this.starSystem && this.systemPlanet && !this.systemMoon) {
-        this.systemObject = { orbits_planet_id: this.systemPlanet.id } as SystemObject 
-        this.objectTitle = "Planet"
-      } else if (!this.starSystem && !this.systemPlanet && this.systemMoon) {
-        this.systemObject = { orbits_moon_id: this.systemMoon.id } as SystemObject 
-        this.objectTitle = "Moon"
-      }
+    if (!(this.systemObject && this.systemObject.id)){
+      this.systemObject = { } as SystemObject 
     }
   }
 

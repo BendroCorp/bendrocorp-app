@@ -20,6 +20,12 @@ export class AddUpdatePlanetModalComponent implements OnInit {
   constructor(private modalService: NgbModal, private systemMapService:SystemMapService, private messageService:MessageService) { }
 
   open(content) {
+    this.formAction = (this.planet && this.planet.id) ? "Update" : "Create"
+    if (!(this.planet && this.planet.id)) {
+     this.planet = { orbits_system_id: this.starSystem.id } as Planet 
+    }
+
+    // open the modal
     this.modalRef = this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'})
   }
 
@@ -85,10 +91,7 @@ export class AddUpdatePlanetModalComponent implements OnInit {
 
 
   ngOnInit() {
-    this.formAction = (this.planet && this.planet.id) ? "Update" : "Create"
-    if (!(this.planet && this.planet.id)) {
-     this.planet = { orbits_system_id: this.starSystem.id } as Planet 
-    }
+    
   }
 
 }

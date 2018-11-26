@@ -28,6 +28,21 @@ export class AddUpdateSettlementModalComponent implements OnInit {
   constructor(private modalService: NgbModal, private systemMapService:SystemMapService, private messageService:MessageService) { }
 
   open(content) {
+    this.formAction = (this.systemSettlement && this.systemSettlement.id) ? "Update" : "Create"
+    if (!(this.systemSettlement && this.systemSettlement.id)) {
+      // Which one is it
+      if (this.systemPlanet && !this.systemMoon) {
+        this.systemSettlement = { on_planet_id: this.systemPlanet.id } as Settlement 
+        this.objectTitle = "Planet"
+        this.successString = `${this.formAction}ed location on ${this.systemPlanet.title}`
+      } else if (!this.systemPlanet && this.systemMoon) {
+        this.systemSettlement = { on_moon_id: this.systemMoon.id } as Settlement 
+        this.objectTitle = "Moon"
+        this.successString = `${this.formAction}ed location on ${this.systemMoon.title}`
+      }
+    }
+
+    // open the modal
     this.modalRef = this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'})
   }
 
@@ -104,18 +119,8 @@ export class AddUpdateSettlementModalComponent implements OnInit {
 
   ngOnInit() {
     this.fetchTypes()
-    this.formAction = (this.systemSettlement && this.systemSettlement.id) ? "Update" : "Create"
     if (!(this.systemSettlement && this.systemSettlement.id)) {
-      // Which one is it
-      if (this.systemPlanet && !this.systemMoon) {
-        this.systemSettlement = { on_planet_id: this.systemPlanet.id } as SystemLocation 
-        this.objectTitle = "Planet"
-        this.successString = `${this.formAction}ed location on ${this.systemPlanet.title}`
-      } else if (!this.systemPlanet && this.systemMoon) {
-        this.systemSettlement = { on_moon_id: this.systemMoon.id } as SystemLocation 
-        this.objectTitle = "Moon"
-        this.successString = `${this.formAction}ed location on ${this.systemMoon.title}`
-      }
+      this.systemSettlement = { } as Settlement
     }
   }
 
