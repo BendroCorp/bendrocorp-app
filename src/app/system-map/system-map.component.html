@@ -74,5 +74,18 @@
         <p>{{location.description}}</p>
       </div>
     </div>
+    <!-- Images -->
+    <div *ngIf="selectedStarSystemItem.system_map_images">
+      <h5>Images&nbsp;
+        <add-update-system-image-modal *ngIf="isEditor && selectedStarSystem && selectedObjectKind === 'p'" [smallBtn]="true" [systemPlanet]="selectedStarSystemItem"></add-update-system-image-modal>
+        <add-update-system-image-modal *ngIf="isEditor && selectedStarSystem && selectedObjectKind === 'm'" [smallBtn]="true" [systemMoon]="selectedStarSystemItem"></add-update-system-image-modal>
+        <add-update-system-image-modal *ngIf="isEditor && selectedStarSystem && selectedObjectKind === 'so'" [smallBtn]="true" [systemObject]="selectedStarSystemItem"></add-update-system-image-modal>
+      </h5>
+      <p *ngIf="selectedStarSystemItem.system_map_images.length == 0">There are currently no images.</p>
+      <div style="display:inline-block; border: 1px solid #666" *ngFor="let image of selectedStarSystemItem.system_map_images">
+        <add-update-system-image-modal style="float:right;" *ngIf="isEditor" [smallBtn]="true" [systemImage]="image"></add-update-system-image-modal>
+        <image-view-modal [title]="image.title" [description]="image.description" [imageUri]="image.image_url" [createdBy]="image.created_by.main_character"></image-view-modal>
+      </div>
+    </div>
   </div>
 </div>

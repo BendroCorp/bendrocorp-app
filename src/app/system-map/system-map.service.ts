@@ -3,7 +3,7 @@ import { ErrorService } from '../error.service';
 import { Globals } from '../globals';
 import { Subject, Observable } from 'rxjs';
 import { tap, catchError } from 'rxjs/operators';
-import { StarSystem, Planet, Moon, Settlement, SystemMapTypes, SystemObject, SystemLocation } from '../models/system-map-models';
+import { StarSystem, Planet, Moon, Settlement, SystemMapTypes, SystemObject, SystemLocation, SystemImage } from '../models/system-map-models';
 import { HttpClient } from '@angular/common/http';
 
 @Injectable({
@@ -150,6 +150,30 @@ export class SystemMapService {
     return this.http.delete<Settlement>(`${this.globals.baseUrl}/system-map/settlement/${settlement.id}`).pipe(
       tap(result => console.log(`Archived settlement!`)),
       catchError(this.errorService.handleError<any>('Archive Settlement'))
+    )
+  }
+
+  addSystemImage(image:SystemImage) : Observable<SystemImage>
+  {
+    return this.http.post<SystemImage>(`${this.globals.baseUrl}/system-map/image`, { image }).pipe(
+      tap(result => console.log(`Created image!`)),
+      catchError(this.errorService.handleError<any>('Create Image'))
+    )
+  }
+
+  updateSystemImage(image:SystemImage) : Observable<SystemImage>
+  {
+    return this.http.patch<SystemImage>(`${this.globals.baseUrl}/system-map/image`, { image }).pipe(
+      tap(result => console.log(`Updated image!`)),
+      catchError(this.errorService.handleError<any>('Update Image'))
+    )
+  }
+
+  archiveSystemImage(image:SystemImage) : Observable<SystemImage>
+  {
+    return this.http.delete<SystemImage>(`${this.globals.baseUrl}/system-map/image/${image.id}`).pipe(
+      tap(result => console.log(`Archived imgage!`)),
+      catchError(this.errorService.handleError<any>('Archive Image'))
     )
   }
 
