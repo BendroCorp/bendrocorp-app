@@ -1,0 +1,41 @@
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">{{formAction}} Image <span *ngIf="objectTitle">({{objectTitle}})</span></h4>
+    <button type="button" class="close" aria-label="Close" (click)="close()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form #addImageForm="ngForm">
+      <div class="form-group">
+        <label>Title</label>
+        <input required class="form-control" type="text" placeholder="Image Title..." name="image_title" [(ngModel)]="systemImage.title" id="">
+      </div>
+      <div class="form-group">
+        <label>Description</label>
+        <textarea class="form-control" placeholder="Image description..." [(ngModel)]="systemImage.description" name="image_description" id="" cols="30" rows="10"></textarea>
+      </div>
+      <div>
+        <label>Image</label>
+        <div *ngIf="systemImage.image_url" style="text-align:center;">
+          <img src="{{systemImage.image_url}}" alt="System Image" style="max-width: 200px;">
+        </div>
+        <div class="form-group">
+          <div class="input-group mb-3">
+            <div class="custom-file">
+              <input required class="custom-file-input" type="file" id="inputGroupFile02" (change)="handleImageFileInput($event.target.files)">
+              <label class="custom-file-label" for="inputGroupFile02">Choose file</label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-primary" [disabled]="!addImageForm.form.valid || formSubmitting" (click)="addUpdateSystemImage()">{{formAction}} Image<span *ngIf="formSubmitting">&nbsp;<i class="fas fa-spinner fa-spin"></i></span></button>
+    <button *ngIf="systemImage.id" class="btn btn-danger" (click)="deleteImage()">Delete</button>
+  </div>
+</ng-template>
+
+<button *ngIf="!systemImage.id" class="btn btn-primary" [ngClass]="{'btn-sm': smallBtn }" (click)="open(content)"><i class="fas fa-plus"></i> Add Image</button>
+<button *ngIf="systemImage.id" class="btn btn-sm btn-primary" [ngClass]="{'btn-sm': smallBtn }" (click)="open(content)"><i class="fas fa-edit"></i></button>

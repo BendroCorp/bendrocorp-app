@@ -1,4 +1,5 @@
 import { Base64Upload, IdTitleDesc } from "./misc-models";
+import { User } from "./user-models";
 
 export class StarSystem 
 {
@@ -29,6 +30,7 @@ export class Planet
     orbits_system_id?:number
     new_primary_image?:Base64Upload
     primary_image_url?:string
+    system_map_images?:SystemImage[]
 }
 
 export class Moon
@@ -43,6 +45,7 @@ export class Moon
     locations?:SystemLocation[]
     new_primary_image?:Base64Upload
     primary_image_url?:string
+    system_map_images?:SystemImage[]
 }
 
 export class SystemObject
@@ -58,6 +61,7 @@ export class SystemObject
     primary_image_url?:string
     object_type_id?:number
     object_type?:IdTitleDesc
+    system_map_images?:SystemImage[]
 }
 
 export class Settlement
@@ -101,4 +105,22 @@ export class SystemMapTypes
     jp_statues?: IdTitleDesc[]
     system_object_types?: IdTitleDesc[]
     location_types?: IdTitleDesc[]
+}
+
+export class SystemImage
+{
+    id?:number
+    title?:string
+    description?:string
+    of_system_id?:number
+    of_planet_id?:number
+    of_moon_id?:number
+    of_system_object_id?:number
+    of_location_id?:number
+    of_gravity_well_id?:number
+    created_by_id?:number
+    created_by?:User
+    new_image?:Base64Upload
+    image_url?:string
+    image_url_thumbnail?:string
 }

@@ -96,6 +96,8 @@ import { OffenderDetailsComponent } from './offender-reports/offender-details/of
 import { OffenderReportReportDetailsComponent } from './offender-reports/offender-report-report-details/offender-report-report-details.component';
 import { AddUpdateLocationModalComponent } from './system-map/add-update-location-modal/add-update-location-modal.component';
 import { AddUpdateSettlementModalComponent } from './system-map/add-update-settlement-modal/add-update-settlement-modal.component';
+import { AddUpdateSystemImageModalComponent } from './system-map/add-update-system-image-modal/add-update-system-image-modal.component';
+import { ImageViewModalComponent } from './image-view-modal/image-view-modal.component';
 
 @NgModule({
   declarations: [
@@ -168,6 +170,8 @@ import { AddUpdateSettlementModalComponent } from './system-map/add-update-settl
     OffenderReportReportDetailsComponent,
     AddUpdateLocationModalComponent,
     AddUpdateSettlementModalComponent,
+    AddUpdateSystemImageModalComponent,
+    ImageViewModalComponent,
   ],
   entryComponents: [
     EventModalComponent,
