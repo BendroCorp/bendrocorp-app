@@ -6,3 +6,8 @@
 .image-view-container > img{
   border:4px solid #000;
 }
+
+.center
+{
+  text-align: center;
+}

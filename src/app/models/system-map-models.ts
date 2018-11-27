@@ -31,6 +31,11 @@ export class Planet
     new_primary_image?:Base64Upload
     primary_image_url?:string
     system_map_images?:SystemImage[]
+    atmospheric_height?:number
+    general_radiation?:number
+    economic_rating?:number
+    population_density?:number
+    minimum_criminality_rating?:number
 }
 
 export class Moon
@@ -46,6 +51,11 @@ export class Moon
     new_primary_image?:Base64Upload
     primary_image_url?:string
     system_map_images?:SystemImage[]
+    atmospheric_height?:number
+    general_radiation?:number
+    economic_rating?:number
+    population_density?:number
+    minimum_criminality_rating?:number
 }
 
 export class SystemObject

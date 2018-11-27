@@ -98,6 +98,7 @@ import { AddUpdateLocationModalComponent } from './system-map/add-update-locatio
 import { AddUpdateSettlementModalComponent } from './system-map/add-update-settlement-modal/add-update-settlement-modal.component';
 import { AddUpdateSystemImageModalComponent } from './system-map/add-update-system-image-modal/add-update-system-image-modal.component';
 import { ImageViewModalComponent } from './image-view-modal/image-view-modal.component';
+import { SystemRatingPanelComponent } from './system-map/system-rating-panel/system-rating-panel.component';
 
 @NgModule({
   declarations: [
@@ -172,6 +173,7 @@ import { ImageViewModalComponent } from './image-view-modal/image-view-modal.com
     AddUpdateSettlementModalComponent,
     AddUpdateSystemImageModalComponent,
     ImageViewModalComponent,
+    SystemRatingPanelComponent,
   ],
   entryComponents: [
     EventModalComponent,
