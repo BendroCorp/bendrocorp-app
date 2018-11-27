@@ -16,7 +16,7 @@
     <button *ngIf="selectedStarSystem" (click)="allSystems()" style="float:right; margin-right: 4px;" class="btn btn-primary">Back To Galaxy</button>
   </div>
 </div>
-<!-- System Map -->
+<!-- System Map  -->
 <div class="row" style="height:80%;">
   <div [ngClass]="{'col-md-6 col-sm-6 col-xs-6': selectedStarSystemItem, 'col-md-12': !selectedStarSystemItem }" class="">    
     <div style="border:2px solid #000; height: 95%;" #starChart></div>   
@@ -25,8 +25,19 @@
     <span class="sm-close"><a (click)="deselectItem()"><i class="fas fa-times"></i></a></span>
     <!-- Basic Details -->
     <div style="clear:both;">
-      <img src="{{selectedStarSystemItem.primary_image_url}}" style="float:right; border: 2px solid black; max-height:150px; margin-left:8px;" alt="">
-      <h2>{{selectedStarSystemItem.title}}&nbsp;<span *ngIf="isEditor"><add-update-planet-modal *ngIf="selectedObjectKind === 'p'" [starSystem]="selectedStarSystem" [planet]="selectedStarSystemItem"></add-update-planet-modal><add-update-moon-modal *ngIf="selectedObjectKind === 'm'" [starSystem]="selectedStarSystem" [moon]="selectedStarSystemItem"></add-update-moon-modal>&nbsp;<add-update-system-object-modal [smallBtn]="true" [systemPlanet]="selectedStarSystemItem" *ngIf="isEditor && selectedStarSystem && selectedObjectKind === 'p'"></add-update-system-object-modal><add-update-system-object-modal [smallBtn]="true" [systemMoon]="selectedStarSystemItem" *ngIf="isEditor && selectedStarSystem&& selectedObjectKind === 'm'"></add-update-system-object-modal></span></h2>
+      <image-view-modal style="float:right;" [thumbnailUri]="selectedStarSystemItem.primary_image_url" [imageUri]="selectedStarSystemItem.primary_image_url_full" [maxWidth]="150"></image-view-modal>
+      <!-- <img src="{{selectedStarSystemItem.primary_image_url}}" style="float:right; border: 2px solid black; max-height:150px; margin-left:8px;" alt=""> -->
+      <h2>{{selectedStarSystemItem.title}}&nbsp;
+        <span *ngIf="isEditor">
+          <add-update-planet-modal *ngIf="selectedObjectKind === 'p'" [starSystem]="selectedStarSystem" [planet]="selectedStarSystemItem"></add-update-planet-modal>
+          <add-update-moon-modal *ngIf="selectedObjectKind === 'm'" [starSystem]="selectedStarSystem" [moon]="selectedStarSystemItem"></add-update-moon-modal>
+          <add-update-system-object-modal *ngIf="selectedStarSystem && selectedObjectKind === 'so'" [smallBtn]="true" [systemObject]="selectedStarSystemItem"></add-update-system-object-modal>
+          <!-- Buttons for system objects around planets and moons -->
+          &nbsp;<add-update-system-object-modal [smallBtn]="true" [systemPlanet]="selectedStarSystemItem" *ngIf="isEditor && selectedStarSystem && selectedObjectKind === 'p'"></add-update-system-object-modal>
+          <add-update-system-object-modal [smallBtn]="true" [systemMoon]="selectedStarSystemItem" *ngIf="isEditor && selectedStarSystem&& selectedObjectKind === 'm'"></add-update-system-object-modal>
+        </span>
+      </h2>
+      <system-rating-panel *ngIf="selectedObjectKind === 'p'" [criminalRating]="selectedStarSystemItem.minimum_criminality_rating" [atmosphericHeight]="selectedStarSystemItem.atmospheric_height" [economicRating]="selectedStarSystemItem.economic_rating" [populationDensity]="selectedStarSystemItem.population_density"></system-rating-panel>
       <p>{{selectedStarSystemItem.description}}</p>
     </div>
     <hr style="clear:both; padding-top:6px;">
@@ -38,7 +49,8 @@
       </h5>
       <p *ngIf="selectedStarSystemItem.settlements.length == 0">There are currently no registered settlements.</p>
       <div *ngFor="let settlement of selectedStarSystemItem.settlements; let i = index">
-        <img src="{{settlement.primary_image_url}}" style="max-height:100px; float:right; margin-left:8px;" alt="">
+        <image-view-modal style="float:right;" [thumbnailUri]="settlement.primary_image_url" [imageUri]="settlement.primary_image_url_full" [maxWidth]="100"></image-view-modal>
+        <!-- <img src="{{settlement.primary_image_url}}" style="max-height:100px; float:right; margin-left:8px;" alt=""> -->
         <h6>{{settlement.title}}&nbsp;
             <add-update-settlement-modal *ngIf="isEditor" [smallBtn]="true" [systemSettlement]="settlement"></add-update-settlement-modal>&nbsp;
             <add-update-location-modal *ngIf="isEditor && selectedStarSystem" [smallBtn]="true" [systemSettlement]="settlement"></add-update-location-modal>
@@ -47,7 +59,8 @@
         <br style="clear:both;">
         <div *ngIf="settlement.locations && settlement.locations.length > 0" style="color:#fff; background: #666666; padding: 8px;">
           <div *ngFor="let setLocation of settlement.locations">
-            <img src="{{setLocation.primary_image_url}}" style="max-height:100px; float:right; margin-left:8px;" alt="">
+            <image-view-modal style="float:right;" [thumbnailUri]="setLocation.primary_image_url" [imageUri]="setLocation.primary_image_url_full" [maxWidth]="100"></image-view-modal>
+            <!-- <img src="{{setLocation.primary_image_url}}" style="max-height:100px; float:right; margin-left:8px;" alt=""> -->
             <h6>{{setLocation.title}}&nbsp;
               <add-update-location-modal *ngIf="isEditor" [smallBtn]="true" [systemLocation]="setLocation"></add-update-location-modal>
             </h6>
@@ -69,7 +82,8 @@
       </h5>
       <p *ngIf="selectedStarSystemItem.locations.length == 0">There are currently no registered locations.</p>
       <div *ngFor="let location of selectedStarSystemItem.locations">
-        <img src="{{location.primary_image_url}}" style="max-height:100px; float:right; margin-left:8px;" alt="">
+        <image-view-modal style="float:right;" [thumbnailUri]="location.primary_image_url" [imageUri]="location.primary_image_url_full" [maxWidth]="100"></image-view-modal>
+        <!-- <img src="{{location.primary_image_url}}" style="max-height:100px; float:right; margin-left:8px;" alt=""> -->
         <h6>{{location.title}} <add-update-location-modal *ngIf="isEditor" [smallBtn]="true" [systemLocation]="location"></add-update-location-modal></h6>
         <p>{{location.description}}</p>
       </div>

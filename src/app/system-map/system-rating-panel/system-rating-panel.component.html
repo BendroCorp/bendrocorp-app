@@ -1,0 +1,14 @@
+<p>
+  <!-- Atmo Height -->
+  <span style="font-size:.9em;" *ngIf="atmosphericHeight" placement="bottom" ngbTooltip="Atmospheric Height">
+    <span>{{toKm(atmosphericHeight)}}k</span>&nbsp;
+  </span>
+  <!-- Population Density -->
+  <span style="font-size:.9em; color:darkcyan;" *ngIf="populationDensity" placement="bottom" ngbTooltip="Population Density">
+    <span *ngFor="let pop of forTimes(populationDensity)"><i class="fas fa-male"></i></span>&nbsp;
+  </span>
+  <!-- Economic Rating -->
+  <span style="font-size:.9em; color: green;" *ngIf="economicRating" placement="bottom" ngbTooltip="Economic Rating">
+      <span *ngFor="let eco of forTimes(economicRating)"><i class="fas fa-dollar-sign"></i></span>
+  </span>
+</p>
