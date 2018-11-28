@@ -8,13 +8,14 @@
 <div class="row">
   <div *ngIf="divisions" class="col-md-12">
     <div *ngFor="let division of divisions" class="card border-primary mb-3">
-      <div class="card-header text-white" [ngStyle]="{'background-color': division.color, 'color': division.font_color}">{{division.name}}</div>
+      <div class="card-header" [ngStyle]="{'background-color': division.color, 'color': division.font_color}">{{division.name}}</div>
       <div class="card-body">
         <table class="table table-striped">
           <thead>
             <tr>
               <th></th>
               <th>Name</th>
+              <th>Handle</th>
               <th>Position</th>
               <th></th>
             </tr>
@@ -23,6 +24,7 @@
             <tr *ngFor="let character of division.division_members">
               <td><img style="max-height: 25px" src="{{character.avatar_url}}" alt=""></td>
               <td>{{character.full_name}}</td>
+              <td>{{character.rsi_handle || "?"}}</td>
               <td>{{character.current_job.title}}</td>
               <td style="text-align:right"><a class="btn btn-primary btn-sm" routerLink="/profiles/{{character.first_name.toLowerCase()}}-{{character.last_name.toLowerCase()}}-{{character.id}}">View Profile</a></td>
             </tr>
