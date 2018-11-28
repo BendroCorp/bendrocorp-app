@@ -23,6 +23,8 @@ export class Character {
     new_avatar?:Base64Upload
 
     application?:CharacterApplication
+
+    rsi_handle?:string
 }
 
 export class Job {

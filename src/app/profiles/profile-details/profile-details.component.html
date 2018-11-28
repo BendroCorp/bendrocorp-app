@@ -31,6 +31,7 @@
             <div>{{profile.first_name}}&nbsp;{{profile.last_name}}</div>
             <div>{{profile.current_job.title}}</div>
             <div>RSI: <a href="https://robertsspaceindustries.com/citizens/{{profile.rsi_handle}}" target="_blank">{{profile.rsi_handle}}</a></div>
+            <div *ngIf="canEdit"><input-editor [(ngModel)]="profile.rsi_handle" (onSave)="updateHandle()"></input-editor></div>
             <!-- if applicable -->
             <div *ngIf="profile.application.application_status_id < 6">
               <div>Application: {{profile.application.application_status.title}}</div>

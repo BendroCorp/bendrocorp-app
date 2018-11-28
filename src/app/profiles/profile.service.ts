@@ -66,6 +66,15 @@ export class ProfileService {
     )
   }
 
+  updateHandle(characterId:number, handle:string) : Observable<StatusMessage>
+  {
+    let character = { id: characterId, handle }
+    return this.http.patch<StatusMessage>(`${this.globals.baseUrl}/profile/handle`, { character }).pipe(
+      tap(result => console.log(`Updated profile id #${character.id}!`)),
+      catchError(this.errorService.handleError<any>('Update Profile'))
+    )
+  }
+
   addShip(owned_ship:OwnedShip) : Observable<OwnedShip>
   {
     return this.http.post<OwnedShip>(`${this.globals.baseUrl}/profile/ship`, { owned_ship }).pipe(
