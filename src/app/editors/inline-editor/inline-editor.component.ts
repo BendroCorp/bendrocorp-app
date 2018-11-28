@@ -118,6 +118,11 @@ export class InlineEditorComponent implements OnInit, ControlValueAccessor {
     setTimeout(() => { this.inputEditorControl.nativeElement.focus(); }, 300);
   }
 
+  IsInputTextEmpty()
+  {
+    return (this._value === "")
+  }
+
   constructor() { }
 
   ngOnInit() {

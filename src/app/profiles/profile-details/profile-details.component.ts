@@ -90,6 +90,21 @@ export class ProfileDetailsComponent implements OnInit {
     }
   }
 
+  updateHandle()
+  {
+    if (this.profile) {
+      if (this.canEdit) {
+        this.profileService.updateHandle(this.profile.id, this.profile.rsi_handle).subscribe(
+          (results) => {
+            if (!(results instanceof HttpErrorResponse)) {
+              this.profileService.refreshData()
+            }
+          }
+        )
+      }
+    }
+  }
+
   addOwnedShip()
   {
     if (this.newShip && this.canEdit) {
