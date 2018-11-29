@@ -108,12 +108,12 @@
                   </div>
                 </ng-template>
               </ngb-tab>
-              <ngb-tab title="Application" [disabled]="!hrRights && profile.application.application_status.id >= 6">
+              <ngb-tab title="Application" [disabled]="!hrRights && (!profile.application || (profile.application.application_status.id >= 6))">
                 <ng-template ngbTabContent>
                   <application-details [application]="profile.application"></application-details>
                 </ng-template>
               </ngb-tab>
-              <ngb-tab title="Interview" [disabled]="(!hrRights && !directorRights) || (!hrRights && directorRights && profile.application.application_status.id >= 6)">
+              <ngb-tab title="Interview" [disabled]="(!hrRights && !directorRights) || (!hrRights && !directorRights && (!profile.application || (profile.application.application_status.id >= 6)))">
                   <ng-template ngbTabContent>
                     <application-interview [application]="profile.application"></application-interview>
                   </ng-template>
