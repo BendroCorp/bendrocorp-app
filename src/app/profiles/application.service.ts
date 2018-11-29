@@ -52,7 +52,7 @@ export class ApplicationService {
 
   rejectApplication(character:Character) : Observable<StatusMessage>
   {
-    return this.http.get<StatusMessage>(`${this.globals.baseUrl}/apply/${character.id}/reject`).pipe(
+    return this.http.post<StatusMessage>(`${this.globals.baseUrl}/apply/reject`, { character }).pipe(
       tap(results => console.log("Advanced application status!")),
       catchError(this.errorService.handleError<any>('Advance Application'))
     )

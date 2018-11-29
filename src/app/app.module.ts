@@ -99,6 +99,7 @@ import { AddUpdateSettlementModalComponent } from './system-map/add-update-settl
 import { AddUpdateSystemImageModalComponent } from './system-map/add-update-system-image-modal/add-update-system-image-modal.component';
 import { ImageViewModalComponent } from './image-view-modal/image-view-modal.component';
 import { SystemRatingPanelComponent } from './system-map/system-rating-panel/system-rating-panel.component';
+import { ApplicationRejectionModalComponent } from './profiles/application-rejection-modal/application-rejection-modal.component';
 
 @NgModule({
   declarations: [
@@ -174,6 +175,7 @@ import { SystemRatingPanelComponent } from './system-map/system-rating-panel/sys
     AddUpdateSystemImageModalComponent,
     ImageViewModalComponent,
     SystemRatingPanelComponent,
+    ApplicationRejectionModalComponent,
   ],
   entryComponents: [
     EventModalComponent,
