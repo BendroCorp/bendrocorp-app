@@ -68,6 +68,8 @@
         <div class="col-md-6">
           <label>RSI Handle</label>
           <input class="form-control" type="text" [(ngModel)]="characterApplication.user_attributes.rsi_handle" name="rsi_handle" placeholder="RSI Handle...">
+          <small *ngIf="!characterApplication.user_attributes.rsi_handle" class="text-muted">(ie. https://robertsspaceindustries.com/citizens/your-handle)</small>
+          <small *ngIf="characterApplication.user_attributes.rsi_handle"><a href="https://robertsspaceindustries.com/citizens/{{characterApplication.user_attributes.rsi_handle}}" target="_blank">https://robertsspaceindustries.com/citizens/{{characterApplication.user_attributes.rsi_handle}}</a></small>
         </div>
       </div>
       <div class="row">  
