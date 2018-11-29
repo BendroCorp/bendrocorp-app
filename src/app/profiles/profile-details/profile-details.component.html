@@ -49,10 +49,10 @@
               <ngb-tab title="Background">
                 <ng-template ngbTabContent>
                   <h4>Physical Description</h4>
-                  <p *ngIf="!canEdit">{{profile.description}}</p>
+                  <p style="white-space: pre-line;" *ngIf="!canEdit">{{profile.description}}</p>
                   <textarea-editor *ngIf="canEdit" [(ngModel)]="profile.description" maxheight="200px" (onSave)="updateProfile()"></textarea-editor>
                   <h4>Background</h4>
-                  <p *ngIf="!canEdit">{{profile.background}}</p>
+                  <p style="white-space: pre-line;" *ngIf="!canEdit">{{profile.background}}</p>
                   <textarea-editor *ngIf="canEdit" [(ngModel)]="profile.background" maxheight="200px" (onSave)="updateProfile()"></textarea-editor>
                 </ng-template>
               </ngb-tab>

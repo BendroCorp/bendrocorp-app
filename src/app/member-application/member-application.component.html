@@ -25,19 +25,19 @@
         <div class="col-md-6">
           <div class="form-group">
             <label>First Name</label>
-            <input class="form-control" type="text" [(ngModel)]="characterApplication.first_name" name="character_first_name" placeholder="Character First Name...">
+            <input class="form-control" type="text" [(ngModel)]="characterApplication.first_name" name="character_first_name" placeholder="Character First Name..." required>
           </div>
           <div class="form-group">
             <label>Last Name</label>
-            <input class="form-control" type="text" [(ngModel)]="characterApplication.last_name" name="character_last_name" placeholder="Character Last Name...">
+            <input class="form-control" type="text" [(ngModel)]="characterApplication.last_name" name="character_last_name" placeholder="Character Last Name..." required>
           </div>
           <div class="form-group">
             <label>Description</label>
-            <textarea class="form-control" name="character_description" [(ngModel)]="characterApplication.description" placeholder="Character Description..."></textarea>
+            <textarea class="form-control" name="character_description" [(ngModel)]="characterApplication.description" placeholder="Character Description..." required></textarea>
           </div>
           <div class="form-group">
             <label>Background</label>
-            <textarea class="form-control" name="character_background" [(ngModel)]="characterApplication.background" placeholder="Character Background..."></textarea>
+            <textarea class="form-control" name="character_background" [(ngModel)]="characterApplication.background" placeholder="Character Background..." required></textarea>
           </div>
         </div>
         <div class="col-md-6">
@@ -67,7 +67,7 @@
       <div class="row">
         <div class="col-md-6">
           <label>RSI Handle</label>
-          <input class="form-control" type="text" [(ngModel)]="characterApplication.user_attributes.rsi_handle" name="rsi_handle" placeholder="RSI Handle...">
+          <input class="form-control" type="text" [(ngModel)]="characterApplication.user_attributes.rsi_handle" name="rsi_handle" placeholder="RSI Handle..." required>
           <small *ngIf="!characterApplication.user_attributes.rsi_handle" class="text-muted">(ie. https://robertsspaceindustries.com/citizens/your-handle)</small>
           <small *ngIf="characterApplication.user_attributes.rsi_handle"><a href="https://robertsspaceindustries.com/citizens/{{characterApplication.user_attributes.rsi_handle}}" target="_blank">https://robertsspaceindustries.com/citizens/{{characterApplication.user_attributes.rsi_handle}}</a></small>
         </div>
@@ -75,15 +75,15 @@
       <div class="row">  
         <div class="col-md-12">
             <label>Tell us about yourself</label>
-            <textarea class="form-control" [(ngModel)]="characterApplication.application_attributes.tell_us_about_the_real_you" name="tell_us_about_the_real_you" placeholder="Tell us about yourself (hobbies, likes/dislikes, age, etc)"></textarea>
+            <textarea class="form-control" [(ngModel)]="characterApplication.application_attributes.tell_us_about_the_real_you" name="tell_us_about_the_real_you" placeholder="Tell us about yourself (hobbies, likes/dislikes, age, etc)" required></textarea>
         </div>
         <div class="col-md-12">
             <label>Why do you want to join BendroCorp?</label>
-            <textarea class="form-control" [(ngModel)]="characterApplication.application_attributes.why_do_want_to_join" name="why_do_want_to_join" placeholder="Why do you want to join BendroCorp?"></textarea>
+            <textarea class="form-control" [(ngModel)]="characterApplication.application_attributes.why_do_want_to_join" name="why_do_want_to_join" placeholder="Why do you want to join BendroCorp?" required></textarea>
         </div>
         <div class="col-md-12">
             <label>How did you hear about us?</label>
-            <textarea class="form-control" [(ngModel)]="characterApplication.application_attributes.how_did_you_hear_about_us" name="how_did_you_hear_about_us" placeholder="How did you hear about us?"></textarea>
+            <textarea class="form-control" [(ngModel)]="characterApplication.application_attributes.how_did_you_hear_about_us" name="how_did_you_hear_about_us" placeholder="How did you hear about us?" required></textarea>
         </div>
       </div>
       <hr>
@@ -108,7 +108,7 @@
           <h5>Standards of Conduct</h5>
           <p>The Standards of Conduct is our core policy governing member behaviour. While other policies exist these Standards of Conduct form the core of the BendroCorp ethos.</p>
           <ol>
-            <li>BendroCorp employees are expected to be professional and courteous at all times in their activities, dealings, contacts and with any individuals they work with or encounter. Obscene language will not be tolerated when dealing with customers or other clients. (This includes obscenities in Xi’an or Banu.)</li>
+            <li>BendroCorp employees are expected to be professional and courteous at all times in their activities, dealings, contacts and with any individuals they work with or encounter. Obscene language will not be tolerated when dealing with fellow employees, customers or other clients. (This includes obscenities in Xi’an or Banu.)</li>
             <li>BendroCorp employees are expected to be courteous and helpful to other employees regardless of their position within the company. Employees who refuse to render aid to other employees when they are in distress may be discharged from the company.</li>
             <li>BendroCorp employees are expected to be respectful of all supervisors and staff placed over them. Employees are expected to follow all reasonable instructions given to them by a supervisor.</li>
             <li>Any attempt by an employee to sow seeds of discord between other BendroCorp employees and their supervisors will result in an immediate discharge. Any employee trying to create a “coup-d'etat” against corporate leadership will be subject to immediate discharge and possible turn over to UEE advocacy. </li>
