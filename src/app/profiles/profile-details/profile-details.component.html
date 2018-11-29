@@ -40,7 +40,7 @@
                 <button class="btn btn-success" *ngIf="profile.application.application_status_id == 5" (click)="advanceApplication()">CEO Accept</button>
               </div>
               <div>
-                <button class="btn btn-danger" (click)="rejectApplication()">Reject Application</button>
+                <application-rejection-modal [character]="profile"></application-rejection-modal>
               </div>
             </div>
           </div>

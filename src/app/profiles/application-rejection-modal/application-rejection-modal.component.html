@@ -1,0 +1,22 @@
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Application Rejection</h4>
+    <button type="button" class="close" aria-label="Close" (click)="openModal.close()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form #rejectionForm="ngForm">
+      <div class="form-group">
+        <label>Rejection Reason</label>
+        <textarea required class="form-control" placeholder="Enter a rejection reason..." [(ngModel)]="character.application.rejection_reason" name="rejection_reason"></textarea>
+        <small class="text-muted">* Please enter a reason for the rejection. The reason should be short, specific and to the point.</small>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-danger" [disabled]="!rejectionForm.form.valid" (click)="rejectApplication()">Reject Application</button>
+  </div>
+</ng-template>
+
+<button class="btn btn-danger" (click)="open(content)">Reject Application</button>

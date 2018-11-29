@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '../../../../node_modules/@angular/router';
 import { ProfileService } from '../profile.service';
 import { Character, CharacterApplicationComment } from '../../models/character-models';
@@ -10,13 +10,14 @@ import { UserSessionResponse } from '../../models/user-models';
 import { Base64Upload } from '../../models/misc-models';
 import { OwnedShip, Ship } from '../../models/ship-models';
 import { SpinnerService } from '../../misc/spinner/spinner.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-profile-details',
   templateUrl: './profile-details.component.html',
   styleUrls: ['./profile-details.component.css']
 })
-export class ProfileDetailsComponent implements OnInit {
+export class ProfileDetailsComponent implements OnInit, OnDestroy {
   profileId:number = this.parseProfileId()
   canEdit:boolean = false
   ceoRights:boolean = (this.authService.hasClaim(9)) ? true : false;
@@ -24,9 +25,16 @@ export class ProfileDetailsComponent implements OnInit {
   directorRights:boolean = this.authService.hasClaim(3)
   shipList:Ship[]
   newShip:OwnedShip = { } as OwnedShip
+  subscription:Subscription
 
   profile:Character
-  constructor(private route:ActivatedRoute, private router:Router, private profileService:ProfileService, private applicationService:ApplicationService, private messageService:MessageService, private authService:AuthService, private spinnerService:SpinnerService) { }
+  constructor(private route:ActivatedRoute, private router:Router, private profileService:ProfileService, private applicationService:ApplicationService, private messageService:MessageService, private authService:AuthService, private spinnerService:SpinnerService) { 
+    this.subscription = this.profileService.dataRefreshAnnounced$.subscribe(
+      () => {
+        this.fetchProfile()
+      }
+    )
+  }
 
   fetchProfile()
   {
@@ -85,7 +93,7 @@ export class ProfileDetailsComponent implements OnInit {
       } else {
         this.messageService.addError("You are not authorized to edit this character.")
       }
-    }else{
+    } else {
       console.error("There is really no way you should get this message...since you should be forward away...but...updateProfile could not find a profile")
     }
   }
@@ -155,23 +163,6 @@ export class ProfileDetailsComponent implements OnInit {
     }
   }
 
-  rejectApplication(character:Character)
-  {
-    if (this.hrRights && character.application.application_status_id < 6) {
-      if (confirm("Are you sure you want to reject this application?")) {
-        this.applicationService.rejectApplication(character).subscribe(
-          (results) => {
-            if (!(results instanceof HttpErrorResponse)) {
-              this.fetchProfile()
-            }
-          }
-        )
-      }
-    } else {
-      this.messageService.addError("You are not authorized to reject applications!")
-    }
-  }
-
   addApplicationComment(applicationComment:CharacterApplicationComment)
   {
     this.applicationService.addApplicationComment(applicationComment).subscribe(
@@ -233,6 +224,12 @@ export class ProfileDetailsComponent implements OnInit {
   ngOnInit() {
     this.spinnerService.spin(true)
     this.fetchProfile()
+  }
+
+  ngOnDestroy() {
+    if (this.subscription) {
+      this.subscription.unsubscribe()
+    }
   }
 
 }
