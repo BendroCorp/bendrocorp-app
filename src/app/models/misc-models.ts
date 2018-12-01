@@ -67,3 +67,14 @@ export class IdTitleDescOrd extends IdTitleDesc
 {
     ordinal?:number
 }
+
+export class SiteLog
+{
+    id?:number
+    module?: string
+    submodule?: string
+    message?: string
+    site_log_type_id?: number
+    site_log_type?: IdTitleDesc
+    created_at?: Date
+}

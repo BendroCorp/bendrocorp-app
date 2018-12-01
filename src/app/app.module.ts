@@ -100,6 +100,8 @@ import { AddUpdateSystemImageModalComponent } from './system-map/add-update-syst
 import { ImageViewModalComponent } from './image-view-modal/image-view-modal.component';
 import { SystemRatingPanelComponent } from './system-map/system-rating-panel/system-rating-panel.component';
 import { ApplicationRejectionModalComponent } from './profiles/application-rejection-modal/application-rejection-modal.component';
+import { SiteLogsComponent } from './site-logs/site-logs.component';
+import { SiteLogDetailsModalComponent } from './site-logs/site-log-details-modal/site-log-details-modal.component';
 
 @NgModule({
   declarations: [
@@ -176,6 +178,8 @@ import { ApplicationRejectionModalComponent } from './profiles/application-rejec
     ImageViewModalComponent,
     SystemRatingPanelComponent,
     ApplicationRejectionModalComponent,
+    SiteLogsComponent,
+    SiteLogDetailsModalComponent,
   ],
   entryComponents: [
     EventModalComponent,
