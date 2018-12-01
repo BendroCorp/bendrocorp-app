@@ -1,0 +1,39 @@
+<div class="">
+  <ol class="breadcrumb">
+    <li>Site Logs (Admin Only)</li>
+  </ol>
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <div class="card border-primary">
+      <div class="card-header bg-primary text-white">Available Site Logs</div>
+      <div class="card-body">
+        <div>
+          <h6 *ngIf="siteLogs.length == 0">There are currently no site logs!</h6>
+          <table *ngIf="siteLogs.length > 0" class="table">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Module</th>
+                <th>Submodule</th>
+                <th>Created</th>
+                <th>Type</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let log of siteLogs">
+                <td>{{log.id}}</td>
+                <td>{{log.module}}</td>
+                <td>{{log.submodule}}</td>                
+                <td>{{(log.created_at | date:'MM/dd/yyyy @ h:mma') || "N/A" }}</td>
+                <td>{{log.site_log_type.title}}</td>
+                <td><site-log-details-modal [siteLog]="log"></site-log-details-modal></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
