@@ -41,7 +41,7 @@ import { HttpErrorResponse } from '@angular/common/http';
     </button>
   </div>
   <div class="modal-body">
-    <form #makeDonationForm="ngForm" (ngSubmit)="onCardSubmit(checkout)" class="checkout">
+    <form #makeDonationForm="ngForm" (ngSubmit)="onCardSubmit(makeDonationForm)" class="checkout">
       <div class="form-group">
         <label>Donation Item</label>
         <p>{{donationItem.title}}</p>
