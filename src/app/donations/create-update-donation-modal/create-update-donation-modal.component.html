@@ -1,0 +1,33 @@
+<ng-template #content let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">{{formAction}} Donation Item</h4>
+      <button type="button" class="close" aria-label="Close" (click)="close()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <form #donationItemForm="ngForm">
+        <div class="form-group">
+          <label>Title</label>
+          <input required [(ngModel)]="donationItem.title" placeholder="Enter a title..." class="form-control" type="text" name="title">
+        </div>
+        <div class="form-group">
+          <label>Description</label>
+          <textarea required [(ngModel)]="donationItem.description" placeholder="Enter a description..." class="form-control" name="description" cols="30" rows="10"></textarea>
+        </div>
+        <div class="form-group">
+          <label>Dollar Goal</label>
+          <input required [(ngModel)]="donationItem.goal" placeholder="Enter the $ goal..." class="form-control" type="number" min="1" name="goal">
+          <small class="text-muted">* Only enter whole dollars.</small>
+        </div>
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-primary" [disabled]="!donationItemForm.form.valid" (click)="createUpdateDonationItem()">{{formAction}} Donation Item</button>
+      <button *ngIf="this.donationItem && this.donationItem.id" class="btn btn-danger" (click)="archiveDonationItem()">Archive</button>
+    </div>
+  </ng-template>
+  
+  <button *ngIf="!(this.donationItem && this.donationItem.id)" class="btn btn-sm btn-secondary" (click)="open(content)">Create</button>
+  <button *ngIf="this.donationItem && this.donationItem.id" class="btn btn-sm btn-primary" (click)="open(content)">Update</button>
+  

@@ -1,3 +1,5 @@
+import { User } from "./user-models";
+
 export class LogItem
 {
     module?:string;
@@ -77,4 +79,33 @@ export class SiteLog
     site_log_type_id?: number
     site_log_type?: IdTitleDesc
     created_at?: Date
+}
+
+export class DonationItem
+{
+    id?: number
+    title?: string
+    description?: string
+    goal?: number
+    created_by?: User
+    created_by_id?: number
+    archived?: boolean
+    donations?: Donation[]
+    total_donations?: number
+    is_completed?: boolean
+    ordinal?: number
+}
+
+export class Donation
+{
+    id?: number
+    donation_item_id?: number
+    user_id?: number
+    user?: User
+    amount?: number
+    stripe_transaction_id?: string
+    charge_succeeded?: boolean
+    charge_failed?: boolean
+    card_token?: string
+    created_at?:Date
 }

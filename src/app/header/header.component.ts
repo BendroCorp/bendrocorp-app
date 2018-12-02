@@ -22,14 +22,15 @@ export class HeaderComponent implements OnInit, OnDestroy {
       {
         console.log("Menu observed auth service call!");
         this.fetchUserSession()
+        this.isMember = this.authService.hasClaim(0)
       }
     )
 
     this.authErrorSubscription = this.errorService.authErrorAnnounced$.subscribe(
       called => {
         console.log("Menu observed auth service call!");
-        
         this.fetchUserSession()
+        this.isMember = this.authService.hasClaim(0)
       }
     )
   }
@@ -38,7 +39,15 @@ export class HeaderComponent implements OnInit, OnDestroy {
   {
     this.authService.logout().subscribe(
       () => {
-        this.router.navigateByUrl('/')
+        let done = this.router.navigateByUrl('/').then((results) => {
+          console.log(results)
+          if (results == null) {
+            location.reload()
+          }
+        }).catch((derp) => {
+          console.log(derp)
+          
+        })
       }
     )    
   }
