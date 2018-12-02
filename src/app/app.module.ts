@@ -102,6 +102,9 @@ import { SystemRatingPanelComponent } from './system-map/system-rating-panel/sys
 import { ApplicationRejectionModalComponent } from './profiles/application-rejection-modal/application-rejection-modal.component';
 import { SiteLogsComponent } from './site-logs/site-logs.component';
 import { SiteLogDetailsModalComponent } from './site-logs/site-log-details-modal/site-log-details-modal.component';
+import { DonationsComponent } from './donations/donations.component';
+import { MakeDonationModalComponent, DonationModalContent } from './donations/make-donation-modal/make-donation-modal.component';
+import { CreateUpdateDonationModalComponent } from './donations/create-update-donation-modal/create-update-donation-modal.component';
 
 @NgModule({
   declarations: [
@@ -180,12 +183,17 @@ import { SiteLogDetailsModalComponent } from './site-logs/site-log-details-modal
     ApplicationRejectionModalComponent,
     SiteLogsComponent,
     SiteLogDetailsModalComponent,
+    DonationsComponent,
+    MakeDonationModalComponent,
+    CreateUpdateDonationModalComponent,
+    DonationModalContent,
   ],
   entryComponents: [
     EventModalComponent,
     UpdateEventBriefingModalComponent,
     UpdateEventDebriefingModalComponent,
-    EventCertificationModalComponent
+    EventCertificationModalComponent,
+    DonationModalContent,
   ],
   imports: [
     BrowserModule,

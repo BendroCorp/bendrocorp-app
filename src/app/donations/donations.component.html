@@ -1,0 +1,63 @@
+<div class="row">
+  <div class="col-md-12">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item active">Funding</li>
+    </ol>
+  </div>
+</div>
+<!-- Items that can be donated to -->
+<div class="row">
+  <div class="col-md-12">
+    <div class="card border-primary mb-3">
+      <div class="card-header text-white bg-primary">Funding<span *ngIf="isAdmin" style="float:right;"><create-update-donation-modal></create-update-donation-modal></span></div>
+      <div class="card-body">
+        <h5 *ngIf="donationItems.length == 0">There are currently no open donation items.</h5>
+        <!-- Donation Items -->
+        <div *ngFor="let item of donationItems" class="donation-item">
+          <h5>{{item.title}}<span>&nbsp;<make-donation-modal [donationItem]="item"></make-donation-modal></span><span *ngIf="isAdmin">&nbsp;<create-update-donation-modal [donationItem]="item"></create-update-donation-modal></span></h5>
+          <p style="white-space: pre-line;">{{item.description}}</p>
+          <!-- Progress Bar -->
+          <div class="progress">
+            <div class="progress-bar" role="progressbar" [ngClass]="{ 'bg-success': item.is_completed }" [ngStyle]="{'width.%': itemWidth(item) }"></div>
+          </div>
+          <br />
+          <div>
+            <small class="text-muted">${{item.total_donations}} of ${{item.goal}} raised.<span *ngIf="item.is_completed"> Woot! Thanks everyone! :)</span></small>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- User's donations -->
+<div class="row">
+    <div class="col-md-12">
+      <div class="card border-primary mb-3">
+        <div class="card-header text-white bg-primary">Your Donations</div>
+        <div class="card-body">
+          <h5 *ngIf="userDonations.length == 0">You have not made any funding donations.</h5>
+          <table class="table table-striped" *ngIf="userDonations.length > 0">
+            <thead>
+              <tr>
+                <th>Donated Towards</th>
+                <th>Amount</th>
+                <th>When</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let donation of userDonations">
+                <td>{{donation.donation_item.title}}</td>
+                <td>{{donation.amount | currency}}</td>
+                <td>{{donation.created_at | date }}</td>
+                <td>
+                  <span *ngIf="donation.charge_succeeded" class="text-success">Succeeded</span>
+                  <span *ngIf="donation.charge_failed" class="text-danger">Failed</span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>

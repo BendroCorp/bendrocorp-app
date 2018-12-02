@@ -7,7 +7,14 @@
         <div *ngIf="userSession">
             <h4><span *ngIf="!userSession.character">Hello!</span><span *ngIf="userSession.character">{{userSession.character.first_name}} <img src="{{userSession.character.avatar_url}}" style="max-height: 20px;" alt=""></span>&nbsp;<span><button class="btn btn-sm btn-primary" (click)="doLogout()"><i class="fas fa-power-off"></i></button></span></h4>
             <!-- Peronal Menus -->
-            <div><span *ngIf="isMember"><a class="btn btn-sm btn-primary btn-header" routerLink="/profiles/{{userSession.character.first_name.toLowerCase()}}-{{userSession.character.last_name.toLowerCase()}}-{{userSession.character.id}}">Profile</a>&nbsp;<a class="btn btn-sm btn-primary btn-header" href="https://discord.gg/yEzMyaT" target="_blank">Discord</a>&nbsp;<settings-modal></settings-modal></span></div>
+            <div>
+                <span *ngIf="isMember">
+                    <a class="btn btn-sm btn-primary btn-header" routerLink="/profiles/{{userSession.character.first_name.toLowerCase()}}-{{userSession.character.last_name.toLowerCase()}}-{{userSession.character.id}}">Profile</a>&nbsp;
+                    <a class="btn btn-sm btn-primary btn-header" href="https://discord.gg/yEzMyaT" target="_blank">Discord</a>&nbsp;
+                    <a class="btn btn-sm btn-primary btn-header" routerLink="/funding">Funding</a>&nbsp;
+                    <settings-modal></settings-modal>
+                </span>
+            </div>
         </div>
     </div>
   </div>
