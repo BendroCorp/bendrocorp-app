@@ -1,0 +1,27 @@
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">{{formAction}} Training Course</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form #trainingCourseForm="ngForm">
+      <div class="form-group">
+        <label>Title</label>
+        <input required class="form-control" [(ngModel)]="trainingCourse.title" type="text" name="title">
+      </div>
+      <div class="form-group">
+        <label>Description</label>
+        <textarea required class="form-control" [(ngModel)]="trainingCourse.description" name="description" cols="30" rows="10"></textarea>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">{{formAction}}</button>
+  </div>
+</ng-template>
+
+<button *ngIf="!(trainingCourse && trainingCourse.id)" class="btn btn-sm btn-primary" (click)="open(content)">{{formAction}} Course</button>
+<button *ngIf="trainingCourse && trainingCourse.id" class="btn btn-sm btn-secondary" (click)="open(content)">{{formAction}} Course</button>
+  

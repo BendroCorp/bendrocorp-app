@@ -1,0 +1,24 @@
+<!-- Breadcrumbs -->
+<div class="row">
+  <div class="col-md-12">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item active">Training</li>
+    </ol>
+  </div>
+</div>
+<!-- Main -->
+<div class="row">
+  <div class="col-md-12">
+    <div class="card border-primary">
+      <div class="card-header bg-primary text-white">Training Courses<span style="float:right;"><training-course-create-update-modal></training-course-create-update-modal></span></div>
+      <div class="card-body">
+        <h6 *ngIf="trainingCourses.length == 0">No current training courses.</h6>
+        <div *ngFor="let course of trainingCourses" (click)="openCourse(course)">
+          <span style="float: right;">{{userCompleted(course)}}</span>
+          <h4>{{course.title}}<span *ngIf="isAdmin"><training-course-create-update-modal [trainingCourse]="course"></training-course-create-update-modal></span></h4>
+          <p>{{course.description}}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -105,6 +105,11 @@ import { SiteLogDetailsModalComponent } from './site-logs/site-log-details-modal
 import { DonationsComponent } from './donations/donations.component';
 import { MakeDonationModalComponent, DonationModalContent } from './donations/make-donation-modal/make-donation-modal.component';
 import { CreateUpdateDonationModalComponent } from './donations/create-update-donation-modal/create-update-donation-modal.component';
+import { TrainingComponent } from './training/training.component';
+import { TrainingCourseDetailsComponent } from './training/training-course-details/training-course-details.component';
+import { TrainingCourseCreateUpdateModalComponent } from './training/training-course-create-update-modal/training-course-create-update-modal.component';
+import { TrainingItemCreateUpdateModalComponent } from './training/training-item-create-update-modal/training-item-create-update-modal.component';
+import { TrainingItemComponent } from './training/training-item/training-item.component';
 
 @NgModule({
   declarations: [
@@ -187,6 +192,11 @@ import { CreateUpdateDonationModalComponent } from './donations/create-update-do
     MakeDonationModalComponent,
     CreateUpdateDonationModalComponent,
     DonationModalContent,
+    TrainingComponent,
+    TrainingCourseDetailsComponent,
+    TrainingCourseCreateUpdateModalComponent,
+    TrainingItemCreateUpdateModalComponent,
+    TrainingItemComponent,
   ],
   entryComponents: [
     EventModalComponent,

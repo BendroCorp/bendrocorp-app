@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { UserSessionResponse, SignUp, NewPassword, TwoFactorDataObject, TwoFactorAuthObject, TokenObject } from './models/user-models';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http'; // https://stackoverflow.com/questions/47369850/property-get-does-not-exist-on-type-httpclientmodule
+import { HttpClient } from '@angular/common/http'; // https://stackoverflow.com/questions/47369850/property-get-does-not-exist-on-type-httpclientmodule
 import * as moment from 'moment';
 import { tap, catchError } from 'rxjs/operators';
 import { ErrorService } from './error.service';
@@ -15,100 +15,94 @@ import { StatusMessage } from './models/misc-models';
 export class AuthService {
   // https://www.metaltoad.com/blog/angular-5-making-api-calls-httpclient-service
   // https://blog.angular-university.io/angular-jwt-authentication/
-  constructor(public http:HttpClient, public messageService:MessageService, public err:ErrorService, public globals:Globals, public router:Router) { }
+  constructor(public http: HttpClient,
+    public messageService: MessageService,
+    public err: ErrorService,
+    public globals: Globals,
+    public router: Router) { }
 
   private dataRefreshSource = new Subject();
   dataRefreshAnnounced$ = this.dataRefreshSource.asObservable();
-  refreshData()
-  {
-    console.log("Auth service data refresh called!");    
+  refreshData() {
+    console.log('Auth service data refresh called!');
     this.dataRefreshSource.next();
   }
 
   /** Log the user in. */
-  login(email:string, password:string, code?:string) {
-    let device = "Web"
-    return this.http.post<UserSessionResponse>(`${this.globals.baseUrlRoot}/auth`, { "session": { email, password, code, device } }).pipe(
+  login(email: string, password: string, code?: string) {
+    const device = 'Web'
+    return this.http.post<UserSessionResponse>(`${this.globals.baseUrlRoot}/auth`, { 'session': { email, password, code, device } }).pipe(
       tap(result => {
         this.messageService.addSuccess('Login Successful! Welcome back!')
-      }), 
+      }),
       catchError(this.err.handleError('Login', []))
     );
   }
 
-  signup(signup:SignUp)
-  {
+  signup(signup: SignUp) {
     return this.http.post<StatusMessage>(`${this.globals.baseUrl}/signup`, { signup }).pipe(
-      tap(result => console.log("New sign up created!")),
+      tap(result => console.log('New sign up created!')),
       catchError(this.err.handleError<any>('Sign Up'))
     )
   }
 
-  changePassword(password:NewPassword)
-  {
+  changePassword(password: NewPassword) {
     return this.http.post<StatusMessage>(`${this.globals.baseUrl}/account/change-password`, { password }).pipe(
-      tap(result => console.log("Password updated!")),
+      tap(result => console.log('Password updated!')),
       catchError(this.err.handleError<any>('Update Password'))
     )
   }
 
-  fetchTfa() : Observable <TwoFactorDataObject>
-  {
+  fetchTfa(): Observable <TwoFactorDataObject> {
     return this.http.get<TwoFactorDataObject>(`${this.globals.baseUrl}/account/fetch-tfa`).pipe(
-      tap(result => console.log("Fetch TFA!")),
+      tap(result => console.log('Fetch TFA!')),
       catchError(this.err.handleError<any>('Fetch TFA'))
     )
   }
 
-  enableTfa(two_factor_auth:TwoFactorAuthObject) : Observable <StatusMessage>
-  {
+  enableTfa(two_factor_auth: TwoFactorAuthObject): Observable <StatusMessage> {
     return this.http.post<StatusMessage>(`${this.globals.baseUrl}/account/enable-tfa`, { two_factor_auth }).pipe(
-      tap(result => console.log("Enable TFA!")),
+      tap(result => console.log('Enable TFA!')),
       catchError(this.err.handleError<any>('Enable TFA'))
     )
   }
 
-  fetchAuthTokens() : Observable<TokenObject[]>
-  {
+  fetchAuthTokens(): Observable<TokenObject[]> {
     return this.http.get<TokenObject[]>(`${this.globals.baseUrl}/user/auth-tokens`).pipe(
       tap(result => console.log(`Fetched ${result.length} tokens`)),
       catchError(this.err.handleError<any>('Retrieve Auth Tokens'))
     )
   }
 
-  removeAuthToken(token:string) : Observable<StatusMessage>
-  {
+  removeAuthToken(token: string): Observable<StatusMessage> {
     return this.http.delete<StatusMessage>(`${this.globals.baseUrl}/account/token/${token}`).pipe(
-      tap(result => console.log("Removed auth token!")),
+      tap(result => console.log('Removed auth token!')),
       catchError(this.err.handleError<any>('Remove Auth Token'))
     )
   }
 
-  requestPasswordReset(email:string) : Observable<StatusMessage>
-  {
-    let user = { email: email }
+  requestPasswordReset(email: string): Observable<StatusMessage> {
+    const user = { email: email }
     return this.http.post<StatusMessage>(`${this.globals.baseUrl}/account/forgot-password`, { user }).pipe(
-      tap(result => console.log("Requested password reset!")),
+      tap(result => console.log('Requested password reset!')),
       catchError(this.err.handleError<any>('Request Password Reset'))
     )
   }
 
-  doPasswordReset(password:string, password_confirmation:string, password_reset_token:string) : Observable<StatusMessage>
-  {
-    let user = { password, password_confirmation, password_reset_token }
+  doPasswordReset(password: string, password_confirmation: string, password_reset_token: string): Observable<StatusMessage> {
+    const user = { password, password_confirmation, password_reset_token }
     return this.http.post<StatusMessage>(`${this.globals.baseUrl}/account/reset-password`, { user }).pipe(
-      tap(result => console.log("Do password reset!")),
+      tap(result => console.log('Do password reset!')),
       catchError(this.err.handleError<any>('Password Reset'))
     )
   }
 
   // Internal stuff below here
 
-  public hasClaim(roleId:number) : boolean
-  {
+  public hasClaim(roleId: number): boolean {
     if (this.isLoggedIn()) {
       if ((this.retrieveUserSession() as UserSessionResponse).claims.length > 0) {
-        let claim = (this.retrieveUserSession() as UserSessionResponse).claims.find(x => x.id === roleId)
+        const claim = (this.retrieveUserSession() as UserSessionResponse).claims.find(x => x.id === roleId)
         if (claim) {
           return true
         }
@@ -119,19 +113,17 @@ export class AuthService {
     }
   }
 
-  setSession(authResult) : Observable<boolean>
-  {
-    if (authResult != 'undefined') {
+  setSession(authResult): Observable<boolean> {
+    if (authResult !== 'undefined') {
       localStorage.setItem('userObject', JSON.stringify(authResult));
       return of(true)
-    }else{
-      console.error("Undefined authResult passed to setSession!");
+    } else {
+      console.error('Undefined authResult passed to setSession!');
       return of(false)
     }
   }
 
-  logout() : Observable<boolean>
-  {
+  logout(): Observable<boolean> {
     // let didLogout = localStorage.removeItem('userObject') ? of(true) : of(false);
     // return didLogout
     localStorage.removeItem('userObject')
@@ -140,47 +132,43 @@ export class AuthService {
 
   public isLoggedIn() {
     if (this.retrieveUserSession()) {
-      let notExpired = moment().isBefore(this.getExpiration());
+      const notExpired = moment().isBefore(this.getExpiration());
       return notExpired;
     } else {
       // this.logout();
       return false;
-    }   
+    }
   }
 
-  public static retrieveUser()
-  {
-    if (localStorage.getItem("userObject") !== null && localStorage.getItem("userObject") !== 'undefined') {
-      var retrieved = localStorage.getItem("userObject")
-      var user = JSON.parse(retrieved)
-      // console.log(user);    
+  // tslint:disable-next-line:member-ordering
+  public static retrieveUser() {
+    if (localStorage.getItem('userObject') !== null && localStorage.getItem('userObject') !== 'undefined') {
+      const retrieved = localStorage.getItem('userObject')
+      const user = JSON.parse(retrieved)
+      // console.log(user);
       return user;
-    }    
+    }
   }
 
-  setOnAuthRedirect(uri:string)
-  {
-    localStorage.setItem("authRedirect", uri)
+  setOnAuthRedirect(uri: string) {
+    localStorage.setItem('authRedirect', uri)
   }
 
-  unSetOnAuthRedirect()
-  {
-    localStorage.removeItem("authRedirect")
+  unSetOnAuthRedirect() {
+    localStorage.removeItem('authRedirect')
   }
 
-  getOnAuthRedirect() : string
-  {
-    return localStorage.getItem("authRedirect")
+  getOnAuthRedirect(): string {
+    return localStorage.getItem('authRedirect')
   }
 
-  retrieveUserSession()
-  {
-    if (localStorage.getItem("userObject") !== null && localStorage.getItem("userObject") !== 'undefined') {
-      var retrieved = localStorage.getItem("userObject")
-      var user = JSON.parse(retrieved)
-      // console.log(user);    
+  retrieveUserSession(): UserSessionResponse {
+    if (localStorage.getItem('userObject') !== null && localStorage.getItem('userObject') !== 'undefined') {
+      const retrieved = localStorage.getItem('userObject')
+      const user = JSON.parse(retrieved)
+      // console.log(user);
       return user;
-    }    
+    }
   }
 
   isLoggedOut() {
@@ -190,6 +178,6 @@ export class AuthService {
   getExpiration() {
       const userObject = this.retrieveUserSession();
       return moment(userObject.token_expires);
-  } 
+  }
 
 }

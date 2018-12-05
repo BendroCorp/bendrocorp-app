@@ -11,7 +11,7 @@ import { HttpClient } from '@angular/common/http';
 })
 export class SystemMapService {
 
-  constructor(private http:HttpClient, private errorService:ErrorService, private globals:Globals) { }
+  constructor(private http: HttpClient, private errorService: ErrorService, private globals: Globals) { }
 
   private dataRefreshSource = new Subject();
   private fullDataRefreshSource = new Subject();
