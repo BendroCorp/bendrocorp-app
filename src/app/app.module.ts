@@ -105,6 +105,13 @@ import { SiteLogDetailsModalComponent } from './site-logs/site-log-details-modal
 import { DonationsComponent } from './donations/donations.component';
 import { MakeDonationModalComponent, DonationModalContent } from './donations/make-donation-modal/make-donation-modal.component';
 import { CreateUpdateDonationModalComponent } from './donations/create-update-donation-modal/create-update-donation-modal.component';
+import { TrainingComponent } from './training/training.component';
+import { TrainingCourseDetailsComponent } from './training/training-course-details/training-course-details.component';
+import { TrainingCourseCreateUpdateModalComponent } from './training/training-course-create-update-modal/training-course-create-update-modal.component';
+import { TrainingItemCreateUpdateModalComponent } from './training/training-item-create-update-modal/training-item-create-update-modal.component';
+import { TrainingItemComponent } from './training/training-item/training-item.component';
+import { SafeResourcePipe } from './pipes/safe-resource.pipe';
+import { SortablejsModule } from 'angular-sortablejs';
 
 @NgModule({
   declarations: [
@@ -187,6 +194,12 @@ import { CreateUpdateDonationModalComponent } from './donations/create-update-do
     MakeDonationModalComponent,
     CreateUpdateDonationModalComponent,
     DonationModalContent,
+    TrainingComponent,
+    TrainingCourseDetailsComponent,
+    TrainingCourseCreateUpdateModalComponent,
+    TrainingItemCreateUpdateModalComponent,
+    TrainingItemComponent,
+    SafeResourcePipe,
   ],
   entryComponents: [
     EventModalComponent,
@@ -208,6 +221,8 @@ import { CreateUpdateDonationModalComponent } from './donations/create-update-do
     QRCodeModule,
     NgxPaginationModule,
     DeviceDetectorModule.forRoot(),
+    SortablejsModule,
+    SortablejsModule.forRoot({ animation: 150 }),
     ServiceWorkerModule.register('/ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [

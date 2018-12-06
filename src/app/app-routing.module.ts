@@ -30,6 +30,8 @@ import { OffenderDetailsComponent } from './offender-reports/offender-details/of
 import { OffenderReportReportDetailsComponent } from './offender-reports/offender-report-report-details/offender-report-report-details.component';
 import { SiteLogsComponent } from './site-logs/site-logs.component';
 import { DonationsComponent } from './donations/donations.component';
+import { TrainingComponent } from './training/training.component';
+import { TrainingCourseDetailsComponent } from './training/training-course-details/training-course-details.component'
 
 const routes: Routes = [
     { path: '', component: DashboardComponent, canActivate: [AuthGuardService, MemberAuthGuardService] },
@@ -46,6 +48,8 @@ const routes: Routes = [
     { path: 'offender-reports/report/:report_id', component: OffenderReportReportDetailsComponent, canActivate: [AuthGuardService, MemberAuthGuardService] },
     { path: 'site-logs', component: SiteLogsComponent, canActivate: [AuthGuardService, MemberAuthGuardService] },
     { path: 'funding', component: DonationsComponent, canActivate: [AuthGuardService, MemberAuthGuardService] },
+    { path: 'training', component: TrainingComponent, canActivate: [AuthGuardService, MemberAuthGuardService] },
+    { path: 'training/:course_id', component: TrainingCourseDetailsComponent, canActivate: [AuthGuardService, MemberAuthGuardService] },
     // public/non-member routes below here
     { path: 'login', component: LoginComponent, canActivate: [NoAuthGuardService] },
     { path: 'signup', component: SignupComponent, canActivate: [NoAuthGuardService] },

@@ -1,0 +1,28 @@
+<!-- Breadcrumbs -->
+<div class="row">
+  <div class="col-md-12">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item active">Training</li>
+    </ol>
+  </div>
+</div>
+<!-- Main -->
+<div class="row">
+  <div class="col-md-12">
+    <div class="card border-primary">
+      <div class="card-header bg-primary text-white">Training Courses<span style="float:right;"><training-course-create-update-modal></training-course-create-update-modal></span></div>
+      <div class="card-body">
+        <h6 *ngIf="trainingCourses.length == 0">No current training courses.</h6>
+        <div *ngFor="let course of trainingCourses">
+          <span *ngIf="userCompleted(course)" placement="left" ngbTooltip="You completed this course!" style="float: right; font-size: 1.5em" class="text-success"><i class="fas fa-check"></i></span>
+          <span *ngIf="!userCompleted(course)" placement="left" ngbTooltip="You have not yet completed this course!" style="float: right; font-size: 1.5em"><i class="fas fa-clipboard-list"></i></span>
+          <h4>{{course.title}}<span *ngIf="course.badge">&nbsp;<img style="max-height: 25px;" src="{{course.badge.image_link}}" alt="{{course.badge.title}}"></span>&nbsp;<button class="btn btn-primary btn-sm" (click)="openCourse(course)">Open Course</button>
+            <span *ngIf="isAdmin">&nbsp;<training-course-create-update-modal [trainingCourse]="course"></training-course-create-update-modal></span>
+            <span *ngIf="course.draft && isAdmin">&nbsp;<button (click)="publishCourse(course)" class="btn btn-sm btn-warning">Publish Draft</button></span>
+          </h4>
+          <p>{{course.description}}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

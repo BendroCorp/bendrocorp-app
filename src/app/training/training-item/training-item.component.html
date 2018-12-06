@@ -1,0 +1,13 @@
+<div *ngIf="trainingItem" class="training-item">
+  <span style="float:right;">
+    <button *ngIf="!userCompletedItem()" class="btn btn-sm btn-primary" (click)="completeTrainingItem()" [disabled]="trainingCourse.draft"><span *ngIf="trainingItem.training_item_type_id != 4">Complete</span><span *ngIf="trainingItem.training_item_type_id == 4">Request Approval</span></button>
+    <button *ngIf="userCompletedItem() == 1" class="btn btn-sm btn-warning" disabled>Requested</button>
+    <button *ngIf="userCompletedItem() == 2" class="btn btn-sm btn-success" disabled>Completed</button>
+  </span>
+  <h6>{{trainingItem.title}} - Lesson {{trainingItem.ordinal}}<span *ngIf="isAdmin">&nbsp;<training-item-create-update-modal [trainingItem]="trainingItem"></training-item-create-update-modal></span></h6>
+  <div>{{trainingItem.text}}</div>
+  <div *ngIf="trainingItem.training_item_type_id == 2"><a href="{{trainingItem.link}}" target="_blank">{{trainingItem.link}}</a></div>
+  <div *ngIf="isYoutubeVideo && trainingItem.training_item_type_id == 3" style="text-align: center;">
+    <iframe style="max-width: 100%" width="560" height="315" [src]="youTubeVideoLink | saferesource" frameborder="0" allow="autoplay" allowfullscreen></iframe>
+  </div>
+</div>

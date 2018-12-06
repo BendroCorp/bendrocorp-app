@@ -1,0 +1,34 @@
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">{{formAction}} Training Course</h4>
+    <button type="button" class="close" aria-label="Close" (click)="close()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form #trainingCourseForm="ngForm">
+      <div class="form-group">
+        <label>Title</label>
+        <input required class="form-control" [(ngModel)]="trainingCourse.title" type="text" name="title">
+      </div>
+      <div class="form-group">
+        <label>Description</label>
+        <textarea required class="form-control" [(ngModel)]="trainingCourse.description" name="description" cols="30" rows="10"></textarea>
+      </div>
+      <div class="form-group">
+        <label>Course Badge</label>
+        <select required class="form-control" [(ngModel)]="trainingCourse.badge_id" name="badge_id">
+          <option *ngFor="let badge of courseBadges" [value]="badge.id">{{badge.title}}</option>
+        </select>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-primary" [disabled]="!trainingCourseForm.form.valid" (click)="createUpdateTrainingCourse()">{{formAction}} Training Course</button>
+    <button *ngIf="trainingCourse && trainingCourse.id" type="button" class="btn btn-danger" (click)="archiveTrainingCourse()">Archive</button>
+  </div>
+</ng-template>
+
+<button *ngIf="!(trainingCourse && trainingCourse.id)" class="btn btn-sm btn-secondary" (click)="open(content)">{{formAction}} Course</button>
+<button *ngIf="trainingCourse && trainingCourse.id" class="btn btn-sm btn-primary" (click)="open(content)">{{formAction}} Course</button>
+  

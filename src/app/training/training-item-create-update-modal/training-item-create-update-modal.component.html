@@ -1,0 +1,43 @@
+<ng-template #content let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">{{formAction}} Training Item</h4>
+      <button type="button" class="close" aria-label="Close" (click)="close()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <form #trainingItemForm="ngForm">
+        <div class="form-group">
+          <label>Title</label>
+          <input required class="form-control" [(ngModel)]="trainingItem.title" type="text" name="title">
+        </div>        
+        <div class="form-group">
+          <label>Text</label>
+          <textarea required class="form-control" [(ngModel)]="trainingItem.text" name="description" cols="30" rows="10"></textarea>
+        </div>
+        <div class="form-group">
+          <label>Training Item Type</label>
+          <select required class="form-control" [(ngModel)]="trainingItem.training_item_type_id" name="training_item_type_id">
+            <option *ngFor="let type of itemTypes" [value]="type.id">{{type.title}}</option>
+          </select>
+        </div>
+        <div *ngIf="trainingItem.training_item_type_id == 2" class="form-group">
+          <label>Link</label>
+          <input required class="form-control" [(ngModel)]="trainingItem.link" type="text" name="link">
+        </div>
+        <div *ngIf="trainingItem.training_item_type_id == 3" class="form-group">
+          <label>Video Link</label>
+          <input required class="form-control" [(ngModel)]="trainingItem.video_link" type="text" name="video_link">
+          <small class="text-muted">* Currently only YouTube is supported.</small>
+        </div>
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-primary" [disabled]="!trainingItemForm.form.valid" (click)="createUpdateTrainingCourse()">{{formAction}} Training Item</button>
+      <button *ngIf="trainingItem && trainingItem.id" type="button" class="btn btn-danger" (click)="archiveTrainingCourse()">Archive</button>
+    </div>
+  </ng-template>
+  
+  <button *ngIf="!(trainingItem && trainingItem.id)" class="btn btn-sm btn-secondary" (click)="open(content)">{{formAction}} Item</button>
+  <button *ngIf="trainingItem && trainingItem.id" class="btn btn-sm btn-primary" (click)="open(content)">{{formAction}} Item</button>
+    
