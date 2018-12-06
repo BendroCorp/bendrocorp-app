@@ -14,7 +14,9 @@
       <div class="card-body">
         <div class="row">
           <div class="col-md-3">
+            <!-- Avatar -->
             <div><img src="{{profile.avatar_url}}" alt="Avatar" style="max-width: 100%;"></div>
+            <!-- Update Avatar (if allowed) -->
             <div *ngIf="canEdit">
               <div class="form-group">
                 <div class="input-group mb-3">
@@ -27,6 +29,10 @@
                   </div>
                 </div>
               </div>
+            </div>
+            <!-- Badges -->
+            <div>
+              <div style="display: inline-block; max-height:25px" *ngFor="let badge of profile.user.badges" placement="bottom" ngbTooltip="{{badge.description}}"><img style="max-height:25px;" src="{{badge.image_link}}" alt="badge.title"></div>
             </div>
             <div>{{profile.first_name}}&nbsp;{{profile.last_name}}</div>
             <div>{{profile.current_job.title}}</div>

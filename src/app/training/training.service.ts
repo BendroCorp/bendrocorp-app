@@ -3,13 +3,13 @@ import { HttpClient } from '@angular/common/http';
 import { ErrorService } from '../error.service';
 import { Globals } from '../globals';
 import { Subject, Observable } from 'rxjs';
-import { TrainingCourse, TrainingItem, TrainingItemCompletion, TrainingCourseCompletion } from '../models/training-models';
+import { TrainingCourse, TrainingItem, TrainingItemCompletion, TrainingCourseCompletion, TrainingItemType, MemberBadge } from '../models/training-models';
 import { tap, catchError } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
-export class TrainingService {
+export class TrainingService {  
 
   constructor(private http: HttpClient, private errorService: ErrorService, private globals: Globals) { }
 
@@ -64,30 +64,45 @@ export class TrainingService {
   createTrainingItem(training_item: TrainingItem) {
     return this.http.post<TrainingItem>(`${this.globals.baseUrl}/training/item`, { training_item }).pipe(
       tap(result => console.log(result)),
-      catchError(this.errorService.handleError<any>('Fetch Training Course'))
+      catchError(this.errorService.handleError<any>('Create Training Item'))
     )
   }
 
   updateTrainingItem(training_item: TrainingItem) {
     return this.http.put<TrainingItem>(`${this.globals.baseUrl}/training/item`, { training_item }).pipe(
       tap(result => console.log(result)),
-      catchError(this.errorService.handleError<any>('Fetch Training Course'))
+      catchError(this.errorService.handleError<any>('Update Training Item'))
     )
   }
 
   archiveTrainingItem(training_item: TrainingItem) {
     return this.http.delete<TrainingItem>(`${this.globals.baseUrl}/training/item/${training_item.id}`).pipe(
       tap(result => console.log(result)),
-      catchError(this.errorService.handleError<any>('Fetch Training Course'))
+      catchError(this.errorService.handleError<any>('Archive Training Item'))
     )
   }
 
   completeTraining(training_item: TrainingItem): Observable<TrainingItemCompletion|TrainingCourseCompletion> {
+    let training_item_completion = { training_item_id: training_item.id } as TrainingItemCompletion
     return this.http
-    .post<TrainingItemCompletion|TrainingCourseCompletion>(`${this.globals.baseUrl}/training/item/complete`, { training_item })
+    .post<TrainingItemCompletion|TrainingCourseCompletion>(`${this.globals.baseUrl}/training/item/complete`, { training_item_completion })
     .pipe(
       tap(result => console.log(result)),
-      catchError(this.errorService.handleError<any>('Fetch Training Course'))
+      catchError(this.errorService.handleError<any>('Complete Training Item'))
+    )
+  }
+
+  fetchTypes(): Observable<TrainingItemType[]> {
+    return this.http.get<TrainingItemType[]>(`${this.globals.baseUrl}/training/types`).pipe(
+      tap(result => console.log(result)),
+      catchError(this.errorService.handleError<any>('List Training Item Types'))
+    )
+  }
+
+  fetchBadges(): Observable<MemberBadge[]> {
+    return this.http.get<MemberBadge[]>(`${this.globals.baseUrl}/training/badges`).pipe(
+      tap(result => console.log(result)),
+      catchError(this.errorService.handleError<any>('List Member Badges'))
     )
   }
 }

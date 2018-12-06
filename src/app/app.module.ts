@@ -110,6 +110,8 @@ import { TrainingCourseDetailsComponent } from './training/training-course-detai
 import { TrainingCourseCreateUpdateModalComponent } from './training/training-course-create-update-modal/training-course-create-update-modal.component';
 import { TrainingItemCreateUpdateModalComponent } from './training/training-item-create-update-modal/training-item-create-update-modal.component';
 import { TrainingItemComponent } from './training/training-item/training-item.component';
+import { SafeResourcePipe } from './pipes/safe-resource.pipe';
+import { SortablejsModule } from 'angular-sortablejs';
 
 @NgModule({
   declarations: [
@@ -197,6 +199,7 @@ import { TrainingItemComponent } from './training/training-item/training-item.co
     TrainingCourseCreateUpdateModalComponent,
     TrainingItemCreateUpdateModalComponent,
     TrainingItemComponent,
+    SafeResourcePipe,
   ],
   entryComponents: [
     EventModalComponent,
@@ -218,6 +221,8 @@ import { TrainingItemComponent } from './training/training-item/training-item.co
     QRCodeModule,
     NgxPaginationModule,
     DeviceDetectorModule.forRoot(),
+    SortablejsModule,
+    SortablejsModule.forRoot({ animation: 150 }),
     ServiceWorkerModule.register('/ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [

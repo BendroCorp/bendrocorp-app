@@ -49,7 +49,7 @@ const routes: Routes = [
     { path: 'site-logs', component: SiteLogsComponent, canActivate: [AuthGuardService, MemberAuthGuardService] },
     { path: 'funding', component: DonationsComponent, canActivate: [AuthGuardService, MemberAuthGuardService] },
     { path: 'training', component: TrainingComponent, canActivate: [AuthGuardService, MemberAuthGuardService] },
-    { path: 'training/:course-id', component: TrainingCourseDetailsComponent, canActivate: [AuthGuardService, MemberAuthGuardService] },
+    { path: 'training/:course_id', component: TrainingCourseDetailsComponent, canActivate: [AuthGuardService, MemberAuthGuardService] },
     // public/non-member routes below here
     { path: 'login', component: LoginComponent, canActivate: [NoAuthGuardService] },
     { path: 'signup', component: SignupComponent, canActivate: [NoAuthGuardService] },

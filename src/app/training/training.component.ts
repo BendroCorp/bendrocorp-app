@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
 import { AuthService } from '../auth.service';
 import { Subscription } from 'rxjs';
+import { SpinnerService } from '../misc/spinner/spinner.service';
 
 @Component({
   selector: 'app-training',
@@ -20,7 +21,8 @@ export class TrainingComponent implements OnInit, OnDestroy {
   constructor(private trainingService: TrainingService,
     private messageService: MessageService,
     private router: Router,
-    private authService: AuthService) {
+    private authService: AuthService,
+    private spinnerService: SpinnerService) {
       this.subscription = this.trainingService.dataRefreshAnnounced$.subscribe(
         () => {
           this.fetchCourses()
@@ -32,8 +34,29 @@ export class TrainingComponent implements OnInit, OnDestroy {
     this.router.navigateByUrl(`/training/${course.id}`)
   }
 
+  publishCourse(course: TrainingCourse) {
+    if (course && course.id && this.isAdmin) {
+      if (confirm("Are you sure you want to publish this course?")) {
+        course.draft = false
+        this.trainingService.updateCourse(course).subscribe(
+          (results) => {
+            if (!(results instanceof HttpErrorResponse)) {
+              this.trainingService.refreshData()
+            }else{
+              course.draft = true
+            }
+          }
+        )
+      }
+    }
+  }
+
   userCompleted(course: TrainingCourse) {
-    return (course.training_course_completions.filter(x => x.user_id === this.authService.retrieveUserSession().id).length > 0)
+    if (course.training_course_completions) {
+      return (course.training_course_completions.filter(x => x.user_id === this.authService.retrieveUserSession().id && x.version == course.version).length > 0)
+    }else{
+      return false
+    }    
   }
 
   fetchCourses() {
@@ -42,11 +65,13 @@ export class TrainingComponent implements OnInit, OnDestroy {
         if (!(results instanceof HttpErrorResponse)) {
           this.trainingCourses = results
         }
+        this.spinnerService.spin(false)
       }
     )
   }
 
   ngOnInit() {
+    this.spinnerService.spin(true)
     this.fetchCourses()
   }
 
