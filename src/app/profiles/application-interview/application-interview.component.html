@@ -23,7 +23,7 @@
         <div class="form-group">
           <div class="custom-control custom-checkbox">
             <input type="checkbox" class="custom-control-input" id="applicant_has_read_soc" [disabled]="lockFields" [(ngModel)]="application.interview.applicant_has_read_soc" name="applicant_has_read_soc">
-            <label class="custom-control-label" for="applicant_has_read_soc">Applicant has read and agrees to follow Standards of Conduct?</label>
+            <label class="custom-control-label" for="applicant_has_read_soc">Applicant has read and agrees to follow <a href="https://github.com/BendroCorp/community-guidelines/blob/master/standards-of-conduct.md" target="_blank">Standards of Conduct</a>?</label>
           </div>
         </div>
         <div class="form-group">
@@ -32,22 +32,31 @@
             <label class="custom-control-label" for="applicant_agrees_to_respect_for_leadership">Applicant agrees to follow respect for leadership policy?</label>
           </div>
         </div>
+        <blockquote class="text-white" style="background:#666666;">
+          <p>Any attempt by an member to sow seeds of discord between other BendroCorp members and the officers or managers of BendroCorp will result in an immediate discharge. Any employee trying to create a &quot;coup-d'etat&quot; against organization leadership will be subject to immediate discharge. No drama.</p>
+        </blockquote>
         <div class="form-group">
           <div class="custom-control custom-checkbox">
             <input type="checkbox" class="custom-control-input" id="applicant_agrees_to_voice_policy" [disabled]="lockFields" [(ngModel)]="application.interview.applicant_agrees_to_voice_policy" name="applicant_agrees_to_voice_policy">
             <label class="custom-control-label" for="applicant_agrees_to_voice_policy">Applicant agrees to FoIP/VoIP policy?</label>
           </div>
         </div>
+        <blockquote class="text-white" style="background:#666666;">
+          <p>Discord is BendroCorp's primary communication platform. When using voice features members are expected to be as respectful as possible. If the member has a noisy background the member is expected if possible to use push-to-talk only.</p>
+        </blockquote>
         <div class="form-group">
           <div class="custom-control custom-checkbox">
             <input type="checkbox" class="custom-control-input" id="applicant_agrees_to_roleplay_style" [disabled]="lockFields" [(ngModel)]="application.interview.applicant_agrees_to_roleplay_style" name="applicant_agrees_to_roleplay_style">
             <label class="custom-control-label" for="applicant_agrees_to_roleplay_style">Applicant agrees to roleplay style?</label>
           </div>
         </div>
+        <blockquote class="text-white" style="background:#666666;">
+          <p>BendroCorp is an immersion roleplay organization. Otherwise known as &quot;light&quot; roleplay. Interactions are often both in and out of character.</p>
+        </blockquote>
         <div class="form-group">
           <div class="custom-control custom-checkbox">
             <input type="checkbox" class="custom-control-input" id="applicant_agrees_to_follow_all_policies" [disabled]="lockFields" [(ngModel)]="application.interview.applicant_agrees_to_follow_all_policies" name="applicant_agrees_to_follow_all_policies">
-            <label class="custom-control-label" for="applicant_agrees_to_follow_all_policies">Applicant agrees to follow all policies?</label>
+            <label class="custom-control-label" for="applicant_agrees_to_follow_all_policies">Applicant agrees to follow all policies current and future? (*)</label>
           </div>
         </div>
         <hr>
@@ -55,7 +64,7 @@
           <p>
             Does the application understand the following participations requirements as detailed in the general standards of conduct:
           </p>
-          <blockquote style="background:#666666;">
+          <blockquote class="text-white" style="background:#666666;">
               <p>Our goal is to make your experience with our guild as fun as possible while still encouraging a community atmosphere where people participate and help each other. No member will ever be removed from the guild for inactivity. All we ask is that if a member knows that they will be absent for a long period of time that they make the rest of the guild community aware of it through our forum.</p>
               <p>If a member has been in-active for 6 months or more they will be moved to the inactive roster.</p>
           </blockquote>
