@@ -48,6 +48,10 @@ export class RemoveRoleComponent implements OnInit {
       (results) => {
         console.log(results);        
         this.users = results
+        .filter(x => x.main_character)
+        .sort((a,b) => {
+          return ('' + a.main_character.first_name).localeCompare(b.main_character.first_name);
+        })
       }
     )
   }
