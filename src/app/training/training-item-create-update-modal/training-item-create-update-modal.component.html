@@ -30,6 +30,11 @@
           <input required class="form-control" [(ngModel)]="trainingItem.video_link" type="text" name="video_link">
           <small class="text-muted">* Currently only YouTube is supported.</small>
         </div>
+        <div class="form-group">
+          <label>Syllabus Link</label>
+          <input class="form-control" [(ngModel)]="trainingItem.syllabus_link" type="text" name="syllabus_link">
+          <small class="text-muted">* This link is only visible to instructors.</small>
+        </div>
       </form>
     </div>
     <div class="modal-footer">
