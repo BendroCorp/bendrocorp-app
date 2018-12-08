@@ -10,7 +10,7 @@
   <div *ngIf="isYoutubeVideo && trainingItem.training_item_type_id == 3" style="text-align: center;">
     <iframe style="max-width: 100%" width="560" height="315" [src]="youTubeVideoLink | saferesource" frameborder="0" allow="autoplay" allowfullscreen></iframe>
   </div>
-  <div *ngIf="isAdmin && trainingItem.syllabus_link">
+  <div *ngIf="(isAdmin || isInstructor) && trainingItem.syllabus_link">
     <span><strong>Instructor Syllabus</strong>: <a href="{{trainingItem.syllabus_link}}" target="_blank">{{trainingItem.syllabus_link}}</a></span>
   </div>
 </div>
