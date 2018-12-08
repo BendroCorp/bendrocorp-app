@@ -7,6 +7,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { AuthService } from '../auth.service';
 import { Subscription } from 'rxjs';
 import { SpinnerService } from '../misc/spinner/spinner.service';
+import { User } from '../models/user-models';
 
 @Component({
   selector: 'app-training',
@@ -15,6 +16,7 @@ import { SpinnerService } from '../misc/spinner/spinner.service';
 })
 export class TrainingComponent implements OnInit, OnDestroy {
   trainingCourses: TrainingCourse[] = []
+  instructors: User[] = []
   subscription: Subscription
   isAdmin: boolean = this.authService.hasClaim(35)
 
@@ -72,6 +74,13 @@ export class TrainingComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.spinnerService.spin(true)
+    this.trainingService.fetchInstructors().subscribe(
+      (results) => {
+        if (!(results instanceof HttpErrorResponse)) {
+          this.instructors = results
+        }
+      }
+    )
     this.fetchCourses()
   }
 
