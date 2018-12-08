@@ -18,6 +18,7 @@
           <div>
             <p>Type: {{approval.approval.approval_kind.title}}</p>
             <p>Submitted by: {{approval.approval.approval_source_character_name}}</p>
+            <p *ngIf="approval.approval.approval_source_on_behalf_of">On Behalf of: {{approval.approval.approval_source_on_behalf_of}}</p>
             <p *ngIf="approval.approval.approval_link"><a routerLink='{{approval.approval.approval_link}}'>Linked Item</a></p>
             <p *ngIf="approval.approval.approval_source_requested_item">Requested Item: {{approval.approval.approval_source_requested_item}}</p>
             <p>Created at: {{approval.approval.created_at | date: 'MM/dd/yyyy hh:mm a '}}</p>
