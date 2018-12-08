@@ -13,12 +13,14 @@ import { OAuthToken } from '../models/misc-models';
   styleUrls: ['./settings-modal.component.css']
 })
 export class SettingsModalComponent implements OnInit {
-  openModal:NgbModalRef
-  passwordChange:NewPassword
-  tfaDataObject:TwoFactorDataObject
-  tfaAuthObject:TwoFactorAuthObject
-  oAuthTokens:OAuthToken[] = []
-  tokens:TokenObject[] = []
+  openModal: NgbModalRef
+  passwordChange: NewPassword
+  changeEmail: string
+  changeEmailPassword: string
+  tfaDataObject: TwoFactorDataObject
+  tfaAuthObject: TwoFactorAuthObject
+  oAuthTokens: OAuthToken[] = []
+  tokens: TokenObject[] = []
   user = this.authService.retrieveUserSession() as UserSessionResponse
 
   constructor(private modalService: NgbModal, private authService:AuthService, private messageService:MessageService, private oAuthService:OauthService) {}
@@ -119,6 +121,21 @@ export class SettingsModalComponent implements OnInit {
           }
         )
       }
+    }
+  }
+
+  doChangeEmail()
+  {
+    if (this.changeEmail) {
+      this.authService.doUpdateEmail(this.changeEmail, this.changeEmailPassword).subscribe(
+        (results) => {
+          if (!(results instanceof HttpErrorResponse)) {
+            this.messageService.addSuccess("Email updated successfully!")
+            this.changeEmail = null
+            this.changeEmailPassword = null
+          }
+        }
+      )
     }
   }
 
