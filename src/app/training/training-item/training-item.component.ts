@@ -14,6 +14,7 @@ export class TrainingItemComponent implements OnInit {
   @Input() trainingItem: TrainingItem
   @Input() trainingCourse: TrainingCourse
   isAdmin: boolean = this.authService.hasClaim(35)
+  isInstructor: boolean = this.authService.hasClaim(36)
   YoutubeVideoId: any;
   isYoutubeVideo: boolean;
   youTubeVideoLink: string;
