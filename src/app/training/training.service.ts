@@ -5,6 +5,7 @@ import { Globals } from '../globals';
 import { Subject, Observable } from 'rxjs';
 import { TrainingCourse, TrainingItem, TrainingItemCompletion, TrainingCourseCompletion, TrainingItemType, MemberBadge } from '../models/training-models';
 import { tap, catchError } from 'rxjs/operators';
+import { User } from '../models/user-models';
 
 @Injectable({
   providedIn: 'root'
@@ -103,6 +104,13 @@ export class TrainingService {
     return this.http.get<MemberBadge[]>(`${this.globals.baseUrl}/training/badges`).pipe(
       tap(result => console.log(result)),
       catchError(this.errorService.handleError<any>('List Member Badges'))
+    )
+  }
+
+  fetchInstructors(): Observable<User[]> {
+    return this.http.get<User[]>(`${this.globals.baseUrl}/training/instructors`).pipe(
+      tap(result => console.log(result)),
+      catchError(this.errorService.handleError<any>('List Training Instructors'))
     )
   }
 }

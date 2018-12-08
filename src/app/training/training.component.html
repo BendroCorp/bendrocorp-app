@@ -8,7 +8,7 @@
 </div>
 <!-- Main -->
 <div class="row">
-  <div class="col-md-12">
+  <div class="col-md-9">
     <div class="card border-primary">
       <div class="card-header bg-primary text-white">Training Courses<span style="float:right;"><training-course-create-update-modal></training-course-create-update-modal></span></div>
       <div class="card-body">
@@ -22,6 +22,18 @@
           </h4>
           <p>{{course.description}}</p>
         </div>
+      </div>
+    </div>
+  </div>
+  <!--  -->
+  <div class="col-md-3">
+    <div class="card border-primary">
+      <div class="card-header bg-primary text-white">Current Instructors</div>
+      <div class="card-body">
+        <h6 *ngIf="instructors.length == 0">No current instructors.</h6>
+        <ul *ngIf="instructors.length > 0">
+          <li *ngFor="let instructor of instructors">{{instructor.main_character.first_name}} {{instructor.main_character.last_name}}</li>
+        </ul>
       </div>
     </div>
   </div>

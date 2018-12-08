@@ -13,21 +13,44 @@
           <br>
           <h5>Change Password</h5>
           <div>
-            <div class="form-group">
-              <label>Original Password</label>
-              <input class="form-control" type="password" [(ngModel)]="passwordChange.original_password" name="original_password">
-            </div>
-            <div class="form-group">
-              <label>New Password</label>
-              <input class="form-control" type="password" [(ngModel)]="passwordChange.password" name="password">
-            </div>
-            <div class="form-group">
-              <label>Password Confirmation</label>
-              <input class="form-control" type="password" [(ngModel)]="passwordChange.password_confirmation" name="password_confirmation">
-            </div>
-            <div>
-              <button class="btn btn-primary" (click)="doChangePassword()">Change Password</button>
-            </div>
+            <form #changePasswordForm="ngForm">
+              <div class="form-group">
+                <label>Original Password</label>
+                <input class="form-control" type="password" [(ngModel)]="passwordChange.original_password" name="original_password">
+              </div>
+              <div class="form-group">
+                <label>New Password</label>
+                <input class="form-control" type="password" [(ngModel)]="passwordChange.password" name="password">
+              </div>
+              <div class="form-group">
+                <label>Password Confirmation</label>
+                <input class="form-control" type="password" [(ngModel)]="passwordChange.password_confirmation" name="password_confirmation">
+              </div>
+              <div>
+                <button class="btn btn-primary" [disabled]="!changePasswordForm.form.valid" (click)="doChangePassword()">Change Password</button>
+              </div>
+            </form>
+          </div>
+        </ng-template>
+      </ngb-tab>
+      <ngb-tab title="Change Email">
+        <ng-template ngbTabContent>
+          <br>
+          <h5>Change Email</h5>
+          <div>
+            <form #changeEmailForm="ngForm">
+              <div class="form-group">
+                <label>New Email</label>
+                <input required class="form-control" type="email" [(ngModel)]="changeEmail" name="email">
+              </div>
+              <div class="form-group">
+                  <label>Enter Password</label>
+                  <input required class="form-control" type="password" [(ngModel)]="changeEmailPassword" name="changeEmailPassword">
+                </div>
+              <div>
+                <button class="btn btn-primary" [disabled]="!changeEmailForm.form.valid" (click)="doChangeEmail()">Change Email</button>
+              </div>
+            </form>
           </div>
         </ng-template>
       </ngb-tab>
@@ -88,8 +111,8 @@
         <ng-template ngbTabContent>
           <br>
           <h5>OAuth Tokens</h5>
-          <h6 *ngIf="!tokens || tokens.length == 0">You have not authorized any third party integrations.</h6>
-          <table *ngIf="tokens && tokens.length > 0" class="table table-striped">
+          <h6 *ngIf="oAuthTokens.length == 0">You have not authorized any third party integrations.</h6>
+          <table *ngIf="oAuthTokens.length > 0" class="table table-striped">
             <tbody>
               <tr *ngFor="let token of oAuthTokens">
                 <td>{{token.token | slice:0:6 }}...</td>
@@ -105,7 +128,7 @@
           <br>
           <h5>Your Membership</h5>
           <div>
-            <p>You can end your membership to BendroCorp at any time by clicking the button below. Please note that this action is not reversable. If at any time you with to rejoin BendroCorp you may do so by getting a membership of leadership via Spectrum.</p>
+            <p>You can end your membership to BendroCorp at any time by clicking the button below. Please note that this action is not reversable. If at any time you wish to rejoin BendroCorp you may do so by getting in touch with a member of leadership via Spectrum.</p>
             <button class="btn btn-lg btn-danger" (click)="doCancelMembership()">Cancel Membership</button>
           </div>
         </ng-template>

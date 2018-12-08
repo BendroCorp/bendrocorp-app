@@ -20,6 +20,7 @@ export class TrainingItem {
     title?: string
     text?: string
     link?: string
+    syllabus_link?: string
     video_link?: string
     archived?: boolean
     training_item_completions?: TrainingItemCompletion[]

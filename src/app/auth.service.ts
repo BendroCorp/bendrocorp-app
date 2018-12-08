@@ -97,6 +97,13 @@ export class AuthService {
     )
   }
 
+  doUpdateEmail(email: string, password: string): Observable<StatusMessage> {
+    return this.http.post<StatusMessage>(`${this.globals.baseUrl}/account/update-email`, { email, password }).pipe(
+      tap(result => console.log('Do email update!')),
+      catchError(this.err.handleError<any>('Email Update'))
+    )
+  }
+ 
   // Internal stuff below here
 
   public hasClaim(roleId: number): boolean {
