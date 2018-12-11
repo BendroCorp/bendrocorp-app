@@ -78,7 +78,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
         (results) => {
           if (!(results instanceof HttpErrorResponse)) {
             let todo = 0
-            results.filter(x => !x.draft).forEach((course) => {
+            results.filter(x => !x.draft && x.required).forEach((course) => {
               if (course.training_course_completions.filter(x => x.version == course.version && x.user_id === (this.authService.retrieveUserSession() as UserSessionResponse).id).length == 0) {
                 todo += 1
               }
