@@ -18,6 +18,9 @@ export class TrainingCourseCreateUpdateModalComponent implements OnInit {
   constructor(private modalService: NgbModal, private trainingService: TrainingService) { }
 
   open(content) {
+    if (!(this.trainingCourse && this.trainingCourse.id)) {
+      this.trainingCourse = { } as TrainingCourse
+    }
     this.openModal = this.modalService.open(content, {ariaLabelledBy: 'Create Update Training Course'})
   }
 
@@ -80,7 +83,6 @@ export class TrainingCourseCreateUpdateModalComponent implements OnInit {
       this.formAction = 'Update'
     } else {
       this.formAction = 'Create'
-      this.trainingCourse = { } as TrainingCourse
     }
   }
 

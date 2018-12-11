@@ -13,6 +13,7 @@ export class TrainingCourse {
     draft?: boolean
     badge?: MemberBadge
     badge_id?: number
+    required?: boolean
 }
 
 export class TrainingItem {
