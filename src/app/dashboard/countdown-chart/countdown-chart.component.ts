@@ -47,7 +47,7 @@ export class CountdownChartComponent implements OnInit, AfterViewInit {
     };
     var chartData = {
       datasets: [{
-          data: [ts.days, daMath],
+          data: [ts.days + 1, daMath],
           backgroundColor:['#2F2F2F', '#00476A']
       }]
     };
@@ -56,7 +56,7 @@ export class CountdownChartComponent implements OnInit, AfterViewInit {
       data: chartData,
       options: this.chartOptions
     })
-    this.eventDays = -ts.days
+    this.eventDays = -(ts.days + 1)
   }
 
   updateHours(ts:TimeSpan)
@@ -72,7 +72,7 @@ export class CountdownChartComponent implements OnInit, AfterViewInit {
     };
     var chartData = {
       datasets: [{
-          data: [ts.hours, daMath],
+          data: [ts.hours + 1, daMath],
           backgroundColor:['#2F2F2F', '#00476A']
       }]
     };
@@ -81,7 +81,7 @@ export class CountdownChartComponent implements OnInit, AfterViewInit {
       data: chartData,
       options: this.chartOptions
     })
-    this.eventHours = -ts.hours
+    this.eventHours = -(ts.hours + 1)
   }
 
   updateMinutes(ts:TimeSpan)
@@ -97,7 +97,7 @@ export class CountdownChartComponent implements OnInit, AfterViewInit {
     };
     var chartData = {
       datasets: [{
-          data: [ts.minutes, daMath],
+          data: [ts.minutes + 1, daMath],
           backgroundColor:['#2F2F2F', '#00476A']
       }]
     };
@@ -106,7 +106,7 @@ export class CountdownChartComponent implements OnInit, AfterViewInit {
       data: chartData,
       options: this.chartOptions
     })
-    this.eventMinutes = -ts.minutes
+    this.eventMinutes = -(ts.minutes + 1)
   }
 
   updateSeconds(ts:TimeSpan)
