@@ -40,14 +40,14 @@ export class CountdownChartComponent implements OnInit, AfterViewInit {
     let context = canvasEl.getContext('2d')
 
     var completeCircle = 30;
-    let daMath = Math.round(completeCircle + ts.days)
+    let daMath = Math.round(completeCircle - ts.days)
 
     var pieOptions = {
       animation: false
     };
     var chartData = {
       datasets: [{
-          data: [ts.days + 1, daMath],
+          data: [ts.days, daMath],
           backgroundColor:['#2F2F2F', '#00476A']
       }]
     };
@@ -56,7 +56,7 @@ export class CountdownChartComponent implements OnInit, AfterViewInit {
       data: chartData,
       options: this.chartOptions
     })
-    this.eventDays = -(ts.days + 1)
+    this.eventDays = ts.days
   }
 
   updateHours(ts:TimeSpan)
@@ -65,14 +65,14 @@ export class CountdownChartComponent implements OnInit, AfterViewInit {
     let context = canvasEl.getContext('2d')
 
     var completeCircle = 24;
-    let daMath = Math.round(completeCircle + ts.hours)
+    let daMath = Math.round(completeCircle - ts.hours)
 
     var pieOptions = {
       animation: false
     };
     var chartData = {
       datasets: [{
-          data: [ts.hours + 1, daMath],
+          data: [ts.hours, daMath],
           backgroundColor:['#2F2F2F', '#00476A']
       }]
     };
@@ -81,7 +81,7 @@ export class CountdownChartComponent implements OnInit, AfterViewInit {
       data: chartData,
       options: this.chartOptions
     })
-    this.eventHours = -(ts.hours + 1)
+    this.eventHours = ts.hours
   }
 
   updateMinutes(ts:TimeSpan)
@@ -90,14 +90,14 @@ export class CountdownChartComponent implements OnInit, AfterViewInit {
     let context = canvasEl.getContext('2d')
 
     var completeCircle = 60;
-    let daMath = Math.round(completeCircle + ts.minutes)
+    let daMath = Math.round(completeCircle - ts.minutes)
 
     var pieOptions = {
       animation: false
     };
     var chartData = {
       datasets: [{
-          data: [ts.minutes + 1, daMath],
+          data: [ts.minutes, daMath],
           backgroundColor:['#2F2F2F', '#00476A']
       }]
     };
@@ -106,7 +106,7 @@ export class CountdownChartComponent implements OnInit, AfterViewInit {
       data: chartData,
       options: this.chartOptions
     })
-    this.eventMinutes = -(ts.minutes + 1)
+    this.eventMinutes = ts.minutes
   }
 
   updateSeconds(ts:TimeSpan)
@@ -115,7 +115,7 @@ export class CountdownChartComponent implements OnInit, AfterViewInit {
     let context = canvasEl.getContext('2d')
 
     var completeCircle = 60;
-    let daMath = Math.round(completeCircle + ts.seconds)
+    let daMath = Math.round(completeCircle - ts.seconds)
 
     var pieOptions = {
       animation: false
@@ -131,7 +131,7 @@ export class CountdownChartComponent implements OnInit, AfterViewInit {
       data: chartData,
       options: this.chartOptions
     })
-    this.eventSeconds = -ts.seconds
+    this.eventSeconds = ts.seconds
   }
 
   ngOnInit() {
