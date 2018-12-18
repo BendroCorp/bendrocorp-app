@@ -104,6 +104,7 @@ export class CharacterApplicationInterview
     why_selected_division?: string
     why_join_bendrocorp?: string
     applicant_questions?: string
+    other_questions?: string
     interview_consensous?: string
     locked_for_review?: boolean
 }
