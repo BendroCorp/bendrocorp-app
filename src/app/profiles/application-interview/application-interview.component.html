@@ -3,14 +3,14 @@
   <div>
     <div>
       <ul>
-        <li>All interviews should be conducted in the Interviews channel on Discord. It should not be conducted on any other channel ever. With 3.3 the plan is to preference having interviews in-game - this avoids non-members having access to our Discord.</li>
+        <li>All interviews should be conducted in the Interviews channel on Discord. It should not be conducted on any other channel ever. Eventually we will move interviews in-game.</li>
         <li>All interviewers should introduce themself by their character name and position within BendroCorp.</li>
         <li>The lead interviewer should then review what will happen over the course of the interview.</li>
         <li>Complete the below Interview Packet except for the General Consensus.</li>
         <li>Upon completing the applicant feedback portion of the interview packet you may ask other relevant questions as you see fit.</li>
-        <li>Once items 2-5 are completed inform the applicant that the interview is concluded and that you will move them out so the interviewers can finish their interview packet. Let them know they will recieve an email once their complete application packet is submitted to the Executive Board for review.</li>
+        <li>Once items all of the items except the interview conensus are completed inform the applicant that the interview is concluded and that you will move them out so the interviewers can finish their interview packet. Let them know they will receive an email once their complete application packet is submitted to the Executive Board for review.</li>
         <li>Discuss and a establish a general consensus regarding the applicant and fill that information into the final field on the packet.</li>
-        <li>Once all information is inserted, check the box "Submit for final approval?" and save the interview. This will lock the packet and notify the Executive Director that the application is ready for final review.</li>
+        <li>Once all information is inserted, check the box "Lock for review?" and save the interview. This will lock the packet and notify the Chief Executive Officer that the application is ready for final review.</li>
       </ul>
     </div>
     <div>
@@ -26,14 +26,21 @@
             <label class="custom-control-label" for="applicant_has_read_soc">Applicant has read and agrees to follow <a href="https://github.com/BendroCorp/community-guidelines/blob/master/standards-of-conduct.md" target="_blank">Standards of Conduct</a>?</label>
           </div>
         </div>
+        <hr>
+        <!-- Leadership policy -->
+        <blockquote class="text-white  policy-block" style="background:#666666;">
+          <p>Any attempt by an member to sow seeds of discord between other BendroCorp members and the officers or managers of BendroCorp will result in an immediate discharge. Any employee trying to create a &quot;coup-d'etat&quot; against organization leadership will be subject to immediate discharge. No drama.</p>
+        </blockquote>
         <div class="form-group">
           <div class="custom-control custom-checkbox">
             <input type="checkbox" class="custom-control-input" id="applicant_agrees_to_respect_for_leadership" [disabled]="lockFields" [(ngModel)]="application.interview.applicant_agrees_to_respect_for_leadership" name="applicant_agrees_to_respect_for_leadership">
             <label class="custom-control-label" for="applicant_agrees_to_respect_for_leadership">Applicant agrees to follow respect for leadership policy?</label>
           </div>
         </div>
-        <blockquote class="text-white" style="background:#666666;">
-          <p>Any attempt by an member to sow seeds of discord between other BendroCorp members and the officers or managers of BendroCorp will result in an immediate discharge. Any employee trying to create a &quot;coup-d'etat&quot; against organization leadership will be subject to immediate discharge. No drama.</p>
+        <hr>
+        <!-- voice comms -->
+        <blockquote class="text-white policy-block" style="background:#666666;">
+          <p>Discord is BendroCorp's primary communication platform. When using voice features members are expected to be as respectful as possible. If the member has a noisy background the member is expected if possible to use push-to-talk only.</p>
         </blockquote>
         <div class="form-group">
           <div class="custom-control custom-checkbox">
@@ -41,8 +48,10 @@
             <label class="custom-control-label" for="applicant_agrees_to_voice_policy">Applicant agrees to FoIP/VoIP policy?</label>
           </div>
         </div>
-        <blockquote class="text-white" style="background:#666666;">
-          <p>Discord is BendroCorp's primary communication platform. When using voice features members are expected to be as respectful as possible. If the member has a noisy background the member is expected if possible to use push-to-talk only.</p>
+        <hr>
+        <!-- Roleplay -->
+        <blockquote class="text-white policy-block " style="background:#666666;">
+          <p>BendroCorp is an immersion roleplay organization. Otherwise known as &quot;light&quot; roleplay. Interactions are often both in and out of character.</p>
         </blockquote>
         <div class="form-group">
           <div class="custom-control custom-checkbox">
@@ -50,9 +59,8 @@
             <label class="custom-control-label" for="applicant_agrees_to_roleplay_style">Applicant agrees to roleplay style?</label>
           </div>
         </div>
-        <blockquote class="text-white" style="background:#666666;">
-          <p>BendroCorp is an immersion roleplay organization. Otherwise known as &quot;light&quot; roleplay. Interactions are often both in and out of character.</p>
-        </blockquote>
+        <hr>
+        <!-- policy agreement -->
         <div class="form-group">
           <div class="custom-control custom-checkbox">
             <input type="checkbox" class="custom-control-input" id="applicant_agrees_to_follow_all_policies" [disabled]="lockFields" [(ngModel)]="application.interview.applicant_agrees_to_follow_all_policies" name="applicant_agrees_to_follow_all_policies">
@@ -62,9 +70,9 @@
         <hr>
         <div class="form-group">
           <p>
-            Does the application understand the following participations requirements as detailed in the general standards of conduct:
+            Does the applicant understand the following participation requirements as detailed in the general standards of conduct:
           </p>
-          <blockquote class="text-white" style="background:#666666;">
+          <blockquote class="text-white policy-block" style="background:#666666;">
               <p>Our goal is to make your experience with our guild as fun as possible while still encouraging a community atmosphere where people participate and help each other. No member will ever be removed from the guild for inactivity. All we ask is that if a member knows that they will be absent for a long period of time that they make the rest of the guild community aware of it through our forum.</p>
               <p>If a member has been in-active for 6 months or more they will be moved to the inactive roster.</p>
           </blockquote>
@@ -76,21 +84,26 @@
         <hr>
         <div class="form-group">
           <label>Why did you select the division that you did?</label>
-          <textarea class="form-control" [(ngModel)]="application.interview.why_selected_division" name="why_selected_division" [disabled]="lockFields"></textarea>
+          <textarea class="form-control" cols="30" rows="10" [(ngModel)]="application.interview.why_selected_division" name="why_selected_division" [disabled]="lockFields"></textarea>
         </div>
         <div class="form-group">
           <label>Why do you want to join BendroCorp?</label>
-          <textarea class="form-control" [(ngModel)]="application.interview.why_join_bendrocorp" name="why_join_bendrocorp" [disabled]="lockFields"></textarea>
+          <textarea class="form-control" cols="30" rows="10" [(ngModel)]="application.interview.why_join_bendrocorp" name="why_join_bendrocorp" [disabled]="lockFields"></textarea>
         </div>
         <hr>
         <div class="form-group">
           <label>Any applicant questions for interviewers?</label>
-          <textarea class="form-control" [(ngModel)]="application.interview.applicant_questions" name="applicant_questions" [disabled]="lockFields"></textarea>
+          <textarea class="form-control" cols="30" rows="10" [(ngModel)]="application.interview.applicant_questions" name="applicant_questions" [disabled]="lockFields"></textarea>
+        </div>
+        <hr>
+        <div class="form-group">
+          <label>Other Questions</label>
+          <textarea class="form-control" cols="30" rows="10" [(ngModel)]="application.interview.other_questions" name="other_questions" [disabled]="lockFields"></textarea>
         </div>
         <hr>
         <div class="form-group">
           <label>Interview Consensous</label>
-          <textarea class="form-control" [(ngModel)]="application.interview.interview_consensous" name="interview_consensous" [disabled]="lockFields"></textarea>
+          <textarea class="form-control" cols="30" rows="10" [(ngModel)]="application.interview.interview_consensous" name="interview_consensous" [disabled]="lockFields"></textarea>
         </div>
         <div class="form-group" *ngIf="!lockFields">
           <div class="custom-control custom-checkbox">
