@@ -10,7 +10,7 @@ import { TimeSpan } from 'ng-timespan';
   styleUrls: ['./countdown-chart.component.css']
 })
 export class CountdownChartComponent implements OnInit, AfterViewInit {
-  @Input() endTime:string;
+  @Input() endTime: string;
 
   // canvas
   @ViewChild('daysChart') public canvasDays: ElementRef;
@@ -19,123 +19,122 @@ export class CountdownChartComponent implements OnInit, AfterViewInit {
   @ViewChild('secondsChart') public canvasSeconds: ElementRef;
 
   // labels
-  eventDays:number;
-  eventHours:number;
-  eventMinutes:number;
-  eventSeconds:number;
+  eventDays: number;
+  eventHours: number;
+  eventMinutes: number;
+  eventSeconds: number;
 
-  //options
+  // options
   chartOptions = { animation: { duration: 0 } }
 
   //
-  eventStarted:boolean;
+  eventStarted: boolean;
 
   ticker: Observable<number> = interval(500)
 
   constructor() { }
 
-  updateDays(ts:TimeSpan)
-  {
-    let canvasEl: HTMLCanvasElement = this.canvasDays.nativeElement
-    let context = canvasEl.getContext('2d')
+  updateDays(ts: TimeSpan) {
+    const canvasEl: HTMLCanvasElement = this.canvasDays.nativeElement
+    const context = canvasEl.getContext('2d')
 
-    var completeCircle = 30;
-    let daMath = Math.round(completeCircle - ts.days)
+    const completeCircle = 30;
+    const daMath = Math.round(completeCircle - ts.days)
 
-    var pieOptions = {
+    const pieOptions = {
       animation: false
     };
-    var chartData = {
+    const chartData = {
       datasets: [{
           data: [ts.days, daMath],
-          backgroundColor:['#2F2F2F', '#00476A']
+          backgroundColor: ['#2F2F2F', '#00476A']
       }]
     };
-    let chartDays = new Chart(canvasEl, {
+
+    const chartDays = new Chart(canvasEl, {
       type: 'doughnut',
       data: chartData,
       options: this.chartOptions
     })
-    this.eventDays = ts.days
+    this.eventDays = Math.abs(ts.days)
   }
 
-  updateHours(ts:TimeSpan)
-  {
-    let canvasEl: HTMLCanvasElement = this.canvasHours.nativeElement
-    let context = canvasEl.getContext('2d')
+  updateHours(ts: TimeSpan) {
+    const canvasEl: HTMLCanvasElement = this.canvasHours.nativeElement
+    const context = canvasEl.getContext('2d')
 
-    var completeCircle = 24;
-    let daMath = Math.round(completeCircle - ts.hours)
+    const completeCircle = 24;
+    const daMath = Math.round(completeCircle - ts.hours)
 
-    var pieOptions = {
+    const pieOptions = {
       animation: false
     };
-    var chartData = {
+    const chartData = {
       datasets: [{
           data: [ts.hours, daMath],
-          backgroundColor:['#2F2F2F', '#00476A']
+          backgroundColor: ['#2F2F2F', '#00476A']
       }]
     };
-    let chartHours = new Chart(canvasEl, {
+    const chartHours = new Chart(canvasEl, {
       type: 'doughnut',
       data: chartData,
       options: this.chartOptions
     })
-    this.eventHours = ts.hours
+    this.eventHours = Math.abs(ts.hours)
   }
 
-  updateMinutes(ts:TimeSpan)
-  {
-    let canvasEl: HTMLCanvasElement = this.canvasMinutes.nativeElement
-    let context = canvasEl.getContext('2d')
+  updateMinutes(ts: TimeSpan) {
+    const canvasEl: HTMLCanvasElement = this.canvasMinutes.nativeElement
+    const context = canvasEl.getContext('2d')
 
-    var completeCircle = 60;
-    let daMath = Math.round(completeCircle - ts.minutes)
+    const completeCircle = 60;
+    const daMath = Math.round(completeCircle - ts.minutes)
 
-    var pieOptions = {
+    const pieOptions = {
       animation: false
     };
-    var chartData = {
+
+    const chartData = {
       datasets: [{
           data: [ts.minutes, daMath],
-          backgroundColor:['#2F2F2F', '#00476A']
+          backgroundColor: ['#2F2F2F', '#00476A']
       }]
     };
-    let chartHours = new Chart(canvasEl, {
+    const chartHours = new Chart(canvasEl, {
       type: 'doughnut',
       data: chartData,
       options: this.chartOptions
     })
-    this.eventMinutes = ts.minutes
+    this.eventMinutes = Math.abs(ts.minutes)
   }
 
-  updateSeconds(ts:TimeSpan)
-  {
-    let canvasEl: HTMLCanvasElement = this.canvasSeconds.nativeElement
-    let context = canvasEl.getContext('2d')
+  updateSeconds(ts: TimeSpan) {
+    const canvasEl: HTMLCanvasElement = this.canvasSeconds.nativeElement
+    const context = canvasEl.getContext('2d')
 
-    var completeCircle = 60;
-    let daMath = Math.round(completeCircle - ts.seconds)
+    const completeCircle = 60;
+    const daMath = Math.round(completeCircle - ts.seconds)
 
-    var pieOptions = {
+    const pieOptions = {
       animation: false
     };
-    var chartData = {
+
+    const chartData = {
       datasets: [{
           data: [ts.seconds, daMath],
-          backgroundColor:['#2F2F2F', '#00476A']
+          backgroundColor: ['#2F2F2F', '#00476A']
       }]
     };
-    let chartHours = new Chart(canvasEl, {
+
+    const chartHours = new Chart(canvasEl, {
       type: 'doughnut',
       data: chartData,
       options: this.chartOptions
     })
-    this.eventSeconds = ts.seconds
+    this.eventSeconds = Math.abs(ts.seconds)
   }
 
   ngOnInit() {
-    
 
   }
 
@@ -144,20 +143,17 @@ export class CountdownChartComponent implements OnInit, AfterViewInit {
       this.ticker.subscribe(
         () => {
           // for every tick update the chart
-          let dateNowMs = new Date().getTime()
-          let expiresMs = new Date(this.endTime).getTime()
-          
-          let timespan = TimeSpan.Subtract(new Date().getTime(), new Date(this.endTime).getTime())
+
+          const timespan = TimeSpan.Subtract(new Date().getTime(), new Date(this.endTime).getTime())
           // console.log(`Time till expiration: ${timespan.days} days, ${timespan.hours} hours, ${timespan.hours} minutes, ${timespan.seconds}`);
-          
           this.updateDays(timespan)
           this.updateHours(timespan)
           this.updateMinutes(timespan)
           this.updateSeconds(timespan)
         }
       )
-    }else{
-      console.error("End time not passed to countdown widget. Countdown will not start.");
+    } else {
+      console.error('End time not passed to countdown widget. Countdown will not start.');
     }
   }
 
