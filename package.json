@@ -1,14 +1,14 @@
 {
   "name": "bendrocorp-app",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "scripts": {
     "ng": "ng",
     "start": "node server.js",
-    "build": "ng build --prod",
-    "test": "ng build --prod",
+    "build": "ng build --prod --build-optimizer --aot  --vendor-chunk --output-hashing=all",
+    "test": "ng build --prod --build-optimizer --aot  --vendor-chunk --output-hashing=all",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "postinstall": "ng build --prod --build-optimizer"
+    "postinstall": "ng build --prod --build-optimizer --aot  --vendor-chunk --output-hashing=all"
   },
   "private": true,
   "dependencies": {
