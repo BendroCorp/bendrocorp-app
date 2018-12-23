@@ -23,7 +23,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let approval of myApprovals">
+            <tr *ngFor="let approval of myApprovals | paginate: { itemsPerPage: 10, currentPage: p }">
               <td routerLink="/requests/approvals/{{approval.approval_id}}">{{approval.approval_id}}</td>
               <td routerLink="/requests/approvals/{{approval.approval_id}}">{{approval.approval.approval_kind.title}}</td>
               <td routerLink="/requests/approvals/{{approval.approval_id}}">{{approval.approval.approval_status}}</td>
@@ -33,6 +33,13 @@
             </tr>
           </tbody>
         </table>
+        <!-- pagination -->
+        <div style="text-align:right;">
+            <pagination-controls (pageChange)="p = $event"></pagination-controls>
+        </div>
+        <div *ngIf="!dofetchAll" style="text-align:center;">
+          <button class="btn btn-primary" (click)="fetchAll()">See More</button>
+        </div>
       </div>
     </div>
   </div>

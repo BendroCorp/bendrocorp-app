@@ -49,12 +49,19 @@ export class RequestsService {
       catchError(this.errorService.handleError<any>('Remove Role Request '))
     )
   }
-  list_approvals() : Observable<MyApproval[]>
+  list_approvals(count:number = null) : Observable<MyApproval[]>
   {
-    return this.http.get<MyApproval[]>(`${this.globals.baseUrl}/user/approvals`).pipe(
-      tap(results => console.log(`Retrieved approvals`)),
-      catchError(this.errorService.handleError('Fetch User Approvals', []))
-    )
+    if (count && !isNaN(count)) {
+      return this.http.get<MyApproval[]>(`${this.globals.baseUrl}/user/approvals/${count}`).pipe(
+        tap(results => console.log(`Retrieved approvals`)),
+        catchError(this.errorService.handleError('Fetch User Approvals', []))
+      )
+    } else {
+      return this.http.get<MyApproval[]>(`${this.globals.baseUrl}/user/approvals`).pipe(
+        tap(results => console.log(`Retrieved approvals`)),
+        catchError(this.errorService.handleError('Fetch User Approvals', []))
+      )
+    }
   }
 
   submit_approval(approval_id:number, approval_type_id:number) : Observable<StatusMessage>
