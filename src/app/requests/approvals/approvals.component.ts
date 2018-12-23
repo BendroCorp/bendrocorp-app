@@ -12,9 +12,11 @@ import { SpinnerService } from '../../misc/spinner/spinner.service';
 })
 export class ApprovalsComponent implements OnInit, OnDestroy {
   
-  myApprovals:MyApproval[]
+  myApprovals:MyApproval[] = []
+  readonly showItems:number = 10
   approvalSubmitting:boolean = false
   subscription:Subscription
+  dofetchAll:boolean = false
   constructor(private requestsService:RequestsService, private spinnerService:SpinnerService) { 
     this.subscription = requestsService.dataRefreshAnnounced$.subscribe(
       () => {
@@ -24,7 +26,11 @@ export class ApprovalsComponent implements OnInit, OnDestroy {
   }
 
   fetchApprovals() {
-    this.requestsService.list_approvals().subscribe(
+    this.spinnerService.spin(true)
+    let count = (this.dofetchAll) ? null : this.showItems
+    console.log(count)
+    
+    this.requestsService.list_approvals(count).subscribe(
       (results) => {
         this.spinnerService.spin(false)
         if (!(results instanceof HttpErrorResponse)) {
@@ -32,6 +38,11 @@ export class ApprovalsComponent implements OnInit, OnDestroy {
         }
       }
     )
+  }
+
+  fetchAll() {
+    this.dofetchAll = true
+    this.fetchApprovals()
   }
 
   ngOnInit() {
