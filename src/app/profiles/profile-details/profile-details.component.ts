@@ -11,6 +11,7 @@ import { Base64Upload } from '../../models/misc-models';
 import { OwnedShip, Ship } from '../../models/ship-models';
 import { SpinnerService } from '../../misc/spinner/spinner.service';
 import { Subscription } from 'rxjs';
+import { EventAttendence } from 'src/app/models/event-models';
 
 @Component({
   selector: 'app-profile-details',
@@ -43,6 +44,7 @@ export class ProfileDetailsComponent implements OnInit, OnDestroy {
         this.spinnerService.spin(false)
         if (!(result instanceof HttpErrorResponse)) {
           this.profile = result
+          console.log(this.profile)
           this.canEdit = ((this.profile.user_id === (this.authService.retrieveUserSession() as UserSessionResponse).id) || this.hrRights) ? true : false
           if (this.canEdit && !this.shipList) {
             this.profileService.list_ships().subscribe(
@@ -172,6 +174,10 @@ export class ProfileDetailsComponent implements OnInit, OnDestroy {
         }
       }
     )
+  }
+
+  attendedCount(attendences: EventAttendence[]) {
+    return attendences.filter(x => x.attendence_type_id === 1).length
   }
 
   handleAvatarFileInput(files: FileList)
