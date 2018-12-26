@@ -34,11 +34,11 @@ export class AddUpdateSettlementModalComponent implements OnInit {
       if (this.systemPlanet && !this.systemMoon) {
         this.systemSettlement = { on_planet_id: this.systemPlanet.id } as Settlement 
         this.objectTitle = "Planet"
-        this.successString = `${this.formAction}ed location on ${this.systemPlanet.title}`
+        this.successString = `${this.formAction}d settlement on ${this.systemPlanet.title}`
       } else if (!this.systemPlanet && this.systemMoon) {
         this.systemSettlement = { on_moon_id: this.systemMoon.id } as Settlement 
         this.objectTitle = "Moon"
-        this.successString = `${this.formAction}ed location on ${this.systemMoon.title}`
+        this.successString = `${this.formAction}d settlement on ${this.systemMoon.title}`
       }
     }
 
