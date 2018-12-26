@@ -1,3 +1,8 @@
+.menu-container 
+{
+    
+}
+
 .menu-container > .menu-title
 {
     text-align: center;
@@ -7,8 +12,12 @@
 {
     padding-left: 16px;
     font-weight: 800;
-    border-left:4px solid #fff;
     margin-bottom: 6px;
+}
+
+.menu-item-active
+{
+    background: #666 !important;
 }
 
 .menu-container > div  > .menu-item.active
@@ -26,4 +35,15 @@
 .menu-item-title > a, .menu-item-title > a:hover, .menu-item-title > a:visited
 {
     color:#fff
+}
+
+.sub-menu-item
+{
+    padding: 4px;
+}
+
+.sub-menu-item.active 
+{
+    list-style: circle;
+    background: #666;
 }

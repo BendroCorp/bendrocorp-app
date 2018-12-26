@@ -5,6 +5,7 @@ import { MenuItem } from '../models/misc-models';
 import { MenuService } from './menu.service';
 import { HttpErrorResponse } from '../../../node_modules/@angular/common/http';
 import { ErrorService } from '../error.service';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-menu',
@@ -17,7 +18,7 @@ export class MenuComponent implements OnInit, OnDestroy {
   menuVisible:boolean = false
   authSubscription:Subscription
   authErrorSubscription:Subscription
-  constructor(private authService:AuthService, private menuService:MenuService, private errorService:ErrorService) { 
+  constructor(private router:Router, private authService:AuthService, private menuService:MenuService, private errorService:ErrorService) { 
     this.authErrorSubscription = this.errorService.authErrorAnnounced$.subscribe(
       called => {
         console.log("Menu observed auth service call!");
@@ -33,6 +34,26 @@ export class MenuComponent implements OnInit, OnDestroy {
         this.checkAuthAndLoadMenu()
       }
     )
+  }
+
+  isActiveItem(linkPath: string) {
+    if (linkPath === '/') {
+      return (this.router.url === '/') ? true : false
+    } else {
+      return (this.router.url.indexOf(linkPath) != -1) ? true : false
+    }
+  }
+
+  nonNestedMembers() {
+    if (this.menuItems) {
+      return this.menuItems.filter(x => !x.nested_under_id)
+    } 
+  }
+
+  nestedItemsForMember(menuItemId: number) {
+    if (menuItemId && this.menuItems) {
+      return this.menuItems.filter(x => x.nested_under_id === menuItemId)
+    }
   }
 
   checkAuthAndLoadMenu()
