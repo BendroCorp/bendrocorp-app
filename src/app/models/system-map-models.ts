@@ -127,6 +127,7 @@ export class SystemImage
     of_moon_id?:number
     of_system_object_id?:number
     of_location_id?:number
+    of_settlement_id?: number
     of_gravity_well_id?:number
     created_by_id?:number
     created_by?:User
