@@ -123,7 +123,10 @@ export class RolesComponent implements OnInit, OnDestroy {
           filtered.push(role)
         }
       }
-      return filtered
+      
+      return filtered.sort((a,b) => {
+        return ('' + a.name).localeCompare(b.name);
+      })
     }
   }
 
