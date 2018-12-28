@@ -5,6 +5,7 @@ import { AddRoleRequest } from '../../models/request-models';
 import { Role, User } from '../../models/user-models';
 import { RequestsService } from '../requests.service';
 import { HttpErrorResponse } from '@angular/common/http';
+import { RoleService } from 'src/app/roles/role.service';
 
 @Component({
   selector: 'app-add-role',
@@ -20,7 +21,7 @@ export class AddRoleComponent implements OnInit {
 
   requestSubmitting:boolean = false
 
-  constructor(private messageService:MessageService, private userService:UserService, private requestService:RequestsService) { }
+  constructor(private messageService:MessageService, private roleService:RoleService, private userService:UserService, private requestService:RequestsService) { }
 
   submitaddRoleRequest()
   {
@@ -71,10 +72,12 @@ export class AddRoleComponent implements OnInit {
       }
     )
 
-    this.userService.list_roles().subscribe(
+    this.roleService.list().subscribe(
       (results) => {
         console.log(results);
-        this.roles = results
+        this.roles = results.sort((a,b) => {
+          return ('' + a.name).localeCompare(b.name);
+        })
       }
     )
   }
