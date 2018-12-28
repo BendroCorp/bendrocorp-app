@@ -31,11 +31,13 @@ export class Job {
     id?: number
     title?: string
     description?: string
+    hiring_description?: string
     recruit_job_id?: number
     next_job_id?: number
     division_id?: number
     hiring?: boolean
     job_level_id?: number
+    max?: number
 }
 
 export class Division {
