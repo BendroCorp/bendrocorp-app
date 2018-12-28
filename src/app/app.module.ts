@@ -112,6 +112,10 @@ import { TrainingItemCreateUpdateModalComponent } from './training/training-item
 import { TrainingItemComponent } from './training/training-item/training-item.component';
 import { SafeResourcePipe } from './pipes/safe-resource.pipe';
 import { SortablejsModule } from 'angular-sortablejs';
+import { RolesComponent } from './roles/roles.component';
+import { JobsComponent } from './jobs/jobs.component';
+import { CreateUpdateJobModalComponent } from './jobs/create-update-job-modal/create-update-job-modal.component';
+import { LiabilitiesComponent } from './liabilities/liabilities.component';
 
 @NgModule({
   declarations: [
@@ -200,6 +204,10 @@ import { SortablejsModule } from 'angular-sortablejs';
     TrainingItemCreateUpdateModalComponent,
     TrainingItemComponent,
     SafeResourcePipe,
+    RolesComponent,
+    JobsComponent,
+    CreateUpdateJobModalComponent,
+    LiabilitiesComponent,
   ],
   entryComponents: [
     EventModalComponent,

@@ -1,0 +1,47 @@
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Profile update</h4>
+    <button type="button" class="close" aria-label="Close" (click)="close()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form #jobCreateUpdateForm="ngForm">
+      <div class="form-group">
+        <label>Title</label>
+        <input required class="form-control" type="text" [(ngModel)]="job.title" name="title" id="">
+      </div>
+      <div class="form-group">
+        <label>Description</label>
+        <textarea required class="form-control" [(ngModel)]="job.description" name="description" id="" cols="30" rows="10"></textarea>
+      </div>
+      <div class="form-group">
+        <label>Hiring Description</label>
+        <textarea class="form-control" [(ngModel)]="job.hiring_description" name="hiring_description" id="" cols="30" rows="10"></textarea>
+      </div>
+      <div class="form-group">
+        <label>Max Members</label>
+        <input class="form-control" type="number" [(ngModel)]="job.max" name="max" id="">
+      </div>
+      <div class="form-group">
+        <label>Division</label>
+        <select class="form-control" [(ngModel)]="job.division_id" name="newNestedRoleId" required>
+          <option *ngFor="let division of divisions" [value]="division.id">{{division.name}}</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <div class="custom-control custom-checkbox">
+          <input type="checkbox" class="custom-control-input" [(ngModel)]="job.hiring" name="hiring" id="customCheck1">
+          <label class="custom-control-label" for="customCheck1">Currently hiring? *</label>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-primary" (click)="createUpdateCharacterJob()">{{formAction}} Job</button>
+  </div>
+</ng-template>
+
+<button *ngIf="!job.id" class="btn btn-sm btn-secondary" (click)="open(content)">{{formAction}} Job</button>
+<button *ngIf="job.id" class="btn btn-sm btn-primary" (click)="open(content)">{{formAction}} Job</button>
+  

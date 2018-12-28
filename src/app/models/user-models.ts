@@ -27,12 +27,17 @@ export class User
 
 export class Role extends Claim
 {
-    nested_roles?:Role[]
+    name?: string
+    description?: string
+    nested_roles?: NestedRole[]
 }
 
 export class NestedRole
 {
-    role_nested?:Role
+    id?: number
+    role_id?: number
+    role_nested_id?: number
+    role_nested?: Role
 }
 
 export class SignUp 

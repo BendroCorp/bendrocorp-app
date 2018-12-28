@@ -4,16 +4,30 @@
     <h6 *ngIf="!menuVisible">NOT AVAILABLE</h6>
   </div>
   <div *ngIf="menuVisible">
-    <div *ngFor="let item of menuItems" class="menu-item">
-      <div class="btn btn-sm btn-primary"> 
+    <div *ngFor="let item of nonNestedMembers()" class="menu-item">
+      <div style="text-align: left;" class="btn btn-sm btn-primary" [ngClass]="{'menu-item-active': isActiveItem(item.link)}"> 
         <span class="menu-item-icon"><i class="fas {{item.icon}}"></i>&nbsp;</span>
         <span class="menu-item-title">
           <!-- If internal -->
-          <a *ngIf="item.internal" routerLink="{{item.link}}">{{item.title}}</a>
+          <a *ngIf="item.internal && item.link" routerLink="{{item.link}}">{{item.title}}</a>
           <!-- if external -->
-          <a *ngIf="!item.internal" href="{{item.link}}" target="_blank">{{item.title}}</a>
+          <a *ngIf="!item.internal && item.link" href="{{item.link}}" target="_blank">{{item.title}}</a>
+          <!-- No link -->
+          <span *ngIf="!item.link">{{item.title}}</span>
         </span>
-        <span *ngIf="item.nested_items.length > 0" class="menu-item-arrow"> ></span>
+        <span *ngIf="nestedItemsForMember(item.id).length > 0" class="menu-item-arrow"> ></span>
+        <div *ngIf="nestedItemsForMember(item.id).length > 0">
+          <ul class="sub-menu-container" style="padding-left: 24px;">
+            <li class="sub-menu-item menu-item-title" [ngClass]="{'active': isActiveItem(nested.link)}" *ngFor="let nested of nestedItemsForMember(item.id)">
+              <!-- If internal -->
+              <a *ngIf="nested.internal && nested.link" routerLink="{{nested.link}}">{{nested.title}}</a>
+              <!-- if external -->
+              <a *ngIf="!nested.internal && nested.link" href="{{nested.link}}" target="_blank">{{nested.title}}</a>
+              <!-- No link -->
+              <span *ngIf="!nested.link">{{nested.title}}</span>
+            </li>
+          </ul>
+        </div>
       </div>
     </div>
   </div> 

@@ -22,7 +22,7 @@ export class ProfileService {
    */
   refreshData()
   {
-    console.log("Requests service data refresh called!");    
+    console.log("Profile service data refresh called!");    
     this.dataRefreshSource.next();
   }
 

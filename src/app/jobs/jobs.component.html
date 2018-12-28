@@ -1,0 +1,42 @@
+<!-- Breadcrumbs -->
+<div class="row">
+  <div class="col-md-12">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item active">Jobs Admin</li>
+    </ol>
+  </div>
+</div>
+
+<!-- Roles -->
+<div class="row" *ngIf="dataLoaded">
+  <!-- Table of roles -->
+  <div class="col-md-12">
+    <div class="card border-primary">
+      <div class="card-header bg-primary text-white">Current Jobs ({{jobs.length}})<span style="float:right;"><create-update-job-modal [job]="job"></create-update-job-modal></span></div>
+      <div class="card-body">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th style="width: 90px">ID #</th>
+              <th>Name</th>
+              <th>Description</th>
+              <th>Hiring</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style="vertical-align: middle;" *ngFor="let job of jobs | paginate: { itemsPerPage: 10, currentPage: p }">
+              <td style="text-align:center;">{{job.id}}</td>
+              <td>{{job.title}}</td>
+              <td>{{job.description}}</td>
+              <td>{{job.hiring}}</td>
+              <td><create-update-job-modal [job]="job"></create-update-job-modal></td>
+            </tr>
+          </tbody>
+        </table>
+        <div style="text-align: right;">
+          <pagination-controls (pageChange)="p = $event"></pagination-controls>
+        </div>
+      </div>
+    </div>
+  </div>

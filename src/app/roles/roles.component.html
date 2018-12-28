@@ -1,0 +1,78 @@
+<!-- Breadcrumbs -->
+<div class="row">
+  <div class="col-md-12">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item active">Roles</li>
+    </ol>
+  </div>
+</div>
+
+<!-- Roles -->
+<div class="row" *ngIf="dataLoaded">
+  <!-- Table of roles -->
+  <div [ngClass]="{'col-md-12': !selectedRole, 'col-md-6': selectedRole }">
+    <div class="card border-primary">
+      <div class="card-header bg-primary text-white">Current Roles</div>
+      <div class="card-body">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th style="width: 90px">ID #</th>
+              <th>Name</th>
+              <th *ngIf="!selectedRole">Description</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style="vertical-align: middle;" *ngFor="let role of roles | paginate: { itemsPerPage: 5, currentPage: p }">
+              <td style="text-align:center;">{{role.id}}</td>
+              <td><input-editor [(ngModel)]="role.name" (onSave)="updateRole(role)"></input-editor></td>
+              <td *ngIf="!selectedRole"><input-editor [(ngModel)]="role.description" (onSave)="updateRole(role)"></input-editor></td>
+              <td><button class="btn btn-sm btn-primary" (click)="selectRole(role)">Nesting</button></td>
+            </tr>
+            <tr>
+              <td>
+                <input class="form-control" [(ngModel)]="newRole.id" type="number" name="new_role_if" id="" placeholder="ID">
+              </td>
+              <td>
+                <input class="form-control" [(ngModel)]="newRole.name" type="text" name="new_role_name" id="" placeholder="Title">
+              </td>
+              <td>
+                <input class="form-control" [(ngModel)]="newRole.description" type="text" name="new_role_description" id="" placeholder="Brief Description">
+              </td>
+              <td><button class="btn btn-primary" [disabled]="roleInProgress" (click)="addRole()">Add<span *ngIf="roleInProgress">&nbsp;<i class="fas fa-spinner fa-spin"></i></span></button></td>
+            </tr>
+          </tbody>
+        </table>
+        <div style="text-align: right;">
+          <pagination-controls (pageChange)="p = $event"></pagination-controls>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Nested Information Box  -->
+  <div *ngIf="selectedRole" class="col-md-6">
+    <div class="card border-primary">
+      <div class="card-header bg-primary text-white">
+        <span>Role: {{selectedRole.name}}</span>
+        <span style="float:right;"><button class="btn btn-sm btn-secondary" (click)="deselectRole()" style="float:right;">Close</button></span>
+      </div>
+      <div class="card-body">
+        <h6>Nesting</h6>
+        <div *ngIf="selectedRole.nested_roles.length == 0">This role has no nested roles.</div>
+        <ul>
+          <li style="clear:both; padding:4px;" *ngFor="let nesting of selectedRole.nested_roles">{{nesting.role_nested.name}} <button (click)="removeNestedRole(nesting)" style="float:right;" class="btn btn-sm btn-primary"><i class="fas fa-trash-alt"></i></button></li>
+        </ul>
+        <div>
+          <form class="form-inline" #nestedRoleForm="ngForm">
+            <select class="form-control" [(ngModel)]="newNestedRoleId" name="newNestedRoleId" required>
+              <option *ngFor="let role of filteredNestedRoles()" [value]="role.id">{{role.name}}</option>
+            </select>
+            <button type="button" class="btn btn-primary mb-2" [disabled]="!nestedRoleForm.form.valid || nestedRoleInProgress" (click)="addNestedRole()">Add Nested Role<span *ngIf="nestedRoleInProgress">&nbsp;<i class="fas fa-spinner fa-spin"></i></span></button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
