@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Job } from '../models/character-models';
+import { Job, Division } from '../models/character-models';
 import { MessageService } from '../message/message.service';
 import { ErrorService } from '../error.service';
 import { Globals } from '../globals';
@@ -28,7 +28,14 @@ export class JobsService {
   list() : Observable<Job[]>
   {
     return this.http.get<Job[]>(`${this.globals.baseUrl}/job`).pipe(
-      tap(results => console.log(`Fetched ${results.length} job`)),
+      tap(results => console.log(`Fetched ${results.length} jobs`)),
+      catchError(this.errorService.handleError('Fetch Jobs', []))
+    )
+  }
+
+  listDivisions() : Observable<Division[]> {
+    return this.http.get<Division[]>(`${this.globals.baseUrl}/division`).pipe(
+      tap(results => console.log(`Fetched ${results.length} divisions`)),
       catchError(this.errorService.handleError('Fetch Jobs', []))
     )
   }

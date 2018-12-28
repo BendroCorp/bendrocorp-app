@@ -1,10 +1,11 @@
 import {Component, OnInit, Input} from '@angular/core';
 
 import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
-import { Job } from 'src/app/models/character-models';
+import { Job, Division } from 'src/app/models/character-models';
 import { JobsService } from '../jobs.service';
 import { MessageService } from 'src/app/message/message.service';
 import { HttpErrorResponse } from '@angular/common/http';
+import { ProfileService } from 'src/app/profiles/profile.service';
 
 @Component({
   selector: 'create-update-job-modal',
@@ -13,10 +14,11 @@ import { HttpErrorResponse } from '@angular/common/http';
 })
 export class CreateUpdateJobModalComponent implements OnInit {
   @Input() job: Job
+  divisions: Division[] = []
   openModal: NgbModalRef
   formAction: string
 
-  constructor(private modalService: NgbModal, private jobService:JobsService, private messageService: MessageService) {}
+  constructor(private modalService: NgbModal, private jobService:JobsService, private profileService: ProfileService, private messageService: MessageService) {}
 
   createUpdateCharacterJob() {
     if (this.job && this.job.id) {
@@ -42,7 +44,6 @@ export class CreateUpdateJobModalComponent implements OnInit {
 
   ngOnInit() {
     if (this.job && this.job.id) {
-      console.log(this.job)
       this.formAction = "Update"
     } else {
       this.job = { } as Job
@@ -51,6 +52,13 @@ export class CreateUpdateJobModalComponent implements OnInit {
   }
 
   open(content) {
+    this.jobService.listDivisions().subscribe(
+      (results) => {
+        if (!(results instanceof HttpErrorResponse)) {
+          this.divisions = results
+        }
+      }
+    )
     this.openModal = this.modalService.open(content, {ariaLabelledBy: 'Create/Update Job Modal'})
   }
 
