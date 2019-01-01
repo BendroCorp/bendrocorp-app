@@ -51,7 +51,9 @@ export class EventCertificationModalComponent implements OnInit {
       (results) =>
       {
         if (!(results instanceof HttpErrorResponse)) {
-          this.attendences = results
+          this.attendences = results.sort((a,b) => {
+            return ('' + a.character.full_name).localeCompare(b.character.full_name);
+          })
         }
       }
     )
