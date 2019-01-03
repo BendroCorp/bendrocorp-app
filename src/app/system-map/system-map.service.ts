@@ -44,17 +44,17 @@ export class SystemMapService {
 
   addSystem()
   {
-
+    throw "Not available!"
   }
 
   updateSystem()
   {
-
+    throw "Not available!"
   }
 
   archiveSystem()
   {
-    
+    throw "Not available!"
   }
 
   addPlanet(planet:Planet) : Observable<Planet>
@@ -93,7 +93,7 @@ export class SystemMapService {
   {
     return this.http.patch<Moon>(`${this.globals.baseUrl}/system-map/moon`, { moon }).pipe(
       tap(result => console.log(`Updated moon!`)),
-      catchError(this.errorService.handleError<any>('Update Planet'))
+      catchError(this.errorService.handleError<any>('Update Moon'))
     )
   }
 
@@ -101,7 +101,7 @@ export class SystemMapService {
   {
     return this.http.delete<Moon>(`${this.globals.baseUrl}/system-map/moon/${moon.id}`).pipe(
       tap(result => console.log(`Archived moon!`)),
-      catchError(this.errorService.handleError<any>('Archive Planet'))
+      catchError(this.errorService.handleError<any>('Archive Moon'))
     )
   }
 
@@ -117,7 +117,7 @@ export class SystemMapService {
   {
     return this.http.patch<SystemObject>(`${this.globals.baseUrl}/system-map/system-object`, { system_object }).pipe(
       tap(result => console.log(`Updated system object!`)),
-      catchError(this.errorService.handleError<any>('Update SystemcObject'))
+      catchError(this.errorService.handleError<any>('Update System Object'))
     )
   }
 
@@ -203,32 +203,32 @@ export class SystemMapService {
 
   addFlora()
   {
-
+    throw "Not available!"
   }
 
   updateFlora()
   {
-
+    throw "Not available!"
   }
 
   archiveFlora()
   {
-    
+    throw "Not available!"
   }
 
   addFauna()
   {
-
+    throw "Not available!"
   }
 
   updateFauna()
   {
-
+    throw "Not available!"
   }
 
   archiveFauna()
   {
-    
+    throw "Not available!"
   }
 
   fetch_types() : Observable<SystemMapTypes>
