@@ -39,7 +39,7 @@
             <div>RSI: <a href="https://robertsspaceindustries.com/citizens/{{profile.rsi_handle}}" target="_blank">{{profile.rsi_handle}}</a></div>
             <div *ngIf="canEdit"><input-editor [(ngModel)]="profile.rsi_handle" (onSave)="updateHandle()"></input-editor></div>
             <!-- if applicable -->
-            <div *ngIf="profile.application && profile.application.application_status_id && profile.application.application_status_id < 6">
+            <div *ngIf="hrRights && profile.application && profile.application.application_status_id && profile.application.application_status_id < 6">
               <div>Application: {{profile.application.application_status.title}}</div>
               <div>
                 <button class="btn btn-success" *ngIf="profile.application.application_status_id < 5" (click)="advanceApplication()">Advance Application</button>
