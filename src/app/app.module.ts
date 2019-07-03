@@ -116,6 +116,8 @@ import { RolesComponent } from './roles/roles.component';
 import { JobsComponent } from './jobs/jobs.component';
 import { CreateUpdateJobModalComponent } from './jobs/create-update-job-modal/create-update-job-modal.component';
 import { LiabilitiesComponent } from './liabilities/liabilities.component';
+import { LawLibraryComponent } from './law-library/law-library.component';
+import { LawLibraryDetailsComponent } from './law-library/law-library-details/law-library-details.component';
 
 @NgModule({
   declarations: [
@@ -208,6 +210,8 @@ import { LiabilitiesComponent } from './liabilities/liabilities.component';
     JobsComponent,
     CreateUpdateJobModalComponent,
     LiabilitiesComponent,
+    LawLibraryComponent,
+    LawLibraryDetailsComponent,
   ],
   entryComponents: [
     EventModalComponent,
