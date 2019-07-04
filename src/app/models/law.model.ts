@@ -20,6 +20,7 @@ export class LawCategory {
   created_by?: User;
   laws?: Law[];
   jurisdiction_id: number;
+  newLaw: Law;
 }
 
 export class Jurisdiction {

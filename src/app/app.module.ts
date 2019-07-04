@@ -244,7 +244,7 @@ import { ConfirmationModal, ConfirmationModalContent } from './modals/confirmati
     DeviceDetectorModule.forRoot(),
     SortablejsModule,
     SortablejsModule.forRoot({ animation: 150 }),
-    ServiceWorkerModule.register('/ngsw-worker.js', { enabled: environment.production })
+    ServiceWorkerModule.register('/ngsw-worker.js', { enabled: environment.production }),
   ],
   providers: [
     PromptUpdateService,

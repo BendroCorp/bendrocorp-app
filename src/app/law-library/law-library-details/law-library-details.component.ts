@@ -6,6 +6,9 @@ import { MessageService } from 'src/app/message/message.service';
 import { Jurisdiction, LawCategory, Law } from 'src/app/models/law.model';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ConfirmationModal } from '../../modals/confirmation-modal/confirmation-modal.component';
+import { Observable } from 'rxjs';
+import { concat } from 'rxjs';
+import { SortablejsOptions } from 'angular-sortablejs';
 
 @Component({
   selector: 'app-law-library-details',
@@ -18,6 +21,7 @@ export class LawLibraryDetailsComponent implements OnInit {
   newLaw: Law = {} as Law;
   dataMoveInProgress: boolean = false;
   lawType = [{value: 'felony'}, {value: 'misdemeanor'}];
+  sortableOptions: SortablejsOptions;
 
   constructor(private route: ActivatedRoute, 
     private lawService: LawService, 
@@ -75,13 +79,13 @@ export class LawLibraryDetailsComponent implements OnInit {
 
   addLaw(lawCategory: LawCategory) { 
     if (lawCategory.id) {
-      this.newLaw.law_category_id = lawCategory.id;
-      this.newLaw.jurisdiction_id = this.jursidiction.id;
+      lawCategory.newLaw.law_category_id = lawCategory.id;
+      lawCategory.newLaw.jurisdiction_id = this.jursidiction.id;
       this.dataMoveInProgress = true;
-      this.lawService.createLaw(this.newLaw).subscribe((results) => {
+      this.lawService.createLaw(lawCategory.newLaw).subscribe((results) => {
         if (!(results instanceof HttpErrorResponse)) {
           this.jursidiction.categories[this.jursidiction.categories.findIndex(x => x.id === lawCategory.id)].laws.push(results);
-          this.newLaw = {} as Law;
+          this.jursidiction.categories[this.jursidiction.categories.findIndex(x => x.id === lawCategory.id)].newLaw = {} as Law;
         }
         this.dataMoveInProgress = false;
       });
@@ -118,16 +122,48 @@ export class LawLibraryDetailsComponent implements OnInit {
     }
   }
 
+  orderCategoriesByOrdinal(categories: LawCategory[]) {
+
+    let sorted = categories.sort((a,b) => {
+      return a.ordinal - b.ordinal;
+    });
+    
+    console.log(sorted);
+    return sorted;
+  }
+
   ngOnInit() {
     if (!this.authService.hasClaim(43)) {
       this.messageService.addError('You are not authorized to directly access the law library!');
       this.router.navigateByUrl('/');
     } else {
+      this.sortableOptions = {
+        onUpdate: (event: any) => {
+          console.log(`Sortable update occured ${event}`);
+          var updateRequests = []
+          // REVIEW: This may be very resource intensive - but we have to update all of the ordinals
+          for (let index = 0; index < this.jursidiction.categories.length; index++) {
+            this.jursidiction.categories[index].ordinal = index + 1
+            updateRequests.push(this.lawService.updateCategory(this.jursidiction.categories[index]))
+          }
+          
+          // Run the update requests in order
+          // let doUpdateRequests = Observable.concat.apply(this, updateRequests); 
+          // https://stackoverflow.com/questions/43336549/how-to-force-observables-to-execute-in-sequence
+          let doUpdateRequests = concat.apply(this, updateRequests)//.subscribe(val => console.log(val));
+          let subscribe = doUpdateRequests.subscribe(val => console.log(val));
+        }
+      };
+
       const jurisId = parseInt(this.route.snapshot.paramMap.get('jurisdiction_id'));
       if (jurisId) {
         this.lawService.fetchJurisdiction(jurisId).subscribe((result) => {
           if (!(result instanceof HttpErrorResponse)) {
             this.jursidiction = result;
+            // stub the new law object in each category
+            for (let index = 0; index < this.jursidiction.categories.length; index++) {
+              this.jursidiction.categories[index].newLaw = {} as Law;
+            }
             console.log(this.jursidiction);
           } else {
             this.router.navigateByUrl('/law-library');
