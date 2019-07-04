@@ -118,12 +118,17 @@ import { CreateUpdateJobModalComponent } from './jobs/create-update-job-modal/cr
 import { LiabilitiesComponent } from './liabilities/liabilities.component';
 import { LawLibraryComponent } from './law-library/law-library.component';
 import { LawLibraryDetailsComponent } from './law-library/law-library-details/law-library-details.component';
+import { SelectEditorComponent } from './editors/select-editor/select-editor.component';
+import { DisplayFieldNameFilter, DisplayNameFilter } from './pipes/display-value.pipe';
+import { ConfirmationModal, ConfirmationModalContent } from './modals/confirmation-modal/confirmation-modal.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     OrderByPipe,
     FilterPipe,
+    DisplayFieldNameFilter,
+    DisplayNameFilter,
     MenuComponent,
     HeaderComponent,
     LoginComponent,
@@ -212,6 +217,9 @@ import { LawLibraryDetailsComponent } from './law-library/law-library-details/la
     LiabilitiesComponent,
     LawLibraryComponent,
     LawLibraryDetailsComponent,
+    SelectEditorComponent,
+    ConfirmationModal,
+    ConfirmationModalContent,
   ],
   entryComponents: [
     EventModalComponent,
@@ -219,6 +227,7 @@ import { LawLibraryDetailsComponent } from './law-library/law-library-details/la
     UpdateEventDebriefingModalComponent,
     EventCertificationModalComponent,
     DonationModalContent,
+    ConfirmationModalContent,
   ],
   imports: [
     BrowserModule,
@@ -243,6 +252,8 @@ import { LawLibraryDetailsComponent } from './law-library/law-library-details/la
     LogUpdateService,
     OrderByPipe,
     FilterPipe,
+    DisplayFieldNameFilter,
+    DisplayNameFilter,
     NgbModal,
     NgbAlert,
     AuthInterceptor,
@@ -261,7 +272,8 @@ import { LawLibraryDetailsComponent } from './law-library/law-library-details/la
     Globals,
     EventService,
     SpinnerService,
-    IsAuthorizedService
+    IsAuthorizedService,
+    ConfirmationModal
   ],
   bootstrap: [AppComponent]
 })

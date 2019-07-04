@@ -2,8 +2,86 @@
 <div class="row">
   <div class="col-md-12">
     <ol class="breadcrumb">
-      <li class="breadcrumb-item">Law Library</li>
-      <li class="breadcrumb-item active">Details</li>
+      <li class="breadcrumb-item"><a routerLink="/law-library">Law Library</a></li>
+      <li class="breadcrumb-item active">Details<span *ngIf="jursidiction"> - {{jursidiction.title}}</span></li>
     </ol>
+  </div>
+</div>
+
+<div class="row" *ngIf="jursidiction">
+  <div class="col-md-12">
+    <h4>{{jursidiction.title}}</h4>
+    <!-- Categories -->
+    <h6>Law Categories</h6>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Category Title</th>
+          <th style="width: 20px;"></th>
+        </tr>
+      </thead>
+      <tbody *ngFor="let category of jursidiction.categories">
+        <tr>
+          <td>
+            <h6>{{category.title}}</h6>
+          </td>
+          <td>
+            <button class="btn btn-sm btn-danger" (click)="archiveCategory(category)"><i class="fas fa-trash-alt"></i></button>
+          </td>
+        </tr>
+        <tr>
+          <!-- holds the law table -->
+          <td colspan="2">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>Title</th>
+                  <th style="width: 150px;">Type</th>
+                  <th style="width: 150px;">Fine</th>
+                  <th style="width: 20px;"></th>
+                </tr>
+                <tr *ngFor="let law of category.laws">
+                  <td>{{law.title | titlecase}}</td>
+                  <td>{{law.law_class | titlecase}}</td>
+                  <td>{{law.fine_amount}}</td>
+                  <td>
+                    <button class="btn btn-sm btn-danger" (click)="archiveLaw(law)"><i class="fas fa-trash-alt"></i></button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <input class="form-control" [(ngModel)]="newLaw.title" type="text" name="new_law_title" id="new_law_title" placeholder="Law Title">
+                  </td>
+                  <td>
+                    <select class="form-control" [(ngModel)]="newLaw.law_class"  name="new_law_type" id="new_law_type">
+                      <option *ngFor="let type of lawType" [value]="type.value">{{type.value | titlecase}}</option>
+                    </select>
+                  </td>
+                  <td>
+                      <input class="form-control" [(ngModel)]="newLaw.fine_amount" type="text" name="new_law_fine_amount" id="new_law_fine_amount" placeholder="Fine">
+                  </td>
+                  <td>
+                    <button class="btn btn-primary" [disabled]="dataMoveInProgress" (click)="addLaw(category)">Add<span *ngIf="dataMoveInProgress">&nbsp;<i class="fas fa-spinner fa-spin"></i></span></button>
+                  </td>
+                </tr>
+              </thead>
+              <tbody>
+                <tr></tr>
+              </tbody>
+            </table>
+          </td>
+        </tr>
+      </tbody>
+      <tbody>
+        <tr>
+          <td>
+            <input class="form-control" [(ngModel)]="newJurisdictionCategory.title" type="text" name="new_jurisdiction_category_title" id="" placeholder="Category Title">
+          </td>
+          <td>
+            <button class="btn btn-primary" [disabled]="dataMoveInProgress" (click)="addCategory()">Add<span *ngIf="dataMoveInProgress">&nbsp;<i class="fas fa-spinner fa-spin"></i></span></button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </div>

@@ -34,11 +34,18 @@ export class LawService {
     )
   }
 
+  fetchJurisdiction(jurisdiction_id: number): Observable<Jurisdiction> {
+    return this.http.get<Jurisdiction>(`${this.globals.baseUrl}/law/jurisdiction/${jurisdiction_id}`).pipe(
+      tap(result => console.log(`Fetched jurisdiction!`)),
+      catchError(this.errorService.handleError('Fetch Jurisdiction'))
+    )
+  }
+
   listCategories(jurisdiction_id: number) : Observable<LawCategory[]>
   {
     return this.http.get<LawCategory[]>(`${this.globals.baseUrl}/law/category/${jurisdiction_id}`).pipe(
       tap(results => console.log(`Fetched ${results.length} law categories!`)),
-      catchError(this.errorService.handleError('Fetch Laws', []))
+      catchError(this.errorService.handleError('Fetch Law Categories', []))
     )
   }
 
@@ -66,42 +73,42 @@ export class LawService {
   createJurisdiction(jurisdiction: Jurisdiction): Observable<Jurisdiction>  {
     return this.http.post<Jurisdiction>(`${this.globals.baseUrl}/law/jurisdiction`, { jurisdiction }).pipe(
       tap(results => console.log(`Created a new law!`)),
-      catchError(this.errorService.handleError('Create Law'))
+      catchError(this.errorService.handleError('Create Jurisdiction'))
     )
   }
 
   updateJurisdiction(jurisdiction: Jurisdiction): Observable<Jurisdiction> {
     return this.http.put<Jurisdiction>(`${this.globals.baseUrl}/law/jurisdiction`, { jurisdiction }).pipe(
       tap(results => console.log(`Updated a law!`)),
-      catchError(this.errorService.handleError('Update Law'))
+      catchError(this.errorService.handleError('Update Jurisdiction'))
     )
   }
 
   archiveJurisdiction(jurisdiction: Jurisdiction): Observable<StatusMessage> {
-    return this.http.delete<StatusMessage>(`${this.globals.baseUrl}/law/${jurisdiction.id}`).pipe(
+    return this.http.delete<StatusMessage>(`${this.globals.baseUrl}/law/jurisdiction/${jurisdiction.id}`).pipe(
       tap(results => console.log(`Updated a law!`)),
-      catchError(this.errorService.handleError('Archive Law'))
+      catchError(this.errorService.handleError('Archive Jurisdiction'))
     )
   }
 
   createCategory(category: LawCategory): Observable<LawCategory> {
-    return this.http.post<LawCategory>(`${this.globals.baseUrl}/law/jurisdiction`, { category }).pipe(
+    return this.http.post<LawCategory>(`${this.globals.baseUrl}/law/category`, { category }).pipe(
       tap(results => console.log(`Created a new law category!`)),
-      catchError(this.errorService.handleError('Create Law'))
+      catchError(this.errorService.handleError('Create Law Category'))
     )
   }
 
   updateCategory(category: LawCategory): Observable<LawCategory> {
-    return this.http.put<LawCategory>(`${this.globals.baseUrl}/law/jurisdiction`, { category }).pipe(
-      tap(results => console.log(`Updated a category!`)),
-      catchError(this.errorService.handleError('Update Law'))
+    return this.http.put<LawCategory>(`${this.globals.baseUrl}/law/category`, { category }).pipe(
+      tap(results => console.log(`Updated a law category!`)),
+      catchError(this.errorService.handleError('Update Law Category'))
     )
   }
 
   archiveCategory(category: LawCategory): Observable<StatusMessage> {
-    return this.http.delete<StatusMessage>(`${this.globals.baseUrl}/law/${category.id}`).pipe(
-      tap(results => console.log(`Updated a category!`)),
-      catchError(this.errorService.handleError('Archive Law'))
+    return this.http.delete<StatusMessage>(`${this.globals.baseUrl}/law/category/${category.id}`).pipe(
+      tap(results => console.log(`Archived a law category!`)),
+      catchError(this.errorService.handleError('Archive Law Category'))
     )
   }
 
