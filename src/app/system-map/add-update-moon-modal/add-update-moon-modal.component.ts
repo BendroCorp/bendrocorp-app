@@ -5,6 +5,8 @@ import { SystemMapService } from '../system-map.service';
 import { MessageService } from 'src/app/message/message.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Base64Upload } from 'src/app/models/misc-models';
+import { Jurisdiction } from 'src/app/models/law.model';
+import { LawService } from 'src/app/law-library/law.service';
 
 @Component({
   selector: 'add-update-moon-modal',
@@ -17,9 +19,12 @@ export class AddUpdateMoonModalComponent implements OnInit {
   modalRef:NgbModalRef
   formAction:string
   formSubmitting:boolean = false
-  constructor(private modalService: NgbModal, private systemMapService:SystemMapService, private messageService:MessageService) { }
+  jurisdictions: Jurisdiction[] = [];
+  
+  constructor(private modalService: NgbModal, private systemMapService:SystemMapService, private messageService:MessageService, private lawService: LawService) { }
 
   open(content) {
+    this.fetchJurisdictions();
     this.formAction = (this.moon && this.moon.id) ? "Update" : "Create"
     if (!(this.moon && this.moon.id)) {
      this.moon = { } as Moon 
@@ -27,6 +32,14 @@ export class AddUpdateMoonModalComponent implements OnInit {
 
     // open the modal
     this.modalRef = this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'})
+  }
+
+  fetchJurisdictions() {
+    this.lawService.listJurisdictions().subscribe((results) => {
+      if (!(results instanceof HttpErrorResponse)) {
+       this.jurisdictions = results; 
+      }
+    });
   }
 
   close()

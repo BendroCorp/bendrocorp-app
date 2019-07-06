@@ -5,6 +5,7 @@ import { Subject, Observable } from 'rxjs';
 import { tap, catchError } from 'rxjs/operators';
 import { StarSystem, Planet, Moon, Settlement, SystemMapTypes, SystemObject, SystemLocation, SystemImage } from '../models/system-map-models';
 import { HttpClient } from '@angular/common/http';
+import { StatusMessage } from '../models/misc-models';
 
 @Injectable({
   providedIn: 'root'
@@ -42,17 +43,25 @@ export class SystemMapService {
     )
   }
 
-  addSystem()
+  addSystem(system: StarSystem): Observable<StarSystem>
   {
-    throw "Not available!"
+    return this.http.post<StarSystem>(`${this.globals.baseUrl}/system-map`, { system }).pipe(
+      tap(result => console.log(`Created system!`)),
+      catchError(this.errorService.handleError<any>('Create System'))
+    );
   }
 
-  updateSystem()
+  updateSystem(system: StarSystem): Observable<StarSystem>
   {
-    throw "Not available!"
+    // system.jurisdiction_id = Number(`${system.jurisdiction_id}`)
+
+    return this.http.put<StarSystem>(`${this.globals.baseUrl}/system-map`, { system }).pipe(
+      tap(result => console.log(`Updated system!`)),
+      catchError(this.errorService.handleError<any>('Update System'))
+    );
   }
 
-  archiveSystem()
+  archiveSystem(): Observable<StatusMessage>
   {
     throw "Not available!"
   }

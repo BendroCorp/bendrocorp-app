@@ -1,17 +1,27 @@
 <ng-template #content let-modal>
   <div class="modal-header">
-    <h4 class="modal-title" id="modal-basic-title">Profile update</h4>
-    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+    <h4 class="modal-title" id="modal-basic-title">{{formAction}} System</h4>
+    <button type="button" class="close" aria-label="Close" (click)="close()">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
   <div class="modal-body">
-    add/update system modal
+    <div class="form-group">
+      <label>Title</label>
+      <input class="form-control" type="text" [(ngModel)]="starSystem.title" id="system_title" name="system_title" placeholder="System Title">
+    </div>
+    <div class="form-group">
+      <label>Jurisdiction</label>
+      <select class="form-control" [(ngModel)]="starSystem.jurisdiction_id" name="jurisdiction" id="jurisdiction">
+        <option *ngFor="let jurisdiction of jurisdictions" [value]="jurisdiction.id">{{jurisdiction.title}}</option>
+      </select>
+    </div>
   </div>
   <div class="modal-footer">
-    <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Save</button>
+    <button type="button" class="btn btn-primary" (click)="saveUpdateSystem()" [disabled]="dataMoveInProgress">{{formAction}} System<span *ngIf="dataMoveInProgress">&nbsp;<i class="fas fa-spinner fa-spin"></i></span></button>
+    <button type="button" class="btn btn-outline-dark" (click)="close()">Close</button>
   </div>
 </ng-template>
 
-<button *ngIf="!system" class="btn btn-primary" disabled><i class="fas fa-plus"></i> Add System</button>
-<button *ngIf="system" class="btn btn-primary" disabled><i class="far fa-edit"></i> Edit System</button>
+<button *ngIf="!starSystem || (starSystem && !starSystem.id)" class="btn btn-primary" (click)="open(content)"><i class="fas fa-plus"></i> Add System</button>
+<button *ngIf="starSystem && starSystem.id" class="btn btn-primary" (click)="open(content)"><i class="far fa-edit"></i> Edit System</button>

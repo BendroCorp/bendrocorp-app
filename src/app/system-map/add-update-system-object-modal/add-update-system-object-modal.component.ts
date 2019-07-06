@@ -5,6 +5,8 @@ import { SystemMapService } from '../system-map.service';
 import { MessageService } from 'src/app/message/message.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Base64Upload } from 'src/app/models/misc-models';
+import { Jurisdiction } from 'src/app/models/law.model';
+import { LawService } from 'src/app/law-library/law.service';
 
 @Component({
   selector: 'add-update-system-object-modal',
@@ -20,12 +22,14 @@ export class AddUpdateSystemObjectModalComponent implements OnInit {
   @Input() smallBtn:boolean
   formAction:string
   objectTitle:string
-  types:SystemMapTypes
+  types:SystemMapTypes;
+  jurisdictions: Jurisdiction[] = [];
 
   modalRef:NgbModalRef
-  constructor(private modalService: NgbModal, private systemMapService:SystemMapService, private messageService:MessageService) { }
+  constructor(private modalService: NgbModal, private systemMapService:SystemMapService, private messageService:MessageService, private lawService: LawService) { }
 
   open(content) {
+    this.fetchJurisdictions();
     this.formAction = (this.systemObject && this.systemObject.id) ? "Update" : "Create"
     if (!(this.systemObject && this.systemObject.id)) {
       // orbits_planet_id, orbits_planet_id, orbits_system_id
@@ -44,6 +48,14 @@ export class AddUpdateSystemObjectModalComponent implements OnInit {
 
     // open the modal
     this.modalRef = this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'})
+  }
+
+  fetchJurisdictions() {
+    this.lawService.listJurisdictions().subscribe((results) => {
+      if (!(results instanceof HttpErrorResponse)) {
+       this.jurisdictions = results; 
+      }
+    });
   }
 
   close()

@@ -16,6 +16,12 @@
           <textarea required class="form-control" placeholder="System Object description..." [(ngModel)]="systemObject.description" name="so_description" id="" cols="30" rows="10"></textarea>
         </div>
         <div class="form-group">
+          <label>Jurisdiction</label>
+          <select class="form-control" [(ngModel)]="systemObject.jurisdiction_id" name="jurisdiction" id="jurisdiction">
+            <option *ngFor="let jurisdiction of jurisdictions" [value]="jurisdiction.id">{{jurisdiction.title}}</option>
+          </select>
+        </div>
+        <div class="form-group">
           <label>Object Type</label>
           <select required class="form-control" [(ngModel)]="systemObject.object_type_id" name="orbits_planet">
             <option *ngFor="let type of types.system_object_types" [value]="type.id">{{type.title}}</option>

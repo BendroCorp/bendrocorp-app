@@ -1,5 +1,6 @@
 import { Base64Upload, IdTitleDesc } from "./misc-models";
 import { User } from "./user-models";
+import { Jurisdiction } from "./law.model";
 
 export class StarSystem 
 {
@@ -9,6 +10,8 @@ export class StarSystem
     system_objects?:SystemObject[]
     jump_points?:JumpPoint[]
     gravity_wells?:GravityWell[]
+    jurisdiction?: Jurisdiction;
+    jurisdiction_id?: number;
 }
 
 export class GravityWell
@@ -22,20 +25,22 @@ export class GravityWell
 
 export class Planet
 {
-    id?:number
-    title?:string
-    moons?:Moon[]
-    system_objects?:SystemObject[]
-    locations?:SystemLocation[]
-    orbits_system_id?:number
-    new_primary_image?:Base64Upload
-    primary_image_url?:string
-    system_map_images?:SystemImage[]
-    atmospheric_height?:number
-    general_radiation?:number
-    economic_rating?:number
-    population_density?:number
-    minimum_criminality_rating?:number
+    id?:number;
+    title?:string;
+    moons?:Moon[];
+    system_objects?:SystemObject[];
+    locations?:SystemLocation[];
+    orbits_system_id?:number;
+    new_primary_image?:Base64Upload;
+    primary_image_url?:string;
+    system_map_images?:SystemImage[];
+    atmospheric_height?:number;
+    general_radiation?:number;
+    economic_rating?:number;
+    population_density?:number;
+    minimum_criminality_rating?:number;
+    jurisdiction?: Jurisdiction;
+    jurisdiction_id?: number;
 }
 
 export class Moon
@@ -56,6 +61,8 @@ export class Moon
     economic_rating?:number
     population_density?:number
     minimum_criminality_rating?:number
+    jurisdiction?: Jurisdiction;
+    jurisdiction_id?: number;
 }
 
 export class SystemObject
@@ -71,17 +78,21 @@ export class SystemObject
     primary_image_url?:string
     object_type_id?:number
     object_type?:IdTitleDesc
-    system_map_images?:SystemImage[]
+    system_map_images?:SystemImage[];
+    jurisdiction?: Jurisdiction;
+    jurisdiction_id?: number;
 }
 
 export class Settlement
 {
-    id?:number
-    title?:string
-    on_planet_id?:number
-    on_moon_id?:number
-    new_primary_image?:Base64Upload
-    primary_image_url?:string
+    id?:number;
+    title?:string;
+    on_planet_id?:number;
+    on_moon_id?:number;
+    new_primary_image?:Base64Upload;
+    primary_image_url?:string;
+    jurisdiction?: Jurisdiction;
+    jurisdiction_id?: number;
 }
 
 export class SystemLocation
@@ -101,8 +112,8 @@ export class SystemLocation
 
 export class JumpPoint
 {
-    id?:number
-    title?:string
+    id?:number;
+    title?:string;
 }
 
 export class SystemMapTypes

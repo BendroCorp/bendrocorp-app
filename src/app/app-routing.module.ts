@@ -35,6 +35,8 @@ import { TrainingCourseDetailsComponent } from './training/training-course-detai
 import { RolesComponent } from './roles/roles.component';
 import { JobsComponent } from './jobs/jobs.component';
 import { LiabilitiesComponent } from './liabilities/liabilities.component';
+import { LawLibraryComponent } from './law-library/law-library.component';
+import { LawLibraryDetailsComponent } from './law-library/law-library-details/law-library-details.component';
 
 const routes: Routes = [
     { path: '', component: DashboardComponent, canActivate: [AuthGuardService, MemberAuthGuardService] },
@@ -56,6 +58,8 @@ const routes: Routes = [
     { path: 'roles', component: RolesComponent, canActivate: [AuthGuardService, MemberAuthGuardService] },
     { path: 'jobs', component: JobsComponent, canActivate: [AuthGuardService, MemberAuthGuardService] },
     { path: 'liabilities', component: LiabilitiesComponent, canActivate: [AuthGuardService, MemberAuthGuardService] },
+    { path: 'law-library', component: LawLibraryComponent, canActivate: [AuthGuardService, MemberAuthGuardService] },
+    { path: 'law-library/:jurisdiction_id', component: LawLibraryDetailsComponent, canActivate: [AuthGuardService, MemberAuthGuardService] },
     // public/non-member routes below here
     { path: 'login', component: LoginComponent, canActivate: [NoAuthGuardService] },
     { path: 'signup', component: SignupComponent, canActivate: [NoAuthGuardService] },

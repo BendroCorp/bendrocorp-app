@@ -1,0 +1,50 @@
+<!-- Breadcrumbs -->
+<div class="row">
+  <div class="col-md-12">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item active">Law Library</li>
+    </ol>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-12">
+    <h2>Legal Jurisdictions</h2>
+    <table *ngIf="lawJurisdictions" class="table table-striped">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Title</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- If there are none -->
+        <tr *ngIf="lawJurisdictions.length == 0">
+          <td colspan="3" style="text-align: center;"><h5>No current legal jurisdictions.</h5></td>
+        </tr>
+        <!-- If we have some -->
+        <tr class="jurisdiction" *ngFor="let jurisdiction of lawJurisdictions">
+          <td style="width: 20px;">{{jurisdiction.id}}</td>
+          <td colspan="2"><input-editor [(ngModel)]="jurisdiction.title" (onSave)="updateJurisdiction(jurisdiction)"></input-editor></td>
+          <td style="width: 125px;">
+            <button class="btn btn-primary" (click)="openJurisdiction(jurisdiction)"><i class="fas fa-folder-open"></i></button>&nbsp;
+            <button class="btn btn-danger" (click)="archiveJurisdiction(jurisdiction)"><i class="fas fa-trash-alt"></i></button>
+          </td>
+        </tr>
+        <!-- Add a Jurisdiction -->
+        <tr>
+          <td>
+            <!-- placeholder -->
+          </td>
+          <td>
+            <input class="form-control" [(ngModel)]="newJurisdiction.title" type="text" name="new_jurisdiction_title" id="" placeholder="Title">
+          </td>
+          <td>
+            <button class="btn btn-primary" [disabled]="newJurisdictionInProgress" (click)="addJurisdiction()">Add<span *ngIf="newJurisdictionInProgress">&nbsp;<i class="fas fa-spinner fa-spin"></i></span></button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

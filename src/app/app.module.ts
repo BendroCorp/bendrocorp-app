@@ -116,12 +116,20 @@ import { RolesComponent } from './roles/roles.component';
 import { JobsComponent } from './jobs/jobs.component';
 import { CreateUpdateJobModalComponent } from './jobs/create-update-job-modal/create-update-job-modal.component';
 import { LiabilitiesComponent } from './liabilities/liabilities.component';
+import { LawLibraryComponent } from './law-library/law-library.component';
+import { LawLibraryDetailsComponent } from './law-library/law-library-details/law-library-details.component';
+import { SelectEditorComponent } from './editors/select-editor/select-editor.component';
+import { DisplayFieldNameFilter, DisplayNameFilter } from './pipes/display-value.pipe';
+import { ConfirmationModal, ConfirmationModalContent } from './modals/confirmation-modal/confirmation-modal.component';
+import { SystemLawModalComponent } from './system-map/system-law-modal/system-law-modal.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     OrderByPipe,
     FilterPipe,
+    DisplayFieldNameFilter,
+    DisplayNameFilter,
     MenuComponent,
     HeaderComponent,
     LoginComponent,
@@ -208,6 +216,12 @@ import { LiabilitiesComponent } from './liabilities/liabilities.component';
     JobsComponent,
     CreateUpdateJobModalComponent,
     LiabilitiesComponent,
+    LawLibraryComponent,
+    LawLibraryDetailsComponent,
+    SelectEditorComponent,
+    ConfirmationModal,
+    ConfirmationModalContent,
+    SystemLawModalComponent,
   ],
   entryComponents: [
     EventModalComponent,
@@ -215,6 +229,7 @@ import { LiabilitiesComponent } from './liabilities/liabilities.component';
     UpdateEventDebriefingModalComponent,
     EventCertificationModalComponent,
     DonationModalContent,
+    ConfirmationModalContent,
   ],
   imports: [
     BrowserModule,
@@ -231,7 +246,7 @@ import { LiabilitiesComponent } from './liabilities/liabilities.component';
     DeviceDetectorModule.forRoot(),
     SortablejsModule,
     SortablejsModule.forRoot({ animation: 150 }),
-    ServiceWorkerModule.register('/ngsw-worker.js', { enabled: environment.production })
+    ServiceWorkerModule.register('/ngsw-worker.js', { enabled: environment.production }),
   ],
   providers: [
     PromptUpdateService,
@@ -239,6 +254,8 @@ import { LiabilitiesComponent } from './liabilities/liabilities.component';
     LogUpdateService,
     OrderByPipe,
     FilterPipe,
+    DisplayFieldNameFilter,
+    DisplayNameFilter,
     NgbModal,
     NgbAlert,
     AuthInterceptor,
@@ -257,7 +274,8 @@ import { LiabilitiesComponent } from './liabilities/liabilities.component';
     Globals,
     EventService,
     SpinnerService,
-    IsAuthorizedService
+    IsAuthorizedService,
+    ConfirmationModal
   ],
   bootstrap: [AppComponent]
 })
