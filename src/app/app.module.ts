@@ -121,6 +121,7 @@ import { LawLibraryDetailsComponent } from './law-library/law-library-details/la
 import { SelectEditorComponent } from './editors/select-editor/select-editor.component';
 import { DisplayFieldNameFilter, DisplayNameFilter } from './pipes/display-value.pipe';
 import { ConfirmationModal, ConfirmationModalContent } from './modals/confirmation-modal/confirmation-modal.component';
+import { SystemLawModalComponent } from './system-map/system-law-modal/system-law-modal.component';
 
 @NgModule({
   declarations: [
@@ -220,6 +221,7 @@ import { ConfirmationModal, ConfirmationModalContent } from './modals/confirmati
     SelectEditorComponent,
     ConfirmationModal,
     ConfirmationModalContent,
+    SystemLawModalComponent,
   ],
   entryComponents: [
     EventModalComponent,

@@ -6,6 +6,7 @@ import { SpinnerService } from '../misc/spinner/spinner.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { DataSet, Network } from 'vis';
 import { Subscription } from 'rxjs';
+import { Jurisdiction } from '../models/law.model';
 
 @Component({
   selector: 'app-system-map',
@@ -21,15 +22,16 @@ import { Subscription } from 'rxjs';
 export class SystemMapComponent implements OnInit, AfterContentInit, OnDestroy {
   
   @ViewChild('starChart') netContainer: ElementRef;
-  network:Network
-  isEditor:boolean = (this.authService.hasClaim(22) || this.authService.hasClaim(23)) ? true :false
-  dataLoaded:boolean = false
-  starSystems:StarSystem[]
-  selectedStarSystem:StarSystem
-  selectedStarSystemItem:any
-  selectedObjectKind:string
-  subscription:Subscription
-  fullSubscription:Subscription
+  network: Network;
+  isEditor: boolean = (this.authService.hasClaim(22) || this.authService.hasClaim(23)) ? true :false;
+  dataLoaded: boolean = false;
+  starSystems: StarSystem[];
+  selectedStarSystem: StarSystem;
+  selectedStarSystemItem: any;
+  selectedStarSystemItemLaws: Jurisdiction[];
+  selectedObjectKind: string;
+  subscription: Subscription;
+  fullSubscription: Subscription;
 
   constructor(private systemMapService:SystemMapService, private authService:AuthService, private spinnerService:SpinnerService) { 
     this.subscription = this.systemMapService.dataRefreshAnnounced$.subscribe(
@@ -173,13 +175,87 @@ export class SystemMapComponent implements OnInit, AfterContentInit, OnDestroy {
         if (params.nodes[0] && /^(gw|p|m|so)-([0-9])$/.test(params.nodes[0])) {
           let matches = /^(gw|p|m|so)-([0-9])$/.exec(params.nodes[0])
           console.log(matches)
-          // if we have selected a system 
-          self.matchItem(matches[1], parseInt(matches[2]))
+          // if we have selected a system
+          const objectKind = matches[1];
+          const objectId = matches[2];
+          self.matchItem(objectKind, parseInt(objectId))
+          self.gatherLaws(objectKind, parseInt(objectId));
         } else {
           // if we have not selected a system then we select one
           self.selectSystem(params.nodes[0])
         }        
       }
+    });
+  }
+
+  /**
+   * Parse and gather the laws for a selected object
+   * @param objectKind gw or p or m or so
+   * @param objectId The Id of the object
+   */
+  private gatherLaws(objectKind:string, objectId:number) {
+    let jurisList = [] as Jurisdiction[];
+
+    // we always get the star system
+    jurisList.push(this.selectedStarSystem.jurisdiction)
+
+    // if its a planet
+    if (objectKind == "p") {
+      if (this.selectedStarSystem.planets[this.selectedStarSystem.planets.findIndex(x => x.id == objectId)].jurisdiction) {
+        jurisList.push(this.selectedStarSystem.planets[this.selectedStarSystem.planets.findIndex(x => x.id == objectId)].jurisdiction);
+      }
+    }
+
+    // if it a moon
+    if (objectKind == "m") {
+      for (let index = 0; index < this.selectedStarSystem.planets.length; index++) {
+        const planet = this.selectedStarSystem.planets[index];
+        if (planet.jurisdiction) {
+          jurisList.push(planet.jurisdiction);
+        }
+
+        const moon = planet.moons.find(x => x.id === objectId)
+        if (moon && moon.jurisdiction) {
+          jurisList.push(moon.jurisdiction);
+        }
+      }
+    }
+
+    // if its a system object
+    if (objectKind == "so") {
+      const starSystemLevelSo = this.selectedStarSystem.system_objects.find(x => x.id === objectId)
+      if (starSystemLevelSo) {
+        if (starSystemLevelSo.jurisdiction) {
+          jurisList.push(starSystemLevelSo.jurisdiction);
+        }
+      } else {
+        for (let index = 0; index < this.selectedStarSystem.planets.length; index++) {
+          const planet = this.selectedStarSystem.planets[index];
+          const planetLevelSo = planet.system_objects.find(x => x.id === objectId)
+          if (planetLevelSo) {
+            if (planetLevelSo.jurisdiction) {
+              jurisList.push(planetLevelSo.jurisdiction)
+            }            
+            break;
+          }
+  
+          for (let index = 0; index < planet.moons.length; index++) {
+            const moon = planet.moons[index];
+            const moonLevelSo = moon.system_objects.find(x => x.id === objectId)
+            if (moonLevelSo) {
+              if (moonLevelSo.jurisdiction) {
+                jurisList.push(moonLevelSo.jurisdiction)
+              }
+              break;
+            }
+          }
+        }
+      }
+    }
+
+    // return a unique list of items
+    this.selectedStarSystemItemLaws = Array.from(new Set(jurisList.map((item: Jurisdiction) => item.id))).map((id) => {
+      return jurisList.find(x => x.id === id)
     });
   }
 
@@ -249,6 +325,10 @@ export class SystemMapComponent implements OnInit, AfterContentInit, OnDestroy {
     this.selectedObjectKind = null
   }
 
+  /**
+   * Select a star system to show
+   * @param systemId The id of the Star System
+   */
   selectSystem(systemId:number)
   {
     // cancel the listener

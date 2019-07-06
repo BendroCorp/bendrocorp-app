@@ -1,15 +1,20 @@
 <!-- Breadcrumbs -->
 <div class="row">
   <div class="col-md-12">
-    <ol class="breadcrumb">
+    <ol *ngIf="!selectedStarSystem" class="breadcrumb">
       <li class="breadcrumb-item active">System Map</li>
     </ol>
+    <ol *ngIf="selectedStarSystem" class="breadcrumb">
+        <li class="breadcrumb-item"><a href="javascript:void(0)" (click)="deselectItem()">System Map</a></li>
+        <li class="breadcrumb-item active">{{selectedStarSystem.title | titlecase}}</li>
+      </ol>
   </div>
 </div>
 <!-- Buttons -->
 <div class="row" style="margin-bottom:4px">
   <div class="col-md-12">
     <add-update-system-modal *ngIf="isEditor && !selectedStarSystem" style="float:right"></add-update-system-modal>
+    <add-update-system-modal *ngIf="isEditor && selectedStarSystem" [starSystem]="selectedStarSystem" style="float:right"></add-update-system-modal>
     <add-update-system-object-modal [starSystem]="selectedStarSystem" *ngIf="isEditor && selectedStarSystem" style="float:right; margin-right: 4px;"></add-update-system-object-modal>
     <add-update-moon-modal [starSystem]="selectedStarSystem" *ngIf="isEditor && selectedStarSystem" style="float:right; margin-right: 4px;"></add-update-moon-modal>
     <add-update-planet-modal [starSystem]="selectedStarSystem" *ngIf="isEditor && selectedStarSystem" style="float:right; margin-right: 4px;"></add-update-planet-modal>
@@ -18,9 +23,12 @@
 </div>
 <!-- System Map  -->
 <div class="row" style="height:80%;">
+  <!-- The map panel -->
   <div [ngClass]="{'col-md-6 col-sm-6 col-xs-6': selectedStarSystemItem, 'col-md-12': !selectedStarSystemItem }" class="">    
+    <!-- The actual visjs element -->
     <div style="border:2px solid #000; height: 95%;" #starChart></div>   
   </div>
+  <!-- The details panel -->
   <div style="height: 95%;" *ngIf="selectedStarSystemItem" class="col-md-6 col-sm-6 col-xs-6 detail-panel">
     <span class="sm-close"><a (click)="deselectItem()"><i class="fas fa-times"></i></a></span>
     <!-- Basic Details -->
@@ -35,6 +43,7 @@
           <!-- Buttons for system objects around planets and moons -->
           &nbsp;<add-update-system-object-modal [smallBtn]="true" [systemPlanet]="selectedStarSystemItem" *ngIf="isEditor && selectedStarSystem && selectedObjectKind === 'p'"></add-update-system-object-modal>
           <add-update-system-object-modal [smallBtn]="true" [systemMoon]="selectedStarSystemItem" *ngIf="isEditor && selectedStarSystem&& selectedObjectKind === 'm'"></add-update-system-object-modal>
+          <system-law-modal [jurisdictions]="selectedStarSystemItemLaws" *ngIf="selectedObjectKind === 'p' || selectedObjectKind === 'm' || selectedObjectKind === 'so'"></system-law-modal>
         </span>
       </h2>
       <system-rating-panel *ngIf="selectedObjectKind === 'p'" [criminalRating]="selectedStarSystemItem.minimum_criminality_rating" [atmosphericHeight]="selectedStarSystemItem.atmospheric_height" [economicRating]="selectedStarSystemItem.economic_rating" [populationDensity]="selectedStarSystemItem.population_density"></system-rating-panel>

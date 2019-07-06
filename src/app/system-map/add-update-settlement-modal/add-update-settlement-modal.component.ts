@@ -5,6 +5,8 @@ import { SystemMapService } from '../system-map.service';
 import { MessageService } from 'src/app/message/message.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Base64Upload } from 'src/app/models/misc-models';
+import { Jurisdiction } from 'src/app/models/law.model';
+import { LawService } from 'src/app/law-library/law.service';
 
 @Component({
   selector: 'add-update-settlement-modal',
@@ -23,11 +25,13 @@ export class AddUpdateSettlementModalComponent implements OnInit {
   successString:string
   types:SystemMapTypes
   modalRef:NgbModalRef
-  formSubmitting:boolean = false
+  formSubmitting:boolean = false;
+  jurisdictions: Jurisdiction[] = [];
 
-  constructor(private modalService: NgbModal, private systemMapService:SystemMapService, private messageService:MessageService) { }
+  constructor(private modalService: NgbModal, private systemMapService:SystemMapService, private messageService:MessageService, private lawService: LawService) { }
 
   open(content) {
+    this.fetchJurisdictions();
     this.formAction = (this.systemSettlement && this.systemSettlement.id) ? "Update" : "Create"
     if (!(this.systemSettlement && this.systemSettlement.id)) {
       // Which one is it
@@ -44,6 +48,14 @@ export class AddUpdateSettlementModalComponent implements OnInit {
 
     // open the modal
     this.modalRef = this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'})
+  }
+
+  fetchJurisdictions() {
+    this.lawService.listJurisdictions().subscribe((results) => {
+      if (!(results instanceof HttpErrorResponse)) {
+       this.jurisdictions = results; 
+      }
+    });
   }
 
   close()

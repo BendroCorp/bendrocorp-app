@@ -38,6 +38,7 @@ export class LawLibraryDetailsComponent implements OnInit {
         this.lawService.createCategory(this.newJurisdictionCategory).subscribe((results) => {
           if (!(results instanceof HttpErrorResponse)) {
             console.log(results);
+            results.newLaw = {} as Law; 
             this.jursidiction.categories.push(results);
             this.newJurisdictionCategory = {} as LawCategory;
           }
@@ -128,7 +129,7 @@ export class LawLibraryDetailsComponent implements OnInit {
       return a.ordinal - b.ordinal;
     });
     
-    console.log(sorted);
+    // console.log(sorted);
     return sorted;
   }
 

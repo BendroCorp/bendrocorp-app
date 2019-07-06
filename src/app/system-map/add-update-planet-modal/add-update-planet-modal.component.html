@@ -15,6 +15,12 @@
           <label>Description</label>
           <textarea required class="form-control" placeholder="Planet description..." [(ngModel)]="planet.description" name="planet_description" id="" cols="30" rows="10"></textarea>
         </div>
+        <div class="form-group">
+          <label>Jurisdiction</label>
+          <select class="form-control" [(ngModel)]="planet.jurisdiction_id" name="jurisdiction" id="jurisdiction">
+            <option *ngFor="let jurisdiction of jurisdictions" [value]="jurisdiction.id">{{jurisdiction.title}}</option>
+          </select>
+        </div>
         <div>
           <label>Primary Image</label>
           <div *ngIf="planet.primary_image_url" style="text-align:center;">

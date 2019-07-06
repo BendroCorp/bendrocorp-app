@@ -1,0 +1,24 @@
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Local Law Summary</h4>
+    <button type="button" class="close" aria-label="Close" (click)="close()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <h2>Legal Summary</h2>
+    <div *ngFor="let jurisdiction of jurisdictions">
+      <h4>{{jurisdiction.title}}</h4>
+      <div *ngFor="let category of jurisdiction.categories">
+        <h6>{{category.title}}</h6>
+        <ul>
+          <li *ngFor="let law of category.laws">
+            {{law.title}}
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<button class="btn btn-sm btn-primary" (click)="open(content)"><i class="fas fa-gavel"></i></button>
