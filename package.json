@@ -28,6 +28,7 @@
     "@types/vis": "^4.21.8",
     "angular-bootstrap-datetimepicker": "^2.2.1",
     "angular-sortablejs": "^2.6.0",
+    "angular2-actioncable": "^6.0.2",
     "angular2-datetimepicker": "^1.1.1",
     "angularx-qrcode": "^1.2.2",
     "bootstrap": "^4.1.3",
