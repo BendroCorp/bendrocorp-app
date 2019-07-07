@@ -122,6 +122,7 @@ import { SelectEditorComponent } from './editors/select-editor/select-editor.com
 import { DisplayFieldNameFilter, DisplayNameFilter } from './pipes/display-value.pipe';
 import { ConfirmationModal, ConfirmationModalContent } from './modals/confirmation-modal/confirmation-modal.component';
 import { SystemLawModalComponent } from './system-map/system-law-modal/system-law-modal.component';
+import { ActionCableService, Channel } from 'angular2-actioncable';
 
 @NgModule({
   declarations: [
@@ -275,7 +276,8 @@ import { SystemLawModalComponent } from './system-map/system-law-modal/system-la
     EventService,
     SpinnerService,
     IsAuthorizedService,
-    ConfirmationModal
+    ConfirmationModal,
+    ActionCableService
   ],
   bootstrap: [AppComponent]
 })
