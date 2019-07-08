@@ -50,13 +50,13 @@ export class SiteLogsComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     if (this.canViewLogs) {
-      const channel: Channel = this.cableService
-      .cable(`${this.globals.wssUri}/?token=${this.authService.retrieveUserSession().token}`)
-      .channel('LogChannel');
+      // const channel: Channel = this.cableService
+      // .cable(`${this.globals.wssUri}/?token=${this.authService.retrieveUserSession().token}`)
+      // .channel('LogChannel');
 
-      this.logSubscription = channel.received().subscribe(message => {
-          this.fetchLogs();
-      });
+      // this.logSubscription = channel.received().subscribe(message => {
+      //     this.fetchLogs();
+      // });
 
       this.spinnerService.spin(true);
       this.fetchLogs();
