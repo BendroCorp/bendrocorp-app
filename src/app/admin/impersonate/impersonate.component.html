@@ -8,7 +8,7 @@
       <div class="card border-primary">
         <div class="card-header bg-primary text-white">User Impersonation</div>
         <div class="card-body">
-          <h6>User Impersonation</h6>
+          <h6>User Impersonation (Please note this is currently not working)</h6>
           <p>Is a tightly controlled adminstrative function. Please note that this feature should only be used when absoluetly required to diagnose an issue that an end user is having. Use of this feature is logged and the feature also informs the end user when it is used against their account.</p>
           <div class="form-group">
             <label>Select User</label>
@@ -17,7 +17,7 @@
             </select>
           </div>
           <div class="form-group">
-            <button class="btn btn-primary" (click)="impersonateUser()" [disabled]="!selectedImpersonationUserId">Impersonate User</button>
+            <button class="btn btn-primary" (click)="impersonateUser()" [disabled]="!selectedImpersonationUserId || true">Impersonate User</button>
           </div>
         </div>
       </div>

@@ -55,7 +55,7 @@ export class CompleteJobModalComponent implements OnInit {
 
   isAcceptor() : boolean
   {
-      return (this.mission.on_mission && this.mission.on_mission.find(x => x.id == (this.authService.retrieveUserSession() as UserSessionResponse).character.id )) ? true : false
+      return (this.mission.on_mission && ((this.authService.retrieveUserSession() as UserSessionResponse).character_id && this.mission.on_mission.find(x => x.id == (this.authService.retrieveUserSession() as UserSessionResponse).character_id) )) ? true : false
   }
 
   ngOnInit() {

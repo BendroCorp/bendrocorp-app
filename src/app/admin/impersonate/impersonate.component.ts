@@ -35,18 +35,18 @@ export class ImpersonateComponent implements OnInit {
     console.log(this.selectedImpersonationUserId);
     
     if (this.selectedImpersonationUserId) {
-      this.adminService.requestImpersonationToken(this.selectedImpersonationUserId).subscribe(
-        (results) => {
-          if (!(results instanceof HttpErrorResponse)) {
-            this.authService.setSession(results).subscribe(
-              () => {
-                this.authService.refreshData()
-                this.router.navigateByUrl('/')
-              }
-            )
-          }
-        }
-      )
+      // this.adminService.requestImpersonationToken(this.selectedImpersonationUserId).subscribe(
+      //   (results) => {
+      //     if (!(results instanceof HttpErrorResponse)) {
+      //       this.authService.setSession(results).subscribe(
+      //         () => {
+      //           this.authService.refreshData()
+      //           this.router.navigateByUrl('/')
+      //         }
+      //       )
+      //     }
+      //   }
+      // )
     }
   }
 

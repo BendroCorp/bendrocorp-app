@@ -10,6 +10,7 @@ import { MessageService } from './message/message.service';
 import { Subject, Observable, of } from 'rxjs';
 import { Router } from '@angular/router';
 import { StatusMessage } from './models/misc-models';
+import { JwtHelperService } from '@auth0/angular-jwt'
 
 @Injectable()
 export class AuthService {
@@ -92,14 +93,14 @@ export class AuthService {
   doPasswordReset(password: string, password_confirmation: string, password_reset_token: string): Observable<StatusMessage> {
     const user = { password, password_confirmation, password_reset_token }
     return this.http.post<StatusMessage>(`${this.globals.baseUrl}/account/reset-password`, { user }).pipe(
-      tap(result => console.log('Do password reset!')),
+      tap(result => console.log('Password reset!')),
       catchError(this.err.handleError<any>('Password Reset'))
     )
   }
 
   doUpdateEmail(email: string, password: string): Observable<StatusMessage> {
     return this.http.post<StatusMessage>(`${this.globals.baseUrl}/account/update-email`, { email, password }).pipe(
-      tap(result => console.log('Do email update!')),
+      tap(result => console.log('Email updated!')),
       catchError(this.err.handleError<any>('Email Update'))
     )
   }
@@ -108,9 +109,10 @@ export class AuthService {
 
   public hasClaim(roleId: number): boolean {
     if (this.isLoggedIn()) {
-      if ((this.retrieveUserSession() as UserSessionResponse).claims.length > 0) {
-        const claim = (this.retrieveUserSession() as UserSessionResponse).claims.find(x => x.id === roleId)
-        if (claim) {
+      if ((this.retrieveUserSession() as UserSessionResponse).roles.length > 0) {
+        const roles = (this.retrieveUserSession() as UserSessionResponse).roles;
+        const claim = roles.find(x => x === roleId)
+        if (claim == roleId) {
           return true
         }
       }
@@ -120,14 +122,21 @@ export class AuthService {
     }
   }
 
-  setSession(authResult): Observable<boolean> {
+  setSession(authResult: string): Observable<boolean> {
     if (authResult !== 'undefined') {
-      localStorage.setItem('userObject', JSON.stringify(authResult));
+      localStorage.setItem('userObject', authResult);
       return of(true)
     } else {
       console.error('Undefined authResult passed to setSession!');
       return of(false)
     }
+  }
+  /**
+   * Retrieve the current JWT token string
+   * @returns Session JWT Token
+   */
+  retrieveSession(): string {
+    return localStorage.getItem('userObject');
   }
 
   logout(): Observable<boolean> {
@@ -147,16 +156,6 @@ export class AuthService {
     }
   }
 
-  // tslint:disable-next-line:member-ordering
-  public static retrieveUser() {
-    if (localStorage.getItem('userObject') !== null && localStorage.getItem('userObject') !== 'undefined') {
-      const retrieved = localStorage.getItem('userObject')
-      const user = JSON.parse(retrieved)
-      // console.log(user);
-      return user;
-    }
-  }
-
   setOnAuthRedirect(uri: string) {
     localStorage.setItem('authRedirect', uri)
   }
@@ -169,12 +168,25 @@ export class AuthService {
     return localStorage.getItem('authRedirect')
   }
 
+  /**
+   * Fetch the user information from the stored JWT token
+   * @returns User parsed from JWT token
+   */
   retrieveUserSession(): UserSessionResponse {
-    if (localStorage.getItem('userObject') !== null && localStorage.getItem('userObject') !== 'undefined') {
-      const retrieved = localStorage.getItem('userObject')
-      const user = JSON.parse(retrieved)
-      // console.log(user);
-      return user;
+    const session = this.retrieveSession();
+    if (session) {
+      const jwtHelper = new JwtHelperService()
+      const decodedToken = jwtHelper.decodeToken(session)
+
+      return { 
+        id: decodedToken.sub, 
+        roles: decodedToken.roles, 
+        first_name: decodedToken.given_name, 
+        last_name: decodedToken.family_name, 
+        avatar: decodedToken.avatar,
+        expires: decodedToken.exp,
+        tfa_enabled: decodedToken.tfa_enabled
+      } as UserSessionResponse;
     }
   }
 
@@ -184,7 +196,7 @@ export class AuthService {
 
   getExpiration() {
       const userObject = this.retrieveUserSession();
-      return moment(userObject.token_expires);
+      return moment.unix(userObject.expires);
   }
 
 }

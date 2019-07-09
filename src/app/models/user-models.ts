@@ -1,6 +1,6 @@
 import { Character } from './character-models'
 
-export class UserSessionResponse
+export class UserSessionResponseOld
 {
     id?:number;
     character?:Character;
@@ -10,6 +10,23 @@ export class UserSessionResponse
     claims?:Claim[];
 }
 
+export class IdTokenResponse {
+    id_token: string;
+}
+
+export class UserSessionResponse
+{
+    id?: number;
+    first_name?: string;
+    last_name?: string;
+    character_id?: number;
+    avatar?: string;
+    expires?: number;
+    roles?: number[];
+    tfa_enabled?:boolean;
+}
+
+// deprecated?
 export class Claim
 {
     id?:number;
@@ -25,6 +42,7 @@ export class User
     roles?:Role[]
 }
 
+// deprecated?
 export class Role extends Claim
 {
     name?: string
