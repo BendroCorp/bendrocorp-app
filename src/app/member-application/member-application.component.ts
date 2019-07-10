@@ -20,7 +20,7 @@ export class MemberApplicationComponent implements OnInit {
   policyCheck:boolean = false
   characterApplication:NewCharacterApplication
   currentApplication:CharacterApplication
-  isApplicant:boolean = ((this.authService.retrieveUserSession() as UserSessionResponse).character && !this.authService.hasClaim(0)) ? true : false
+  isApplicant:boolean = ((this.authService.retrieveUserSession() as UserSessionResponse).first_name && !this.authService.hasClaim(0)) ? true : false
   ships:Ship[]
   jobs:Job[]
 

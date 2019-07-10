@@ -39,7 +39,7 @@ export class AuthInterceptor implements HttpInterceptor {
         // Retrieve the token from the userObject       
         if (this.authService.isLoggedIn()) {           
             
-            const token = this.authService.retrieveUserSession().token
+            const token = this.authService.retrieveSession();
 
             // console.log(`Logged in adding token to request: ${token}`);
                         

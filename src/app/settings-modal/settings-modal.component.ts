@@ -22,6 +22,7 @@ export class SettingsModalComponent implements OnInit {
   oAuthTokens: OAuthToken[] = []
   tokens: TokenObject[] = []
   user = this.authService.retrieveUserSession() as UserSessionResponse
+  tfa_enabled: boolean = this.user.tfa_enabled || this.checkSessTfaEnabled();
 
   constructor(private modalService: NgbModal, private authService:AuthService, private messageService:MessageService, private oAuthService:OauthService) {}
 
@@ -58,12 +59,18 @@ export class SettingsModalComponent implements OnInit {
     this.authService.enableTfa(this.tfaAuthObject).subscribe(
       (result) => {
         if (!(result instanceof HttpErrorResponse)) {          
-          this.user.tfa_enabled = true
-          this.authService.setSession(this.user)
+          // this.user.tfa_enabled = true
+          // this.authService.setSession(this.user)
+          sessionStorage.setItem('sess_tfa_enabled', 'true');
           this.authService.refreshData()
         }
       }
     )
+  }
+
+  checkSessTfaEnabled(): boolean {
+    let val = sessionStorage.getItem('sess_tfa_enabled')
+    return (val == 'true')
   }
 
   doCancelMembership()

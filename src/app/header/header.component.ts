@@ -66,7 +66,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
   fetchUserSession()
   {
     if (this.authService.isLoggedIn()) {
-      this.userSession = this.authService.retrieveUserSession()
+      this.userSession = this.authService.retrieveUserSession();
+      console.log(this.userSession);
+      
     } else {
       this.userSession = null
     }
