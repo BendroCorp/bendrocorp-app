@@ -6,7 +6,6 @@ import { MessageService } from '../message/message.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { OauthService } from '../oauth/oauth.service';
 import { OAuthToken } from '../models/misc-models';
-import { userInfo } from 'os';
 
 @Component({
   selector: 'settings-modal',
