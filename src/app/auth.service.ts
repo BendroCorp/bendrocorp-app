@@ -136,7 +136,15 @@ export class AuthService {
    * @returns Session JWT Token
    */
   retrieveSession(): string {
-    return localStorage.getItem('userObject');
+    const encodedJwt = localStorage.getItem('userObject');
+    if (encodedJwt) {
+      const results = /^[A-Za-z0-9-_=]+\.[A-Za-z0-9-_=]+\.?[A-Za-z0-9-_.+\/=]*$/.test(encodedJwt)
+      if (results) {
+        return encodedJwt
+      } else {
+        this.logout();
+      }
+    }
   }
 
   logout(): Observable<boolean> {
