@@ -193,7 +193,8 @@ export class AuthService {
         last_name: decodedToken.family_name, 
         avatar: decodedToken.avatar,
         expires: decodedToken.exp,
-        tfa_enabled: decodedToken.tfa_enabled
+        tfa_enabled: decodedToken.tfa_enabled,
+        character_id: decodedToken.character_id
       } as UserSessionResponse;
     }
   }
