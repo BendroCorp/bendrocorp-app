@@ -22,7 +22,7 @@ export class FlightLogService {
    */
   refreshData()
   {
-    console.log("Job board service data refresh called!");    
+    console.log("Flight log service data refresh called!");    
     this.dataRefreshSource.next();
   }
 

@@ -1,0 +1,29 @@
+<!-- Breadcrumbs -->
+<div class="row">
+  <div class="col-md-12">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item active">Spectrum News</li>
+    </ol>
+  </div>
+</div>
+
+<!-- Articles -->
+<div class="row">
+  <div class="col-md-10 col-sm-12 col-xs-12">
+    <div class="card border-primary">
+      <div class="card-header bg-primary text-white">BendroCorp Spectrum News <news-add-update-modal *ngIf="isAdmin" style="float: right;"></news-add-update-modal></div>
+      <div class="card-body article-list">
+        <div>
+          <h6 *ngIf="newsArticles.length == 0">No articles are currently posted. Please check back later!</h6>
+        </div>
+        <div class="article-item" *ngFor="let item of newsArticles">
+          <h4>{{item.title}}<span *ngIf="!item.published">&nbsp;&nbsp;<small class="text-warning">DRAFT</small></span><span *ngIf="isAdmin"> <news-add-update-modal [newsArticle]="item" style="float: right;"></news-add-update-modal></span></h4>
+          <p><small>{{item.created_at | date}}</small></p>
+          <p *ngIf="item.text.length > 50">{{item.text.slice(0, 50)}}...</p>
+          <p *ngIf="item.text.length <= 50">{{item.text}}</p>
+          <button class="btn btn-primary" routerLink="/news/{{item.id}}">Read More</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

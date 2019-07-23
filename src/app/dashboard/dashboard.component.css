@@ -1,3 +1,12 @@
+.recent-news > .dashboard-news-item { 
+    padding-top: 4px;
+    border-bottom: 2px solid rgba(0, 0, 0, 0.6);
+}
+
+.recent-news > .dashboard-news-item:last-child {
+    border-bottom: none;
+}
+
 .upcoming-events-box
 {
     height: 300px;
