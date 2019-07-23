@@ -1,0 +1,9 @@
+.article-list > .article-item {
+  padding-top: 4px;
+  padding-bottom: 4px;
+  border-bottom: 2px solid #000;
+}
+
+.article-list > .article-item:last-child {
+  border-bottom: none;
+}

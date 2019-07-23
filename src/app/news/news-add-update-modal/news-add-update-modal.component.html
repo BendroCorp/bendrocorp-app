@@ -1,0 +1,39 @@
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Profile update</h4>
+    <button type="button" class="close" aria-label="Close" (click)="close()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form>
+      <div class="form-group">
+        <label>Title</label>
+        <input class="form-control" placeholder="Article Title" [(ngModel)]="newsArticle.title" name="article_title" id="article_title" type="text">        
+      </div>
+      <div class="form-group">
+        <label>Text</label>
+        <textarea class="form-control" placeholder="Article Title" [(ngModel)]="newsArticle.text" name="article_text" id="article_text" cols="30" rows="10"></textarea>
+      </div>
+      <div class="form-group">
+        <div class="custom-control custom-checkbox">
+          <input type="checkbox" class="custom-control-input" id="article_published" [(ngModel)]="newsArticle.published" name="article_published">
+          <label class="custom-control-label" for="article_published">Published? (visible to non-admins)</label>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="custom-control custom-checkbox">
+          <input type="checkbox" class="custom-control-input" id="article_public" [(ngModel)]="newsArticle.public" name="article_public">
+          <label class="custom-control-label" for="article_public">Public?</label>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-primary" (click)="addUpdateNewsArticle()">Save</button>
+    <button type="button" class="btn btn-secondary" (click)="close()">Cancel</button>
+  </div>
+</ng-template>
+
+<button *ngIf="!newsArticle || (newsArticle && !newsArticle.id)" (click)="open(content)" class="btn btn-secondary">{{formAction}} Article</button>
+<button *ngIf="newsArticle && newsArticle.id" (click)="open(content)" class="btn btn-primary">{{formAction}} Article</button>

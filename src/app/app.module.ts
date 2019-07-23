@@ -123,6 +123,9 @@ import { DisplayFieldNameFilter, DisplayNameFilter } from './pipes/display-value
 import { ConfirmationModal, ConfirmationModalContent } from './modals/confirmation-modal/confirmation-modal.component';
 import { SystemLawModalComponent } from './system-map/system-law-modal/system-law-modal.component';
 import { ActionCableService, Channel } from 'angular2-actioncable';
+import { NewsComponent } from './news/news.component';
+import { NewsAddUpdateModalComponent } from './news/news-add-update-modal/news-add-update-modal.component';
+import { NewsDetailComponent } from './news/news-detail/news-detail.component';
 
 @NgModule({
   declarations: [
@@ -223,6 +226,9 @@ import { ActionCableService, Channel } from 'angular2-actioncable';
     ConfirmationModal,
     ConfirmationModalContent,
     SystemLawModalComponent,
+    NewsComponent,
+    NewsAddUpdateModalComponent,
+    NewsDetailComponent,
   ],
   entryComponents: [
     EventModalComponent,

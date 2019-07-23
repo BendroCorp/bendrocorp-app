@@ -1,0 +1,25 @@
+<!-- Breadcrumbs -->
+<div class="row">
+  <div class="col-md-12">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item active"><a routerLink="/news">Spectrum News</a></li>
+      <li *ngIf="article" class="breadcrumb-item active">{{article.title}}</li>
+    </ol>
+  </div>
+</div>
+
+<!-- article -->
+<div *ngIf="article" class="row">
+  <div class="col-md-12">
+    <div class="card border-primary">
+      <div class="card-header bg-primary text-white">{{article.title}} <news-add-update-modal [newsArticle]="article" *ngIf="isAdmin" style="float: right;"></news-add-update-modal></div>
+      <div class="card-body article-list">
+        <article>
+          <h3>{{article.title}}<span *ngIf="!article.published">&nbsp;&nbsp;<small class="text-warning">DRAFT</small></span></h3>
+          <p><small>{{article.created_by.main_character.first_name}} {{article.created_by.main_character.last_name}} - {{article.created_at | date}}</small></p>
+          <p style="white-space: pre-line;">{{article.text}}</p>
+        </article>
+      </div>
+    </div>    
+  </div>
+</div>
