@@ -40,7 +40,12 @@
               <tbody>
                 <tr *ngFor="let approver of approval.approval.approval_approvers">
                   <td>{{approver.character_name}}</td>
-                  <td>{{approver.approver_response}}</td>
+                  <td>
+                    <span>{{approver.approver_response}}</span>
+                    <span style="float: right;">
+                      <button *ngIf="isCeo && approver.approval_type_id != 6 && !approvalCompleted()" class="btn btn-sm btn-warning" (click)="removeApprover(approver.id)"><i class="fas fa-minus"></i></button>
+                    </span>
+                  </td>
                 </tr>
               </tbody>
             </table>

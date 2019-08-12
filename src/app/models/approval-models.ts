@@ -6,6 +6,7 @@ export class MyApproval
     approval_type?:ApprovalType
     created_at?: Date
     updated_at?: Date
+    approval?: Approval
 }
 
 export class Approval

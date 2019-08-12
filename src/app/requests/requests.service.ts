@@ -49,6 +49,7 @@ export class RequestsService {
       catchError(this.errorService.handleError<any>('Remove Role Request '))
     )
   }
+
   list_approvals(count:number = null) : Observable<MyApproval[]>
   {
     if (count && !isNaN(count)) {
@@ -64,11 +65,25 @@ export class RequestsService {
     }
   }
 
+  fetch_approval(approval_approver_id: number): Observable<MyApproval> {
+    return this.http.get<MyApproval>(`${this.globals.baseUrl}/user/approval/${approval_approver_id}`).pipe(
+      tap(results => console.log(`Fetched approval approver record # ${results.id}`)),
+      catchError(this.errorService.handleError<any>('Fetch Single Approval Approver'))
+    )
+  }
+
   submit_approval(approval_id:number, approval_type_id:number) : Observable<StatusMessage>
   {
     return this.http.get<StatusMessage>(`${this.globals.baseUrl}/approvals/${approval_id}/${approval_type_id}`).pipe(
       tap(results => console.log(`Submitted approval change for approval #${approval_id}`)),
       catchError(this.errorService.handleError<any>('Submit Approval'))
+    )
+  }
+
+  remove_approver(approver_id:number) : Observable<StatusMessage> {
+    return this.http.delete<StatusMessage>(`${this.globals.baseUrl}/approvals/approver/${approver_id}`).pipe(
+      tap(results => console.log(`Removed approver #${approver_id}`)),
+      catchError(this.errorService.handleError<any>('Remove Approver'))
     )
   }
 }
