@@ -39,7 +39,7 @@
     <p>{{comment.comment}}</p>
     <hr>
   </div>
-  <div *ngIf="!application.locked_for_review">
+  <div *ngIf="application.application_status_id > 1 && application.application_status_id < 4">
     <div class="form-group">
       <textarea class="form-control" [(ngModel)]="newCommentText" name="new_comment"></textarea>
     </div>
