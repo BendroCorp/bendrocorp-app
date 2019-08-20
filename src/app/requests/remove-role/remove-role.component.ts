@@ -40,7 +40,7 @@ export class RemoveRoleComponent implements OnInit {
 
   roleList()
   {
-    this.selectedUser = this.users.find(x => x.id == this.removeRoleRequest.on_behalf_of_id)
+    this.selectedUser = this.users.find(x => x.main_character.id == this.removeRoleRequest.on_behalf_of_id)
   }
 
   ngOnInit() {
