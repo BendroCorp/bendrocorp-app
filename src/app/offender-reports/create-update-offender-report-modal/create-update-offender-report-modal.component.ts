@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, OnDestroy } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { OffenderReportService } from '../offender-report.service';
 import { Offender, OffenderReport, ViolenceRating, Infraction, ForceLevel } from '../../models/offender-report-models';
@@ -18,31 +18,31 @@ import { MessageService } from 'src/app/message/message.service';
 })
 export class CreateUpdateOffenderReportModalComponent implements OnInit, OnDestroy {  
 
-  constructor(private modalService: NgbModal, private offenderReportService:OffenderReportService, private profileService:ProfileService, private messageService:MessageService) {}
-  @Input() offenderReport:OffenderReport
-  systemData:StarSystem[]
-  shipData:Ship[]
-  violenceRatings:ViolenceRating[]
-  infractions:Infraction[]
-  forceLevels:ForceLevel[]
-  formAction:string
-  formActionOuter:string
-  handleVerified:boolean
-  checkingHandle:boolean = false
-  handleTextChanged = new Subject<string>()
-  subscription:Subscription
+  constructor(private modalService: NgbModal, private offenderReportService:OffenderReportService, private profileService:ProfileService, private messageService:MessageService, private ref: ChangeDetectorRef) {}
+  @Input() offenderReport: OffenderReport;
+  systemData: StarSystem[];
+  shipData: Ship[];
+  violenceRatings: ViolenceRating[];
+  infractions: Infraction[];
+  forceLevels: ForceLevel[];
+  formAction: string;
+  formActionOuter: string;
+  handleVerified: boolean;
+  checkingHandle: boolean = false;
+  handleTextChanged = new Subject<string>();
+  subscription: Subscription;
 
-  openModal:NgbModalRef
+  openModal: NgbModalRef;
 
   open(content) {    
     console.log(this.offenderReport);
     
-    this.openModal = this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' })
+    this.openModal = this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' });
   }
 
   searchHandle($event)
   {
-    this.handleTextChanged.next($event.target.value)
+    this.handleTextChanged.next($event.target.value);
   }
 
   verifyHandle(handle:string)
@@ -50,8 +50,8 @@ export class CreateUpdateOffenderReportModalComponent implements OnInit, OnDestr
     if (handle) {
       this.offenderReportService.verify_handle(handle).subscribe(
         (result) => {
-          this.checkingHandle = false
-          this.handleVerified = result        
+          this.checkingHandle = false;
+          this.handleVerified = result;        
         }
       )
     }
@@ -60,6 +60,19 @@ export class CreateUpdateOffenderReportModalComponent implements OnInit, OnDestr
   doCreateUpdate()
   {
     if (this.handleVerified) {
+      console.log(`Handle Verified: ${this.handleVerified}`);
+      
+      // adjust the infractions list
+      this.offenderReport.remove_infractions.forEach((val) => {
+        this.offenderReport.infractions.splice(this.offenderReport.infractions.findIndex(x => x.id === val.id), 1);
+        this.ref.detectChanges();
+      });
+
+      this.offenderReport.new_infractions.forEach((val) => {
+        this.offenderReport.infractions.push(val);
+        this.ref.detectChanges();
+      });
+
       if (this.offenderReport && this.offenderReport.id) {
         this.offenderReportService.update(this.offenderReport).subscribe(
           (results) => {
@@ -88,8 +101,20 @@ export class CreateUpdateOffenderReportModalComponent implements OnInit, OnDestr
 
   submitForApproval()
   {
-    if (this.offenderReport && this.offenderReport.id) {
-      if (confirm("Are you sure you want to submit this offender report for approval?")) {
+    if (confirm("Are you sure you want to submit this offender report for approval?")) {
+
+      if (this.offenderReport && this.offenderReport.id) {
+        // adjust the infractions list
+        this.offenderReport.remove_infractions.forEach((val) => {
+          this.offenderReport.infractions.splice(this.offenderReport.infractions.findIndex(x => x.id === val.id), 1);
+          this.ref.detectChanges();
+        });
+
+        this.offenderReport.new_infractions.forEach((val) => {
+          this.offenderReport.infractions.push(val);
+          this.ref.detectChanges();
+        });
+
         this.offenderReportService.submit(this.offenderReport).subscribe(
           (results) => {
             if (!(results instanceof HttpErrorResponse)) {
