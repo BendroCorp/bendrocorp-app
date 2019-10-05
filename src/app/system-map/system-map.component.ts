@@ -145,7 +145,21 @@ export class SystemMapComponent implements OnInit, AfterContentInit, OnDestroy {
           improvedLayout: true
         },
         physics: {
-          enabled: false
+          forceAtlas2Based: {
+              gravitationalConstant: -26,
+              centralGravity: 0.005,
+              springLength: 230,
+              springConstant: 0.18,
+              avoidOverlap: 1.5
+          },
+          maxVelocity: 146,
+          solver: 'forceAtlas2Based',
+          timestep: 0.35,
+          stabilization: {
+              enabled: true,
+              iterations: 1000,
+              updateInterval: 25
+          }
         },
         interaction: {
           zoomView: false,
@@ -163,28 +177,38 @@ export class SystemMapComponent implements OnInit, AfterContentInit, OnDestroy {
   {
     var container = document.getElementById('star-map');
     // var options = {};
-    this.network = new Network(this.netContainer.nativeElement, dataSet, options);
+    this.network = new Network(this.netContainer.nativeElement, dataSet, options) as Network;
     let self = this;
+
+    // deal with physics
 
     // setup the listener
     this.network.on('select', function(params) {
       if (params && params.nodes && params.nodes[0] && !this.selectedStarSystem) {
         // console output to debug
+        // const theNode = params.nodes[0] as Node
+        
         console.log(params.nodes[0])
 
-        if (params.nodes[0] && /^(gw|p|m|so)-([0-9])$/.test(params.nodes[0])) {
-          let matches = /^(gw|p|m|so)-([0-9])$/.exec(params.nodes[0])
+        if (params.nodes[0] && /^(gw|p|m|so)-([0-9]{1,4})$/.test(params.nodes[0])) {
+          let matches = /^(gw|p|m|so)-([0-9]{1,4})$/.exec(params.nodes[0])
           console.log(matches)
           // if we have selected a system
           const objectKind = matches[1];
           const objectId = matches[2];
+          // this.network.selectNodes([]);
+          // this.network.selectEdges([]);
           self.matchItem(objectKind, parseInt(objectId))
           self.gatherLaws(objectKind, parseInt(objectId));
         } else {
           // if we have not selected a system then we select one
           self.selectSystem(params.nodes[0])
-        }        
+        }
       }
+      console.log('network:');
+      
+      console.log(this.network);
+      
     });
   }
 
@@ -197,7 +221,9 @@ export class SystemMapComponent implements OnInit, AfterContentInit, OnDestroy {
     let jurisList = [] as Jurisdiction[];
 
     // we always get the star system
-    jurisList.push(this.selectedStarSystem.jurisdiction)
+    if (this.selectedStarSystem.jurisdiction) {
+      jurisList.push(this.selectedStarSystem.jurisdiction);
+    }
 
     // if its a planet
     if (objectKind == "p") {
@@ -254,9 +280,11 @@ export class SystemMapComponent implements OnInit, AfterContentInit, OnDestroy {
     }
 
     // return a unique list of items
-    this.selectedStarSystemItemLaws = Array.from(new Set(jurisList.map((item: Jurisdiction) => item.id))).map((id) => {
-      return jurisList.find(x => x.id === id)
-    });
+    if (jurisList) {
+      this.selectedStarSystemItemLaws = Array.from(new Set(jurisList.map((item: Jurisdiction) => item.id))).map((id) => {
+        return jurisList.find(x => x.id === id)
+      });
+    }
   }
 
   /**
@@ -285,7 +313,6 @@ export class SystemMapComponent implements OnInit, AfterContentInit, OnDestroy {
             return
           }
         }
-        
         
       }else if (objectKind === "so") { // system object
         this.selectedStarSystemItem = this.selectedStarSystem.system_objects.find(x => x.id === objectId)
