@@ -1,0 +1,6 @@
+<h4>Adding your Discord information</h4>
+
+<p *ngIf="codeRequestComplete">
+  <span *ngIf="discordIdentityValid">Done! You can close this window!</span>
+  <span *ngIf="!discordIdentityValid" style="color: red;">Uh oh! Something went wrong we will look into it!</span>
+</p>

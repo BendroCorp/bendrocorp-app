@@ -40,6 +40,14 @@ export class User
     rsi_handle?:string
     main_character?:Character
     roles?:Role[]
+    discord_identity?: DiscordIdentity
+}
+
+export class DiscordIdentity {
+    discord_username: string;
+    discord_id: string;
+    refresh_token: string;
+    joined: boolean;
 }
 
 // deprecated?
