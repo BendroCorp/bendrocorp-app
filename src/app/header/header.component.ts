@@ -21,7 +21,12 @@ export class HeaderComponent implements OnInit, OnDestroy {
   alertCount: number = 0
   trainingCount: number = 0
 
-  constructor(private authService:AuthService, private traininingService: TrainingService, private errorService:ErrorService, private router:Router) { 
+  constructor(
+    private authService:AuthService,
+    private traininingService: TrainingService,
+    private errorService:ErrorService,
+    private router:Router
+  ) { 
     this.authSubscription = this.authService.dataRefreshAnnounced$.subscribe(
       () =>
       {

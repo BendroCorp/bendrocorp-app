@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { User, Role } from './models/user-models';
+import { User, Role, DiscordIdentity } from './models/user-models';
 import { ErrorService } from './error.service';
 import { Globals } from './globals';
 import { Subject, Observable } from 'rxjs';
@@ -23,6 +23,20 @@ export class UserService {
   {
     console.log("Requests service data refresh called!");    
     this.dataRefreshSource.next();
+  }
+
+  me(): Observable<User> {
+    return this.http.get<User>(`${this.globals.baseUrl}/user/me`).pipe(
+      tap(results => console.log(`Fetched Me!`)),
+      catchError(this.errorService.handleError<any>('Fetch Me'))
+    )
+  }
+
+  discord_identity_start(code: string): Observable<DiscordIdentity> {
+    return this.http.post<DiscordIdentity>(`${this.globals.baseUrl}/user/discord-identity`, { code }).pipe(
+      tap(results => console.log(`Set Discord Identity!`)),
+      catchError(this.errorService.handleError<any>('Set Discord Identity'))
+    )
   }
 
   list() : Observable<User[]>

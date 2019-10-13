@@ -126,6 +126,8 @@ import { ActionCableService, Channel } from 'angular2-actioncable';
 import { NewsComponent } from './news/news.component';
 import { NewsAddUpdateModalComponent } from './news/news-add-update-modal/news-add-update-modal.component';
 import { NewsDetailComponent } from './news/news-detail/news-detail.component';
+import { DiscordComponent } from './header/discord/discord.component';
+import { DiscordCallbackComponent } from './header/discord/discord-callback/discord-callback.component';
 
 @NgModule({
   declarations: [
@@ -229,6 +231,8 @@ import { NewsDetailComponent } from './news/news-detail/news-detail.component';
     NewsComponent,
     NewsAddUpdateModalComponent,
     NewsDetailComponent,
+    DiscordComponent,
+    DiscordCallbackComponent,
   ],
   entryComponents: [
     EventModalComponent,
