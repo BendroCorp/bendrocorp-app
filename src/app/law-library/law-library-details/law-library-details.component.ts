@@ -85,6 +85,11 @@ export class LawLibraryDetailsComponent implements OnInit {
       this.dataMoveInProgress = true;
       this.lawService.createLaw(lawCategory.newLaw).subscribe((results) => {
         if (!(results instanceof HttpErrorResponse)) {
+
+          if (!this.jursidiction.categories[this.jursidiction.categories.findIndex(x => x.id === lawCategory.id)].laws) {
+            this.jursidiction.categories[this.jursidiction.categories.findIndex(x => x.id === lawCategory.id)].laws = []
+          }
+
           this.jursidiction.categories[this.jursidiction.categories.findIndex(x => x.id === lawCategory.id)].laws.push(results);
           this.jursidiction.categories[this.jursidiction.categories.findIndex(x => x.id === lawCategory.id)].newLaw = {} as Law;
         }
