@@ -34,6 +34,15 @@ export class ProfileService {
     )
   }
 
+
+  list_members() : Observable<Character[]>
+  {
+    return this.http.get<Character[]>(`${this.globals.baseUrl}/profile/member`).pipe(
+      tap(result => console.log(`Fetched ${result.length} profiles!`)),
+      catchError(this.errorService.handleError('Fetch Profiles', []))
+    )
+  }
+
   list_by_division() : Observable<Division[]>
   {
     return this.http.get<Division[]>(`${this.globals.baseUrl}/profile/by-division`).pipe(
