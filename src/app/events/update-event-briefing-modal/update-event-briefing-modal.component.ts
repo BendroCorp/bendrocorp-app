@@ -60,7 +60,7 @@ export class UpdateEventBriefingModalComponent implements OnInit {
       console.log(this.event.briefing);
             
       
-      this.profileService.list().subscribe(
+      this.profileService.list_members().subscribe(
         (results) =>
         {
           if (!(results instanceof HttpErrorResponse)) {
