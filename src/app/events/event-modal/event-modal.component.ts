@@ -12,24 +12,24 @@ import { HttpErrorResponse } from '../../../../node_modules/@angular/common/http
 })
 export class EventModalComponent implements OnInit {
   
-  @Input() event:Event
-  eventTypes:EventType[] = []
-  formAction:string
-  closeResult: string
-  recurrenceId:number = 0
+  @Input() event:Event;
+  eventTypes:EventType[] = [];
+  formAction:string;
+  closeResult: string;
+  recurrenceId:number = 0;
 
-  openModal:NgbModalRef
+  openModal: NgbModalRef;
 
   constructor(private modalService: NgbModal, private eventService:EventService) { }
 
   ngOnInit() {
     if (this.event && this.event.id) {
-      this.formAction = 'Update'
-      this.event.start_date = new Date(this.event.start_date)
-      this.event.end_date = new Date(this.event.end_date)      
+      this.formAction = 'Update';
+      this.event.start_date = new Date(this.event.start_date);
+      this.event.end_date = new Date(this.event.end_date);     
     } else {
-      this.formAction = 'Create'
-      this.event = { } as Event
+      this.formAction = 'Create';
+      this.event = { } as Event;
     }
 
     this.getRecurrence()
@@ -38,27 +38,27 @@ export class EventModalComponent implements OnInit {
       (results) => 
       {
         if (!(results instanceof HttpErrorResponse)) {
-          this.eventTypes = results
+          this.eventTypes = results;
         }
       }
     )
   }
 
   open(content) {
-    this.openModal = this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'})
+    this.openModal = this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'});
   }
 
   setRecurrence()
   {
     if (this.recurrenceId == 1) {
-      this.event.monthly_recurrence = false
-      this.event.weekly_recurrence = true
+      this.event.monthly_recurrence = false;
+      this.event.weekly_recurrence = true;
     } else if (this.recurrenceId == 2) {
-      this.event.monthly_recurrence = true
-      this.event.weekly_recurrence = false
+      this.event.monthly_recurrence = true;
+      this.event.weekly_recurrence = false;
     } else {
-      this.event.monthly_recurrence = false
-      this.event.weekly_recurrence = false
+      this.event.monthly_recurrence = false;
+      this.event.weekly_recurrence = false;
     }
   }
 
@@ -66,14 +66,14 @@ export class EventModalComponent implements OnInit {
   {
     if (this.event) {
       if (this.event.weekly_recurrence && !this.event.monthly_recurrence) {
-        this.recurrenceId = 1
+        this.recurrenceId = 1;
       } else if (!this.event.weekly_recurrence && this.event.monthly_recurrence) {
-        this.recurrenceId = 2
+        this.recurrenceId = 2;
       } else {
-        this.recurrenceId = 0
+        this.recurrenceId = 0;
       }
     }else{
-      this.recurrenceId = 0
+      this.recurrenceId = 0;
     }
   }
 
@@ -81,10 +81,10 @@ export class EventModalComponent implements OnInit {
   onStartDateSelect(event_date_change:any)
   {
     if (event_date_change && event_date_change.value) {
-      console.log(event_date_change.value)    
-      let new_date = new Date(event_date_change.value)
-      new_date.setSeconds(0)
-      console.log(new_date)    
+      console.log(event_date_change.value);
+      let new_date = new Date(event_date_change.value);
+      new_date.setSeconds(0);
+      console.log(new_date);
       this.event.start_date_ms = new_date.getTime()
       console.log(this.event.start_date_ms);  
     }  
@@ -93,10 +93,10 @@ export class EventModalComponent implements OnInit {
   onEndDateSelect(event_date_change:any)
   {
     if (event_date_change && event_date_change.value) {
-      console.log(event_date_change.value)    
-      let new_date = new Date(event_date_change.value)
-      new_date.setSeconds(0)
-      console.log(new_date)    
+      console.log(event_date_change.value);
+      let new_date = new Date(event_date_change.value);
+      new_date.setSeconds(0);
+      console.log(new_date);
       this.event.end_date_ms = new_date.getTime()
       console.log(this.event.end_date_ms);  
     }  
@@ -116,8 +116,8 @@ export class EventModalComponent implements OnInit {
           // Yay actually do nothing! :D
           // welll actually....
           if (!(results instanceof HttpErrorResponse)) {
-            this.eventService.refreshData()
-            this.openModal.close()
+            this.eventService.refreshData();
+            this.openModal.close();
           }
         }
       )
@@ -126,8 +126,9 @@ export class EventModalComponent implements OnInit {
       this.eventService.create(this.event).subscribe(
         (results) => {
           if (!(results instanceof HttpErrorResponse)) {
-            this.eventService.refreshData()
-            this.openModal.close()
+            this.eventService.refreshData();
+            this.event = { } as Event;
+            this.openModal.close();
           }
         }
       )
