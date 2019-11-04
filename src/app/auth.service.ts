@@ -104,6 +104,13 @@ export class AuthService {
       catchError(this.err.handleError<any>('Email Update'))
     )
   }
+
+  terminateMembership(password: string): Observable<StatusMessage> {
+    return this.http.post<StatusMessage>(`${this.globals.baseUrl}/user/end-membership`, { password }).pipe(
+      tap(result => console.log('Membership terminated!')),
+      catchError(this.err.handleError<any>('Membership Termination'))
+    )
+  }
  
   // Internal stuff below here
 

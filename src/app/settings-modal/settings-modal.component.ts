@@ -6,6 +6,7 @@ import { MessageService } from '../message/message.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { OauthService } from '../oauth/oauth.service';
 import { OAuthToken } from '../models/misc-models';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'settings-modal',
@@ -13,18 +14,19 @@ import { OAuthToken } from '../models/misc-models';
   styleUrls: ['./settings-modal.component.css']
 })
 export class SettingsModalComponent implements OnInit {
-  openModal: NgbModalRef
-  passwordChange: NewPassword
-  changeEmail: string
-  changeEmailPassword: string
-  tfaDataObject: TwoFactorDataObject
-  tfaAuthObject: TwoFactorAuthObject
-  oAuthTokens: OAuthToken[] = []
-  tokens: TokenObject[] = []
-  user = this.authService.retrieveUserSession() as UserSessionResponse
+  openModal: NgbModalRef;
+  passwordChange: NewPassword;
+  changeEmail: string;
+  changeEmailPassword: string;
+  endMembershipPassword: string;
+  tfaDataObject: TwoFactorDataObject;
+  tfaAuthObject: TwoFactorAuthObject;
+  oAuthTokens: OAuthToken[] = [];
+  tokens: TokenObject[] = [];
+  user = this.authService.retrieveUserSession() as UserSessionResponse;
   tfa_enabled: boolean = this.user.tfa_enabled || this.checkSessTfaEnabled();
 
-  constructor(private modalService: NgbModal, private authService:AuthService, private messageService:MessageService, private oAuthService:OauthService) {}
+  constructor(private modalService: NgbModal, private router: Router, private authService:AuthService, private messageService:MessageService, private oAuthService:OauthService) {}
 
   doChangePassword()
   {
@@ -75,7 +77,20 @@ export class SettingsModalComponent implements OnInit {
 
   doCancelMembership()
   {
-    this.messageService.addInfo("The one click button is currently not available. If you would like to end your membership please contact your Director via Discord.")
+    // this.messageService.addInfo("The one click button is currently not available. If you would like to end your membership please contact your Director via Discord.")
+    if (this.endMembershipPassword) {
+      this.authService.terminateMembership(this.endMembershipPassword).subscribe((results) => {
+        if (!(results instanceof HttpErrorResponse)) {
+          this.endMembershipPassword = null;
+          this.authService.logout();
+          this.messageService.addSuccess('Your membership to BendroCorp has been ended!')
+          this.router.navigateByUrl('/');
+          this.close();
+        }
+      })
+    } else {
+      this.messageService.addError("You must enter your password!")
+    }
   }
 
   fetchAuthTokens()
@@ -151,6 +166,9 @@ export class SettingsModalComponent implements OnInit {
     this.openModal = this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'})
   }
 
+  /**
+   * Close the modal
+   */
   close()
   {
     this.openModal.close()

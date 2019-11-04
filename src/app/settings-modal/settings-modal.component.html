@@ -128,7 +128,12 @@
           <br>
           <h5>Your Membership</h5>
           <div>
-            <p>You can end your membership to BendroCorp at any time by clicking the button below. Please note that this action is not reversable. If at any time you wish to rejoin BendroCorp you may do so by getting in touch with a member of leadership via Spectrum.</p>
+            <p>You can end your membership to BendroCorp at any time by clicking the button below. Please note that this action is not reversable. If at any time you wish to rejoin BendroCorp you may do so by getting in touch with a member of leadership via Spectrum or Discord.</p>
+            <h6>To Enable TFA enter the code produced by your authenticator and your current password:</h6>
+            <div class="form-group">
+              <label>Password</label>
+              <input class="form-control" [(ngModel)]="endMembershipPassword" type="password">
+            </div>
             <button class="btn btn-lg btn-danger" (click)="doCancelMembership()">Cancel Membership</button>
           </div>
         </ng-template>
