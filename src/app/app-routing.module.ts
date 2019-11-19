@@ -40,6 +40,7 @@ import { LawLibraryDetailsComponent } from './law-library/law-library-details/la
 import { NewsComponent } from './news/news.component';
 import { NewsDetailComponent } from './news/news-detail/news-detail.component';
 import { DiscordCallbackComponent } from './header/discord/discord-callback/discord-callback.component';
+import { ReportsComponent } from './reports/reports.component';
 
 const routes: Routes = [
     { path: '', component: DashboardComponent, canActivate: [AuthGuardService, MemberAuthGuardService] },
@@ -65,6 +66,7 @@ const routes: Routes = [
     { path: 'law-library/:jurisdiction_id', component: LawLibraryDetailsComponent, canActivate: [AuthGuardService, MemberAuthGuardService] },
     { path: 'news', component: NewsComponent, canActivate: [AuthGuardService, MemberAuthGuardService] },
     { path: 'news/:news_id', component: NewsDetailComponent, canActivate: [AuthGuardService, MemberAuthGuardService] },
+    { path: 'reports', component: ReportsComponent, canActivate: [AuthGuardService, MemberAuthGuardService] },
     // public/non-member routes below here
     { path: 'login', component: LoginComponent, canActivate: [NoAuthGuardService] },
     { path: 'signup', component: SignupComponent, canActivate: [NoAuthGuardService] },
