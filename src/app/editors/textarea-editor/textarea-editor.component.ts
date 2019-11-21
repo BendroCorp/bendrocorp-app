@@ -20,7 +20,7 @@ const TEXTAREA_EDIT_VALUE_ACCESSOR = {
   providers: [TEXTAREA_EDIT_VALUE_ACCESSOR]
 })
 export class TextareaEditorComponent implements OnInit, ControlValueAccessor {
-  @ViewChild('textareaEditorControl') textareaEditorControl: ElementRef;
+  @ViewChild('textareaEditorControl', { static: true }) textareaEditorControl: ElementRef;
   @Input() label: string = '';
   @Input() required: string = "false";
   @Input() requiredMessage: string = '';

@@ -1,6 +1,5 @@
 import { Component, OnInit, Input, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
-import { Chart } from 'chart.js'
-import { NumberValueAccessor } from '../../../../node_modules/@angular/forms/src/directives';
+import { Chart } from 'chart.js';
 import { interval, Observable } from '../../../../node_modules/rxjs';
 import { TimeSpan } from 'ng-timespan';
 
@@ -13,10 +12,10 @@ export class CountdownChartComponent implements OnInit, AfterViewInit {
   @Input() endTime: string;
 
   // canvas
-  @ViewChild('daysChart') public canvasDays: ElementRef;
-  @ViewChild('hoursChart') public canvasHours: ElementRef;
-  @ViewChild('minutesChart') public canvasMinutes: ElementRef;
-  @ViewChild('secondsChart') public canvasSeconds: ElementRef;
+  @ViewChild('daysChart', { static: true }) public canvasDays: ElementRef;
+  @ViewChild('hoursChart', { static: true }) public canvasHours: ElementRef;
+  @ViewChild('minutesChart', { static: true }) public canvasMinutes: ElementRef;
+  @ViewChild('secondsChart', { static: true }) public canvasSeconds: ElementRef;
 
   // labels
   eventDays: number;

@@ -8,7 +8,7 @@ import { Network } from 'vis';
 })
 export class StarChartComponent implements OnInit {
   graphData
-  @ViewChild('starChart') netContainer: ElementRef;
+  @ViewChild('starChart', { static: true }) netContainer: ElementRef;
 
   constructor() { }
 

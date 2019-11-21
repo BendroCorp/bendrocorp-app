@@ -49,7 +49,7 @@ const SELECT_CONTROL_VALUE_ACCESSOR = {
   providers: [SELECT_CONTROL_VALUE_ACCESSOR]
 })
 export class SelectEditorComponent implements ControlValueAccessor, OnInit {
-  @ViewChild('selectEditorControl') selectEditorControl: ElementRef;
+  @ViewChild('selectEditorControl', { static: true }) selectEditorControl: ElementRef;
   @Input() label: string = '';  // Label value for input element
   @Input() required: string = 'false'; // Is input requried?
   @Input() requiredMessage: string = '';
