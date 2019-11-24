@@ -128,6 +128,10 @@ import { NewsAddUpdateModalComponent } from './news/news-add-update-modal/news-a
 import { NewsDetailComponent } from './news/news-detail/news-detail.component';
 import { DiscordComponent } from './header/discord/discord.component';
 import { DiscordCallbackComponent } from './header/discord/discord-callback/discord-callback.component';
+import { TemplatesComponent } from './reports/templates/templates.component';
+import { ReportDetailsComponent } from './reports/report-details/report-details.component';
+import { TemplateEditorComponent } from './reports/templates/template-editor/template-editor.component';
+import { AddReportComponent } from './reports/add-report/add-report.component';
 
 @NgModule({
   declarations: [
@@ -233,6 +237,10 @@ import { DiscordCallbackComponent } from './header/discord/discord-callback/disc
     NewsDetailComponent,
     DiscordComponent,
     DiscordCallbackComponent,
+    TemplatesComponent,
+    ReportDetailsComponent,
+    TemplateEditorComponent,
+    AddReportComponent
   ],
   entryComponents: [
     EventModalComponent,

@@ -23,7 +23,7 @@
     "@angular/router": "^8.2.14",
     "@angular/service-worker": "^8.2.14",
     "@auth0/angular-jwt": "^2.1.2",
-    "@bendrocorp/bendrocorp-node-sdk": "^0.2.36",
+    "@bendrocorp/bendrocorp-node-sdk": "^0.2.45",
     "@ng-bootstrap/ng-bootstrap": "^5.1.4",
     "@types/chart.js": "^2.9.2",
     "@types/vis": "^4.21.19",

@@ -13,10 +13,30 @@
       <div class="card-header bg-primary text-white">
         <span>Current Reports</span>
         <div style="float: right;">
-          <button class="btn btn-sm btn-secondary">Template Editor</button>&nbsp;
-          <button class="btn btn-sm btn-secondary">Create Report</button>
+          <add-report-modal></add-report-modal> &nbsp;
+          <button *ngIf="isReportBuilder" (click)="openTemplates()" class="btn btn-sm btn-secondary">Template Editor</button>
         </div>
       </div>
-      <div class="card-body"></div>
+      <div class="card-body">
+        <h6 *ngIf="reports.length == 0">You currently do not have access to any reports!</h6>
+        <table *ngIf="reports.length > 0" class="table table-striped table-hover">
+          <thead>
+            <tr>
+              <th>Report Type</th>
+              <th>Author</th>
+              <th>Created</th>
+              <th>Submitted</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let report of reports" [routerLink]="['/reports/', report.id]">
+              <td>{{report.template.name}}</td>
+              <td>{{report.created_by.main_character.first_name}}</td>
+              <td>{{report.created_at | date}}</td>
+              <td><span *ngIf="!report.draft">Yes</span><span *ngIf="report.draft">No</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
   </div>
 </div>

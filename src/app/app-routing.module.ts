@@ -41,6 +41,9 @@ import { NewsComponent } from './news/news.component';
 import { NewsDetailComponent } from './news/news-detail/news-detail.component';
 import { DiscordCallbackComponent } from './header/discord/discord-callback/discord-callback.component';
 import { ReportsComponent } from './reports/reports.component';
+import { TemplatesComponent } from './reports/templates/templates.component';
+import { TemplateEditorComponent } from './reports/templates/template-editor/template-editor.component';
+import { ReportDetailsComponent } from './reports/report-details/report-details.component';
 
 const routes: Routes = [
     { path: '', component: DashboardComponent, canActivate: [AuthGuardService, MemberAuthGuardService] },
@@ -67,6 +70,9 @@ const routes: Routes = [
     { path: 'news', component: NewsComponent, canActivate: [AuthGuardService, MemberAuthGuardService] },
     { path: 'news/:news_id', component: NewsDetailComponent, canActivate: [AuthGuardService, MemberAuthGuardService] },
     { path: 'reports', component: ReportsComponent, canActivate: [AuthGuardService, MemberAuthGuardService] },
+    { path: 'reports/templates', component: TemplatesComponent, canActivate: [AuthGuardService, MemberAuthGuardService] },
+    { path: 'reports/templates/:template_id', component: TemplateEditorComponent, canActivate: [AuthGuardService, MemberAuthGuardService] },
+    { path: 'reports/:report_id', component: ReportDetailsComponent, canActivate: [AuthGuardService, MemberAuthGuardService] },
     // public/non-member routes below here
     { path: 'login', component: LoginComponent, canActivate: [NoAuthGuardService] },
     { path: 'signup', component: SignupComponent, canActivate: [NoAuthGuardService] },

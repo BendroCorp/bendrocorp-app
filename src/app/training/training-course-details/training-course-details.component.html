@@ -13,7 +13,7 @@
       <div class="card border-primary">
         <div class="card-header bg-primary text-white">{{course.title}}<span *ngIf="course.draft">&nbsp;<span class="badge badge-warning">Draft</span></span><span *ngIf="course.required">&nbsp;<span class="badge badge-danger">Required</span>&nbsp;</span><span style="float:right;" *ngIf="isAdmin"><span *ngIf="course.draft"><button class="btn btn-sm btn-warning" (click)="publishCourse()">Publish Draft</button>&nbsp;</span><training-item-create-update-modal [trainingCourse]="course"></training-item-create-update-modal></span></div>
         <div class="card-body">          
-          <h6 *ngIf="course.training_items.length == 0">There are currently not training items!</h6>
+          <h6 *ngIf="course.training_items.length == 0">There are currently no training items!</h6>
           <div [sortablejs]="course.training_items" [sortablejsOptions]="sortableOptions">
             <div *ngFor="let item of course.training_items">
               <training-item [trainingItem]="item" [trainingCourse]="course"></training-item>

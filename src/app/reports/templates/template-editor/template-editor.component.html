@@ -1,0 +1,97 @@
+<div class="row">
+  <div class="col-md-12">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a [routerLink]="['/reports']">Reports</a></li>
+      <li class="breadcrumb-item "><a [routerLink]="['/reports/templates']">Templates</a></li>
+      <li class="breadcrumb-item active">Edit - <span *ngIf="template">{{template.name}}</span></li>
+    </ol>
+  </div>
+</div>
+
+<div *ngIf="template" class="row">
+  <div class="col-md-12">
+    <div class="card border-primary">
+      <div class="card-header bg-primary text-white">
+        <span>Template Editor</span>
+        <div style="float: right;">
+          <span class="btn btn-sm btn-secondary.disabled"><span *ngIf="!dataSubmissionInProgress" class="text-secondary">Saved</span><span class="text-white" *ngIf="dataSubmissionInProgress">Save <i class="fas fa-spinner fa-pulse"></i></span></span>&nbsp;
+          <button (click)="addField()" class="btn btn-sm btn-secondary">Add Field</button>&nbsp;|
+          <button (click)="archiveTemplate()" class="btn btn-sm btn-danger">Archive Template</button>
+        </div>
+      </div>
+      <div class="card-body">
+        <!-- meta data -->
+        <div class="row">
+          <h5>Template Metadata</h5>
+          <div class="col-md-12">
+            <label>Template Title</label>
+            <input (ngModelChange)="this.templateFieldUpdate.next($event)" class="form-control" type="text" name="template_name" id="template_name" [(ngModel)]="template.name">
+          </div>
+          <div class="col-md-12">
+            <label>Template Description</label>
+            <textarea (ngModelChange)="this.templateFieldUpdate.next($event)" class="form-control" name="template_description" id="template_description" cols="30" rows="4" [(ngModel)]="template.description"></textarea>
+          </div>
+          <div class="col-md-12">
+            <label>Template Handler</label>
+            <select (ngModelChange)="this.templateFieldUpdate.next($event)" class="form-control" [(ngModel)]="template.handler_id" name="handler_id">
+              <option *ngFor="let handler of reportHandlers" [value]="handler.id">{{handler.name}}</option>
+            </select>
+            <small>9 times out of 10 "Generic Approval" should be used. Anything else requires special coding.</small>
+          </div>
+          <div class="col-md-12">
+            <hr />
+            <div class="custom-control custom-checkbox">
+              <input (ngModelChange)="this.templateFieldUpdate.next($event)" type="checkbox" class="custom-control-input" id="draftCheck" [ngModelOptions]="{standalone: true}" [(ngModel)]="template.draft" name="draft">
+              <label class="custom-control-label" for="draftCheck">Draft Template?</label>
+            </div>
+          </div>
+        </div>
+        <hr />
+        <!-- Field forms -->
+        <div class="row">
+          <div class="col-md-12">
+            <h5>Fields</h5>
+            <h6 *ngIf="template.fields.length == 0">No fields! Add one!</h6>
+          </div>
+          <div class="col-md-6" *ngFor="let field of template.fields; let i = index">
+            <form>
+              <div class="form-group">
+                <label>Display Name</label>
+                <input (ngModelChange)="this.templateFieldUpdate.next($event)" class="form-control" type="text" name="field_name" id="field_name" [(ngModel)]="field.name">
+              </div>
+              <div class="form-group">
+                <label>Description</label>
+                <textarea (ngModelChange)="this.templateFieldUpdate.next($event)" class="form-control" name="field_description" id="field_description" cols="30" rows="5" [(ngModel)]="field.description"></textarea>
+              </div>
+              <div class="form-group">
+                <label>Validator (<a href="https://regex101.com/" target="_blank">Regex</a>)</label>
+                <input (ngModelChange)="this.templateFieldUpdate.next($event)" class="form-control" type="text" name="field_validator" id="field_validator" [(ngModel)]="field.validator">
+              </div>
+              <div class="form-group">
+                <label>Display Type</label>
+                <select (ngModelChange)="this.templateFieldUpdate.next($event)" class="form-control" [(ngModel)]="field.field_presentation_type_id" name="field_presentation_type_id">
+                  <option *ngFor="let typer of displayTypes" [value]="typer.id">{{typer.name}}</option>
+                </select>
+              </div>
+              <div *ngIf="field.field_presentation_type_id == 5">
+                <label>Select Field</label>
+                <select (ngModelChange)="this.templateFieldUpdate.next($event)" class="form-control" [(ngModel)]="field.field_id" name="field_id">
+                  <option *ngFor="let field of fields" [value]="field.id">{{field.name}}</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <div class="custom-control custom-checkbox">
+                  <input (ngModelChange)="this.templateFieldUpdate.next($event)" type="checkbox" class="custom-control-input" id="customCheck{{i}}" [ngModelOptions]="{standalone: true}" [(ngModel)]="field.required" name="required">
+                  <label class="custom-control-label" for="customCheck{{i}}">Required?</label>
+                </div>
+              </div>
+              <div class="form-group">
+                <button (click)="archiveField(field)" class="btn btn-sm btn-danger">Archive Field</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,32 +1,55 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { AuthService } from '../auth.service';
-// import { AuthClient, ReportResource } from '@bendrocorp/bendrocorp-node-sdk';
-import { Report, ReportField, ReportFieldValue, ReportTemplate } from '@bendrocorp/bendrocorp-node-sdk/models/report.model'
+import { AuthClient, ReportResource } from '@bendrocorp/bendrocorp-node-sdk';
+import { Report, ReportField, ReportFieldValue, ReportTemplate } from '@bendrocorp/bendrocorp-node-sdk/models/report.model';
+import { ReportService } from './report.service';
+import { HttpErrorResponse } from '@angular/common/http';
+import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-reports',
   templateUrl: './reports.component.html',
   styleUrls: ['./reports.component.css']
 })
-export class ReportsComponent implements OnInit {
+export class ReportsComponent implements OnInit, OnDestroy {
   isReportBuilder: boolean = this.authService.hasClaim(48);
   isReportAdmin: boolean = this.authService.hasClaim(49);
-  reports: Report[];
+  reports: Report[] = [];
+  subscription: Subscription;
 
-  constructor(private authService: AuthService) { }
+  constructor(
+    private authService: AuthService,
+    private reportService: ReportService,
+    private router: Router
+  ) { 
+    this.subscription = this.reportService.reportsRefreshAnnounced$.subscribe(() => {
+      this.fetchReports();
+    });
+  }
 
   fetchReports() {
-    // let authClient = new AuthClient();
-    // authClient.setCredentials({ access_token: this.authService.retrieveSession() })
+    this.reportService.listReports().subscribe((results) => {
+      if (!(results instanceof HttpErrorResponse)) {
+        this.reports = results;
+      }
+    });
+  }
 
-    // new ReportResource({ auth: authClient }).list({ type: 'reports' }).subscribe((results) => {
-    //   // this.reports = results as Report[] // we have to cast it
-    // }, (error) => {
-    //   // we need to play with error handling and how that will work with the SDK and probably make adjustment to it
-    // })
+  openTemplates() {
+    if (this.isReportBuilder) {
+      this.router.navigateByUrl('reports/templates');
+    }
   }
 
   ngOnInit() {
+    this.fetchReports();
+  }
+
+  ngOnDestroy() {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
   }
 
 }
