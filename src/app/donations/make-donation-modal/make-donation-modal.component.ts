@@ -71,7 +71,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 })
 export class DonationModalContent implements AfterViewInit {
   @Input() donationItem:DonationItem
-  @ViewChild('cardElement') cardElement: ElementRef;
+  @ViewChild('cardElement', { static: true }) cardElement: ElementRef;
   card: any;
   cardHandler = this.onChange.bind(this);
   error: string;

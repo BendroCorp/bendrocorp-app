@@ -6,8 +6,7 @@ import { MessageService } from 'src/app/message/message.service';
 import { Jurisdiction, LawCategory, Law } from 'src/app/models/law.model';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ConfirmationModal } from '../../modals/confirmation-modal/confirmation-modal.component';
-import { Observable } from 'rxjs';
-import { concat } from 'rxjs';
+import { Observable ,  concat } from 'rxjs';
 import { SortablejsOptions } from 'angular-sortablejs';
 
 @Component({

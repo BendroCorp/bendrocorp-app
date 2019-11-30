@@ -5,7 +5,7 @@ import { tap, catchError } from 'rxjs/operators';
 import { StatusMessage } from '../../models/misc-models';
 import { Globals } from '../../globals';
 import { ErrorService } from '../../error.service';
-import { DeviceDetectorService } from 'ngx-device-detector';
+// import { DeviceDetectorService } from 'ngx-device-detector';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +15,12 @@ export class ApiOfflineService {
   private apiOffline:boolean = false 
   private dataRefreshSource = new Subject();
 
-  constructor(private http:HttpClient, private error:ErrorService, private globals:Globals, private deviceService:DeviceDetectorService) {
+  constructor(
+    private http:HttpClient,
+    private error:ErrorService,
+    private globals:Globals,
+    //private deviceService:DeviceDetectorService
+  ) {
     // perform an initial immediate check
     // this.healthCheck().subscribe(
     //   (results) => {

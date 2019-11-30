@@ -21,7 +21,7 @@ import { Jurisdiction } from '../models/law.model';
 // https://stackoverflow.com/questions/38974896/call-child-component-method-from-parent-class-angular
 export class SystemMapComponent implements OnInit, AfterContentInit, OnDestroy {
   
-  @ViewChild('starChart') netContainer: ElementRef;
+  @ViewChild('starChart', { static: true }) netContainer: ElementRef;
   network: Network;
   isEditor: boolean = (this.authService.hasClaim(22) || this.authService.hasClaim(23)) ? true :false;
   dataLoaded: boolean = false;

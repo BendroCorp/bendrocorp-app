@@ -17,7 +17,7 @@ export class InlineEditorComponent implements OnInit, ControlValueAccessor {
 
   // TO USE: <input-editor label="First Name" id="txtname" [(ngModel)]="name" type="text" placeholder="Enter First Name" (onSave)="sampleClick()"></input-editor>
 
-  @ViewChild('inputEditorControl') inputEditorControl: ElementRef; // input DOM element
+  @ViewChild('inputEditorControl', { static: true }) inputEditorControl: ElementRef; // input DOM element
   @Input() label: string = '';  // Label value for input element
   @Input() placeholder: string = ''; // Placeholder value ofr input element
   @Input() type: string = 'text'; // The type of input element

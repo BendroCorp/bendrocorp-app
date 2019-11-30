@@ -81,7 +81,7 @@ import { LogUpdateService } from './updates/log-update-service.service';
 import { ApiOfflineComponent } from './misc/api-offline/api-offline.component';
 import { IsAuthorizedService } from './misc/is-authorized.service';
 import { OauthComponent } from './oauth/oauth.component';
-import { DeviceDetectorModule } from 'ngx-device-detector';
+// import { DeviceDetectorModule } from 'ngx-device-detector';
 import { AuthCompleteComponent } from './misc/auth-complete/auth-complete.component';
 import { StarChartComponent } from './system-map/star-chart/star-chart.component';
 import { AddUpdateSystemModalComponent } from './system-map/add-update-system-modal/add-update-system-modal.component';
@@ -128,6 +128,10 @@ import { NewsAddUpdateModalComponent } from './news/news-add-update-modal/news-a
 import { NewsDetailComponent } from './news/news-detail/news-detail.component';
 import { DiscordComponent } from './header/discord/discord.component';
 import { DiscordCallbackComponent } from './header/discord/discord-callback/discord-callback.component';
+import { TemplatesComponent } from './reports/templates/templates.component';
+import { ReportDetailsComponent } from './reports/report-details/report-details.component';
+import { TemplateEditorComponent } from './reports/templates/template-editor/template-editor.component';
+import { AddReportComponent } from './reports/add-report/add-report.component';
 
 @NgModule({
   declarations: [
@@ -233,6 +237,10 @@ import { DiscordCallbackComponent } from './header/discord/discord-callback/disc
     NewsDetailComponent,
     DiscordComponent,
     DiscordCallbackComponent,
+    TemplatesComponent,
+    ReportDetailsComponent,
+    TemplateEditorComponent,
+    AddReportComponent
   ],
   entryComponents: [
     EventModalComponent,
@@ -248,13 +256,13 @@ import { DiscordCallbackComponent } from './header/discord/discord-callback/disc
     AppRoutingModule,
     FormsModule, 
     ReactiveFormsModule,
-    NgbModule.forRoot(),
+    NgbModule, //.forRoot(),
     BrowserAnimationsModule,
     AngularDateTimePickerModule,
     DlDateTimePickerDateModule,
     QRCodeModule,
     NgxPaginationModule,
-    DeviceDetectorModule.forRoot(),
+    // DeviceDetectorModule.forRoot(),
     SortablejsModule,
     SortablejsModule.forRoot({ animation: 150 }),
     ServiceWorkerModule.register('/ngsw-worker.js', { enabled: environment.production }),
@@ -287,7 +295,7 @@ import { DiscordCallbackComponent } from './header/discord/discord-callback/disc
     SpinnerService,
     IsAuthorizedService,
     ConfirmationModal,
-    ActionCableService
+    // ActionCableService
   ],
   bootstrap: [AppComponent]
 })
