@@ -12,12 +12,12 @@ import { ILNewsStory } from '../models/news.model';
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit, OnDestroy {
-  recentNewsArticles: ILNewsStory[];
-  nextEvent:Event
-  events:Event[]
-  eventStartedSubscription:Subscription
-  showCountdown:boolean
-  checkerStarted:boolean
+  recentNewsArticles: ILNewsStory[] = [];
+  nextEvent: Event;
+  events: Event[] = [];
+  eventStartedSubscription: Subscription;
+  showCountdown: boolean;
+  checkerStarted: boolean;
 
   constructor(private eventService:EventService, private newsService: NewsService) { }
 

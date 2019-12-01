@@ -132,6 +132,17 @@ import { TemplatesComponent } from './reports/templates/templates.component';
 import { ReportDetailsComponent } from './reports/report-details/report-details.component';
 import { TemplateEditorComponent } from './reports/templates/template-editor/template-editor.component';
 import { AddReportComponent } from './reports/add-report/add-report.component';
+import { SystemMapMapViewComponent } from './system-map/system-map-map-view/system-map-map-view.component';
+import { SystemMapListViewComponent } from './system-map/system-map-list-view/system-map-list-view.component';
+import { AddUpdateMissionGiverModalComponent } from './system-map/add-update-mission-giver-modal/add-update-mission-giver-modal.component';
+import { FactionAdminComponent } from './faction-admin/faction-admin.component';
+import { AddUpdateFactionModalComponent } from './faction-admin/add-update-faction-modal/add-update-faction-modal.component';
+import { AddUpdateJumpPointModalComponent } from './system-map/add-update-jump-point-modal/add-update-jump-point-modal.component';
+import { ViewJumpPointModal, ViewJumpPointModalContent } from './system-map/view-jump-point-modal/view-jump-point-modal.component';
+import { AddUpdateGravityWellModalComponent } from './system-map/add-update-gravity-well-modal/add-update-gravity-well-modal.component';
+import { AngularResizedEventModule } from 'angular-resize-event';
+import { SystemMapTagComponent } from './system-map/system-map-tag/system-map-tag.component';
+import { SystemMapObjectDetailComponent } from './system-map/system-map-object-detail/system-map-object-detail.component';
 
 @NgModule({
   declarations: [
@@ -240,7 +251,18 @@ import { AddReportComponent } from './reports/add-report/add-report.component';
     TemplatesComponent,
     ReportDetailsComponent,
     TemplateEditorComponent,
-    AddReportComponent
+    AddReportComponent,
+    SystemMapMapViewComponent,
+    SystemMapListViewComponent,
+    AddUpdateMissionGiverModalComponent,
+    FactionAdminComponent,
+    AddUpdateFactionModalComponent,
+    AddUpdateJumpPointModalComponent,
+    ViewJumpPointModal,
+    ViewJumpPointModalContent,
+    AddUpdateGravityWellModalComponent,
+    SystemMapTagComponent,
+    SystemMapObjectDetailComponent,
   ],
   entryComponents: [
     EventModalComponent,
@@ -249,6 +271,7 @@ import { AddReportComponent } from './reports/add-report/add-report.component';
     EventCertificationModalComponent,
     DonationModalContent,
     ConfirmationModalContent,
+    ViewJumpPointModalContent,
   ],
   imports: [
     BrowserModule,
@@ -266,6 +289,7 @@ import { AddReportComponent } from './reports/add-report/add-report.component';
     SortablejsModule,
     SortablejsModule.forRoot({ animation: 150 }),
     ServiceWorkerModule.register('/ngsw-worker.js', { enabled: environment.production }),
+    AngularResizedEventModule,
   ],
   providers: [
     PromptUpdateService,
@@ -295,6 +319,7 @@ import { AddReportComponent } from './reports/add-report/add-report.component';
     SpinnerService,
     IsAuthorizedService,
     ConfirmationModal,
+    ViewJumpPointModal,
     // ActionCableService
   ],
   bootstrap: [AppComponent]

@@ -1,0 +1,84 @@
+<!-- Breadcrumbs -->
+<div *ngIf="selectedItem" class="row">
+  <div class="col-md-12">
+    <ol *ngIf="!selectedStarSystem" class="breadcrumb">
+      <li class="breadcrumb-item"><a routerLink="/system-map">System Map</a></li>
+      <li class="breadcrumb-item active">{{selectedItem.title | titlecase}}</li>
+    </ol>
+  </div>
+</div>
+
+<!-- Details -->
+<div *ngIf="selectedItem" class="row">
+  <div class="col-md-12">
+    <div class="card border-primary">
+      <div class="card-header bg-primary text-white">
+        <span>Details</span>
+      </div>
+      <div class="card-body">
+        <img style="float: right; max-width: 200px;" src="{{selectedItem.primary_image_url}}" alt="{{selectedItem.title}}">
+        <!-- Basic details -->
+        <div>
+          <h3>{{selectedItem.title}}</h3>
+          <system-map-tag *ngIf="selectedItem.tags" [tags]="selectedItem.tags"></system-map-tag>
+          <p>{{selectedItem.description}}</p>
+          <p *ngIf="selectedItem.parent"><strong>Parent: </strong><a [routerLink]="['/system-map', parseObjectLink(selectedItem.parent)]">{{selectedItem.parent.title}}</a></p>
+          <p><strong>Object Type: </strong>{{selectedItem.kind}}</p>
+        </div>
+        <!-- Faction -->
+        <div *ngIf="selectedItem.faction_affiliation">
+          <p><strong>Faction: </strong>{{selectedItem.faction_affiliation.title}}</p>
+        </div>
+        <!-- Jurisdiction -->
+        <div *ngIf="selectedItem.jurisdiction">
+          <p><strong>Jurisdiction: </strong>{{selectedItem.jurisdiction.title}}</p>
+        </div>
+        <!-- Planets -->
+        <div *ngIf="selectedItem.planets && selectedItem.planets.length > 0">
+          <p>
+            <span><strong>Planets: </strong></span>
+            <span *ngFor="let item of selectedItem.planets; let i = index"><a [routerLink]="['/system-map', parseObjectLink(item)]">{{item.title}}</a><span *ngIf="(i + 1) < selectedItem.planets.length">, </span></span>
+          </p>
+        </div>
+        <!-- Moons -->
+        <div *ngIf="selectedItem.moons && selectedItem.moons.length > 0">
+          <p>
+            <span><strong>Moons: </strong></span>
+            <span *ngFor="let item of selectedItem.moons; let i = index"><a [routerLink]="['/system-map', parseObjectLink(item)]">{{item.title}}</a><span *ngIf="(i + 1) < selectedItem.moons.length">, </span></span>
+          </p>
+        </div>
+        <!-- Settlements -->
+        <div *ngIf="selectedItem.settlements && selectedItem.settlements.length > 0">
+          <p>
+            <span><strong>Settlements: </strong></span>
+            <span *ngFor="let item of selectedItem.settlements; let i = index"><a [routerLink]="['/system-map', parseObjectLink(item)]">{{item.title}}</a><span *ngIf="(i + 1) < selectedItem.settlements.length">, </span></span>
+          </p>
+        </div>
+        <!-- Locations -->
+        <div *ngIf="selectedItem.locations && selectedItem.locations.length > 0">
+          <p>
+            <span><strong>Locations: </strong></span>
+            <span *ngFor="let item of selectedItem.locations; let i = index"><a [routerLink]="['/system-map', parseObjectLink(item)]">{{item.title}}</a><span *ngIf="(i + 1) < selectedItem.locations.length">, </span></span>
+          </p>
+        </div>
+        <!-- Mission Givers -->
+        <div *ngIf="selectedItem.mission_givers && selectedItem.mission_givers.length > 0">
+          <p>
+            <span><strong>Mission Givers: </strong></span>
+            <span *ngFor="let item of selectedItem.mission_givers; let i = index"><a [routerLink]="['/system-map', parseObjectLink(item)]">{{item.title}}</a><span *ngIf="(i + 1) < selectedItem.mission_givers.length">, </span></span>
+          </p>
+        </div>
+        <!-- Images -->
+        <div *ngIf="selectedItem.system_map_images">
+          <h6>Images</h6>
+          <p *ngIf="selectedItem.system_map_images.length == 0">No current images.</p>
+          <div style="display:inline-block; border: 1px solid #666" *ngFor="let image of selectedItem.system_map_images">
+              <image-view-modal [title]="image.title" [description]="image.description"
+                [thumbnailUri]="image.image_url_thumbnail" [imageUri]="image.image_url"
+                [createdBy]="image.created_by.main_character"></image-view-modal>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

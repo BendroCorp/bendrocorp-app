@@ -7,6 +7,8 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Base64Upload } from 'src/app/models/misc-models';
 import { Jurisdiction } from 'src/app/models/law.model';
 import { LawService } from 'src/app/law-library/law.service';
+import { FieldDescriptor } from '@bendrocorp/bendrocorp-node-sdk/models/field.model';
+import { FieldService } from 'src/app/misc/field.service';
 
 @Component({
   selector: 'add-update-system-object-modal',
@@ -14,19 +16,26 @@ import { LawService } from 'src/app/law-library/law.service';
   styleUrls: ['./add-update-system-object-modal.component.css']
 })
 export class AddUpdateSystemObjectModalComponent implements OnInit {
-  @Input() systemObject:SystemObject
+  @Input() systemObject: SystemObject;
 
-  @Input() starSystem:StarSystem
-  @Input() systemPlanet:Planet
-  @Input() systemMoon:Moon
-  @Input() smallBtn:boolean
-  formAction:string
-  objectTitle:string
-  types:SystemMapTypes;
+  @Input() starSystem: StarSystem;
+  @Input() systemPlanet: Planet;
+  @Input() systemMoon: Moon;
+  @Input() smallBtn: boolean;
+
+  formAction: string;
+  objectTitle: string;
+  types: FieldDescriptor[];
   jurisdictions: Jurisdiction[] = [];
 
   modalRef:NgbModalRef
-  constructor(private modalService: NgbModal, private systemMapService:SystemMapService, private messageService:MessageService, private lawService: LawService) { }
+  constructor(
+    private modalService: NgbModal,
+    private systemMapService:SystemMapService,
+    private messageService:MessageService,
+    private lawService: LawService,
+    private fieldService: FieldService
+  ) { }
 
   open(content) {
     this.fetchJurisdictions();
@@ -90,13 +99,18 @@ export class AddUpdateSystemObjectModalComponent implements OnInit {
 
   fetchTypes()
   {
-    this.systemMapService.fetch_types().subscribe(
-      (results) => {
-        if (!(results instanceof HttpErrorResponse)) {
-          this.types = results
-        }
+    // this.systemMapService.fetch_types().subscribe(
+    //   (results) => {
+    //     if (!(results instanceof HttpErrorResponse)) {
+    //       this.types = results
+    //     }
+    //   }
+    // )
+    this.fieldService.getField('62ac3a07-ece3-4079-8da1-3e88617032fd').subscribe((results) => {
+      if (!(results instanceof HttpErrorResponse)) {
+        this.types = results;
       }
-    )
+    });
   }
 
   handleImageFileInput(files: FileList)

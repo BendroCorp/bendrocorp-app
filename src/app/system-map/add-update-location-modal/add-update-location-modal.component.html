@@ -13,12 +13,17 @@
         </div>
         <div class="form-group">
           <label>Description</label>
-          <textarea required class="form-control" placeholder="Location description..." [(ngModel)]="systemLocation.description" name="so_description" id="" cols="30" rows="10"></textarea>
+          <textarea required class="form-control" placeholder="Location description..." [(ngModel)]="systemLocation.description" name="location_description" id="" cols="30" rows="10"></textarea>
+        </div>
+        <div class="form-group">
+          <label>Tags</label>
+          <input class="form-control" type="text" placeholder="Tags..." name="location_tags" [(ngModel)]="systemLocation.tags" id="">
+          <small>Comma seperated list of tags. This is used primarily for display and searchability.</small>
         </div>
         <div class="form-group">
           <label>Location Type</label>
-          <select required class="form-control" [(ngModel)]="systemLocation.object_type_id" name="orbits_planet">
-            <option *ngFor="let type of types.location_types" [value]="type.id">{{type.title}}</option>
+          <select required class="form-control" [(ngModel)]="systemLocation.location_type_id" name="location_type_id">
+            <option *ngFor="let type of types" [value]="type.id">{{type.title}}</option>
           </select>
         </div>
         <div>

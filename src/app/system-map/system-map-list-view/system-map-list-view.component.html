@@ -1,0 +1,47 @@
+<div class="row">
+  <div class="col-md-12" style="margin: 8px 0 8px 0;">
+    <div class="input-group">
+      <input placeholder="Search System Map" class="form-control form-control-lg" type="text" name="" id="" (keyup)="onSearchKeyUp()" [(ngModel)]="searchFilter">
+      <div *ngIf="isFiltering" class="input-group-append">
+        <span class="input-group-text"><i class="fas fa-spinner fa-spin"></i></span>
+      </div>
+    </div>
+    <small>System Map represents BendroCorp's knowledge of the galaxy. If you cannot find what you are looking for here make you sure check the <a href="https://robertsspaceindustries.com/galactapedia" target="_blank">Galactapedia</a>.</small>
+  </div>
+</div>
+<div class="row" style="text-align: center;">
+  <!-- recents -->
+  <div class="col-md-12" *ngIf="!searchFilter">
+    <div class="row">
+      <div class="col-md-12" style="text-align: left;">
+        <h6>Recents (<a href="javascript:void(0)" (click)="clearRecents()">Clear</a>)</h6>
+        <p *ngIf="!recentItems || recentItems.length == 0">No recent selected search items!</p>
+      </div>
+    </div>
+    <div class="row">
+      <div *ngFor="let item of recentItems" (click)="selectListItem(item)" class="col-md-3 col-sm-3" style="display: inline-block; text-align: center; margin: 6px; border: 4px solid #000; padding-top: 4px; cursor: pointer;">
+        <img style="max-height: 150px; max-width: 100%;" src="{{item.primary_image_url}}" alt="">
+        <h6>{{item.title}}</h6>
+        <system-map-tag *ngIf="item.tags" [tags]="item.tags"></system-map-tag>
+        <p>{{item.description}}</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- searches -->
+  <div *ngIf="searchFilter" class="col-md-12">
+    <div class="row">
+      <div class="col-md-12" style="text-align: left;">
+        <h6>Search Results</h6>
+      </div>
+    </div>
+    <div class="row">
+      <div *ngFor="let item of searchList" (click)="selectListItem(item)" class="col-md-3 col-sm-3" style="display: inline-block; text-align: center; margin: 6px; border: 4px solid #000; padding-top: 4px; cursor: pointer;">
+        <img style="max-height: 150px; max-width: 100%;" src="{{item.primary_image_url}}" alt="">
+        <h6>{{item.title}}</h6>
+        <system-map-tag *ngIf="item.tags" [tags]="item.tags"></system-map-tag>
+        <p>{{item.description}}</p>
+      </div>
+    </div>
+  </div>
+</div>

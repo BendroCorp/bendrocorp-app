@@ -65,3 +65,14 @@
 {
     text-decoration: underline;
 }
+
+input:focus,
+select:focus,
+textarea:focus,
+button:focus {
+    outline: none !important;
+}
+
+*:focus {
+    outline: none !important;
+}

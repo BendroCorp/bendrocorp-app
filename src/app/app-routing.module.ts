@@ -44,6 +44,8 @@ import { ReportsComponent } from './reports/reports.component';
 import { TemplatesComponent } from './reports/templates/templates.component';
 import { TemplateEditorComponent } from './reports/templates/template-editor/template-editor.component';
 import { ReportDetailsComponent } from './reports/report-details/report-details.component';
+import { FactionAdminComponent } from './faction-admin/faction-admin.component';
+import { SystemMapObjectDetailComponent } from './system-map/system-map-object-detail/system-map-object-detail.component';
 
 const routes: Routes = [
     { path: '', component: DashboardComponent, canActivate: [AuthGuardService, MemberAuthGuardService] },
@@ -56,6 +58,7 @@ const routes: Routes = [
     { path: 'flight-logs/:flight_log_id', component: FlightLogDetailsComponent, canActivate: [AuthGuardService, MemberAuthGuardService] },
     { path: 'offender-reports', component: OffenderReportsComponent, canActivate: [AuthGuardService, MemberAuthGuardService] },
     { path: 'system-map', component: SystemMapComponent, canActivate: [AuthGuardService, MemberAuthGuardService]},
+    { path: 'system-map/:object_id', component: SystemMapObjectDetailComponent, canActivate: [AuthGuardService, MemberAuthGuardService]},
     { path: 'offender-reports/:offender_id', component: OffenderDetailsComponent, canActivate: [AuthGuardService, MemberAuthGuardService] },
     { path: 'offender-reports/report/:report_id', component: OffenderReportReportDetailsComponent, canActivate: [AuthGuardService, MemberAuthGuardService] },
     { path: 'site-logs', component: SiteLogsComponent, canActivate: [AuthGuardService, MemberAuthGuardService] },
@@ -67,6 +70,7 @@ const routes: Routes = [
     { path: 'liabilities', component: LiabilitiesComponent, canActivate: [AuthGuardService, MemberAuthGuardService] },
     { path: 'law-library', component: LawLibraryComponent, canActivate: [AuthGuardService, MemberAuthGuardService] },
     { path: 'law-library/:jurisdiction_id', component: LawLibraryDetailsComponent, canActivate: [AuthGuardService, MemberAuthGuardService] },
+    { path: 'faction-admin', component: FactionAdminComponent, canActivate: [AuthGuardService, MemberAuthGuardService] },
     { path: 'news', component: NewsComponent, canActivate: [AuthGuardService, MemberAuthGuardService] },
     { path: 'news/:news_id', component: NewsDetailComponent, canActivate: [AuthGuardService, MemberAuthGuardService] },
     { path: 'reports', component: ReportsComponent, canActivate: [AuthGuardService, MemberAuthGuardService] },

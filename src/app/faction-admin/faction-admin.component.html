@@ -1,0 +1,44 @@
+<!-- Breadcrumbs -->
+<div class="row">
+  <div class="col-md-12">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item active">Factions</li>
+    </ol>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-12">
+    <div class="card border-primary">
+      <div class="card-header bg-primary text-white">
+        <span>Current Faction Affiliations</span>
+        <add-update-faction-modal [smallBtn]="true" style="float: right;"></add-update-faction-modal>
+      </div>
+      <div class="card-body">
+        <table *ngIf="factions" class="table table-striped">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Title</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- If there are none -->
+            <tr *ngIf="factions.length == 0 && initialDataLoaded">
+              <td colspan="3" style="text-align: center;"><h5>No current factions.</h5></td>
+            </tr>
+            <tr *ngFor="let faction of factions">
+              <td style="width: 100px; vertical-align: middle;">{{splitId(faction.id)}}</td>
+              <td style="width: auto; vertical-align: middle;">{{faction.title}}</td>
+              <td style="text-align: right; vertical-align: middle;">
+                <add-update-faction-modal [smallBtn]="true" [faction]="faction"></add-update-faction-modal>&nbsp;
+                <button (click)="archiveFaction(faction)" class="btn btn-sm btn-danger"><i class="fas fa-trash-alt"></i></button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

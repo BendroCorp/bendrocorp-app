@@ -5,6 +5,8 @@ import { SystemMapService } from '../system-map.service';
 import { MessageService } from 'src/app/message/message.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Base64Upload } from 'src/app/models/misc-models';
+import { FieldService } from 'src/app/misc/field.service';
+import { FieldDescriptor } from '@bendrocorp/bendrocorp-node-sdk/models/field.model';
 
 @Component({
   selector: 'add-update-location-modal',
@@ -12,21 +14,27 @@ import { Base64Upload } from 'src/app/models/misc-models';
   styleUrls: ['./add-update-location-modal.component.css']
 })
 export class AddUpdateLocationModalComponent implements OnInit {
-  @Input() systemLocation:SystemLocation
+  @Input() systemLocation: SystemLocation;
 
-  @Input() systemPlanet:Planet
-  @Input() systemMoon:Moon
-  @Input() systemObject:SystemObject
-  @Input() systemSettlement:Settlement
-  @Input() smallBtn:boolean
-  formAction:string
-  objectTitle:string
-  successString:string
-  types:SystemMapTypes
-  modalRef:NgbModalRef
-  formSubmitting:boolean = false
+  @Input() systemPlanet: Planet;
+  @Input() systemMoon: Moon;
+  @Input() systemObject: SystemObject;
+  @Input() systemSettlement: Settlement;
+  @Input() smallBtn: boolean;
 
-  constructor(private modalService: NgbModal, private systemMapService:SystemMapService, private messageService:MessageService) { }
+  formAction: string;
+  objectTitle: string;
+  successString: string;
+  types: FieldDescriptor[];
+  modalRef: NgbModalRef;
+  formSubmitting: boolean = false;
+
+  constructor(
+    private modalService: NgbModal,
+    private systemMapService:SystemMapService,
+    private messageService:MessageService,
+    private fieldService: FieldService
+  ) { }
 
   open(content) {
     this.formAction = (this.systemLocation && this.systemLocation.id) ? "Update" : "Create"
@@ -92,13 +100,18 @@ export class AddUpdateLocationModalComponent implements OnInit {
 
   fetchTypes()
   {
-    this.systemMapService.fetch_types().subscribe(
-      (results) => {
-        if (!(results instanceof HttpErrorResponse)) {
-          this.types = results
-        }
+    // this.systemMapService.fetch_types().subscribe(
+    //   (results) => {
+    //     if (!(results instanceof HttpErrorResponse)) {
+    //       this.types = results
+    //     }
+    //   }
+    // )
+    this.fieldService.getField('9393a4e0-210b-43db-a5e7-92d7d0226066').subscribe((results) => {
+      if (!(results instanceof HttpErrorResponse)) {
+        this.types = results;
       }
-    )
+    });
   }
 
   handleImageFileInput(files: FileList)
