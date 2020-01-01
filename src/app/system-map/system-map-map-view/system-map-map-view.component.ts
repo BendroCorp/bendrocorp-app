@@ -419,7 +419,7 @@ export class SystemMapMapViewComponent implements OnInit, OnDestroy {
               size: 5,
             }
           )
-          edgesArray.push({ from: `gw-${gravity_well.id}`, to: `so-${system_object.id}` })
+          edgesArray.push({ from: `gw-${gravity_well.id}`, to: `so-${system_object.id}`, dashes: true, width: 4 })
         }
 
         for (let indexP = 0; indexP < this.selectedStarSystem.planets.length; indexP++) {
@@ -435,7 +435,7 @@ export class SystemMapMapViewComponent implements OnInit, OnDestroy {
             }
           )
           // push an edge line
-          edgesArray.push({ from: `gw-${gravity_well.id}`, to: `p-${planet.id}` })
+          edgesArray.push({ from: `gw-${gravity_well.id}`, to: `p-${planet.id}`, dashes: true, width: 4 })
 
           // next do each planets moons
           for (let index = 0; index < planet.moons.length; index++) {
@@ -451,7 +451,7 @@ export class SystemMapMapViewComponent implements OnInit, OnDestroy {
               }
             )
             // push an edge line
-            edgesArray.push({ from: `p-${planet.id}`, to: `m-${moon.id}` })
+            edgesArray.push({ from: `p-${planet.id}`, to: `m-${moon.id}`, dashes: true, width: 4 })
 
             // Do each moons system objects
             for (let indexSo = 0; indexSo < moon.system_objects.length; indexSo++) {
@@ -465,7 +465,7 @@ export class SystemMapMapViewComponent implements OnInit, OnDestroy {
                   size: 5,
                 }
               )
-              edgesArray.push({ from: `m-${moon.id}`, to: `so-${system_object.id}` })
+              edgesArray.push({ from: `m-${moon.id}`, to: `so-${system_object.id}`, dashes: true, width: 4 })
             }
           }
 
@@ -481,7 +481,7 @@ export class SystemMapMapViewComponent implements OnInit, OnDestroy {
                 size: 10,
               }
             )
-            edgesArray.push({ from: `p-${planet.id}`, to: `so-${system_object.id}` })
+            edgesArray.push({ from: `p-${planet.id}`, to: `so-${system_object.id}`, dashes: true, width: 4 })
           }
         }
       }
