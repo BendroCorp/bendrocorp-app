@@ -1,0 +1,59 @@
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">{{formAction}} Gravity Well</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form #addUpdateGravityWellForm="ngForm">
+      <div class="form-group">
+        <label>Title <span class="text-danger">*</span></label>
+        <input required class="form-control" type="text" placeholder="Gravity Well Title..." name="gravity_well_title" [(ngModel)]="gravityWell.title" id="">
+      </div>
+      <div class="form-group">
+        <label>Description</label>
+        <textarea class="form-control" placeholder="Gravity Well description..." [(ngModel)]="gravityWell.description" name="gravity_well_description" id="" cols="30" rows="10"></textarea>
+      </div>
+      <div class="form-group">
+        <label>Tags</label>
+        <input class="form-control" type="text" placeholder="Tags..." name="gravity_well_tags" [(ngModel)]="gravityWell.tags" id="">
+        <small>Comma seperated list of tags. This is used primarily for display and searchability.</small>
+      </div>
+      <div class="form-group">
+        <label>Luminosity Class <span class="text-danger">*</span></label>
+        <select required class="form-control" [(ngModel)]="gravityWell.luminosity_class_id" name="luminosity_class_id" id="luminosity_class_id">
+          <option *ngFor="let lumClass of luminosityClasses" [value]="lumClass.id">{{lumClass.title}}</option>
+        </select>
+        <small>{{getDescriptorDescription(gravityWell.luminosity_class_id, luminosityClasses)}}</small>
+      </div>
+      <div class="form-group">
+        <label>Gravity Well Type <span class="text-danger">*</span></label>
+        <select required class="form-control" [(ngModel)]="gravityWell.gravity_well_type_id" name="gravity_well_type_id" id="gravity_well_type_id">
+          <option *ngFor="let wellType of gravityWellTypes" [value]="wellType.id">{{wellType.title}}</option>
+        </select>
+        <small>{{getDescriptorDescription(gravityWell.gravity_well_type_id, gravityWellTypes)}}</small>
+      </div>
+      <div>
+        <label>Primary Image</label>
+        <div *ngIf="gravityWell.primary_image_url" style="text-align:center;">
+          <img src="{{gravityWell.primary_image_url}}" alt="Avatar" style="max-width: 200px;">
+        </div>
+        <div class="form-group">
+          <div class="input-group mb-3">
+            <div class="custom-file">
+              <input class="custom-file-input" type="file" id="inputGroupFile02" (change)="handleImageFileInput($event.target.files)">
+              <label class="custom-file-label" for="inputGroupFile02">Choose file</label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-primary" (click)="addUpdateGravityWell()" [disabled]="!addUpdateGravityWellForm.form.valid || formSubmitting">{{formAction}} Gravity Well</button>
+  </div>
+</ng-template>
+
+<button *ngIf="!gravityWell || (gravityWell && !gravityWell.id)" class="btn btn-primary" [ngClass]="{'btn-sm': smallBtn }" (click)="open(content)"><i class="fas fa-plus"></i> Add Gravity Well</button>
+<button *ngIf="gravityWell && gravityWell.id" class="btn btn-primary" [ngClass]="{'btn-sm': smallBtn }" (click)="open(content)"><i class="fas fa-edit"></i> Edit Gravity Well</button>

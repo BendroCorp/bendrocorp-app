@@ -11,6 +11,21 @@
       <input class="form-control" type="text" [(ngModel)]="starSystem.title" id="system_title" name="system_title" placeholder="System Title">
     </div>
     <div class="form-group">
+      <label>Description</label>
+      <textarea required class="form-control" placeholder="System description..." [(ngModel)]="starSystem.description" name="system_description" id="" cols="30" rows="10"></textarea>
+    </div>
+    <div class="form-group">
+      <label>Tags</label>
+      <input class="form-control" type="text" placeholder="Tags..." name="system_tags" [(ngModel)]="starSystem.tags" id="">
+      <small>Comma seperated list of tags. This is used primarily for display and searchability.</small>
+    </div>
+    <div class="form-group">
+      <label>Affiliation</label>
+      <select class="form-control" [(ngModel)]="starSystem.faction_affiliation_id" name="faction_affiliation_id" id="faction_affiliation_id">
+        <option *ngFor="let faction of factions" [value]="faction.id">{{faction.title}}</option>
+      </select>
+    </div>
+    <div class="form-group">
       <label>Jurisdiction</label>
       <select class="form-control" [(ngModel)]="starSystem.jurisdiction_id" name="jurisdiction" id="jurisdiction">
         <option *ngFor="let jurisdiction of jurisdictions" [value]="jurisdiction.id">{{jurisdiction.title}}</option>

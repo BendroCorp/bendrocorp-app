@@ -120,13 +120,13 @@ export class AddUpdateSettlementModalComponent implements OnInit {
 
   fetchTypes()
   {
-    this.systemMapService.fetch_types().subscribe(
-      (results) => {
-        if (!(results instanceof HttpErrorResponse)) {
-          this.types = results
-        }
-      }
-    )
+    // this.systemMapService.fetch_types().subscribe(
+    //   (results) => {
+    //     if (!(results instanceof HttpErrorResponse)) {
+    //       this.types = results
+    //     }
+    //   }
+    // )
   }
 
   ngOnInit() {

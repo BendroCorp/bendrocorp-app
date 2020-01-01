@@ -31,7 +31,7 @@ export class LocationSwitcherComponent implements OnInit {
     this.objectWithLocation.moon_id = null
   }
 
-  public selectSystem(systemId:number)
+  public selectSystem(systemId: string)
   {  
     this.selectedSystem = this.systemData.find(x => x.id == systemId)
     this.selectedPlanet = null
@@ -40,7 +40,7 @@ export class LocationSwitcherComponent implements OnInit {
     this.objectWithLocation.moon_id = null
   }
 
-  public selectPlanet(planetId:number)
+  public selectPlanet(planetId: string)
   {
     this.selectedPlanet = this.selectedSystem.planets.find(x => x.id == planetId)
     this.selectedMoon = null
@@ -50,7 +50,7 @@ export class LocationSwitcherComponent implements OnInit {
     console.log(this.objectWithLocation)
   }
 
-  public selectMoon(moonId:number)
+  public selectMoon(moonId: string)
   {
     console.log(`moonId: ${moonId}`);
     this.selectedMoon = this.selectedPlanet.moons.find(x => x.id == moonId)
@@ -99,7 +99,7 @@ export class LocationSwitcherComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.systemMapService.list().subscribe(
+    this.systemMapService.listSystems().subscribe(
       (results) => {
         if (!(results instanceof HttpErrorResponse)) {
           this.systemData = results

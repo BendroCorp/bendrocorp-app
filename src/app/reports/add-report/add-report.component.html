@@ -19,7 +19,7 @@
       </form>
     </div>
     <div class="modal-footer">
-      <button type="button" class="btn btn-primary" (click)="createReport()">Create Report</button>
+      <button *ngIf="templates.length > 0" type="button" class="btn btn-primary" (click)="createReport()">Create Report</button>
     </div>
   </ng-template>
   

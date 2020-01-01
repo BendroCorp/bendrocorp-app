@@ -1,0 +1,23 @@
+@font-face
+{
+  /* font-family:'system-map-icons'; */
+  /* src:url('/rsi/static/js/starmap/fonts/icons.eot?-6ac3q6');
+  src:url('/rsi/static/js/starmap/fonts/icons.eot?#iefix-6ac3q6') format('embedded-opentype'),url('/rsi/static/js/starmap/fonts/icons.ttf?-6ac3q6') format('truetype'),url('/rsi/static/js/starmap/fonts/icons.woff?-6ac3q6') format('woff'),url('/rsi/static/js/starmap/fonts/icons.svg?-6ac3q6#icomoon') format('svg'); */
+  /* src:url('/assets/fonts/sc-icons/icons.eot?-6ac3q6'); */
+  /* src:url('/assets/fonts/sc-icons/icons.eot?#iefix-6ac3q6') format('embedded-opentype'),url('/assets/fonts/sc-icons/icons.ttf?-6ac3q6') format('truetype'),url('/assets/fonts/sc-icons/icons.woff?-6ac3q6') format('woff'),url('/assets/fonts/sc-icons/icons.svg?-6ac3q6#icomoon') format('svg'); */
+  /* font-weight:normal; */
+  /* font-style:normal */
+}
+
+.detail-panel
+{
+  margin-top: 4px;
+}
+
+.sm-close
+{
+  float:right; 
+  font-size: 1.2em; 
+  clear: both; 
+  margin: 4px;
+}

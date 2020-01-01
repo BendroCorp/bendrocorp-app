@@ -16,6 +16,11 @@
           <textarea required class="form-control" placeholder="Moon description..." [(ngModel)]="moon.description" name="moon_description" id="" cols="30" rows="10"></textarea>
         </div>
         <div class="form-group">
+          <label>Tags</label>
+          <input class="form-control" type="text" placeholder="Tags..." name="moon_tags" [(ngModel)]="moon.tags" id="">
+          <small>Comma seperated list of tags. This is used primarily for display and searchability.</small>
+        </div>
+        <div *ngIf="!moon.id" class="form-group">
           <label>Orbit Planets</label>
           <select required class="form-control" [(ngModel)]="moon.orbits_planet_id" name="orbits_planet">
             <option *ngFor="let planet of starSystem.planets" [value]="planet.id">{{planet.title}}</option>

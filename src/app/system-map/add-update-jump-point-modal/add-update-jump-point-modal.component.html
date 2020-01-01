@@ -1,0 +1,84 @@
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">{{formAction}} Jump Point</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.close()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form #addUpdateJumpPointForm="ngForm">
+      <div class="form-group">
+        <label>Title <span class="text-danger">*</span></label>
+        <input required class="form-control" type="text" placeholder="Jump Point Title..." name="jump_point_title" [(ngModel)]="jumpPoint.title" id="">
+      </div>
+      <div class="form-group">
+        <label>Description</label>
+        <textarea class="form-control" placeholder="Jump Point description..." [(ngModel)]="jumpPoint.description" name="jump_point_description" id="" cols="30" rows="10"></textarea>
+      </div>
+      <div class="form-group">
+        <label>Tags</label>
+        <input class="form-control" type="text" placeholder="Tags..." name="jump_point_tags" [(ngModel)]="jumpPoint.tags" id="">
+        <small>Comma seperated list of tags. This is used primarily for display and searchability.</small>
+      </div>
+      <div class="form-group">
+        <label>Connection Size <span class="text-danger">*</span></label>
+        <select required class="form-control" [(ngModel)]="jumpPoint.connection_size_id" name="connection_size_id" id="connection_size_id">
+          <option *ngFor="let size of connectionSizes" [value]="size.id">{{size.title}}</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Connection Status <span class="text-danger">*</span></label>
+        <select required class="form-control" [(ngModel)]="jumpPoint.connection_status_id" name="connection_status_id" id="connection_status_id">
+          <option *ngFor="let status of connectionStatuses" [value]="status.id">{{status.title}}</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>System One <span class="text-danger">*</span></label>
+        <select required class="form-control" [(ngModel)]="jumpPoint.system_one_id" name="system_one_id" id="system_one_id">
+          <option *ngFor="let starSystem of starSystems" [value]="starSystem.id">{{starSystem.title}}</option>
+        </select>
+        <small>NOTE: The Jump Point will be colored based on the selection of the first system.</small>
+      </div>
+      <div>
+        <label>System One Primary Image</label>
+        <div *ngIf="jumpPoint.primary_image_one_url" style="text-align:center;">
+          <img src="{{jumpPoint.primary_image_one_url}}" alt="Avatar" style="max-width: 200px;">
+        </div>
+        <div class="form-group">
+          <div class="input-group mb-3">
+            <div class="custom-file">
+              <input class="custom-file-input" type="file" id="inputGroupFile02" (change)="handleImageFileInputOne($event.target.files)">
+              <label class="custom-file-label" for="inputGroupFile02">Choose file</label>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>System Two <span class="text-danger">*</span></label>
+        <select required class="form-control" [(ngModel)]="jumpPoint.system_two_id" name="system_two_id" id="system_two_id">
+          <option *ngFor="let starSystem of starSystems" [value]="starSystem.id">{{starSystem.title}}</option>
+        </select>
+      </div>
+      <div>
+        <label>System Two Primary Image</label>
+        <div *ngIf="jumpPoint.primary_image_two_url" style="text-align:center;">
+          <img src="{{jumpPoint.primary_image_two_url}}" alt="Avatar" style="max-width: 200px;">
+        </div>
+        <div class="form-group">
+          <div class="input-group mb-3">
+            <div class="custom-file">
+              <input class="custom-file-input" type="file" id="inputGroupFile03" (change)="handleImageFileInputTwo($event.target.files)">
+              <label class="custom-file-label" for="inputGroupFile03">Choose file</label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-primary" (click)="saveUpdateJumpPoint()" [disabled]="!addUpdateJumpPointForm.form.valid || !(jumpPoint.system_one_id && jumpPoint.system_two_id) || formSubmitting">{{formAction}} Jump Point</button>
+  </div>
+</ng-template>
+
+<button *ngIf="!jumpPoint || (jumpPoint && !jumpPoint.id)" class="btn btn-primary" [ngClass]="{'btn-sm': smallBtn }" (click)="open(content)"><i class="fas fa-plus"></i> Add Jump Point</button>
+<button *ngIf="jumpPoint && jumpPoint.id" class="btn btn-primary" [ngClass]="{'btn-sm': smallBtn }" (click)="open(content)"><i class="fas fa-edit"></i> Edit Jump Point</button>

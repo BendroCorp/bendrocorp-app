@@ -1,0 +1,51 @@
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">{{formAction}} Mission Giver</h4>
+    <button type="button" class="close" aria-label="Close" (click)="close()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form #addUpdateMissionGiverForm="ngForm">
+      <div class="form-group">
+        <label>Title</label>
+        <input required class="form-control" type="text" placeholder=" Mission Giver Title..." name="missionGiver_title" [(ngModel)]="missionGiver.title" id="">
+      </div>
+      <div class="form-group">
+        <label>Description</label>
+        <textarea required class="form-control" placeholder=" Mission Giver description..." [(ngModel)]="missionGiver.description" name="missionGiver_description" id="" cols="30" rows="10"></textarea>
+      </div>
+      <div class="form-group">
+        <label>Tags</label>
+        <input class="form-control" type="text" placeholder="Tags..." name="missionGiver_tags" [(ngModel)]="missionGiver.tags" id="">
+        <small>Comma seperated list of tags. This is used primarily for display and searchability.</small>
+      </div>
+      <div class="form-group">
+        <label>Affiliation</label>
+        <select class="form-control" [(ngModel)]="missionGiver.faction_affiliation_id" name="faction_affiliation_id" id="faction_affiliation_id">
+          <option *ngFor="let faction of factions" [value]="faction.id">{{faction.title}}</option>
+        </select>
+      </div>
+      <div>
+        <label>Primary Image</label>
+        <div *ngIf="missionGiver.primary_image_url" style="text-align:center;">
+          <img src="{{missionGiver.primary_image_url}}" alt="Avatar" style="max-width: 200px;">
+        </div>
+        <div class="form-group">
+          <div class="input-group mb-3">
+            <div class="custom-file">
+              <input class="custom-file-input" type="file" id="inputGroupFile02" (change)="handleImageFileInput($event.target.files)">
+              <label class="custom-file-label" for="inputGroupFile02">Choose file</label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-primary" [disabled]="!addUpdateMissionGiverForm.form.valid || formSubmitting" (click)="createUpdateMissionGiver()">{{formAction}} Mission Giver<span *ngIf="formSubmitting">&nbsp;<i class="fas fa-spinner fa-spin"></i></span></button>
+  </div>
+</ng-template>
+
+<button *ngIf="!missionGiver || (missionGiver && !missionGiver.id)" [ngClass]="{'btn-sm': smallBtn }" class="btn btn-sm btn-primary" (click)="open(content)"><i class="fas fa-plus"></i> Add Mission Giver</button>
+<button *ngIf="missionGiver && missionGiver.id" [ngClass]="{'btn-sm': smallBtn }" class="btn btn-sm btn-primary" (click)="open(content)"><i class="fas fa-edit"></i> Edit Mission Giver</button>

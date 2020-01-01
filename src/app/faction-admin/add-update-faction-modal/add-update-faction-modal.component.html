@@ -1,0 +1,46 @@
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">{{formAction}} Faction</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form #factionAffiliationForm="ngForm">
+      <div class="form-group">
+        <label>Title <span class="text-danger">*</span></label>
+        <input required class="form-control" type="text" placeholder="Faction Title..." name="faction_title" [(ngModel)]="faction.title" id="faction_title">
+      </div>
+      <div class="form-group">
+        <label>Description <span class="text-danger">*</span></label>
+        <textarea required class="form-control" placeholder="Faction description..." [(ngModel)]="faction.description" name="faction_description" id="faction_description" cols="30" rows="10"></textarea>
+      </div>
+      <div class="form-group">
+        <label>Color</label>
+        <input class="form-control" pattern="^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$" type="text" placeholder="Faction Color..." name="faction_color" [(ngModel)]="faction.color" id="faction_color">
+        <small>HEX Color: #fff</small>
+      </div>
+      <div>
+        <label>Primary Image</label>
+        <div *ngIf="faction.primary_image_url" style="text-align:center;">
+          <img src="{{faction.primary_image_url}}" alt="Avatar" style="max-width: 200px;">
+        </div>
+        <div class="form-group">
+          <div class="input-group mb-3">
+            <div class="custom-file">
+              <input class="custom-file-input" type="file" id="inputGroupFile02" (change)="handleImageFileInput($event.target.files)">
+              <label class="custom-file-label" for="inputGroupFile02">Choose file</label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-primary" (click)="addUpdateFaction()" [disabled]="!factionAffiliationForm.form.valid || formSubmitting">{{formAction}} Faction</button>
+  </div>
+</ng-template>
+
+<button *ngIf="!faction.id" class="btn btn-primary" [ngClass]="{'btn-sm': smallBtn }" (click)="open(content)"><i class="fas fa-plus"></i> Add Faction</button>
+<button *ngIf="faction.id" class="btn btn-sm btn-primary" [ngClass]="{'btn-sm': smallBtn }" (click)="open(content)"><i class="fas fa-edit"></i> Edit</button>
+  
