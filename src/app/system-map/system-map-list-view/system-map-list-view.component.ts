@@ -23,6 +23,9 @@ export class SystemMapListViewComponent implements OnInit {
   locations: SystemLocation[];
   missionGivers: MissionGiver[];
 
+  // initial data loaded
+  initialDataLoaded: boolean = false;
+
   // search stuff
   fullList: SystemMapSearchItem[] = [];
   searchList: SystemMapSearchItem[] = [];
@@ -149,6 +152,9 @@ export class SystemMapListViewComponent implements OnInit {
 
           // stop the spinner
           this.spinnerService.spin(false);
+
+          // loaded
+          this.initialDataLoaded = true;
         }
       } else {
         console.error('uh oh...something went wrong..');

@@ -1,4 +1,5 @@
-<div class="row">
+<!-- search box -->
+<div *ngIf="initialDataLoaded" class="row">
   <div class="col-md-12" style="margin: 8px 0 8px 0;">
     <div class="input-group">
       <input placeholder="Search System Map" class="form-control form-control-lg" type="text" name="" id="" (keyup)="onSearchKeyUp()" [(ngModel)]="searchFilter">
@@ -9,7 +10,9 @@
     <small>System Map represents BendroCorp's knowledge of the galaxy. If you cannot find what you are looking for here make you sure check the <a href="https://robertsspaceindustries.com/galactapedia" target="_blank">Galactapedia</a>.</small>
   </div>
 </div>
-<div class="row" style="text-align: center;">
+
+<!-- data/search results -->
+<div *ngIf="initialDataLoaded" class="row" style="text-align: center;">
   <!-- recents -->
   <div class="col-md-12" *ngIf="!searchFilter">
     <div class="row">
