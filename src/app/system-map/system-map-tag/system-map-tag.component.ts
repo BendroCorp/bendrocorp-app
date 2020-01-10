@@ -22,4 +22,11 @@ export class SystemMapTagComponent {
       return tagArray;
     }
   }
+
+  isRestricted(tag: string): boolean {
+    if (tag) {
+      return (tag.toLowerCase() === 'restricted');
+    }
+    return 
+  }
 }
