@@ -239,12 +239,22 @@ export class SystemMapSearchItem {
     settlements?: Settlement[];
     mission_givers?: MissionGiver[];
     object_type?: IdTitleDesc;
+    object_type_id?: string;
     location_type?: IdTitleDesc;
+    location_type_id?: string;
     system_map_images?: SystemImage[];
     faction_affiliation?: FactionAffiliation;
+    faction_affiliation_id?: string;
     jurisdiction?: Jurisdiction;
-    //
+    jurisdiction_id?: string;
+    // planet/moon specific stuff
+    atmospheric_height?: number;
+    general_radiation?: number;
+    economic_rating?: number;
+    population_density?: number;
+    minimum_criminality_rating?: number;
+
     type?: 'Planet'|'Moon'|'System Object'|'Location'|'Settlement'|'Mission Giver'
-    hasPlanetParent: boolean; // for locations, settlements and mission givers
-    hasMoonParent: boolean; // for locations, settlements and mission givers
+    hasPlanetParent?: boolean; // for locations, settlements and mission givers
+    hasMoonParent?: boolean; // for locations, settlements and mission givers
   }

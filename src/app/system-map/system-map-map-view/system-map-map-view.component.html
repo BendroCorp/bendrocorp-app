@@ -100,7 +100,7 @@
             </h6>
             <p>{{setLocation.description}}</p>
             <div *ngIf="isEditor" style="margin: 4px 0 4px 0">
-              <mission-giver-modal style="margin: 0 2px 0 0" [smallBtn]="true" [systemLocation]="setLocation"></mission-giver-modal>
+              <add-update-mission-giver-modal style="margin: 0 2px 0 0" [smallBtn]="true" [systemLocation]="setLocation"></add-update-mission-giver-modal>
               <add-update-system-image-modal [smallBtn]="true" [systemLocation]="setLocation"></add-update-system-image-modal>
             </div>
             <!-- Settlement location mission givers -->
@@ -111,7 +111,7 @@
                 <image-view-modal style="float:right;" [thumbnailUri]="mg.primary_image_url"
                 [imageUri]="mg.primary_image_url_full" [maxWidth]="100"></image-view-modal>
                 <div>
-                  <strong>{{mg.title}} <small *ngIf="mg.faction_affiliation">({{mg.faction_affiliation.title}}) </small></strong><mission-giver-modal [smallBtn]="true" [missionGiver]="mg"></mission-giver-modal>
+                  <strong>{{mg.title}} <small *ngIf="mg.faction_affiliation">({{mg.faction_affiliation.title}}) </small></strong><add-update-mission-giver-modal [smallBtn]="true" [missionGiver]="mg"></add-update-mission-giver-modal>
                 </div>
                 <p>{{mg.description}}</p>
               </div>
@@ -153,7 +153,7 @@
         </h6>
         <p>{{location.description}}</p>
         <div *ngIf="isEditor" style="margin: 4px 0 4px 0">
-          <mission-giver-modal style="margin: 0 2px 0 0" [smallBtn]="true" [systemLocation]="location"></mission-giver-modal>
+          <add-update-mission-giver-modal style="margin: 0 2px 0 0" [smallBtn]="true" [systemLocation]="location"></add-update-mission-giver-modal>
           <add-update-system-image-modal [smallBtn]="true" [systemLocation]="location"></add-update-system-image-modal>
         </div>
         <!-- Settlement location mission givers -->
@@ -164,7 +164,7 @@
             <image-view-modal style="float:right;" [thumbnailUri]="mg.primary_image_url"
             [imageUri]="mg.primary_image_url_full" [maxWidth]="100"></image-view-modal>
             <div>
-              <strong>{{mg.title}} <small *ngIf="mg.faction_affiliation">({{mg.faction_affiliation.title}}) </small></strong><mission-giver-modal [smallBtn]="true" [missionGiver]="mg"></mission-giver-modal>
+              <strong>{{mg.title}} <small *ngIf="mg.faction_affiliation">({{mg.faction_affiliation.title}}) </small></strong><add-update-mission-giver-modal [smallBtn]="true" [missionGiver]="mg"></add-update-mission-giver-modal>
             </div>
             <p>{{mg.description}}</p>
           </div>
