@@ -81,7 +81,17 @@
         </div>
         <!-- Images -->
         <div *ngIf="selectedItem.system_map_images">
-          <h6>Images</h6>
+          <h6>
+            <span>Images</span>
+            <span *ngIf="isEditor">&nbsp;
+              <add-update-system-image-modal *ngIf="selectedItem.kind === 'Planet'" [systemPlanet]="selectedStarSystemItem"></add-update-system-image-modal>
+              <add-update-system-image-modal *ngIf="selectedItem.kind === 'Moon'" [systemMoon]="selectedStarSystemItem"></add-update-system-image-modal>
+              <add-update-system-image-modal *ngIf="selectedItem.kind === 'System Object'" [systemObject]="selectedStarSystemItem"></add-update-system-image-modal>
+              <add-update-system-image-modal *ngIf="selectedItem.kind === 'Settlement'" [systemSettlement]="selectedStarSystemItem"></add-update-system-image-modal>
+              <add-update-system-image-modal *ngIf="selectedItem.kind === 'Location'" [systemLocation]="selectedStarSystemItem"></add-update-system-image-modal>
+              <add-update-system-image-modal *ngIf="selectedItem.kind === 'Mission Giver'" [missionGiver]="selectedStarSystemItem"></add-update-system-image-modal>
+            </span>
+          </h6>
           <p *ngIf="selectedItem.system_map_images.length == 0">No current images.</p>
           <div style="display:inline-block; border: 1px solid #666" *ngFor="let image of selectedItem.system_map_images">
               <image-view-modal [title]="image.title" [description]="image.description"

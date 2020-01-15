@@ -192,6 +192,7 @@ export class SystemImage
     of_location_id?: string;
     of_settlement_id?: string;
     of_gravity_well_id?: string;
+    of_mission_giver_id?: string;
     created_by_id?: number;
     created_by?: User;
     new_image?: Base64Upload;
