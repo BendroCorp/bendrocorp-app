@@ -25,6 +25,7 @@
           <h3>
             <span>{{selectedItem.title}} <small>({{selectedItem.kind}})</small></span>
             <span *ngIf="isEditor" style="padding-left: 4px;">
+              <add-update-system-modal *ngIf="selectedItem.kind == 'Star System'" [starSystem]="selectedItem"></add-update-system-modal>
               <add-update-jump-point-modal *ngIf="selectedItem.kind == 'Jump Point'" [jumpPoint]="selectedItem"></add-update-jump-point-modal>
               <add-update-system-modal *ngIf="selectedItem.kind == 'System'" [starSystem]="selectedItem"></add-update-system-modal>
               <add-update-planet-modal *ngIf="selectedItem.kind == 'Planet'" [planet]="selectedItem"></add-update-planet-modal>
@@ -81,6 +82,13 @@
           <p>
             <span><strong>Mission Givers: </strong></span>
             <span *ngFor="let item of selectedItem.mission_givers; let i = index"><a [routerLink]="['/system-map', parseObjectLink(item)]">{{item.title}}</a><span *ngIf="(i + 1) < selectedItem.mission_givers.length">, </span></span>
+          </p>
+        </div>
+        <!-- Jump Points -->
+        <div *ngIf="selectedItem.jump_points && selectedItem.jump_points.length > 0">
+          <p>
+            <span><strong>Jump Points: </strong></span>
+            <span *ngFor="let item of selectedItem.jump_points; let i = index"><a [routerLink]="['/system-map', parseObjectLink(item)]">{{item.title}}</a><span *ngIf="(i + 1) < selectedItem.mission_givers.length">, </span></span>
           </p>
         </div>
         <!-- Images -->

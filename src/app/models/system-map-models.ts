@@ -240,6 +240,8 @@ export class SystemMapSearchItem {
     locations?: Location[];
     settlements?: Settlement[];
     mission_givers?: MissionGiver[];
+    system_objects: SystemObject[];
+    jump_points: JumpPoint[];
     object_type?: IdTitleDesc;
     object_type_id?: string;
     location_type?: IdTitleDesc;
