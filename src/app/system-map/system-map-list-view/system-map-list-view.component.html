@@ -26,7 +26,7 @@
         <img style="max-height: 150px; max-width: 100%;" src="{{item.primary_image_url}}" alt="">
         <h6>{{item.title}}</h6>
         <system-map-tag *ngIf="item.tags" [tags]="item.tags"></system-map-tag>
-        <p>{{item.description}}</p>
+        <p>{{ (item.description.length > listItemTextLimit)? (item.description | slice:0:listItemTextLimit)+'...':(item.description) }}</p>
       </div>
     </div>
   </div>
@@ -43,7 +43,7 @@
         <img style="max-height: 150px; max-width: 100%;" src="{{item.primary_image_url}}" alt="">
         <h6>{{item.title}}</h6>
         <system-map-tag *ngIf="item.tags" [tags]="item.tags"></system-map-tag>
-        <p>{{item.description}}</p>
+        <p>{{ (item.description.length > listItemTextLimit)? (item.description | slice:0:listItemTextLimit)+'...':(item.description) }}</p>
       </div>
     </div>
   </div>

@@ -27,6 +27,7 @@ export class AddUpdateSystemObjectModalComponent implements OnInit {
   objectTitle: string;
   types: FieldDescriptor[];
   jurisdictions: Jurisdiction[] = [];
+  formSubmitting: boolean = false;
 
   modalRef:NgbModalRef
   constructor(
@@ -76,12 +77,14 @@ export class AddUpdateSystemObjectModalComponent implements OnInit {
 
   addUpdateSystemObject()
   {
+    this.formSubmitting = true;
     if (this.systemObject.id) {
       this.systemMapService.updateSystemObject(this.systemObject).subscribe(
         (results) => {
           if (!(results instanceof HttpErrorResponse)) {
-            this.systemMapService.fullRefreshData()
-            this.close()
+            this.systemMapService.fullRefreshData();
+            this.formSubmitting = false;
+            this.close();
           }
         }
       )
@@ -89,8 +92,9 @@ export class AddUpdateSystemObjectModalComponent implements OnInit {
       this.systemMapService.addSystemObject(this.systemObject).subscribe(
         (results) => {
           if (!(results instanceof HttpErrorResponse)) {
-            this.systemMapService.fullRefreshData()
-            this.close()
+            this.systemMapService.fullRefreshData();
+            this.formSubmitting = false;
+            this.close();
           }
         }
       )

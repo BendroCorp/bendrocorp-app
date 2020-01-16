@@ -33,6 +33,9 @@ export class SystemMapListViewComponent implements OnInit {
   recentItems: SystemMapSearchItem[] = [];
   isFiltering: boolean = false;
 
+  // limits the number of characters shown in the item boxes
+  listItemTextLimit = 150;
+
   // https://stackoverflow.com/questions/42761163/angular-2-debouncing-a-keyup-event
   private searchSubject: Subject<string> = new Subject();
 
@@ -114,6 +117,7 @@ export class SystemMapListViewComponent implements OnInit {
             tags: x.tags,
             kind: x.kind,
             primary_image_url: x.primary_image_url,
+            primary_image_url_full: x.primary_image_url_full,
             // specific items below this
             planets: x.planets,
             moons: x.moons,
@@ -121,10 +125,19 @@ export class SystemMapListViewComponent implements OnInit {
             settlements: x.settlements,
             mission_givers: x.mission_givers,
             faction_affiliation: x.faction_affiliation,
+            faction_affiliation_id: x.faction_affiliation_id,
             jurisdiction: x.jurisdiction,
+            jurisdiction_id: x.jurisdiction_id,
             object_type: x.object_type,
+            object_type_id: x.object_type_id,
             location_type: x.location_type,
-            system_map_images: x.system_map_images
+            location_type_id: x.location_type_id,
+            system_map_images: x.system_map_images,
+            atmospheric_height: x.atmospheric_height,
+            general_radiation: x.general_radiation,
+            economic_rating: x.economic_rating,
+            population_density: x.population_density,
+            minimum_criminality_rating: x.minimum_criminality_rating
           } as SystemMapSearchItem;
 
           // parent

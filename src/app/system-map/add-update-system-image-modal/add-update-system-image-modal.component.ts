@@ -31,6 +31,7 @@ export class AddUpdateSystemImageModalComponent implements OnInit {
   successString: string;
   modalRef: NgbModalRef;
   formSubmitting: boolean = false;
+  validType: boolean = false;
   
   constructor(private modalService: NgbModal, private systemMapService:SystemMapService, private messageService:MessageService) { }
 
@@ -39,29 +40,37 @@ export class AddUpdateSystemImageModalComponent implements OnInit {
     if (!(this.systemImage && this.systemImage.id)) {
       // Which one is it
       if (this.systemPlanet && !this.systemMoon && !this.systemObject && !this.systemSettlement && !this.systemLocation && !this.missionGiver) {
-        this.systemImage = { of_planet_id: this.systemPlanet.id } as SystemImage 
-        this.objectTitle = "Planet"
-        this.successString = `${this.formAction}d system image on ${this.systemPlanet.title}`
+        this.systemImage = { of_planet_id: this.systemPlanet.id } as SystemImage;
+        this.objectTitle = "Planet";
+        this.successString = `${this.formAction}d system image on ${this.systemPlanet.title}`;
+        this.validType = true;
       } else if (!this.systemPlanet && this.systemMoon && !this.systemObject && !this.systemSettlement && !this.systemLocation && !this.missionGiver) {
-        this.systemImage = { of_moon_id: this.systemMoon.id } as SystemImage 
-        this.objectTitle = "Moon"
-        this.successString = `${this.formAction}d system image on ${this.systemMoon.title}`
+        this.systemImage = { of_moon_id: this.systemMoon.id } as SystemImage;
+        this.objectTitle = "Moon";
+        this.successString = `${this.formAction}d system image on ${this.systemMoon.title}`;
+        this.validType = true;
       } else if (!this.systemPlanet && !this.systemMoon && this.systemObject && !this.systemSettlement && !this.systemLocation && !this.missionGiver) {
-        this.systemImage = { of_system_object_id: this.systemObject.id } as SystemImage 
-        this.objectTitle = "System Object"
-        this.successString = `${this.formAction}d system image on ${this.systemObject.title}`
+        this.systemImage = { of_system_object_id: this.systemObject.id } as SystemImage;
+        this.objectTitle = "System Object";
+        this.successString = `${this.formAction}d system image on ${this.systemObject.title}`;
+        this.validType = true;
       } else if (!this.systemPlanet && !this.systemMoon && !this.systemObject && this.systemSettlement && !this.systemLocation && !this.missionGiver) {
-        this.systemImage = { of_settlement_id: this.systemSettlement.id } as SystemImage 
-        this.objectTitle = "Settlement"
-        this.successString = `${this.formAction}d system image on ${this.systemSettlement.title}`
+        this.systemImage = { of_settlement_id: this.systemSettlement.id } as SystemImage;
+        this.objectTitle = "Settlement";
+        this.successString = `${this.formAction}d system image on ${this.systemSettlement.title}`;
+        this.validType = true;
       } else if (!this.systemPlanet && !this.systemMoon && !this.systemObject && !this.systemSettlement && this.systemLocation && !this.missionGiver) {
-        this.systemImage = { of_location_id: this.systemLocation.id } as SystemImage 
-        this.objectTitle = "Location"
-        this.successString = `${this.formAction}d system image on ${this.systemLocation.title}`
+        this.systemImage = { of_location_id: this.systemLocation.id } as SystemImage;
+        this.objectTitle = "Location";
+        this.successString = `${this.formAction}d system image on ${this.systemLocation.title}`;
+        this.validType = true;
       } else if (!this.systemPlanet && !this.systemMoon && !this.systemObject && !this.systemSettlement && !this.systemLocation && this.missionGiver) {
-        this.systemImage = { of_mission_giver_id: this.systemLocation.id } as SystemImage 
-        this.objectTitle = "Mission Giver"
-        this.successString = `${this.formAction}d system image on ${this.systemLocation.title}`
+        this.systemImage = { of_mission_giver_id: this.missionGiver.id } as SystemImage;
+        this.objectTitle = "Mission Giver";
+        this.successString = `${this.formAction}d system image on ${this.missionGiver.title}`;
+        this.validType = true;
+      } else {
+        this.messageService.addError('Error: Image modal not passed a valid type...')
       }
     }
 

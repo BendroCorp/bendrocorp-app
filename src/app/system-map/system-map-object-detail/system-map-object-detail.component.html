@@ -16,7 +16,10 @@
         <span>Details</span>
       </div>
       <div class="card-body">
-        <img style="float: right; max-width: 200px;" src="{{selectedItem.primary_image_url}}" alt="{{selectedItem.title}}">
+        <image-view-modal style="float:right;" [thumbnailUri]="selectedItem.primary_image_url"
+            [imageUri]="selectedItem.primary_image_url_full" [maxWidth]="200"></image-view-modal>
+        <!-- primary_image_url_full -->
+        <!-- <img style="float: right; max-width: 200px;" src="{{selectedItem.primary_image_url}}" alt="{{selectedItem.title}}"> -->
         <!-- Basic details -->
         <div>
           <h3>
@@ -29,6 +32,7 @@
               <add-update-settlement-modal *ngIf="selectedItem.kind == 'Settlement'" [systemSettlement]="selectedItem"></add-update-settlement-modal>
               <add-update-location-modal *ngIf="selectedItem.kind == 'Location'" [systemLocation]="selectedItem"></add-update-location-modal>
               <add-update-mission-giver-modal *ngIf="selectedItem.kind == 'Mission Giver'" [missionGiver]="selectedItem"></add-update-mission-giver-modal>
+              <add-update-system-object-modal *ngIf="selectedItem.kind == 'System Object'" [systemObject]="selectedItem"></add-update-system-object-modal>
             </span>
           </h3>
           <system-map-tag *ngIf="selectedItem.tags" [tags]="selectedItem.tags"></system-map-tag>
@@ -84,12 +88,12 @@
           <h6>
             <span>Images</span>
             <span *ngIf="isEditor">&nbsp;
-              <add-update-system-image-modal *ngIf="selectedItem.kind === 'Planet'" [systemPlanet]="selectedStarSystemItem"></add-update-system-image-modal>
-              <add-update-system-image-modal *ngIf="selectedItem.kind === 'Moon'" [systemMoon]="selectedStarSystemItem"></add-update-system-image-modal>
-              <add-update-system-image-modal *ngIf="selectedItem.kind === 'System Object'" [systemObject]="selectedStarSystemItem"></add-update-system-image-modal>
-              <add-update-system-image-modal *ngIf="selectedItem.kind === 'Settlement'" [systemSettlement]="selectedStarSystemItem"></add-update-system-image-modal>
-              <add-update-system-image-modal *ngIf="selectedItem.kind === 'Location'" [systemLocation]="selectedStarSystemItem"></add-update-system-image-modal>
-              <add-update-system-image-modal *ngIf="selectedItem.kind === 'Mission Giver'" [missionGiver]="selectedStarSystemItem"></add-update-system-image-modal>
+              <add-update-system-image-modal *ngIf="selectedItem.kind === 'Planet'" [systemPlanet]="selectedItem"></add-update-system-image-modal>
+              <add-update-system-image-modal *ngIf="selectedItem.kind === 'Moon'" [systemMoon]="selectedItem"></add-update-system-image-modal>
+              <add-update-system-image-modal *ngIf="selectedItem.kind === 'System Object'" [systemObject]="selectedItem"></add-update-system-image-modal>
+              <add-update-system-image-modal *ngIf="selectedItem.kind === 'Settlement'" [systemSettlement]="selectedItem"></add-update-system-image-modal>
+              <add-update-system-image-modal *ngIf="selectedItem.kind === 'Location'" [systemLocation]="selectedItem"></add-update-system-image-modal>
+              <add-update-system-image-modal *ngIf="selectedItem.kind === 'Mission Giver'" [missionGiver]="selectedItem"></add-update-system-image-modal>
             </span>
           </h6>
           <p *ngIf="selectedItem.system_map_images.length == 0">No current images.</p>

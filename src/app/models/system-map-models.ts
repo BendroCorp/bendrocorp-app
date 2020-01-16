@@ -233,6 +233,7 @@ export class SystemMapSearchItem {
     tags: string;
     kind: string;
     primary_image_url: string;
+    primary_image_url_full: string;
     // specific sub-things, not everything will have all of these things...
     planets?: Planet[];
     moons?: Moon[];

@@ -73,6 +73,7 @@ export class SystemMapObjectDetailComponent implements OnInit, OnDestroy {
             tags: x.tags,
             kind: x.kind,
             primary_image_url: x.primary_image_url,
+            primary_image_url_full: x.primary_image_url_full,
             // specific items below this
             planets: x.planets,
             moons: x.moons,
