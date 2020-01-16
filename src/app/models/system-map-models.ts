@@ -192,6 +192,7 @@ export class SystemImage
     of_location_id?: string;
     of_settlement_id?: string;
     of_gravity_well_id?: string;
+    of_mission_giver_id?: string;
     created_by_id?: number;
     created_by?: User;
     new_image?: Base64Upload;
@@ -232,6 +233,7 @@ export class SystemMapSearchItem {
     tags: string;
     kind: string;
     primary_image_url: string;
+    primary_image_url_full: string;
     // specific sub-things, not everything will have all of these things...
     planets?: Planet[];
     moons?: Moon[];
@@ -239,12 +241,22 @@ export class SystemMapSearchItem {
     settlements?: Settlement[];
     mission_givers?: MissionGiver[];
     object_type?: IdTitleDesc;
+    object_type_id?: string;
     location_type?: IdTitleDesc;
+    location_type_id?: string;
     system_map_images?: SystemImage[];
     faction_affiliation?: FactionAffiliation;
+    faction_affiliation_id?: string;
     jurisdiction?: Jurisdiction;
-    //
+    jurisdiction_id?: string;
+    // planet/moon specific stuff
+    atmospheric_height?: number;
+    general_radiation?: number;
+    economic_rating?: number;
+    population_density?: number;
+    minimum_criminality_rating?: number;
+
     type?: 'Planet'|'Moon'|'System Object'|'Location'|'Settlement'|'Mission Giver'
-    hasPlanetParent: boolean; // for locations, settlements and mission givers
-    hasMoonParent: boolean; // for locations, settlements and mission givers
+    hasPlanetParent?: boolean; // for locations, settlements and mission givers
+    hasMoonParent?: boolean; // for locations, settlements and mission givers
   }

@@ -8,7 +8,7 @@ import { FactionService } from 'src/app/misc/faction.service';
 import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
-  selector: 'mission-giver-modal',
+  selector: 'add-update-mission-giver-modal',
   templateUrl: './add-update-mission-giver-modal.component.html',
   styleUrls: ['./add-update-mission-giver-modal.component.css']
 })

@@ -15,13 +15,15 @@ import { MessageService } from 'src/app/message/message.service';
   styleUrls: ['./system-map-object-detail.component.css']
 })
 export class SystemMapObjectDetailComponent implements OnInit, OnDestroy {
+  isEditor: boolean = (this.authService.hasClaim(22) || this.authService.hasClaim(23)) ? true : false;
   
   fullList: SystemMapSearchItem[] = [];
   selectedItemId: string;
   selectedItem: SystemMapSearchItem;
 
-  // 
+  // subscriptions
   routeSubscription: Subscription;
+  updateSubscription: Subscription;
 
   constructor(
     private systemMapService: SystemMapService,
@@ -30,7 +32,11 @@ export class SystemMapObjectDetailComponent implements OnInit, OnDestroy {
     private router: Router,
     private route: ActivatedRoute,
     private messageService: MessageService
-  ) { }
+  ) { 
+    this.updateSubscription = this.systemMapService.fullDataRefreshAnnounced$.subscribe(() => {
+      this.fetchSystemObjectsAndSelect();
+    });
+  }
 
   fetchSystemObjectsAndSelect() {
     // collection for all of the requests
@@ -67,6 +73,7 @@ export class SystemMapObjectDetailComponent implements OnInit, OnDestroy {
             tags: x.tags,
             kind: x.kind,
             primary_image_url: x.primary_image_url,
+            primary_image_url_full: x.primary_image_url_full,
             // specific items below this
             planets: x.planets,
             moons: x.moons,
@@ -74,10 +81,19 @@ export class SystemMapObjectDetailComponent implements OnInit, OnDestroy {
             settlements: x.settlements,
             mission_givers: x.mission_givers,
             faction_affiliation: x.faction_affiliation,
+            faction_affiliation_id: x.faction_affiliation_id,
             jurisdiction: x.jurisdiction,
+            jurisdiction_id: x.jurisdiction_id,
             object_type: x.object_type,
+            object_type_id: x.object_type_id,
             location_type: x.location_type,
-            system_map_images: x.system_map_images
+            location_type_id: x.location_type_id,
+            system_map_images: x.system_map_images,
+            atmospheric_height: x.atmospheric_height,
+            general_radiation: x.general_radiation,
+            economic_rating: x.economic_rating,
+            population_density: x.population_density,
+            minimum_criminality_rating: x.minimum_criminality_rating
           } as SystemMapSearchItem;
 
           // parent
@@ -127,12 +143,6 @@ export class SystemMapObjectDetailComponent implements OnInit, OnDestroy {
     });
   }
 
-  // joinAndLinkObjects(items: []) {
-  //   items.map(x => {
-
-  //   })
-  // }
-
   parseObjectLink(item: SystemMapSearchItem): string {
     let urlObjectId = `${item.id.split('-')[0]}-${item.title.trim().toLowerCase().split(' ').join('-')}`
     return urlObjectId;
@@ -177,7 +187,11 @@ export class SystemMapObjectDetailComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     //
-    if (this.routeSubscription) {
+    if (this.updateSubscription) {
+      this.routeSubscription.unsubscribe();
+    }
+
+    if (this.updateSubscription) {
       this.routeSubscription.unsubscribe();
     }
   }

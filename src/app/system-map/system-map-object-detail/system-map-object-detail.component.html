@@ -16,10 +16,25 @@
         <span>Details</span>
       </div>
       <div class="card-body">
-        <img style="float: right; max-width: 200px;" src="{{selectedItem.primary_image_url}}" alt="{{selectedItem.title}}">
+        <image-view-modal style="float:right;" [thumbnailUri]="selectedItem.primary_image_url"
+            [imageUri]="selectedItem.primary_image_url_full" [maxWidth]="200"></image-view-modal>
+        <!-- primary_image_url_full -->
+        <!-- <img style="float: right; max-width: 200px;" src="{{selectedItem.primary_image_url}}" alt="{{selectedItem.title}}"> -->
         <!-- Basic details -->
         <div>
-          <h3>{{selectedItem.title}}</h3>
+          <h3>
+            <span>{{selectedItem.title}} <small>({{selectedItem.kind}})</small></span>
+            <span *ngIf="isEditor" style="padding-left: 4px;">
+              <add-update-jump-point-modal *ngIf="selectedItem.kind == 'Jump Point'" [jumpPoint]="selectedItem"></add-update-jump-point-modal>
+              <add-update-system-modal *ngIf="selectedItem.kind == 'System'" [starSystem]="selectedItem"></add-update-system-modal>
+              <add-update-planet-modal *ngIf="selectedItem.kind == 'Planet'" [planet]="selectedItem"></add-update-planet-modal>
+              <add-update-moon-modal *ngIf="selectedItem.kind == 'Moon'" [moon]="selectedItem"></add-update-moon-modal>
+              <add-update-settlement-modal *ngIf="selectedItem.kind == 'Settlement'" [systemSettlement]="selectedItem"></add-update-settlement-modal>
+              <add-update-location-modal *ngIf="selectedItem.kind == 'Location'" [systemLocation]="selectedItem"></add-update-location-modal>
+              <add-update-mission-giver-modal *ngIf="selectedItem.kind == 'Mission Giver'" [missionGiver]="selectedItem"></add-update-mission-giver-modal>
+              <add-update-system-object-modal *ngIf="selectedItem.kind == 'System Object'" [systemObject]="selectedItem"></add-update-system-object-modal>
+            </span>
+          </h3>
           <system-map-tag *ngIf="selectedItem.tags" [tags]="selectedItem.tags"></system-map-tag>
           <p>{{selectedItem.description}}</p>
           <p *ngIf="selectedItem.parent"><strong>Parent: </strong><a [routerLink]="['/system-map', parseObjectLink(selectedItem.parent)]">{{selectedItem.parent.title}}</a></p>
@@ -70,7 +85,17 @@
         </div>
         <!-- Images -->
         <div *ngIf="selectedItem.system_map_images">
-          <h6>Images</h6>
+          <h6>
+            <span>Images</span>
+            <span *ngIf="isEditor">&nbsp;
+              <add-update-system-image-modal *ngIf="selectedItem.kind === 'Planet'" [systemPlanet]="selectedItem"></add-update-system-image-modal>
+              <add-update-system-image-modal *ngIf="selectedItem.kind === 'Moon'" [systemMoon]="selectedItem"></add-update-system-image-modal>
+              <add-update-system-image-modal *ngIf="selectedItem.kind === 'System Object'" [systemObject]="selectedItem"></add-update-system-image-modal>
+              <add-update-system-image-modal *ngIf="selectedItem.kind === 'Settlement'" [systemSettlement]="selectedItem"></add-update-system-image-modal>
+              <add-update-system-image-modal *ngIf="selectedItem.kind === 'Location'" [systemLocation]="selectedItem"></add-update-system-image-modal>
+              <add-update-system-image-modal *ngIf="selectedItem.kind === 'Mission Giver'" [missionGiver]="selectedItem"></add-update-system-image-modal>
+            </span>
+          </h6>
           <p *ngIf="selectedItem.system_map_images.length == 0">No current images.</p>
           <div style="display:inline-block; border: 1px solid #666" *ngFor="let image of selectedItem.system_map_images">
               <image-view-modal [title]="image.title" [description]="image.description"
