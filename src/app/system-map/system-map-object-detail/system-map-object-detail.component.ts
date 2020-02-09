@@ -79,6 +79,8 @@ export class SystemMapObjectDetailComponent implements OnInit, OnDestroy {
             moons: x.moons,
             locations: x.locations,
             settlements: x.settlements,
+            system_objects: x.system_objects,
+            jump_points: x.jump_points,
             mission_givers: x.mission_givers,
             faction_affiliation: x.faction_affiliation,
             faction_affiliation_id: x.faction_affiliation_id,

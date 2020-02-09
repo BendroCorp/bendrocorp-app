@@ -112,6 +112,7 @@
                 [imageUri]="mg.primary_image_url_full" [maxWidth]="100"></image-view-modal>
                 <div>
                   <strong>{{mg.title}} <small *ngIf="mg.faction_affiliation">({{mg.faction_affiliation.title}}) </small></strong><add-update-mission-giver-modal [smallBtn]="true" [missionGiver]="mg"></add-update-mission-giver-modal>
+                  <p><system-map-tag *ngIf="mg.tags" [tags]="mg.tags"></system-map-tag></p>
                 </div>
                 <p>{{mg.description}}</p>
               </div>
