@@ -143,6 +143,9 @@ import { AddUpdateGravityWellModalComponent } from './system-map/add-update-grav
 import { AngularResizedEventModule } from 'angular-resize-event';
 import { SystemMapTagComponent } from './system-map/system-map-tag/system-map-tag.component';
 import { SystemMapObjectDetailComponent } from './system-map/system-map-object-detail/system-map-object-detail.component';
+import { FieldAdminComponent } from './field-admin/field-admin.component';
+import { FieldAdminDetailsComponent } from './field-admin/field-admin-details/field-admin-details.component';
+import { FieldAdminCreateUpdateModalComponent } from './field-admin/field-admin-create-update-modal/field-admin-create-update-modal.component';
 
 @NgModule({
   declarations: [
@@ -263,6 +266,9 @@ import { SystemMapObjectDetailComponent } from './system-map/system-map-object-d
     AddUpdateGravityWellModalComponent,
     SystemMapTagComponent,
     SystemMapObjectDetailComponent,
+    FieldAdminComponent,
+    FieldAdminDetailsComponent,
+    FieldAdminCreateUpdateModalComponent,
   ],
   entryComponents: [
     EventModalComponent,

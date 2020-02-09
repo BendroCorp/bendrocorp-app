@@ -46,6 +46,8 @@ import { TemplateEditorComponent } from './reports/templates/template-editor/tem
 import { ReportDetailsComponent } from './reports/report-details/report-details.component';
 import { FactionAdminComponent } from './faction-admin/faction-admin.component';
 import { SystemMapObjectDetailComponent } from './system-map/system-map-object-detail/system-map-object-detail.component';
+import { FieldAdminComponent } from './field-admin/field-admin.component';
+import { FieldAdminDetailsComponent } from './field-admin/field-admin-details/field-admin-details.component';
 
 const routes: Routes = [
     { path: '', component: DashboardComponent, canActivate: [AuthGuardService, MemberAuthGuardService] },
@@ -77,6 +79,8 @@ const routes: Routes = [
     { path: 'reports/templates', component: TemplatesComponent, canActivate: [AuthGuardService, MemberAuthGuardService] },
     { path: 'reports/templates/:template_id', component: TemplateEditorComponent, canActivate: [AuthGuardService, MemberAuthGuardService] },
     { path: 'reports/:report_id', component: ReportDetailsComponent, canActivate: [AuthGuardService, MemberAuthGuardService] },
+    { path: 'field-admin', component: FieldAdminComponent, canActivate: [AuthGuardService, MemberAuthGuardService] },
+    { path: 'field-admin/:id', component: FieldAdminDetailsComponent, canActivate: [AuthGuardService, MemberAuthGuardService] },
     // public/non-member routes below here
     { path: 'login', component: LoginComponent, canActivate: [NoAuthGuardService] },
     { path: 'signup', component: SignupComponent, canActivate: [NoAuthGuardService] },

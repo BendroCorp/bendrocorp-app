@@ -1,0 +1,31 @@
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">{{formAction}} Field</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form #addUpdateFieldForm="ngForm">
+      <div class="form-group">
+        <label>Name</label>
+        <input required class="form-control" type="text" placeholder="Field Name..." name="field_name" [(ngModel)]="field.name" id="">
+      </div>
+      <div class="form-group" *ngIf="descriptorClasses.length > 0">
+        <label>Descriptor Class</label>
+        <select class="form-control" [(ngModel)]="field.field_descriptor_class_id" name="field_descriptor_class_id" id="field_descriptor_class_id">
+          <option *ngFor="let desc of descriptorClasses" [value]="desc.id">{{desc.title}}</option>
+        </select>
+        <small>* Specifying a descriptor class will prevent the manual addition of descriptors.</small>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-primary" (click)="addUpdateField()">{{formAction}} Field</button>
+    <button type="button" class="btn btn-secondary" (click)="modal.close('Save click')">Close</button>
+  </div>
+</ng-template>
+
+<button *ngIf="field && field.id && !field.read_only" class="btn btn-sm btn-primary" (click)="open(content)"><i class="fas fa-edit"></i></button>
+<button *ngIf="field && field.id && field.read_only" placement="bottom" ngbTooltip="Read-only" disabled><i class="fas fa-edit"></i></button>
+<button *ngIf="!field || !field.id" class="btn btn-sm btn-secondary" (click)="open(content)">Create Field</button>
