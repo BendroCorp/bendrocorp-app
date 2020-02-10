@@ -10,6 +10,8 @@ import { Subscription, Subject, concat } from 'rxjs';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { Field } from '@bendrocorp/bendrocorp-node-sdk/models/field.model';
 import { FieldService } from 'src/app/misc/field.service';
+import { Role } from '@bendrocorp/bendrocorp-node-sdk/models/user.model';
+import { RoleService } from 'src/app/roles/role.service';
 
 @Component({
   selector: 'app-template-editor',
@@ -21,7 +23,8 @@ export class TemplateEditorComponent implements OnInit, OnDestroy {
   templateId: string = this.route.snapshot.paramMap.get('template_id')
   isReportBuilder: boolean = this.authService.hasClaim(48);
   reportHandlers: ReportHandler[];
-  fields: Field[];
+  fields: Field[] = [];
+  roles: Role[] = [];
   template: ReportTemplate;
   templateFieldUpdate = new Subject<string>();
   templateUpdateSubscription: Subscription;
@@ -35,7 +38,8 @@ export class TemplateEditorComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private reportsService: ReportService,
     private fieldService: FieldService,
-    private confirmation: ConfirmationModal
+    private confirmation: ConfirmationModal,
+    private roleService: RoleService
   ) {
     this.templateUpdateSubscription = this.templateFieldUpdate.pipe(
       debounceTime(700),
@@ -136,6 +140,15 @@ export class TemplateEditorComponent implements OnInit, OnDestroy {
     });
   }
 
+  fetchRoles() {
+    this.roleService.listSimple().subscribe((results) => {
+      if (!(results instanceof HttpErrorResponse)) {
+        this.roles.push({ name: 'No Role (Not a protected form)' } as Role)
+        this.roles = this.roles.concat(results);
+      }
+    });
+  }
+
   fetchHandlers() {
     this.reportsService.listReportHandlers().subscribe((results) => {
       if (!(results instanceof HttpErrorResponse)) {
@@ -157,6 +170,7 @@ export class TemplateEditorComponent implements OnInit, OnDestroy {
       this.messageService.addError('You are not authorized to create report templates!')
       this.router.navigateByUrl('/');
     } else {
+      this.fetchRoles();
       this.fetchFields();
       this.fetchHandlers();
       this.fetchTemplate();

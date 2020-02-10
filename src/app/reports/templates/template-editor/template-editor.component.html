@@ -39,6 +39,12 @@
             <small>9 times out of 10 "Generic Approval" should be used. Anything else requires special coding.</small>
           </div>
           <div class="col-md-12">
+            <label>Role Protect</label>
+            <select (ngModelChange)="this.templateFieldUpdate.next($event)" class="form-control" [(ngModel)]="template.role_id" name="role_id">
+              <option *ngFor="let role of roles" [value]="role.id">{{role.name}}</option>
+            </select>
+          </div>
+          <div class="col-md-12">
             <hr />
             <div class="custom-control custom-checkbox">
               <input (ngModelChange)="this.templateFieldUpdate.next($event)" type="checkbox" class="custom-control-input" id="draftCheck" [ngModelOptions]="{standalone: true}" [(ngModel)]="template.draft" name="draft">
