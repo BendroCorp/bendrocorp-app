@@ -34,6 +34,18 @@ export class RoleService {
     )
   }
 
+  /**
+   * Provides a simple lists of roles with just id,name. This is intended for admin interfaces. The regular endpoint sometimes returns too much data to admins.
+   * @returns Role[]
+   */
+  listSimple() : Observable<Role[]>
+  {
+    return this.http.get<Role[]>(`${this.globals.baseUrl}/role/simple`).pipe(
+      tap(results => console.log(`Fetched ${results.length} roles`)),
+      catchError(this.errorService.handleError('Fetch Roles', []))
+    )
+  }
+
   createRole(role:Role) : Observable<Role>
   {
     return this.http.post<Role>(`${this.globals.baseUrl}/role`, { role }).pipe(
