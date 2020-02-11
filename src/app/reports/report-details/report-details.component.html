@@ -43,7 +43,7 @@
             <div class="form-group" *ngIf="approverList && approverList.length > 0">
               <label>Report For</label>
               <select (ngModelChange)="this.reportFieldUpdate.next($event)" class="form-control" [(ngModel)]="report.report_for_id" name="report_for_id">
-                <option *ngFor="let approver of approverList" [value]="approver.user_id">{{approver.full_name}}</option>
+                <option *ngFor="let approver of approverList" [value]="approver.id">{{approver.title}}</option>
               </select>
               <hr />
             </div>
@@ -70,7 +70,7 @@
               <!-- Type 3 - Number -->
               <input (ngModelChange)="this.reportFieldUpdate.next($event)" placeholder="{{field.name}}" *ngIf="field.field_presentation_type_id == 3" class="form-control" type="number" name="field_value" id="field_value" [(ngModel)]="field.field_value.value">
               <!-- Type 4 - Date -->
-              <dl-date-time-picker startView="day" maxView="year" minView="minute" minuteStep="5" name="field_value" (change)="this.reportFieldUpdate.next($event)" [(ngModel)]="field.field_value.value"></dl-date-time-picker>
+              <dl-date-time-picker startView="day" maxView="year" minView="minute" minuteStep="5" name="field_value" (change)="this.reportFieldUpdate.next($event)" [(ngModel)]="field.field_value.value" *ngIf="field.field_presentation_type_id == 4"></dl-date-time-picker>
               <!-- Type 5 - Field -->
               <select *ngIf="field.field_presentation_type_id == 5 && (fields && fields.length > 0)" (ngModelChange)="this.reportFieldUpdate.next($event)" class="form-control" [(ngModel)]="field.field_value.value" name="field_value">
                 <option *ngFor="let descriptor of getFieldDescriptors(field)" [value]="descriptor.title">{{descriptor.title}}</option>

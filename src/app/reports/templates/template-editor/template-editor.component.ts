@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ReportTemplate, ReportField, ReportHandler } from '@bendrocorp/bendrocorp-node-sdk/models/report.model';
+import { ReportTemplate, ReportField, ReportHandler, ReportRoute } from '@bendrocorp/bendrocorp-node-sdk/models/report.model';
 import { AuthService } from 'src/app/auth.service';
 import { MessageService } from 'src/app/message/message.service';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -25,6 +25,7 @@ export class TemplateEditorComponent implements OnInit, OnDestroy {
   reportHandlers: ReportHandler[];
   fields: Field[] = [];
   roles: Role[] = [];
+  reportRoutes: ReportRoute[] = [];
   template: ReportTemplate;
   templateFieldUpdate = new Subject<string>();
   templateUpdateSubscription: Subscription;
@@ -165,11 +166,20 @@ export class TemplateEditorComponent implements OnInit, OnDestroy {
     });
   }
 
+  fetchRoutes() {
+    this.reportsService.listReportRoutes().subscribe((results) => {
+      if (!(results instanceof HttpErrorResponse)) {
+        this.reportRoutes = results;
+      }
+    });
+  }
+
   ngOnInit() {
     if (!this.isReportBuilder) {
       this.messageService.addError('You are not authorized to create report templates!')
       this.router.navigateByUrl('/');
     } else {
+      this.fetchRoutes();
       this.fetchRoles();
       this.fetchFields();
       this.fetchHandlers();
