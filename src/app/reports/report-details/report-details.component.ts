@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ReportService } from '../report.service';
 import { Router, ActivatedRoute } from '@angular/router';
-import { Report, ReportField } from '@bendrocorp/bendrocorp-node-sdk/models/report.model';
+import { Report, ReportField, ReportRoute } from '@bendrocorp/bendrocorp-node-sdk/models/report.model';
 import { HttpErrorResponse } from '@angular/common/http';
 import { AuthService } from 'src/app/auth.service';
 import { MessageService } from 'src/app/message/message.service';
@@ -25,7 +25,7 @@ export class ReportDetailsComponent implements OnInit, OnDestroy {
   reportId: string;
   report: Report;
   publishDraft: boolean;
-  approverList: Character[];
+  approverList: ReportRoute[];
   fields: Field[];
   dataSubmissionInProgress: boolean;
   reportFieldUpdate = new Subject<string>();
@@ -64,7 +64,7 @@ export class ReportDetailsComponent implements OnInit, OnDestroy {
               
               if (!this.publishDraft) {
                 this.fetchFields();
-                this.fetchProfiles();
+                this.fetchRoutes();
               }
               
               return;
@@ -79,8 +79,16 @@ export class ReportDetailsComponent implements OnInit, OnDestroy {
     }
   }
 
-  fetchProfiles() {
-    this.profileService.list_members().subscribe((results) => {
+  // fetchProfiles() {
+  //   this.profileService.list_members().subscribe((results) => {
+  //     if (!(results instanceof HttpErrorResponse)) {
+  //       this.approverList = results;
+  //     }
+  //   });
+  // }
+
+  fetchRoutes() {
+    this.reportService.listReportRoutes().subscribe((results) => {
       if (!(results instanceof HttpErrorResponse)) {
         this.approverList = results;
       }

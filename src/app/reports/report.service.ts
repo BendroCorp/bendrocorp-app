@@ -4,7 +4,7 @@ import { MessageService } from '../message/message.service';
 import { ErrorService } from '../error.service';
 import { Globals } from '../globals';
 import { Subject, Observable } from 'rxjs';
-import { Report, ReportField, ReportFieldValue, ReportTemplate, ReportHandler } from '@bendrocorp/bendrocorp-node-sdk/models/report.model';
+import { Report, ReportField, ReportFieldValue, ReportTemplate, ReportHandler, ReportRoute } from '@bendrocorp/bendrocorp-node-sdk/models/report.model';
 import { catchError, tap } from 'rxjs/operators';
 import { StatusMessage } from '../models/misc-models';
 
@@ -125,6 +125,13 @@ export class ReportService {
     return this.http.get<ReportHandler[]>(`${this.globals.baseUrl}/reports/templates/handlers`).pipe(
       tap(results => console.log(results)),
       catchError(this.errorService.handleError<any>('Fetch Report Handlers'))
+    );
+  }
+
+  listReportRoutes(): Observable<ReportRoute[]> {
+    return this.http.get<ReportRoute[]>(`${this.globals.baseUrl}/reports/routes`).pipe(
+      tap(results => console.log(results)),
+      catchError(this.errorService.handleError<any>('Fetch Report Routes'))
     );
   }
 }
