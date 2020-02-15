@@ -1,7 +1,7 @@
 <div class="row">
   <div class="col-md-12">
     <ol class="breadcrumb">
-      <li class="breadcrumb-item"><a [routerLink]="['/reports']">Reports</a></li>
+      <li class="breadcrumb-item"><a [routerLink]="['/forms']">Forms</a></li>
       <li class="breadcrumb-item active">Templates</li>
     </ol>
   </div>
@@ -23,7 +23,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let template of templates" [routerLink]="['/reports/templates/', template.id]">
+            <tr *ngFor="let template of templates" [routerLink]="['/forms/templates/', template.id]">
               <td>{{template.name}}</td>
             </tr>
           </tbody>

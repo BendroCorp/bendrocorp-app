@@ -1,6 +1,6 @@
 <ng-template #content let-modal>
     <div class="modal-header">
-      <h4 class="modal-title" id="modal-basic-title">Create New Report</h4>
+      <h4 class="modal-title" id="modal-basic-title">Start New Form</h4>
       <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
         <span aria-hidden="true">&times;</span>
       </button>
@@ -19,8 +19,8 @@
       </form>
     </div>
     <div class="modal-footer">
-      <button *ngIf="templates.length > 0" type="button" class="btn btn-primary" (click)="createReport()">Create Report</button>
+      <button *ngIf="templates.length > 0" type="button" class="btn btn-primary" (click)="createReport()">Start Form</button>
     </div>
   </ng-template>
   
-  <button class="btn btn-sm btn-secondary" (click)="open(content)">Add Report</button>  
+  <button class="btn btn-sm btn-secondary" (click)="open(content)">Start New Form</button>  

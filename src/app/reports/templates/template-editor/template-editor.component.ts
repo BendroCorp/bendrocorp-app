@@ -22,7 +22,7 @@ export class TemplateEditorComponent implements OnInit, OnDestroy {
   
   templateId: string = this.route.snapshot.paramMap.get('template_id')
   isReportBuilder: boolean = this.authService.hasClaim(48);
-  reportHandlers: ReportHandler[];
+  reportHandlers: ReportHandler[] = [];
   fields: Field[] = [];
   roles: Role[] = [];
   reportRoutes: ReportRoute[] = [];
@@ -30,6 +30,7 @@ export class TemplateEditorComponent implements OnInit, OnDestroy {
   templateFieldUpdate = new Subject<string>();
   templateUpdateSubscription: Subscription;
   dataSubmissionInProgress: boolean;
+  draftLock: boolean = false;
   displayTypes: any[] = [{ id: 1, name: 'Text' }, { id: 2, name: 'Long Text' }, { id: 3, name: 'Number' }, { id: 4, name: 'Date' }, { id: 5, name: 'Field' }]
 
   constructor(
@@ -46,6 +47,7 @@ export class TemplateEditorComponent implements OnInit, OnDestroy {
       debounceTime(700),
       distinctUntilChanged())
       .subscribe(() => {
+        this.allVariablesAssigned();
         this.updateValues();
       });
   }
@@ -79,9 +81,54 @@ export class TemplateEditorComponent implements OnInit, OnDestroy {
         if (!(results instanceof HttpErrorResponse)) {
           this.reportsService.refreshTemplatesData();
           this.messageService.addSuccess('Template updated!');
-          // this.router.navigateByUrl(`/reports/templates/${results.id}`);
+          // this.router.navigateByUrl(`/forms/templates/${results.id}`);
         }
       });
+    }
+  }
+  
+  selectedHandlerForClass() {
+    if (this.template && this.template.handler_id) {
+      const handler = this.reportHandlers.find(x => x.id == this.template.handler_id)
+      if (handler && handler.for_class) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  getHandlerVariables() {
+    if (this.template && this.template.handler_id) {
+      const handler = this.reportHandlers.find(x => x.id == this.template.handler_id)
+      if (handler && handler.for_class) {
+        return handler.variables;
+      }
+    }
+  }
+
+  allVariablesAssigned() {
+    if (this.template) {
+      if (!this.selectedHandlerForClass()) {
+        this.draftLock = false;
+        return true;
+      } else {
+        if (this.template && this.template.fields && this.template.fields.length > 0) {
+          // TODO: Get the variables and the fields and make sure they are all used
+          const variables = this.getHandlerVariables();
+          if (variables.length === this.template.fields.filter(x => x.report_handler_variable_id).length) {
+            this.draftLock = false;
+            return true;
+          } else {
+            this.draftLock = true;
+            this.template.draft = true;
+            return false;
+          }
+        } else {
+          this.draftLock = true;
+          this.template.draft = true;
+          return false;
+        }
+      }
     }
   }
 
@@ -90,7 +137,7 @@ export class TemplateEditorComponent implements OnInit, OnDestroy {
       if (this.template && this.template.id) {
         this.reportsService.archiveTemplate(this.template).subscribe((results) => {
           this.reportsService.refreshTemplatesData();
-          this.router.navigateByUrl('/reports/templates');
+          this.router.navigateByUrl('/forms/templates');
         });
       }
     }

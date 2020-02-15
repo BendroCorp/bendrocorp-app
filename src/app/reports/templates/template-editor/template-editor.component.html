@@ -1,8 +1,8 @@
 <div class="row">
   <div class="col-md-12">
     <ol class="breadcrumb">
-      <li class="breadcrumb-item"><a [routerLink]="['/reports']">Reports</a></li>
-      <li class="breadcrumb-item "><a [routerLink]="['/reports/templates']">Templates</a></li>
+      <li class="breadcrumb-item"><a [routerLink]="['/forms']">Reports</a></li>
+      <li class="breadcrumb-item "><a [routerLink]="['/forms/templates']">Templates</a></li>
       <li class="breadcrumb-item active">Edit - <span *ngIf="template">{{template.name}}</span></li>
     </ol>
   </div>
@@ -44,7 +44,7 @@
               <option *ngFor="let role of roles" [value]="role.id">{{role.name}}</option>
             </select>
           </div>
-          <div class="col-md-12">
+          <div class="col-md-12" *ngIf="!selectedHandlerForClass()">
             <label>Default Route</label>
             <select (ngModelChange)="this.templateFieldUpdate.next($event)" class="form-control" [(ngModel)]="template.report_for_id" name="report_for_id">
               <option *ngFor="let reoute of reportRoutes" [value]="reoute.id">{{reoute.title}}</option>
@@ -53,7 +53,7 @@
           <div class="col-md-12">
             <hr />
             <div class="custom-control custom-checkbox">
-              <input (ngModelChange)="this.templateFieldUpdate.next($event)" type="checkbox" class="custom-control-input" id="draftCheck" [ngModelOptions]="{standalone: true}" [(ngModel)]="template.draft" name="draft">
+              <input (ngModelChange)="this.templateFieldUpdate.next($event)" type="checkbox" class="custom-control-input" id="draftCheck" [ngModelOptions]="{standalone: true}" [disabled]="draftLock" [(ngModel)]="template.draft" name="draft">
               <label class="custom-control-label" for="draftCheck">Draft Template?</label>
             </div>
           </div>
@@ -62,7 +62,7 @@
         <!-- Field forms -->
         <div class="row">
           <div class="col-md-12">
-            <h5>Fields</h5>
+            <h5>Fields<small *ngIf="selectedHandlerForClass() && !allVariablesAssigned()" class="text-danger"> All variables have not been assigned!</small></h5>
             <h6 *ngIf="template.fields.length == 0">No fields! Add one!</h6>
           </div>
           <div class="col-md-6" *ngFor="let field of template.fields; let i = index">
@@ -75,7 +75,7 @@
                 <label>Description</label>
                 <textarea (ngModelChange)="this.templateFieldUpdate.next($event)" class="form-control" name="field_description" id="field_description" cols="30" rows="5" [(ngModel)]="field.description"></textarea>
               </div>
-              <div class="form-group">
+              <div *ngIf="field.field_presentation_type_id != 5" class="form-group">
                 <label>Validator (<a href="https://regex101.com/" target="_blank">Regex</a>)</label>
                 <input (ngModelChange)="this.templateFieldUpdate.next($event)" class="form-control" type="text" name="field_validator" id="field_validator" [(ngModel)]="field.validator">
               </div>
@@ -89,6 +89,12 @@
                 <label>Select Field</label>
                 <select (ngModelChange)="this.templateFieldUpdate.next($event)" class="form-control" [(ngModel)]="field.field_id" name="field_id">
                   <option *ngFor="let field of fields" [value]="field.id">{{field.name}}</option>
+                </select>
+              </div>
+              <div *ngIf="selectedHandlerForClass()">
+                <label>Select Variable</label>
+                <select (ngModelChange)="this.templateFieldUpdate.next($event)" class="form-control" [(ngModel)]="field.report_handler_variable_id" name="report_handler_variable_id">
+                  <option *ngFor="let variable of getHandlerVariables()" [value]="variable.id">{{variable.name}}</option>
                 </select>
               </div>
               <div class="form-group">

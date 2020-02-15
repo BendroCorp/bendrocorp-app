@@ -2,8 +2,8 @@
 <div class="row">
   <div class="col-md-12">
     <ol class="breadcrumb">
-      <li class="breadcrumb-item"><a [routerLink]="['/reports']">Reports</a></li>
-      <li class="breadcrumb-item active">Report</li>
+      <li class="breadcrumb-item"><a [routerLink]="['/forms']">Forms</a></li>
+      <li class="breadcrumb-item active">Form</li>
     </ol>
   </div>
 </div>
@@ -57,8 +57,9 @@
             <!-- if not a draft show the value -->
             <div *ngIf="!report.draft">
               <h6>{{field.name}}</h6>
-              <p *ngIf="field.field_presentation_type_id != 4">{{field.field_value.value}}</p>
+              <p *ngIf="field.field_presentation_type_id < 4">{{field.field_value.value}}</p>
               <p *ngIf="field.field_presentation_type_id == 4">{{field.field_value.value |  date:'MM/dd/yyyy @ h:mma' }}</p>
+              <p *ngIf="field.field_presentation_type_id == 5">{{getSingleDescriptorValue(field, field.field_value.value)}}</p>
             </div>
             <!-- if it is a draft show the field -->
             <div *ngIf="report.draft">
@@ -73,7 +74,7 @@
               <dl-date-time-picker startView="day" maxView="year" minView="minute" minuteStep="5" name="field_value" (change)="this.reportFieldUpdate.next($event)" [(ngModel)]="field.field_value.value" *ngIf="field.field_presentation_type_id == 4"></dl-date-time-picker>
               <!-- Type 5 - Field -->
               <select *ngIf="field.field_presentation_type_id == 5 && (fields && fields.length > 0)" (ngModelChange)="this.reportFieldUpdate.next($event)" class="form-control" [(ngModel)]="field.field_value.value" name="field_value">
-                <option *ngFor="let descriptor of getFieldDescriptors(field)" [value]="descriptor.title">{{descriptor.title}}</option>
+                <option *ngFor="let descriptor of getFieldDescriptors(field)" [value]="descriptor.id">{{descriptor.title}}</option>
               </select>
               <!-- field description -->
               <small>{{field.description}}</small>
