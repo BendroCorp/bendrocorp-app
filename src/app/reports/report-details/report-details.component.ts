@@ -73,7 +73,7 @@ export class ReportDetailsComponent implements OnInit, OnDestroy {
           
           // if we here something went wrong
           this.messageService.addInfo("Report not found or you do not have access to view this report!");
-          this.router.navigateByUrl('/reports');
+          this.router.navigateByUrl('/forms');
         }
       });
     }
@@ -114,6 +114,16 @@ export class ReportDetailsComponent implements OnInit, OnDestroy {
       }
     }
     // return null;
+  }
+
+  getSingleDescriptorValue(field: Field, descriptor_id: string) {
+    const descs = this.getFieldDescriptors(field);
+    if (descs) {
+      const val = descs.find(x => x.id == descriptor_id)
+      if (val) {
+        return val.title;
+      }
+    }
   }
 
   updateValues() { 
@@ -162,7 +172,7 @@ export class ReportDetailsComponent implements OnInit, OnDestroy {
 
   formValid() {
     if (this.report && this.report.id) {
-      if (!this.report.report_for_id) {
+      if (!this.report.report_for_id && !this.report.handler.for_class) {
         return false;
       }
 
@@ -194,7 +204,7 @@ export class ReportDetailsComponent implements OnInit, OnDestroy {
         if (!(results instanceof HttpErrorResponse)) {
           this.messageService.addSuccess('Report archived!');
           this.reportService.refreshReportsData();
-          this.router.navigateByUrl('/reports');
+          this.router.navigateByUrl('/forms');
         }
       })
     }
@@ -203,6 +213,7 @@ export class ReportDetailsComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.reportId = this.route.snapshot.paramMap.get('report_id');
     this.fetchReport();
+    this.fetchFields();
   }
 
   ngOnDestroy() {

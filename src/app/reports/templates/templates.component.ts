@@ -31,7 +31,7 @@ export class TemplatesComponent implements OnInit, OnDestroy {
   createTemplate() {
     this.reportsService.createTemplate({ name: 'New Report Template' } as ReportTemplate).subscribe((results) => {
       if (!(results instanceof HttpErrorResponse)) {
-        this.router.navigateByUrl(`/reports/templates/${results.id}`);
+        this.router.navigateByUrl(`/forms/templates/${results.id}`);
       }
     });
   }

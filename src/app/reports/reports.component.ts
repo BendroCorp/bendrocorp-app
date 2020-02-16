@@ -36,9 +36,15 @@ export class ReportsComponent implements OnInit, OnDestroy {
     });
   }
 
+  openReport(report: Report) {
+    if (report && report.id) {
+      this.router.navigateByUrl(`/forms/${report.id}`);
+    }
+  }
+
   openTemplates() {
     if (this.isReportBuilder) {
-      this.router.navigateByUrl('reports/templates');
+      this.router.navigateByUrl('forms/templates');
     }
   }
 
