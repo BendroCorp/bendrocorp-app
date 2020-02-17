@@ -54,4 +54,11 @@ export class UserService {
       catchError(this.errorService.handleError('Fetch Roles', []))
     )
   }
+
+  remaining_approval_count(): Observable<number> {
+    return this.http.get<number>(`${this.globals.baseUrl}/user/approvals-count`).pipe(
+      tap(result => console.log(`You have ${result} outstanding approvals!`)),
+      catchError(this.errorService.handleError<any>('Fetch Approval Count'))
+    );
+  }
 }

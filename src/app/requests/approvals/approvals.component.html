@@ -1,7 +1,6 @@
 <div class="row">
   <div class="col-md-12">
     <ol class="breadcrumb">
-      <li class="breadcrumb-item"><a routerLink="/requests">Requests</a></li>
       <li class="breadcrumb-item active">Approvals</li>
     </ol>
   </div>
@@ -24,9 +23,9 @@
           </thead>
           <tbody>
             <tr *ngFor="let approval of myApprovals | paginate: { itemsPerPage: 10, currentPage: p }">
-              <td routerLink="/requests/approvals/{{approval.approval_id}}">{{approval.approval_id}}</td>
-              <td routerLink="/requests/approvals/{{approval.approval_id}}">{{approval.approval.approval_kind.title}}</td>
-              <td routerLink="/requests/approvals/{{approval.approval_id}}">{{approval.approval.approval_status}}</td>
+              <td routerLink="/approvals/{{approval.approval_id}}">{{approval.approval_id}}</td>
+              <td routerLink="/approvals/{{approval.approval_id}}">{{approval.approval.approval_kind.title}}</td>
+              <td routerLink="/approvals/{{approval.approval_id}}">{{approval.approval.approval_status}}</td>
               <td>
                 <approval-control [approval]="approval"></approval-control>
               </td>

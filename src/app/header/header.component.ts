@@ -6,6 +6,8 @@ import { ErrorService } from '../error.service';
 import { Router } from '../../../node_modules/@angular/router';
 import { TrainingService } from '../training/training.service';
 import { HttpErrorResponse } from '@angular/common/http';
+import { RequestsService } from '../requests/requests.service';
+import { UserService } from '../user.service';
 
 @Component({
   selector: 'app-header',
@@ -13,17 +15,21 @@ import { HttpErrorResponse } from '@angular/common/http';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit, OnDestroy {
-  userSession:UserSessionResponse
-  authSubscription:Subscription
-  authErrorSubscription:Subscription
-  trainingSubscription:Subscription
-  isMember:boolean = this.authService.hasClaim(0)
-  alertCount: number = 0
-  trainingCount: number = 0
+  userSession: UserSessionResponse;
+  authSubscription: Subscription;
+  authErrorSubscription: Subscription;
+  trainingSubscription: Subscription;
+  requestsSubscription: Subscription;
+  isMember: boolean = this.authService.hasClaim(0);
+  approvalsCount: number = 0;
+  alertCount: number = 0;
+  trainingCount: number = 0;
 
   constructor(
     private authService:AuthService,
     private traininingService: TrainingService,
+    private requestsService: RequestsService,
+    private userService: UserService,
     private errorService:ErrorService,
     private router:Router
   ) { 
@@ -49,6 +55,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
         this.fetchTrainingCount()
       }
     )
+
+    this.requestsSubscription = this.requestsService.dataRefreshAnnounced$.subscribe(() => {
+      this.fetchApprovalCount();
+    });
   }
 
   doLogout()
@@ -93,21 +103,38 @@ export class HeaderComponent implements OnInit, OnDestroy {
             
             // assign stuff
             this.trainingCount = todo
-            this.alertCount = todo // future use in case we add multiple alertable items
+            this.alertCount = this.trainingCount + this.approvalsCount;  // future use in case we add multiple alertable items
           }
         }
       )
     }
   }
 
-  ngOnInit() {
-    this.fetchUserSession()
-    this.fetchTrainingCount()
+  fetchApprovalCount() {
+    this.userService.remaining_approval_count().subscribe((results) => {
+      this.approvalsCount = results;
+      this.alertCount = this.trainingCount + this.approvalsCount;
+    });
   }
 
-  ngOnDestroy() {
-    this.authSubscription.unsubscribe()
-    this.authErrorSubscription.unsubscribe()
+  ngOnInit() {
+    this.fetchUserSession();
+    this.fetchTrainingCount();
+    this.fetchApprovalCount();
+  }
+
+  ngOnDestroy() {    
+    if (this.authErrorSubscription) {
+      this.authErrorSubscription.unsubscribe();
+    }
+
+    if (this.authSubscription) {
+      this.authSubscription.unsubscribe();
+    }
+
+    if (this.requestsSubscription) {
+      this.requestsSubscription.unsubscribe();
+    }
   }
 
 }
