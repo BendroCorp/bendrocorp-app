@@ -13,7 +13,8 @@
                     <button class="btn btn-sm btn-primary" id="dropdownBasic1" ngbDropdownToggle>{{userSession.first_name}}<span *ngIf="alertCount > 0">&nbsp;<span class="badge badge-pill badge-danger">{{alertCount}}</span></span></button>
                     <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
                         <button class="dropdown-item" style="cursor:pointer;" routerLink="/profiles/{{userSession.first_name.toLowerCase()}}-{{userSession.last_name.toLowerCase()}}-{{userSession.character_id}}">My Profile</button>
-                        <button class="dropdown-item" style="cursor:pointer;" routerLink="/training">Training<span *ngIf="alertCount > 0">&nbsp;<span class="badge badge-pill badge-danger">{{trainingCount}}</span></span></button>
+                        <button class="dropdown-item" style="cursor: pointer;" routerLink="/approvals">Approvals<span *ngIf="approvalsCount > 0">&nbsp;<span class="badge badge-pill badge-danger">{{approvalsCount}}</span></span></button>
+                        <button class="dropdown-item" style="cursor:pointer;" routerLink="/training">Training<span *ngIf="trainingCount > 0">&nbsp;<span class="badge badge-pill badge-danger">{{trainingCount}}</span></span></button>
                         <settings-modal class="dropdown-item"></settings-modal>
                     </div>
                     &nbsp;
