@@ -36,7 +36,7 @@ export class AddReportComponent implements OnInit, OnDestroy {
     this.reportService.createReport(this.report).subscribe((results) => {
       if (!(results instanceof HttpErrorResponse)) {
         // this.templates = results;
-        this.router.navigateByUrl(`/reports/${results.id}`);
+        this.router.navigateByUrl(`/forms/${results.id}`);
         this.openModal.close();
       }
     });
