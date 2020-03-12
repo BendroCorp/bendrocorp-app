@@ -1,3 +1,74 @@
-<p>
-  pages works!
-</p>
+<!-- Breadcrumbs -->
+<div class="row">
+  <div class="col-md-12">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item active">Pages</li>
+    </ol>
+  </div>
+</div>
+
+<div class="row" *ngIf="initialDataLoaded">
+  <div class="col-md-9">
+    <div class="card border-primary">
+      <div class="card-header bg-primary text-white">
+        <span>Current Pages</span>
+        <div style="float: right;">
+          <button class="btn btn-sm btn-secondary" (click)="createPage()" [disabled]="creatingPage">Create Page<span *ngIf="creatingPage">&nbsp;<i class="fas fa-spinner fa-spin"></i></span></button>
+        </div>
+      </div>
+      <div class="card-body">
+        <!-- search box -->
+        <div class="row">
+          <div class="col-md-12" style="margin: 8px 0 8px 0;">
+            <div class="input-group">
+              <input placeholder="Search Pages" class="form-control form-control-sm" type="text" name="" id="" (keyup)="onSearchKeyUp()" [(ngModel)]="searchFilter">
+              <div *ngIf="isFiltering" class="input-group-append">
+                <span class="input-group-text"><i class="fas fa-spinner fa-spin"></i></span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- regular content -->
+        <div *ngIf="!searchFilter">
+          <!-- list content box -->
+          <h6 *ngIf="initialDataLoaded && pages && pages.length == 0">You currently do not have access to any pages.</h6>
+          
+          <!-- Featured -->
+          <div *ngIf="featuredPages.length > 0">
+            <h5>Featured</h5>
+            <page-snippet *ngFor="let page of featuredPages" [page]="page" (click)="openPage(page)" class="col-md-6 page-snippet-block"></page-snippet>
+          </div>
+          <!-- Policies -->
+          <div style="margin-top: 8px;" *ngIf="policyPages.length > 0">
+            <h5>Policies</h5>
+            <page-snippet *ngFor="let page of featuredPages" [page]="page" (click)="openPage(page)" class="col-md-6 page-snippet-block"></page-snippet>
+          </div>
+          <!-- Guides -->
+          <div style="margin-top: 8px;" *ngIf="guidePages.length > 0">
+            <h5>Guides</h5>
+            <page-snippet *ngFor="let page of guidePages" [page]="page" (click)="openPage(page)" class="col-md-6 page-snippet-block"></page-snippet>
+          </div>
+          <!-- Other -->
+          <div style="margin-top: 8px;" *ngIf="otherPages.length > 0">
+            <h5>Other</h5>
+            <page-snippet *ngFor="let page of otherPages" [page]="page" (click)="openPage(page)" class="col-md-6 page-snippet-block"></page-snippet>
+          </div>
+        </div>
+        <!-- search view -->
+        <div *ngIf="searchFilter">
+          <page-snippet *ngFor="let page of filteredPages" [page]="page" (click)="openPage(page)" class="col-md-12 page-snippet-block"  style="margin-bottom: 4px;"></page-snippet>
+        </div>
+      </div> <!-- end card body -->
+    </div>
+  </div>
+  <div class="col-md-3">
+    <div class="card border-primary">
+      <div class="card-header bg-primary text-white">
+        <span>Your Pages</span>
+      </div>
+      <div class="card-body">
+        <p *ngFor="let page of yourPages"><a routerLink="/pages/{{page.id}}/edit">{{page.title}}</a></p>
+      </div>
+    </div>
+  </div>
+</div>

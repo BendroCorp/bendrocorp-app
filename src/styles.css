@@ -2,6 +2,12 @@
 
 @import '~bootswatch/dist/flatly/bootstrap.css';
 /* @import './assets/fonts/system-map/style.css'; */
+:root {
+  --simplemde-statusbar-lines: 'Lines: ';
+  --simplemde-statusbar-words: 'Words: ';
+  --simplemde-statusbar-characters: 'Characters: ';
+  --simplemde-statusbar-counts: 'Counts: ';
+}
 
 html, body {
     height: 100%;

@@ -1,0 +1,11 @@
+<div *ngIf="page" (click)="openPage(page)">
+  <p>
+    <strong>{{page.title}}</strong>
+    <br>
+    <small>{{page.subtitle}}</small>
+    <br>
+    <page-tags [tags]="page.tags"></page-tags>
+    <br>
+    <small>By: {{page.creator.main_character_full_name}}</small>
+  </p>
+</div>
