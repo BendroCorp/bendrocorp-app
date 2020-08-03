@@ -9,7 +9,6 @@
     "lint": "ng lint",
     "e2e": "ng e2e",
     "postinstall": "ng build --prod --build-optimizer --aot  --vendor-chunk --output-hashing=all"
-    "build:ci": "npm run clean && npm run test && npm run build"
   },
   "private": true,
   "dependencies": {
