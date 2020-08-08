@@ -146,6 +146,12 @@ import { SystemMapObjectDetailComponent } from './system-map/system-map-object-d
 import { FieldAdminComponent } from './field-admin/field-admin.component';
 import { FieldAdminDetailsComponent } from './field-admin/field-admin-details/field-admin-details.component';
 import { FieldAdminCreateUpdateModalComponent } from './field-admin/field-admin-create-update-modal/field-admin-create-update-modal.component';
+import { PageDetailComponent } from './pages/page-detail/page-detail.component';
+import { PageCreateUpdateComponent } from './pages/page-create-update/page-create-update.component';
+import { SimplemdeModule } from 'ngx-simplemde';
+import { NgxSummernoteModule } from 'node_modules/ngx-summernote';
+import { PageTagsComponent } from './pages/page-tags/page-tags.component';
+import { PageSnippetComponent } from './pages/page-snippet/page-snippet.component';
 
 @NgModule({
   declarations: [
@@ -269,6 +275,10 @@ import { FieldAdminCreateUpdateModalComponent } from './field-admin/field-admin-
     FieldAdminComponent,
     FieldAdminDetailsComponent,
     FieldAdminCreateUpdateModalComponent,
+    PageDetailComponent,
+    PageCreateUpdateComponent,
+    PageTagsComponent,
+    PageSnippetComponent,
   ],
   entryComponents: [
     EventModalComponent,
@@ -296,6 +306,8 @@ import { FieldAdminCreateUpdateModalComponent } from './field-admin/field-admin-
     SortablejsModule.forRoot({ animation: 150 }),
     ServiceWorkerModule.register('/ngsw-worker.js', { enabled: environment.production }),
     AngularResizedEventModule,
+    SimplemdeModule.forRoot({ }),
+    NgxSummernoteModule
   ],
   providers: [
     PromptUpdateService,

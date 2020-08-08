@@ -1,0 +1,22 @@
+<!-- Breadcrumbs -->
+<div *ngIf="page" class="row">
+  <div class="col-md-12">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a routerLink="/pages">Pages</a></li>
+      <li class="breadcrumb-item active">{{page.title}}</li>
+    </ol>
+  </div>
+</div>
+
+<!-- Page detail -->
+<div *ngIf="page">
+  <div *ngIf="isEditor || isAdmin" style="float:right;">
+    <span *ngIf="isEditor"><button class="btn btn-primary btn-sm" (click)="editPage()">Edit</button></span>
+    <span *ngIf="isAdmin" style="margin-left: 4px;"><button class="btn btn-danger btn-sm" (click)="archivePage()">Archive</button></span>
+  </div>
+  <h2>{{page.title}}</h2>
+  <small>{{page.subtitle}}</small>
+  <page-tags [tags]="page.tags"></page-tags>
+  <hr>
+  <div [innerHTML]="sanitizedContent"></div>
+</div>

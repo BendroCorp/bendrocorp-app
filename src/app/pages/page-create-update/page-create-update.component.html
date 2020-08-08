@@ -1,0 +1,88 @@
+<!-- Breadcrumbs -->
+<div *ngIf="initialDataLoaded" class="row">
+  <div class="col-md-12">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a routerLink="/pages">Pages</a></li>
+      <li class="breadcrumb-item active"><span>Edit Page - {{page.title}}</span></li>
+    </ol>
+  </div>
+</div>
+
+<div *ngIf="initialDataLoaded">
+  <div class="card border-primary">
+    <div class="card-header bg-primary text-white">
+      <span>Update Page</span>
+      <span style="float: right;">
+        <button class="btn btn-sm btn-secondary" (click)="updatePage()" [disabled]="dataOperationRunning">Update Page</button>
+        &nbsp;
+        <button class="btn btn-sm btn-danger" (click)="archivePage()" [disabled]="dataOperationRunning">Archive Page</button>
+      </span>
+    </div>
+    <div class="card-body">
+      <div class="form-group">
+        <label>Title</label>
+        <input class="form-control" placeholder="Page Title" type="text" name="page_title" id="page_title" [(ngModel)]="page.title">
+      </div>
+    
+      <div class="form-group">
+        <label>Subtitle</label>
+        <input class="form-control" placeholder="Page Subtitle" type="text" name="page_subtitle" id="page_subtitle" [(ngModel)]="page.subtitle">
+      </div>
+    
+      <div class="form-group">
+        <label>Content</label>
+        <div [ngxSummernote]="editorConfig" [(ngModel)]="page.content"></div>
+        <!-- <simplemde [(ngModel)]="page.content"></simplemde> -->
+        <!-- <textarea placeholder="Page Content" class="form-control" name="page_content" id="page_content" rows="15"></textarea> -->
+      </div>
+      
+      <!-- <div class="form-group">
+        <label>Content (debug)</label>
+        <div>{{page.content}}</div>
+      </div> -->
+    
+      <div class="form-group">
+        <label>Tags</label>
+        <input class="form-control" placeholder="Tags" type="text" name="page_tags" id="page_tags" [(ngModel)]="page.tags">
+        <small>Enter a comma seperated list of tags. Do not include the #.</small>
+      </div>
+    
+      <div class="row form-group">          
+        <div class="col-md-6 col-sm-6 col-xs-6">
+          <label>Categories</label>
+          <select class="form-control" name="infractions" multiple>
+            <option *ngFor="let category of filteredCategories()" (dblclick)="addCategoryToPage(category)" [value]="category.id">{{category.title}}</option>
+          </select>
+          <small class="text-mute">(Double click to add a category)</small>
+        </div>
+        <div class="col-md-6 col-sm-6 col-xs-6">
+          <label>&nbsp;</label>
+          <p *ngIf="(page.infractions && page.categories.length == 0) && (page.new_categories && page.new_categories.length == 0)">No selected categories.</p>
+          <!-- Current Infractions -->
+          <ul>
+            <li [ngClass]="{'deleted': onRemoveList(category), 'text-danger': onRemoveList(category) }" *ngFor="let category of page.categories">{{category.title}} <a (click)="removeCategoryFromPage(category)"><i class="fas fa-trash-alt"></i></a></li>
+          </ul>
+          <!-- New Infractions -->
+          <ul>
+            <li *ngFor="let category of page.new_categories">{{category.title}} <a (click)="removeCategoryFromPage(category)"><i class="fas fa-trash-alt"></i></a></li>
+          </ul>
+        </div>
+      </div>
+    
+      <div class="form-group">
+        <div class="custom-control custom-checkbox">
+          <input type="checkbox" class="custom-control-input" [(ngModel)]="page.published" name="published" id="customCheck1">
+          <label class="custom-control-label" for="customCheck1">Published</label>
+        </div>
+      </div>
+    </div>
+    <div class="card-footer bg-primary text-white">
+      <span style="float: right;">
+        <button class="btn btn-sm btn-secondary" (click)="updatePage()" [disabled]="dataOperationRunning">Update Page</button>
+        &nbsp;
+        <button class="btn btn-sm btn-danger" (click)="archivePage()" [disabled]="dataOperationRunning">Archive Page</button>
+      </span>
+    </div>
+  </div>
+  
+</div>

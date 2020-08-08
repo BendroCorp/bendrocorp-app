@@ -48,6 +48,9 @@ import { FactionAdminComponent } from './faction-admin/faction-admin.component';
 import { SystemMapObjectDetailComponent } from './system-map/system-map-object-detail/system-map-object-detail.component';
 import { FieldAdminComponent } from './field-admin/field-admin.component';
 import { FieldAdminDetailsComponent } from './field-admin/field-admin-details/field-admin-details.component';
+import { PagesComponent } from './pages/pages.component';
+import { PageDetailComponent } from './pages/page-detail/page-detail.component';
+import { PageCreateUpdateComponent } from './pages/page-create-update/page-create-update.component';
 
 const routes: Routes = [
     { path: '', component: DashboardComponent, canActivate: [AuthGuardService, MemberAuthGuardService] },
@@ -83,6 +86,9 @@ const routes: Routes = [
     { path: 'field-admin/:id', component: FieldAdminDetailsComponent, canActivate: [AuthGuardService, MemberAuthGuardService] },
     { path: 'approvals', component: ApprovalsComponent, canActivate: [AuthGuardService, MemberAuthGuardService] },
     { path: 'approvals/:approval_id', component: ApprovalDetailsComponent, canActivate: [AuthGuardService, MemberAuthGuardService]},
+    { path: 'pages', component: PagesComponent, canActivate: [AuthGuardService, MemberAuthGuardService]},
+    { path: 'pages/:page_id', component: PageDetailComponent, canActivate: [AuthGuardService, MemberAuthGuardService]},
+    { path: 'pages/:page_id/edit', component: PageCreateUpdateComponent, canActivate: [AuthGuardService, MemberAuthGuardService]},
     // public/non-member routes below here
     { path: 'login', component: LoginComponent, canActivate: [NoAuthGuardService] },
     { path: 'signup', component: SignupComponent, canActivate: [NoAuthGuardService] },
