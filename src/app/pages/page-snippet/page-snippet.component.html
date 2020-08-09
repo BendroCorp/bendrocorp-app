@@ -1,6 +1,6 @@
 <div *ngIf="page" (click)="openPage(page)">
   <p>
-    <strong>{{page.title}}</strong>
+    <strong>{{page.title}}<span *ngIf="!page.published">&nbsp;<span class="badge badge-pill badge-danger">Unpublished</span></span></strong>
     <br>
     <small>{{page.subtitle}}</small>
     <br>
