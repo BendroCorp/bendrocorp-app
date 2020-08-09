@@ -41,7 +41,7 @@
           <!-- Policies -->
           <div style="margin-top: 8px;" *ngIf="policyPages.length > 0">
             <h5>Policies</h5>
-            <page-snippet *ngFor="let page of featuredPages" [page]="page" (click)="openPage(page)" class="col-md-6 page-snippet-block"></page-snippet>
+            <page-snippet *ngFor="let page of policyPages" [page]="page" (click)="openPage(page)" class="col-md-6 page-snippet-block"></page-snippet>
           </div>
           <!-- Guides -->
           <div style="margin-top: 8px;" *ngIf="guidePages.length > 0">
