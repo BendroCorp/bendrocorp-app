@@ -149,7 +149,7 @@ export class PageCreateUpdateComponent implements OnInit {
           ['misc', ['codeview', 'undo', 'redo']],
           ['style', ['bold', 'italic', 'underline', 'clear']],
           ['font', ['bold', 'italic', 'underline', 'strikethrough', 'superscript', 'subscript', 'clear']],
-          ['fontsize', ['fontname', 'fontsize']],
+          ['fontsize', ['fontsize']],
           ['para', ['style', 'ul', 'ol', 'paragraph']],
           ['insert', ['table', 'picture', 'link', 'video', 'hr']]
       ],
