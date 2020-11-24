@@ -127,7 +127,7 @@ jobs:
       run: kubectl apply -f ./k8/bendrocorp_app_v1_deployment.yml
 
     - name: Set Nofication Message
-      run: echo ::set-env name=DISCORD_MESSAGE::${{ env.MY_WORKFLOW_VAR }} of BendroCorp/bendrocorp-app_v1 has been deployed to Kubernetes
+      run: echo ::set-env name=DISCORD_MESSAGE::${{ env.MY_WORKFLOW_VAR }} of BendroCorp/bendrocorp-app has been deployed to Kubernetes
 
     - name: Discord Notification
       env:
