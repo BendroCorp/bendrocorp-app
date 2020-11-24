@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bendrocorp-app-v1-deployment
+spec:
+  selector:
+    matchLabels:
+      app: bendrocorp-app-v1-deployment
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: bendrocorp-app-v1-deployment
+    spec:
+      terminationGracePeriodSeconds: 30
+      containers:
+      - name: bendrocorp-app-v1-deployment
+        image: docker.pkg.github.com/bendrocorp/bendrocorp-app/bendrocorp-app:VERSION_HERE #VERSION_HERE
+        imagePullPolicy: Always
+        ports:
+          - containerPort: 80
+      imagePullSecrets:
+      - name: dockerconfigjson-github-com
